@@ -1,0 +1,32 @@
+name: Python application tests
+
+on: [push]
+
+jobs:
+  flake8:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python 3.8.2
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8.2
+    - name: Install dependencies
+      run: pip install flake8
+    - name: Lint with flake8
+      run: flake8 .
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Set up Python 3.8.2
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8.2
+      - name: Install dependencies
+        run: echo "make pip.install"
+      - name: Config .env file
+        run: echo "make config.env"
+      - name: Test with pytest
+        run: echo "make test"

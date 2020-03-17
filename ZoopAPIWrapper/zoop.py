@@ -2,6 +2,7 @@ import requests
 import json
 from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
 
+
 class Zoop():
     """This class wraps the zoop API to ease use in python
 
@@ -11,7 +12,6 @@ class Zoop():
 
         self.marketplace_id = marketplace_id
         self.basic_auth = publishable_key
-
 
     def search_seller_by_id(self, identifier):
         url = self.BASE_ZOOP_URL + f'{MARKETPLACE_ID}/sellers/{MAIN_SELLER}'

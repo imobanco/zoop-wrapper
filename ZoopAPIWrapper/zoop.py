@@ -26,6 +26,6 @@ class Zoop:
             url += f"{identifier}/"
         return url
 
-        response = requests.get(url, auth=(ZOOP_KEY, ''))
-        response_as_dict = json.loads(response.text)
-        return response_as_dict
+    @property
+    def __auth(self):
+        return ZOOP_KEY, ''

@@ -7,7 +7,7 @@ from pycpfcnpj import gen
 from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER, MARKETPLACE_ID
 
 
-class TestZoop(TestCase):
+class ZoopTestCase(TestCase):
     def setUp(self):
         self.zoop = Zoop()
 

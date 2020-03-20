@@ -46,3 +46,11 @@ class Zoop:
         response = requests.post(url, data=data, auth=self.__auth)
         response = self.__process_response(response)
         return response
+
+    def list_sellers(self):
+        url = self.__construct_url(action='sellers')
+        return self.__get(url)
+
+    def retrieve_seller(self, identifier):
+        url = self.__construct_url(action='sellers', identifier=identifier)
+        return self.__get(url)

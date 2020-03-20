@@ -97,7 +97,6 @@ class ZoopTestCase(TestCase):
         response = self.zoop.add_individual_seller(data)
         self.assertEqual(response.status_code, 409, msg=response.data)
 
-
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)
     #     print(response_as_dict)
@@ -105,7 +104,3 @@ class ZoopTestCase(TestCase):
     # def test_list_transactions(self):
     #     response_as_dict = self.zoop.list_transactions(MAIN_SELLER)
     #     print(response_as_dict)
-
-
-if __name__ == '__main__':
-    unittest.main()

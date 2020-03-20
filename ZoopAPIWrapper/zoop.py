@@ -15,8 +15,16 @@ class Zoop:
         self.__marketplace_id = MARKETPLACE_ID
         self.__key = ZOOP_KEY
 
-    def search_seller_by_id(self, identifier):
-        url = self.BASE_ZOOP_URL + f'{MARKETPLACE_ID}/sellers/{MAIN_SELLER}'
+        self.__main_seller = MAIN_SELLER
+
+    def __construct_url(self, action=None, identifier=None):
+        url = f"{self._base_url}/"
+        url += f"{self.__marketplace_id}/"
+        if action:
+            url += f"{action}/"
+        if identifier:
+            url += f"{identifier}/"
+        return url
 
         response = requests.get(url, auth=(ZOOP_KEY, ''))
         response_as_dict = json.loads(response.text)

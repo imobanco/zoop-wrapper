@@ -41,3 +41,8 @@ class Zoop:
         response = requests.get(url, auth=self.__auth)
         response = self.__process_response(response)
         return response
+
+    def __post(self, url, data):
+        response = requests.post(url, data=data, auth=self.__auth)
+        response = self.__process_response(response)
+        return response

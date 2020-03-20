@@ -36,3 +36,8 @@ class Zoop:
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
         return response
+
+    def __get(self, url):
+        response = requests.get(url, auth=self.__auth)
+        response = self.__process_response(response)
+        return response

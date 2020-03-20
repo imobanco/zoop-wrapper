@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER
+from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER, MARKETPLACE_ID
 
 
 class TestZoop(TestCase):
@@ -13,6 +13,23 @@ class TestZoop(TestCase):
 
     def tearDown(self):
         del self.zoop
+
+    def test_construct_url(self):
+        action = 'teste'
+        identifier = '123'
+
+        url = self.zoop._Zoop__construct_url(action, identifier)
+
+        self.assertEqual(url, f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/teste/123/')
+
+    def test_process_response(self):
+        response = MagicMock(
+            content='{"error": {"message": "foo"}}'
+        )
+
+        processed_response = self.zoop._Zoop__process_response(response)
+        self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
+        self.assertEqual(processed_response.error, "foo")
 
     def test_list_sellers(self):
         response = self.zoop.list_sellers()
@@ -78,7 +95,7 @@ class TestZoop(TestCase):
         }
 
         response = self.zoop.add_individual_seller(data)
-        self.assertEqual(response.status_code, 409, msg=response.error)
+        self.assertEqual(response.status_code, 409, msg=response.data)
 
 
     # def test_get_bank_account(self):

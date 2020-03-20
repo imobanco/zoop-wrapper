@@ -54,3 +54,13 @@ class Zoop:
     def retrieve_seller(self, identifier):
         url = self.__construct_url(action='sellers', identifier=identifier)
         return self.__get(url)
+
+    def _add_seller(self, seller_type, seller):
+        url = self.__construct_url(action=f'sellers/{seller_type}')
+        return self.__post(url, data=seller)
+
+    def add_individual_seller(self, seller):
+        return self._add_seller('individuals', seller)
+
+    def add_business_seller(self, seller):
+        return self._add_seller('business', seller)

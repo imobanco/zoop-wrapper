@@ -29,3 +29,10 @@ class Zoop:
     @property
     def __auth(self):
         return ZOOP_KEY, ''
+
+    @staticmethod
+    def __process_response(response):
+        response.data = json.loads(response.content)
+        if response.data.get('error'):
+            response.error = response.data.get('error').get('message')
+        return response

@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER, MARKETPLACE_ID, ZOOP_KEY
+from ZoopAPIWrapper.api import Zoop, MAIN_SELLER, MARKETPLACE_ID, ZOOP_KEY
 
 
 class ZoopTestCase(TestCase):

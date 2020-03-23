@@ -25,3 +25,23 @@ class ZoopBase:
     @property
     def fields(self):
         return list(self.__FIELDS)
+
+
+class ZoopModel(ZoopBase):
+    __FIELDS = ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
+
+    def __init__(self, id, resource, uri, created_at, updated_at, metadata):
+        super().__init__()
+        self.id = id
+        self.resource = resource
+        self.uri = uri
+
+        self.created_at = created_at
+        self.updated_at = updated_at
+        self.metadata = metadata
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)

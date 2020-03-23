@@ -1,0 +1,4 @@
+# Local development dependencies go here
+-r requirements.txt
+
+flake8

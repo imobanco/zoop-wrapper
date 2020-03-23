@@ -5,16 +5,19 @@ class Seller(ZoopMarketPlaceModel):
     RESOURCE = 'seller'
 
     __FIELDS = ["status", "type", "account_balance", "current_balance",
-                "description", "statement_descriptor", "mcc", "show_profile_online",
-                "is_mobile", "decline_on_fail_security_code", "decline_on_fail_zipcode",
-                "delinquent", "payment_methods", "default_debit", "default_credit",
-                "merchant_code", "terminal_code"]
+                "description", "statement_descriptor", "mcc",
+                "show_profile_online", "is_mobile",
+                "decline_on_fail_security_code",
+                "decline_on_fail_zipcode",
+                "delinquent", "payment_methods", "default_debit",
+                "default_credit", "merchant_code", "terminal_code"]
 
     def __init__(self, status, type, account_balance, current_balance,
                  description, statement_descriptor, mcc, show_profile_online,
-                 is_mobile, decline_on_fail_security_code, decline_on_fail_zipcode,
-                 delinquent, payment_methods, default_debit, default_credit,
-                 merchant_code, terminal_code, **kwargs):
+                 is_mobile, decline_on_fail_security_code,
+                 decline_on_fail_zipcode, delinquent, payment_methods,
+                 default_debit, default_credit, merchant_code, terminal_code,
+                 **kwargs):
         super().__init__(**kwargs)
 
         self.status = status

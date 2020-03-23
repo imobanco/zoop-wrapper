@@ -22,7 +22,8 @@ class ZoopTestCase(TestCase):
 
         url = self.zoop._Zoop__construct_url(action, identifier)
 
-        self.assertEqual(url, f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/teste/123/')
+        self.assertEqual(url, f'https://api.zoop.ws/v1/marketplaces/'
+                              f'{MARKETPLACE_ID}/teste/123/')
 
     def test_process_response(self):
         response = MagicMock(
@@ -43,7 +44,8 @@ class ZoopTestCase(TestCase):
 
     def test_process_response_resource_list(self):
         response = MagicMock(
-            content='{"resource": "list", "items": [{"resource": "test", "message": "foo"}]}'
+            content='{"resource": "list", "items": '
+                    '[{"resource": "test", "message": "foo"}]}'
         )
 
         processed_response = self.zoop._Zoop__process_response(response)
@@ -62,23 +64,29 @@ class ZoopTestCase(TestCase):
     def test_retrieve_seller(self):
         response = self.zoop.retrieve_seller(MAIN_SELLER)
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.data.get('id'),
+                         '27e17b778b404a83bf8e25ec995e2ffe')
         self.assertIsInstance(response.instance, BusinessSeller)
-        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.instance.id,
+                         '27e17b778b404a83bf8e25ec995e2ffe')
 
     def test_search_seller_individual(self):
         response = self.zoop.search_individual_seller('12685293892')
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'), '29f1251bc7514b96ad5f6d873f9812a1')
+        self.assertEqual(response.data.get('id'),
+                         '29f1251bc7514b96ad5f6d873f9812a1')
         self.assertIsInstance(response.instance, IndividualSeller)
-        self.assertEqual(response.instance.id, '29f1251bc7514b96ad5f6d873f9812a1')
+        self.assertEqual(response.instance.id,
+                         '29f1251bc7514b96ad5f6d873f9812a1')
 
     def test_search_seller_business(self):
         response = self.zoop.search_business_seller('24103314000188')
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.data.get('id'),
+                         '27e17b778b404a83bf8e25ec995e2ffe')
         self.assertIsInstance(response.instance, BusinessSeller)
-        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.instance.id,
+                         '27e17b778b404a83bf8e25ec995e2ffe')
 
     @patch('ZoopAPIWrapper.api.requests.post')
     def test_add_individual_seller(self, mocked_post):
@@ -153,18 +161,22 @@ class ZoopTestCase(TestCase):
             outfile.write(json_object)
 
     def test_list_seller_bank_accounts(self):
-        response = self.zoop.list_seller_bank_accounts('ee7e4b3683f8461a89e173dfb9d41d2c')
+        response = self.zoop.list_seller_bank_accounts(
+            'ee7e4b3683f8461a89e173dfb9d41d2c')
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
         self.assertTrue(items)
 
     def test_retrieve_bank_account(self):
-        response = self.zoop.retrieve_bank_account('064d3c7846b142e591896d2fb69dac3f')
+        response = self.zoop.retrieve_bank_account(
+            '064d3c7846b142e591896d2fb69dac3f')
         self.assertEqual(response.status_code, 200, msg=response.data)
         data = response.data
-        self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f', msg=data)
+        self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f',
+                         msg=data)
         self.assertIsInstance(response.instance, BankAccount)
-        self.assertEqual(response.instance.id, '064d3c7846b142e591896d2fb69dac3f')
+        self.assertEqual(response.instance.id,
+                         '064d3c7846b142e591896d2fb69dac3f')
 
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)

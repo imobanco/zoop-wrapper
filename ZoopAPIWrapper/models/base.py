@@ -33,7 +33,8 @@ class ZoopBase:
 class ZoopModel(ZoopBase):
     __FIELDS = ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
 
-    def __init__(self, id, resource, uri, created_at, updated_at, metadata, **kwargs):
+    def __init__(self, id, resource, uri, created_at, updated_at, metadata,
+                 **kwargs):
         super().__init__(**kwargs)
         self.id = id
         self.resource = resource

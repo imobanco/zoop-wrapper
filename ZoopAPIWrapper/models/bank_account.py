@@ -56,7 +56,8 @@ class BankAccount(ZoopModel):
         self.customer = customer
         self.fingerprint = fingerprint
         self.address = Address.from_dict(address)
-        self.verification_checklist = VerificationChecklist.from_dict(verification_checklist)
+        self.verification_checklist = VerificationChecklist\
+            .from_dict(verification_checklist)
 
     @property
     def fields(self):

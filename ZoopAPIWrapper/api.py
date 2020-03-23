@@ -18,7 +18,8 @@ class Zoop:
 
         self.__main_seller = MAIN_SELLER
 
-    def __construct_url(self, action=None, identifier=None, subaction=None, search=None):
+    def __construct_url(self, action=None, identifier=None,
+                        subaction=None, search=None):
         url = f"{self._base_url}/"
         url += f"{self.__marketplace_id}/"
         if action:
@@ -40,7 +41,8 @@ class Zoop:
         response.data = json.loads(response.content)
         if response.data.get('resource'):
             if response.data.get('resource') == 'list':
-                response.instances = [get_instance_from_data(item) for item in response.data.get('items')]
+                response.instances = [get_instance_from_data(item)
+                                      for item in response.data.get('items')]
             else:
                 response.instance = get_instance_from_data(response.data)
         if response.data.get('error'):
@@ -71,7 +73,8 @@ class Zoop:
         return self.__get(url)
 
     def _search_seller(self, id_type, identifier):
-        url = self.__construct_url(action='sellers', search=f"{id_type}={identifier}")
+        url = self.__construct_url(action='sellers',
+                                   search=f"{id_type}={identifier}")
         return self.__get(url)
 
     def search_business_seller(self, identifier):
@@ -99,9 +102,11 @@ class Zoop:
         return self.__get(url)
 
     def list_seller_bank_accounts(self, identifier):
-        url = self.__construct_url(action='sellers', identifier=identifier, subaction='bank_accounts')
+        url = self.__construct_url(action='sellers', identifier=identifier,
+                                   subaction='bank_accounts')
         return self.__get(url)
 
     def retrieve_bank_account(self, identifier):
-        url = self.__construct_url(action='bank_accounts', identifier=identifier)
+        url = self.__construct_url(action='bank_accounts',
+                                   identifier=identifier)
         return self.__get(url)

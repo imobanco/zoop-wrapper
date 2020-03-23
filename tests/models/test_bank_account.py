@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.bank_account import BankAccount, VerificationChecklist, Address
+from ZoopAPIWrapper.models.bank_account import (
+    BankAccount, VerificationChecklist)
 
 
 class BankAccountTestCase(TestCase):
@@ -47,7 +48,8 @@ class BankAccountTestCase(TestCase):
         self.assertEqual(instance.routing_number, 'foo')
         self.assertEqual(instance.phone_number, 'foo')
         self.assertIsNone(instance.address)
-        self.assertIsInstance(instance.verification_checklist, VerificationChecklist)
+        self.assertIsInstance(instance.verification_checklist,
+                              VerificationChecklist)
         self.assertEqual(instance.verification_checklist.deposit_check, 'foo')
 
     def test_to_dict(self):

@@ -126,7 +126,13 @@ class ZoopTestCase(TestCase):
         json_object = json.dumps(items, indent=4)
         with open("data/bank_accounts.json", "w") as outfile:
             outfile.write(json_object)
+
+    def test_list_seller_bank_accounts(self):
+        response = self.zoop.list_seller_bank_accounts('ee7e4b3683f8461a89e173dfb9d41d2c')
+        self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
+        self.assertTrue(items)
+
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)
     #     print(response_as_dict)

@@ -91,3 +91,7 @@ class Zoop:
     def list_bank_accounts(self):
         url = self.__construct_url(action='bank_accounts')
         return self.__get(url)
+
+    def list_seller_bank_accounts(self, identifier):
+        url = self.__construct_url(action='sellers', identifier=identifier, subaction='bank_accounts')
+        return self.__get(url)

@@ -133,6 +133,12 @@ class ZoopTestCase(TestCase):
         items = response.data.get('items')
         self.assertTrue(items)
 
+    def test_retrieve_bank_account(self):
+        response = self.zoop.retrieve_bank_account('064d3c7846b142e591896d2fb69dac3f')
+        self.assertEqual(response.status_code, 200, msg=response.data)
+        data = response.data
+        self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f', msg=data)
+
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)
     #     print(response_as_dict)

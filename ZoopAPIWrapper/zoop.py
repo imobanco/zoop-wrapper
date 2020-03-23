@@ -17,13 +17,17 @@ class Zoop:
 
         self.__main_seller = MAIN_SELLER
 
-    def __construct_url(self, action=None, identifier=None):
+    def __construct_url(self, action=None, identifier=None, subaction=None, search=None):
         url = f"{self._base_url}/"
         url += f"{self.__marketplace_id}/"
         if action:
             url += f"{action}/"
         if identifier:
             url += f"{identifier}/"
+        if subaction:
+            url += f"{subaction}/"
+        if search:
+            url += f"search?{search}"
         return url
 
     @property

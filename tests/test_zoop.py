@@ -107,6 +107,16 @@ class ZoopTestCase(TestCase):
         response = self.zoop.add_individual_seller(data)
         self.assertEqual(response.status_code, 409, msg=response.data)
 
+    @patch('ZoopAPIWrapper.zoop.requests.delete')
+    def test_remove_seller(self, mocked_delete):
+        mocked_delete.return_value = MagicMock(content='{}', status_code=200)
+
+        response = self.zoop.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
+        self.assertEqual(response.status_code, 200, msg=response.data)
+
+        mocked_delete.assert_called_once_with(
+            f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/'
+            f'sellers/0b6dbebcb5f24473ac730537e873b4d8/', auth=(ZOOP_KEY, ''))
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)
     #     print(response_as_dict)

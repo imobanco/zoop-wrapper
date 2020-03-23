@@ -83,3 +83,7 @@ class Zoop:
 
     def add_business_seller(self, seller):
         return self._add_seller('business', seller)
+
+    def remove_seller(self, identifier):
+        url = self.__construct_url(action='sellers', identifier=identifier)
+        return self.__delete(url)

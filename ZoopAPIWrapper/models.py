@@ -169,6 +169,33 @@ class IndividualSeller(Seller, Owner):
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
+
+class BusinessSeller(Seller):
+    __FIELDS = ["business_name", "business_phone",
+                "business_email", "business_website",
+                "business_description", "business_opening_date",
+                "business_facebook", "business_twitter", "ein",
+                "owner", "business_address"]
+
+    def __init__(self, business_name, business_phone,
+                 business_email, business_website,
+                 business_description, business_opening_date,
+                 business_facebook, business_twitter, ein,
+                 owner, business_address, **kwargs):
+        super().__init__(**kwargs)
+
+        self.business_name = business_name
+        self.business_phone = business_phone
+        self.business_email = business_email
+        self.business_website = business_website
+        self.business_description = business_description
+        self.business_opening_date = business_opening_date
+        self.business_facebook = business_facebook
+        self.business_twitter = business_twitter
+        self.ein = ein
+        self.business_address = Address.from_dict(business_address)
+        self.owner = Owner.from_dict(owner)
+
     @property
     def fields(self):
         super_fields = super().fields

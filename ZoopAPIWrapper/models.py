@@ -63,6 +63,8 @@ class ZoopMarketPlaceModel(ZoopModel):
 
 
 class Seller(ZoopMarketPlaceModel):
+    RESOURCE = 'seller'
+
     __FIELDS = ["status", "type", "account_balance", "current_balance",
                 "description", "statement_descriptor", "mcc", "show_profile_online",
                 "is_mobile", "decline_on_fail_security_code", "decline_on_fail_zipcode",
@@ -99,6 +101,21 @@ class Seller(ZoopMarketPlaceModel):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+    @staticmethod
+    def get_seller_class(_type):
+        if _type == 'individual':
+            return IndividualSeller
+        elif _type == 'business':
+            return BusinessSeller
+        else:
+            raise ValueError('seller type não identificado')
+
+    @classmethod
+    def from_dict(cls, data):
+        _type = data.get('type')
+        klass = Seller.get_seller_class(_type)
+        return klass.from_dict(data)
 
 
 class Address(ZoopBase):
@@ -163,6 +180,10 @@ class IndividualSeller(Seller, Owner):
         self.facebook = facebook
         self.twitter = twitter
 
+    @classmethod
+    def from_dict(cls, data):
+        return cls._from_dict(**data)
+
     @property
     def fields(self):
         super_fields = super().fields
@@ -195,6 +216,10 @@ class BusinessSeller(Seller):
         self.ein = ein
         self.business_address = Address.from_dict(business_address)
         self.owner = Owner.from_dict(owner)
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls._from_dict(**data)
 
     @property
     def fields(self):

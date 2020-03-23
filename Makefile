@@ -3,6 +3,7 @@ pip.install:
 
 config.env:
 	cp .env.sample .env
+	mkdir data
 
 test:
 	python -m unittest

@@ -6,8 +6,12 @@ class ZoopBase:
         pass
 
     @classmethod
-    def from_dict(cls):
-        return cls()
+    def _from_dict(cls, **entries):
+        return cls(**entries)
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls._from_dict(**data)
 
     def to_dict(self):
         data = {}

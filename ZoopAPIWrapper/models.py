@@ -100,3 +100,29 @@ class Seller(ZoopMarketPlaceModel):
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
+
+class Address(ZoopBase):
+    __FIELDS = ["line1", "line2", "line3",
+                "neighborhood", "city", "state",
+                "postal_code", "country_code"]
+
+    def __init__(self, line1, line2, line3,
+                 neighborhood, city, state,
+                 postal_code, country_code, **kwargs):
+        super().__init__(**kwargs)
+
+        self.line1 = line1
+        self.line2 = line2
+        self.line3 = line3
+        self.neighborhood = neighborhood
+        self.city = city
+        self.state = state
+        self.postal_code = postal_code
+        self.country_code = country_code
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+

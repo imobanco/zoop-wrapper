@@ -61,3 +61,42 @@ class ZoopMarketPlaceModel(ZoopModel):
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
+
+class Seller(ZoopMarketPlaceModel):
+    __FIELDS = ["status", "type", "account_balance", "current_balance",
+                "description", "statement_descriptor", "mcc", "show_profile_online",
+                "is_mobile", "decline_on_fail_security_code", "decline_on_fail_zipcode",
+                "delinquent", "payment_methods", "default_debit", "default_credit",
+                "merchant_code", "terminal_code"]
+
+    def __init__(self, status, type, account_balance, current_balance,
+                 description, statement_descriptor, mcc, show_profile_online,
+                 is_mobile, decline_on_fail_security_code, decline_on_fail_zipcode,
+                 delinquent, payment_methods, default_debit, default_credit,
+                 merchant_code, terminal_code, **kwargs):
+        super().__init__(**kwargs)
+
+        self.status = status
+        self.type = type
+        self.account_balance = account_balance
+        self.current_balance = current_balance
+        self.description = description
+        self.statement_descriptor = statement_descriptor
+        self.mcc = mcc
+        self.show_profile_online = show_profile_online
+        self.is_mobile = is_mobile
+        self.decline_on_fail_security_code = decline_on_fail_security_code
+        self.decline_on_fail_zipcode = decline_on_fail_zipcode
+        self.delinquent = delinquent
+        self.payment_methods = payment_methods
+        self.default_debit = default_debit
+        self.default_credit = default_credit
+        self.merchant_code = merchant_code
+        self.terminal_code = terminal_code
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+

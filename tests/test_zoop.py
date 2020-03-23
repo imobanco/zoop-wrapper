@@ -117,6 +117,16 @@ class ZoopTestCase(TestCase):
         mocked_delete.assert_called_once_with(
             f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/'
             f'sellers/0b6dbebcb5f24473ac730537e873b4d8/', auth=(ZOOP_KEY, ''))
+
+    def test_list_bank_accounts(self):
+        response = self.zoop.list_bank_accounts()
+        self.assertEqual(response.status_code, 200, msg=response.data)
+        items = response.data.get('items')
+        self.assertTrue(items)
+        json_object = json.dumps(items, indent=4)
+        with open("data/bank_accounts.json", "w") as outfile:
+            outfile.write(json_object)
+        items = response.data.get('items')
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)
     #     print(response_as_dict)

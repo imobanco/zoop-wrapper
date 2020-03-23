@@ -87,3 +87,7 @@ class Zoop:
     def remove_seller(self, identifier):
         url = self.__construct_url(action='sellers', identifier=identifier)
         return self.__delete(url)
+
+    def list_bank_accounts(self):
+        url = self.__construct_url(action='bank_accounts')
+        return self.__get(url)

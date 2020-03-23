@@ -5,7 +5,8 @@ from unittest.mock import patch, MagicMock
 from pycpfcnpj import gen
 
 from ZoopAPIWrapper.api import Zoop, MAIN_SELLER, MARKETPLACE_ID, ZOOP_KEY
-from ZoopAPIWrapper.models import BusinessSeller, IndividualSeller
+from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
+from ZoopAPIWrapper.models.bank_account import BankAccount
 
 
 class ZoopTestCase(TestCase):
@@ -162,6 +163,8 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         data = response.data
         self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f', msg=data)
+        self.assertIsInstance(response.instance, BankAccount)
+        self.assertEqual(response.instance.id, '064d3c7846b142e591896d2fb69dac3f')
 
     # def test_get_bank_account(self):
     #     response_as_dict = self.zoop.get_bank_account(MAIN_SELLER)

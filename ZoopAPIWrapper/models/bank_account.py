@@ -32,12 +32,11 @@ class BankAccount(ZoopModel):
                 "address", "verification_checklist"]
 
     def __init__(self, holder_name, taxpayer_id, description,
-                 bank_name, bank_code, type,
-                 last4_digits, account_number,
+                 bank_name, bank_code, type, account_number,
                  country_code, routing_number,
                  phone_number, is_active, is_verified,
                  debitable, customer, fingerprint,
-                 address, verification_checklist, **kwargs):
+                 address, verification_checklist, last4_digits=None, **kwargs):
         super().__init__(**kwargs)
 
         self.holder_name = holder_name

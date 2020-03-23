@@ -32,6 +32,23 @@ class ZoopTestCase(TestCase):
         self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
         self.assertEqual(processed_response.error, "foo")
 
+    def test_process_response_resource(self):
+        response = MagicMock(
+            content='{"resource": "test"}'
+        )
+
+        processed_response = self.zoop._Zoop__process_response(response)
+        self.assertIsNone(processed_response.instance)
+
+    def test_process_response_resource_list(self):
+        response = MagicMock(
+            content='{"resource": "list", "items": [{"resource": "test", "message": "foo"}]}'
+        )
+
+        processed_response = self.zoop._Zoop__process_response(response)
+        self.assertEqual(len(processed_response.instances), 1)
+        self.assertEqual(processed_response.instances, [None])
+
     def test_list_sellers(self):
         response = self.zoop.list_sellers()
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -53,7 +70,7 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '29f1251bc7514b96ad5f6d873f9812a1')
         self.assertIsInstance(response.instance, IndividualSeller)
-        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.instance.id, '29f1251bc7514b96ad5f6d873f9812a1')
 
     def test_search_seller_business(self):
         response = self.zoop.search_business_seller('24103314000188')

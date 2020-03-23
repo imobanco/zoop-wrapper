@@ -10,7 +10,11 @@ class ZoopBase:
 
     @classmethod
     def from_dict(cls, data):
-        return cls._from_dict(**data)
+        try:
+            return cls._from_dict(**data)
+        except TypeError as e:
+            print(e)
+            return None
 
     def to_dict(self):
         data = {}

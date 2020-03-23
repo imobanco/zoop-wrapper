@@ -58,6 +58,7 @@ class BankAccountTestCase(TestCase):
             'metadata': {},
             'created_at': 'foo',
             'updated_at': 'foo',
+
             "holder_name": "foo",
             "taxpayer_id": "foo",
             "description": "foo",

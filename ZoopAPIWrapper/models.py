@@ -45,3 +45,19 @@ class ZoopModel(ZoopBase):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+
+class ZoopMarketPlaceModel(ZoopModel):
+    __FIELDS = ["marketplace_id"]
+
+    def __init__(self, marketplace_id, **kwargs):
+        super().__init__(**kwargs)
+
+        self.marketplace_id = marketplace_id
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+

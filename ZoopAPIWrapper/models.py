@@ -126,3 +126,30 @@ class Address(ZoopBase):
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
+
+class IndividualSeller(Seller):
+    __FIELDS = ["first_name", "last_name", "email",
+                "taxpayer_id", "phone_number", "birthdate",
+                "website", "facebook", "twitter", "address"]
+
+    def __init__(self, first_name, last_name, email,
+                 taxpayer_id, phone_number, birthdate,
+                 website, facebook, twitter, address, **kwargs):
+        super().__init__(**kwargs)
+
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.taxpayer_id = taxpayer_id
+        self.phone_number = phone_number
+        self.birthdate = birthdate
+        self.website = website
+        self.facebook = facebook
+        self.twitter = twitter
+        self.address = Address.from_dict(address)
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)

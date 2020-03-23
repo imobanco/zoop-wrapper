@@ -3,6 +3,7 @@ import json
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
+from ZoopAPIWrapper.models import get_instance_from_data
 
 
 class Zoop:
@@ -37,6 +38,11 @@ class Zoop:
     @staticmethod
     def __process_response(response):
         response.data = json.loads(response.content)
+        if response.data.get('resource'):
+            if response.data.get('resource') == 'list':
+                response.instances = [get_instance_from_data(item) for item in response.data.get('items')]
+            else:
+                response.instance = get_instance_from_data(response.data)
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
         return response

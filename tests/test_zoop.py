@@ -5,6 +5,7 @@ from unittest.mock import patch, MagicMock
 from pycpfcnpj import gen
 
 from ZoopAPIWrapper.api import Zoop, MAIN_SELLER, MARKETPLACE_ID, ZOOP_KEY
+from ZoopAPIWrapper.models import BusinessSeller, IndividualSeller
 
 
 class ZoopTestCase(TestCase):
@@ -44,16 +45,22 @@ class ZoopTestCase(TestCase):
         response = self.zoop.retrieve_seller(MAIN_SELLER)
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertIsInstance(response.instance, BusinessSeller)
+        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
 
     def test_search_seller_individual(self):
         response = self.zoop.search_individual_seller('12685293892')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '29f1251bc7514b96ad5f6d873f9812a1')
+        self.assertIsInstance(response.instance, IndividualSeller)
+        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
 
     def test_search_seller_business(self):
         response = self.zoop.search_business_seller('24103314000188')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertIsInstance(response.instance, BusinessSeller)
+        self.assertEqual(response.instance.id, '27e17b778b404a83bf8e25ec995e2ffe')
 
     @patch('ZoopAPIWrapper.api.requests.post')
     def test_add_individual_seller(self, mocked_post):

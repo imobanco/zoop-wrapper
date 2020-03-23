@@ -64,8 +64,18 @@ class Zoop:
         url = self.__construct_url(action='sellers', identifier=identifier)
         return self.__get(url)
 
+    def _search_seller(self, id_type, identifier):
+        url = self.__construct_url(action='sellers', search=f"{id_type}={identifier}")
+        return self.__get(url)
+
+    def search_business_seller(self, identifier):
+        return self._search_seller('ein', identifier)
+
+    def search_individual_seller(self, identifier):
+        return self._search_seller('taxpayer_id', identifier)
+
     def _add_seller(self, seller_type, seller):
-        url = self.__construct_url(action=f'sellers/{seller_type}')
+        url = self.__construct_url(action=f'sellers', subaction=seller_type)
         return self.__post(url, data=seller)
 
     def add_individual_seller(self, seller):

@@ -4,7 +4,7 @@ from unittest.mock import patch, MagicMock
 
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER, MARKETPLACE_ID
+from ZoopAPIWrapper.zoop import Zoop, MAIN_SELLER, MARKETPLACE_ID, ZOOP_KEY
 
 
 class ZoopTestCase(TestCase):
@@ -45,6 +45,16 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
 
+    def test_search_seller_individual(self):
+        response = self.zoop.search_individual_seller('12685293892')
+        self.assertEqual(response.status_code, 200, msg=response.data)
+        self.assertEqual(response.data.get('id'), '29f1251bc7514b96ad5f6d873f9812a1')
+
+    def test_search_seller_business(self):
+        response = self.zoop.search_business_seller('24103314000188')
+        self.assertEqual(response.status_code, 200, msg=response.data)
+        self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+
     @patch('ZoopAPIWrapper.zoop.requests.post')
     def test_add_individual_seller(self, mocked_post):
 
@@ -75,7 +85,7 @@ class ZoopTestCase(TestCase):
 
     def test_add_individual_seller_duplicated(self):
         data = {
-            "taxpayer_id": 59432919110,
+            "taxpayer_id": 12685293892,
             'first_name': 'foo',
             'last_name': 'bar',
             'email': 'foo@bar.com',

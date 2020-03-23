@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models import Owner, Address
+from ZoopAPIWrapper.models.seller import Owner, Address
 
 
 class OwnerTestCase(TestCase):

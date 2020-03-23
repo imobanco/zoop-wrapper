@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models import ZoopMarketPlaceModel
+from ZoopAPIWrapper.models.base import ZoopMarketPlaceModel
 
 
 class ZoopMarketPlaceModelTestCase(TestCase):

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models import ZoopModel
+from ZoopAPIWrapper.models.base import ZoopModel
 
 
 class ZoopModelTestCase(TestCase):

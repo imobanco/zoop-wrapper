@@ -22,7 +22,8 @@ class BusinessOrIndividualMixin:
 
         if ((not has_business_identifier and not has_individual_identifier) or
                 (has_business_identifier and has_individual_identifier)):
-            raise TypeError(f'missing identifier. Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
+            raise TypeError(f'missing identifier. '
+                            f'Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
                             f'"{cls.BUSINESS_IDENTIFIER}"')
         elif has_individual_identifier:
             identifier_type = cls.INDIVIDUAL_IDENTIFIER

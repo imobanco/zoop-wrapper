@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.bank_account import (
-    BankAccount, IndividualBankAccount, BusinessBankAccount, VerificationChecklist)
+    BankAccount, IndividualBankAccount,
+    BusinessBankAccount, VerificationChecklist)
 
 
 class BankAccountTestCase(TestCase):

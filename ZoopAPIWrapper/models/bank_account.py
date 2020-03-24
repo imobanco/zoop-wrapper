@@ -1,5 +1,6 @@
 from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, Address
-from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin, classproperty
+from ZoopAPIWrapper.models.mixins import (
+    BusinessOrIndividualMixin, classproperty)
 
 
 class VerificationChecklist(ZoopBase):
@@ -38,7 +39,8 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
                  country_code=None, phone_number=None,
                  is_active=None, is_verified=None,
                  debitable=None, customer=None, fingerprint=None,
-                 address=None, verification_checklist=None, last4_digits=None, **kwargs):
+                 address=None, verification_checklist=None,
+                 last4_digits=None, **kwargs):
         super().__init__(**kwargs)
 
         self.holder_name = holder_name

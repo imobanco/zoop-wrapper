@@ -1,5 +1,6 @@
 from ZoopAPIWrapper.models.base import ZoopBase, ZoopMarketPlaceModel, Address
-from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin, classproperty
+from ZoopAPIWrapper.models.mixins import (
+    BusinessOrIndividualMixin, classproperty)
 
 
 class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
@@ -13,12 +14,13 @@ class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
                 "delinquent", "payment_methods", "default_debit",
                 "default_credit", "merchant_code", "terminal_code"]
 
-    def __init__(self, status, account_balance, current_balance,
-                 description, statement_descriptor, mcc, show_profile_online,
-                 is_mobile, decline_on_fail_security_code,
-                 decline_on_fail_zipcode, delinquent, payment_methods,
-                 default_debit, default_credit, merchant_code, terminal_code,
-                 type=None, **kwargs):
+    def __init__(self, status=None, account_balance=None, current_balance=None,
+                 description=None, statement_descriptor=None, mcc=None,
+                 show_profile_online=None, is_mobile=None,
+                 decline_on_fail_security_code=None,
+                 decline_on_fail_zipcode=None, delinquent=None,
+                 payment_methods=None, default_debit=None, default_credit=None,
+                 merchant_code=None, terminal_code=None, type=None, **kwargs):
         super().__init__(**kwargs)
 
         self.status = status
@@ -90,8 +92,8 @@ class Owner(ZoopBase):
 class IndividualSeller(Seller, Owner):
     __FIELDS = ["website", "facebook", "twitter"]
 
-    def __init__(self, website, facebook,
-                 twitter, **kwargs):
+    def __init__(self, website=None, facebook=None,
+                 twitter=None, **kwargs):
         super().__init__(**kwargs)
 
         self.website = website
@@ -116,24 +118,25 @@ class BusinessSeller(Seller):
                 "business_facebook", "business_twitter", "ein",
                 "owner", "business_address"]
 
-    def __init__(self, business_name, business_phone,
+    def __init__(self, ein, business_name, business_phone,
                  business_email, business_website,
-                 business_description, business_opening_date,
-                 business_facebook, business_twitter, ein,
-                 owner, business_address, **kwargs):
+                 business_opening_date, owner, business_address,
+                 business_description=None, business_facebook=None,
+                 business_twitter=None, **kwargs):
         super().__init__(**kwargs)
 
+        self.ein = ein
         self.business_name = business_name
         self.business_phone = business_phone
         self.business_email = business_email
         self.business_website = business_website
-        self.business_description = business_description
         self.business_opening_date = business_opening_date
-        self.business_facebook = business_facebook
-        self.business_twitter = business_twitter
-        self.ein = ein
         self.business_address = Address.from_dict(business_address)
         self.owner = Owner.from_dict(owner)
+
+        self.business_description = business_description
+        self.business_facebook = business_facebook
+        self.business_twitter = business_twitter
 
     @classmethod
     def from_dict(cls, data):

@@ -140,7 +140,9 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     def from_dict(cls, data):
         """
         construct a IndividualBankAccount or BusinessBankAccount
-        depending on BusinessOrIndividualMixin
+        depending on BusinessOrIndividualMixin.
+        Factory pattern
+
         Args:
             data: dict of data
 
@@ -181,7 +183,7 @@ class BusinessBankAccount(BankAccount):
     @classmethod
     def from_dict(cls, data):
         """
-        construct a instance of this class from dict
+        construct a instance of this class from dict.
 
         Args:
             data: dict of data

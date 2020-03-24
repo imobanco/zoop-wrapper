@@ -1,6 +1,7 @@
 class ZoopBase:
     """
     This class represent a bare ZoopBase object.
+
     A instance of this class doesn't have attributes.
 
     This class has the attribute __FIELDS with the list of attributes it has.
@@ -81,6 +82,7 @@ class ZoopBase:
 class ZoopModel(ZoopBase):
     """
     This class and it's subclasses have attributes.
+
     The __FIELDS list the attributes this class
     has responsability of constructing in the serialization to dict.
 
@@ -121,6 +123,7 @@ class ZoopModel(ZoopBase):
 class ZoopMarketPlaceModel(ZoopModel):
     """
     This class and it's subclasses have attributes.
+
     The __FIELDS list the attributes this class
     has responsability of constructing in the serialization to dict.
 
@@ -149,6 +152,7 @@ class ZoopMarketPlaceModel(ZoopModel):
 class Address(ZoopBase):
     """
     This class and it's subclasses have attributes.
+
     The __FIELDS list the attributes this class
     has responsability of constructing in the serialization to dict.
 

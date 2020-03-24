@@ -7,10 +7,11 @@ from ZoopAPIWrapper.models.utils import get_instance_from_data
 
 
 class Zoop:
-    """This class wraps the zoop API to ease use in python
-
     """
-    def __init__(self, ):
+    This class wraps the zoop API to ease use in python
+    """
+
+    def __init__(self):
         self._base_url = 'https://api.zoop.ws/v1/marketplaces'
 
         self.__marketplace_id = MARKETPLACE_ID
@@ -20,6 +21,23 @@ class Zoop:
 
     def __construct_url(self, action=None, identifier=None,
                         subaction=None, search=None):
+        """
+        construct url for the request
+
+        Args:
+            action: action endpoint
+            identifier: identifier detail string (ID)
+            subaction: subaction endpoint
+            search: query with urls args to be researched
+
+        Examples:
+            >>> zoop = Zoop()
+            >>> zoop._Zoop__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')
+            'http://zoopapiurl.com/{marketplace_id}/seller/1/bank_accounts/search?account_number=1'
+
+        Returns: full url for the request
+
+        """
         url = f"{self._base_url}/"
         url += f"{self.__marketplace_id}/"
         if action:
@@ -73,11 +91,17 @@ class Zoop:
         return self.__get(url)
 
     def _search_seller(self, id_type, identifier):
-        url = self.__construct_url(action='sellers',
-                                   search=f"{id_type}={identifier}")
+        url = self.__construct_url(action='sellers', search=f"{id_type}={identifier}")
         return self.__get(url)
 
     def search_business_seller(self, identifier):
+        """
+        search business by CNPJ
+        Args:
+            identifier: ein (Employer Identification Number) is equivalent to CNPJ
+
+        Returns: response with Seller
+        """
         return self._search_seller('ein', identifier)
 
     def search_individual_seller(self, identifier):
@@ -102,11 +126,9 @@ class Zoop:
         return self.__get(url)
 
     def list_seller_bank_accounts(self, identifier):
-        url = self.__construct_url(action='sellers', identifier=identifier,
-                                   subaction='bank_accounts')
+        url = self.__construct_url(action='sellers', identifier=identifier, subaction='bank_accounts')
         return self.__get(url)
 
     def retrieve_bank_account(self, identifier):
-        url = self.__construct_url(action='bank_accounts',
-                                   identifier=identifier)
+        url = self.__construct_url(action='bank_accounts', identifier=identifier)
         return self.__get(url)

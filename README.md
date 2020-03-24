@@ -1,5 +1,15 @@
 # ZoopAPIWrapper
 
+## Setup env & data folder
+run command to config `.env` file and `data` folder
+```shell script
+make config
+```
+Or
+```shell script
+make config.data
+make config.env
+```
 
 ## Docker + docker-compose
 
@@ -24,7 +34,7 @@ zoopapiwrapper \
 bash
 ```
 
-## Running using Docker Compose (development):
+### Running using Docker Compose (development):
 
 First build:
 
@@ -37,12 +47,30 @@ For development use:
 Note: the above command uses `run`, for development it is really handy.
 
 
-## Running tests
+## Bare python
+requires python>=3.6
 
-`python -m unittest discover`
+config virtual `env` for python with your python version
+```shell script
+python3.6 -m venv env
+```
 
-### Install for local development
+### Active env
+on project folder run
+```shell script
+source env/bin/activate
+```
 
-`pip install --editable .`
+### Install libs
+on project folder and with env active
 
-`python -c "import ZoopAPIWrapper"`
+```shell script
+make pip.install
+```
+
+### Running tests
+on project folder and with env active
+
+```shell script
+make test
+```

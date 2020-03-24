@@ -1,0 +1,5 @@
+# Local development dependencies go here
+-r requirements.txt
+
+flake8==3.7.9
+pycpfcnpj==1.5.1

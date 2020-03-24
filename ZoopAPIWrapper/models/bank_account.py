@@ -65,3 +65,64 @@ class BankAccount(ZoopModel):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+    @staticmethod
+    def get_bank_account_class(customer_identifier_type):
+        if customer_identifier_type == 'taxpayer_id':
+            return IndividualBankAccount
+        elif customer_identifier_type == 'ein':
+            return BusinessBankAccount
+        else:
+            raise ValueError('costumer_identifier type não identificado')
+
+    @classmethod
+    def from_dict(cls, data):
+        taxpayer_id = data.get('taxpayer_id')
+        ein = data.get('ein')
+        if taxpayer_id is None and ein is None:
+            raise TypeError('missing customer_identifier. Must be "taxpayer_id" or "ein"')
+        elif taxpayer_id is not None:
+            customer_identifier_type = 'taxpayer_id'
+        else:
+            customer_identifier_type = 'ein'
+
+        klass = BankAccount.get_bank_account_class(customer_identifier_type)
+        return klass.from_dict(data)
+
+
+class BusinessBankAccount(BankAccount):
+    __FIELDS = ["ein"]
+
+    def __init__(self, ein, **kwargs):
+        super().__init__(**kwargs)
+
+        self.ein = ein
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls._from_dict(**data)
+
+
+class IndividualBankAccount(BankAccount):
+    __FIELDS = ["taxpayer_id"]
+
+    def __init__(self, taxpayer_id, **kwargs):
+        super().__init__(**kwargs)
+
+        self.taxpayer_id = taxpayer_id
+
+    @property
+    def fields(self):
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+    @classmethod
+    def from_dict(cls, data):
+        return cls._from_dict(**data)

@@ -3,7 +3,12 @@ import json
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
+from ZoopAPIWrapper.models.base import ZoopModel
 from ZoopAPIWrapper.models.utils import get_instance_from_data
+from ZoopAPIWrapper.models.seller import Seller
+from ZoopAPIWrapper.models.bank_account import (
+    BankAccount, IndividualBankAccount, BusinessBankAccount)
+from ZoopAPIWrapper.models.token import Token
 
 
 class Zoop:
@@ -77,6 +82,11 @@ class Zoop:
         response = self.__process_response(response)
         return response
 
+    def __post_instance(self, url, instance: ZoopModel):
+        if not isinstance(instance, ZoopModel):
+            raise TypeError('instance must be a ZoopModel')
+        return self.__post(url, data=instance.to_dict())
+
     def __delete(self, url):
         response = requests.delete(url, auth=self.__auth)
         response = self.__process_response(response)
@@ -108,15 +118,12 @@ class Zoop:
     def search_individual_seller(self, identifier):
         return self._search_seller('taxpayer_id', identifier)
 
-    def _add_seller(self, seller_type, seller):
-        url = self.__construct_url(action=f'sellers', subaction=seller_type)
-        return self.__post(url, data=seller)
-
-    def add_individual_seller(self, seller):
-        return self._add_seller('individuals', seller)
-
-    def add_business_seller(self, seller):
-        return self._add_seller('business', seller)
+    def add_seller(self, data: dict):
+        seller_instance = Seller.from_dict(data)
+        assert isinstance(seller_instance, Seller)
+        url = self.__construct_url(action=f'sellers',
+                                   subaction=seller_instance.type)
+        return self.__post_instance(url, instance=seller_instance)
 
     def remove_seller(self, identifier):
         url = self.__construct_url(action='sellers', identifier=identifier)

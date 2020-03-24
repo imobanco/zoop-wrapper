@@ -4,6 +4,17 @@ from ZoopAPIWrapper.models.mixins import (
 
 
 class VerificationChecklist(ZoopBase):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        postal_code_check: boolean of verification
+        address_line1_check: boolean of verification
+        deposit_check: boolean of verification
+    """
     __FIELDS = ["postal_code_check", "address_line1_check",
                 "deposit_check"]
 
@@ -17,12 +28,45 @@ class VerificationChecklist(ZoopBase):
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
 
 class BankAccount(ZoopModel, BusinessOrIndividualMixin):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
+    Attributes:
+        holder_name: name of owner
+        bank_code: code of bank
+        routing_number: agency code in BR
+        account_number: account number
+        description: description
+        bank_name: name of bank
+        type: type of account
+        country_code: country code
+        phone_number: phone number
+        is_active: boolean of verification
+        is_verified: boolean of verification
+        debitable:  boolean of verification
+        customer: id of owner
+        fingerprint: ?
+        address: Address
+        verification_checklist: VerificationCheckList
+        last4_digits: last 4 digits of account number
+    """
     RESOURCE = 'bank_account'
 
     __FIELDS = ["holder_name", "description",
@@ -66,26 +110,56 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     # noinspection PyMethodParameters
     @classproperty
     def business_class(cls):
+        """
+        getter for individual class
+        Returns: IndividualBankAccount
+        """
         return BusinessBankAccount
 
     # noinspection PyMethodParameters
     @classproperty
     def individual_class(cls):
+        """
+        getter for business class
+        Returns: BusinessBankAccount
+        """
         return IndividualBankAccount
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a IndividualBankAccount or BusinessBankAccount
+        depending on BusinessOrIndividualMixin
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of BankAccount
+        """
         klass = BankAccount.get_class(data)
         return klass.from_dict(data)
 
 
 class BusinessBankAccount(BankAccount):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        ein: cnpj
+    """
     __FIELDS = ["ein"]
 
     def __init__(self, ein, **kwargs):
@@ -95,16 +169,38 @@ class BusinessBankAccount(BankAccount):
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of class or None
+        """
         return cls._from_dict(**data)
 
 
 class IndividualBankAccount(BankAccount):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        taxpayer_id: cpf
+    """
     __FIELDS = ["taxpayer_id"]
 
     def __init__(self, taxpayer_id, **kwargs):
@@ -114,10 +210,23 @@ class IndividualBankAccount(BankAccount):
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of class or None
+        """
         return cls._from_dict(**data)

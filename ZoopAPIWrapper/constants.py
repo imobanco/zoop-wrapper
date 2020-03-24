@@ -1,6 +1,6 @@
-import os
+from decouple import config
 
 
-ZOOP_KEY = os.environ['ZOOP_KEY']
-MARKETPLACE_ID = os.environ['MARKETPLACE_ID']
-MAIN_SELLER = os.environ['MAIN_SELLER']
+ZOOP_KEY = config('ZOOP_KEY')
+MARKETPLACE_ID = config('MARKETPLACE_ID')
+MAIN_SELLER = config('MAIN_SELLER')

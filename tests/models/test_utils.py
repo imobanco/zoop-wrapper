@@ -47,4 +47,3 @@ class UtilsTestCase(TestCase):
 
         self.assertIsInstance(mocked_from_dict, MagicMock)
         mocked_from_dict.assert_called_once_with(data)
-

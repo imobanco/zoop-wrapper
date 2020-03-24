@@ -20,9 +20,13 @@ class ZoopBase:
         data = {}
         for field in self.fields:
             try:
-                data[field] = self.__getattribute__(field).to_dict()
+                attr = self.__getattribute__(field).to_dict()
             except AttributeError:
-                data[field] = self.__getattribute__(field)
+                attr = self.__getattribute__(field)
+
+            if attr is not None:
+                data[field] = attr
+
         return data
 
     @property

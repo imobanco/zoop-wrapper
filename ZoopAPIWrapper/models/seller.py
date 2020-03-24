@@ -4,6 +4,36 @@ from ZoopAPIWrapper.models.mixins import (
 
 
 class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
+    The TYPE attribute of this class is used on Zoop.api.
+
+    Attributes:
+        type: individual or business string
+        status: pending or active string
+        account_balance: amount of balance
+        current_balance: curent amount of balance
+        description: description
+        statement_descriptor: ?
+        mcc: ?
+        show_profile_online:
+        is_mobile: bolean of verification
+        decline_on_fail_security_code: bolean of verification
+        decline_on_fail_zipcode: bolean of verification
+        delinquent: bolean of verification
+        payment_methods: ?
+        default_debit: ?
+        default_credit: ?
+        merchant_code: ?
+        terminal_code: ?
+    """
     RESOURCE = 'seller'
 
     TYPE = None
@@ -47,32 +77,78 @@ class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     # noinspection PyMethodParameters
     @classproperty
     def business_class(cls):
+        """
+        getter for business class
+        Returns: BusinessSeller
+        """
         return BusinessSeller
 
     # noinspection PyMethodParameters
     @classproperty
     def individual_class(cls):
+        """
+        getter for individual class
+        Returns: IndividualSeller
+        """
         return IndividualSeller
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a IndividualSeller or BusinessSeller
+        depending on BusinessOrIndividualMixin.
+        Factory pattern
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of Seller
+        """
         klass = cls.get_class(data)
         return klass.from_dict(data)
 
     @classmethod
     def get_type(cls):
+        """
+        getter for TYPE attribute
+
+        Raises:
+            ValueError: when called from Seller
+
+        Returns: TYPE attribute
+        """
         if cls.TYPE is None:
             raise ValueError('TYPE must be set!')
         return cls.TYPE
 
 
 class Owner(ZoopBase):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        first_name: first name
+        last_name: last name
+        email: email
+        taxpayer_id: cpf
+        phone_number: phone number
+        birthdate: birthdate
+        address: Address
+    """
     __FIELDS = ["first_name", "last_name", "email",
                 "taxpayer_id", "phone_number",
                 "birthdate", "address"]
@@ -92,12 +168,31 @@ class Owner(ZoopBase):
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
 
 class IndividualSeller(Seller, Owner):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The TYPE attribute of this class is used on Zoop.api.
+
+    Attributes:
+        website: website url?
+        facebook: facebook profile url?
+        twitter: twitter profile url?
+
+    """
     __FIELDS = ["website", "facebook", "twitter"]
 
     TYPE = 'individuals'
@@ -112,16 +207,50 @@ class IndividualSeller(Seller, Owner):
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of class or None
+        """
         return cls._from_dict(**data)
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
 
 class BusinessSeller(Seller):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The TYPE attribute of this class is used on Zoop.api.
+
+    Attributes:
+        ein: npj
+        business_name: name
+        business_phone: phone number
+        business_email: email
+        business_website: website url
+        business_opening_date: date of openning
+        owner: Owner
+        business_address: Address
+        business_description: description
+        business_facebook: facebook profile url?
+        business_twitter: twitter profile url?
+    """
     TYPE = 'business'
 
     __FIELDS = ["business_name", "business_phone",
@@ -152,10 +281,23 @@ class BusinessSeller(Seller):
 
     @classmethod
     def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of class or None
+        """
         return cls._from_dict(**data)
 
     @property
     def fields(self):
+        """
+        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)

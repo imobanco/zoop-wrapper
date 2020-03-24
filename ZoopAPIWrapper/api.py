@@ -6,9 +6,6 @@ from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
 from ZoopAPIWrapper.models.base import ZoopModel
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.bank_account import (
-    BankAccount, IndividualBankAccount, BusinessBankAccount)
-from ZoopAPIWrapper.models.token import Token
 
 
 class Zoop:

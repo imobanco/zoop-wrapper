@@ -121,6 +121,16 @@ class ZoopTestCase(TestCase):
             'email': 'foo@bar.com',
             'phone_number': '+55 84 99999-9999',
             'birthdate': '1994-12-27',
+            'address': {
+                'line1': 'foo',
+                'line2': '123',
+                'line3': 'barbar',
+                'neighborhood': 'fooofoo',
+                'city': 'Natal',
+                'state': 'BR-RN',
+                'postal_code': '59152250',
+                'country_code': "BR"
+            }
         }
 
         response = self.zoop.add_seller(data)
@@ -135,7 +145,36 @@ class ZoopTestCase(TestCase):
             'business_name': 'foo',
             'business_phone': 'foo',
             'business_email': 'foo',
-            'business_website': 'foo'
+            'business_website': 'foo',
+            'business_opening_date': 'foo',
+            "owner": {
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo",
+                "phone_number": "foo",
+                "taxpayer_id": "foo",
+                "birthdate": "foo",
+                "address": {
+                    "line1": "foo",
+                    "line2": "foo",
+                    "line3": "foo",
+                    "neighborhood": "foo",
+                    "city": "foo",
+                    "state": "foo",
+                    "postal_code": "foo",
+                    "country_code": "foo"
+                }
+            },
+            'business_address': {
+                'line1': 'foo',
+                'line2': '123',
+                'line3': 'barbar',
+                'neighborhood': 'fooofoo',
+                'city': 'Natal',
+                'state': 'BR-RN',
+                'postal_code': '59152250',
+                'country_code': "BR"
+            }
         }
 
         response = self.zoop.add_seller(data)
@@ -156,16 +195,16 @@ class ZoopTestCase(TestCase):
             'phone_number': '+55 84 99999-9999',
             'birthdate': '1994-12-27',
 
-            # 'address': {
-            #     'line1': 'foo',
-            #     'line2': '123',
-            #     'line3': 'barbar',
-            #     'neighborhood': 'fooofoo',
-            #     'city': 'Natal',
-            #     'state': 'BR-RN',
-            #     'postal_code': '59152250',
-            #     'country_code': "BR"
-            # }
+            'address': {
+                'line1': 'foo',
+                'line2': '123',
+                'line3': 'barbar',
+                'neighborhood': 'fooofoo',
+                'city': 'Natal',
+                'state': 'BR-RN',
+                'postal_code': '59152250',
+                'country_code': "BR"
+            }
         }
 
         response = self.zoop.add_seller(data)

@@ -9,16 +9,19 @@ from ZoopAPIWrapper.models.utils import Token
 
 
 class UtilsTestCase(TestCase):
-    def test_get_model(self):
+    def test_get_model_seller(self):
         model_class = _get_model_class_from_resource('seller')
         self.assertEqual(model_class, Seller)
 
+    def test_get_model_bank_account(self):
         model_class = _get_model_class_from_resource('bank_account')
         self.assertEqual(model_class, BankAccount)
 
+    def test_get_model_token(self):
         model_class = _get_model_class_from_resource('token')
         self.assertEqual(model_class, Token)
 
+    def test_get_model_not_found(self):
         self.assertRaises(ValueError, _get_model_class_from_resource, 'test')
 
     @patch('ZoopAPIWrapper.models.utils.Seller.from_dict')

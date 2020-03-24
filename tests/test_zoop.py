@@ -18,7 +18,7 @@ class ZoopTestCase(TestCase):
         action = 'teste'
         identifier = '123'
 
-        url = self.zoop._Zoop__construct_url(action, identifier)
+        url = self.zoop._Zoop__construct_url(action=action, identifier=identifier)
 
         self.assertEqual(url, f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/teste/123/')
 
@@ -32,6 +32,11 @@ class ZoopTestCase(TestCase):
         self.assertEqual(processed_response.error, "foo")
 
     def test_list_sellers(self):
+        """
+        Test list_sellers method.
+        And create a dump with all sellers.
+        """
+
         response = self.zoop.list_sellers()
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
@@ -41,19 +46,36 @@ class ZoopTestCase(TestCase):
             outfile.write(json_object)
 
     def test_retrieve_seller(self):
+        """
+        Test search_individual_seller method.
+        Got this seller id from the json dump of sellers.
+        This seller id is special. Why? because it's ours to receive money!
+        """
+
         response = self.zoop.retrieve_seller(MAIN_SELLER)
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
 
-    def test_search_seller_individual(self):
+    def test_search_individual_seller(self):
+        """
+        Test search_individual_seller method.
+        Got this seller taxpayer_id from the json dump of sellers.
+        """
+
         response = self.zoop.search_individual_seller('12685293892')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), '29f1251bc7514b96ad5f6d873f9812a1')
 
-    def test_search_seller_business(self):
-        response = self.zoop.search_business_seller('24103314000188')
+    def test_search_business_seller(self):
+        """
+        Test search_business_seller method.
+        Got this seller taxpayer_id from the json dump of sellers.
+        """
+
+        response = self.zoop.search_business_seller('13347016000117')
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'), '27e17b778b404a83bf8e25ec995e2ffe')
+        self.assertEqual(response.data.get('id'),
+                         '3cb35bfe25634c88ab9b0134305102c8')
 
     @patch('ZoopAPIWrapper.api.requests.post')
     def test_add_individual_seller(self, mocked_post):
@@ -84,6 +106,12 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.status_code, 201, msg=response.error)
 
     def test_add_individual_seller_duplicated(self):
+        """
+        the zoop api returns 409 if theres a unique attribute duplicated on the DB.
+        such as taxpayer_id.
+        Got this taxpayer_id from sellers json dump.
+        """
+
         data = {
             "taxpayer_id": 12685293892,
             'first_name': 'foo',
@@ -109,6 +137,13 @@ class ZoopTestCase(TestCase):
 
     @patch('ZoopAPIWrapper.api.requests.delete')
     def test_remove_seller(self, mocked_delete):
+        """
+        Test remove_seller method.
+        Got the seller id from sellers dump.
+
+        Args:
+            mocked_delete: mock of object 'delete' from 'requests' on file 'ZoopAPIWrapper.api'
+        """
         mocked_delete.return_value = MagicMock(content='{}', status_code=200)
 
         response = self.zoop.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
@@ -119,6 +154,10 @@ class ZoopTestCase(TestCase):
             f'sellers/0b6dbebcb5f24473ac730537e873b4d8/', auth=(ZOOP_KEY, ''))
 
     def test_list_bank_accounts(self):
+        """
+        Test list_bank_accounts method.
+        And create a dump with all bank_accounts.
+        """
         response = self.zoop.list_bank_accounts()
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
@@ -128,13 +167,23 @@ class ZoopTestCase(TestCase):
             outfile.write(json_object)
 
     def test_list_seller_bank_accounts(self):
-        response = self.zoop.list_seller_bank_accounts('ee7e4b3683f8461a89e173dfb9d41d2c')
+        """
+        Test list_seller_bank_accounts method.
+        Got this costumer (seller_id) from the json dump of bank_accounts.
+        """
+        response = self.zoop.list_seller_bank_accounts(
+            'ee7e4b3683f8461a89e173dfb9d41d2c')
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
         self.assertTrue(items)
 
     def test_retrieve_bank_account(self):
-        response = self.zoop.retrieve_bank_account('064d3c7846b142e591896d2fb69dac3f')
+        """
+        Test retrieve_bank_account method.
+        Got this bank_account id from the json dump of bank_accounts.
+        """
+        response = self.zoop.retrieve_bank_account(
+            '064d3c7846b142e591896d2fb69dac3f')
         self.assertEqual(response.status_code, 200, msg=response.data)
         data = response.data
         self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f', msg=data)

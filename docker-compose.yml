@@ -1,0 +1,10 @@
+version: '3.6'
+
+services:
+  zoopapiwrapper:
+    build: .
+    volumes:
+      - .:/code
+    working_dir: /code
+    env_file:
+      - .env

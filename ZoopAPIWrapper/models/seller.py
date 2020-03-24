@@ -95,7 +95,8 @@ class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -169,7 +170,8 @@ class Owner(ZoopBase):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -220,7 +222,8 @@ class IndividualSeller(Seller, Owner):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -294,7 +297,8 @@ class BusinessSeller(Seller):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """

@@ -29,7 +29,8 @@ class VerificationChecklist(ZoopBase):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -128,7 +129,8 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -172,7 +174,8 @@ class BusinessBankAccount(BankAccount):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -213,7 +216,8 @@ class IndividualBankAccount(BankAccount):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """

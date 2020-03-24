@@ -55,11 +55,11 @@ class ZoopBase:
         data = {}
         for field in self.fields:
             try:
-                """our attr may be a ZoopBase instance. 
+                """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
                 attr = getattr(self, field).to_dict()
             except AttributeError:
-                """our attr doesn't have to_dict() method. 
+                """our attr doesn't have to_dict() method.
                 Oh snap! It's not a ZoopBase instance!"""
                 attr = getattr(self, field)
 
@@ -111,7 +111,8 @@ class ZoopModel(ZoopBase):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -140,7 +141,8 @@ class ZoopMarketPlaceModel(ZoopModel):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
@@ -187,7 +189,8 @@ class Address(ZoopBase):
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS extended with it's father fields.
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """

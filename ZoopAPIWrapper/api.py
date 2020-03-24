@@ -32,7 +32,7 @@ class Zoop:
 
         Examples:
             >>> zoop = Zoop()
-            >>> zoop._Zoop__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')
+            >>> zoop._Zoop__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
             'http://zoopapiurl.com/{marketplace_id}/seller/1/bank_accounts/search?account_number=1'
 
         Returns: full url for the request
@@ -91,14 +91,15 @@ class Zoop:
         return self.__get(url)
 
     def _search_seller(self, id_type, identifier):
-        url = self.__construct_url(action='sellers', search=f"{id_type}={identifier}")
+        url = self.__construct_url(action='sellers',
+                                   search=f"{id_type}={identifier}")
         return self.__get(url)
 
     def search_business_seller(self, identifier):
         """
         search business by CNPJ
         Args:
-            identifier: ein (Employer Identification Number) is equivalent to CNPJ
+            identifier: ein (Employer Identification Number) is equivalent to CNPJ  # noqa:
 
         Returns: response with Seller
         """
@@ -126,9 +127,12 @@ class Zoop:
         return self.__get(url)
 
     def list_seller_bank_accounts(self, identifier):
-        url = self.__construct_url(action='sellers', identifier=identifier, subaction='bank_accounts')
+        url = self.__construct_url(action='sellers',
+                                   identifier=identifier,
+                                   subaction='bank_accounts')
         return self.__get(url)
 
     def retrieve_bank_account(self, identifier):
-        url = self.__construct_url(action='bank_accounts', identifier=identifier)
+        url = self.__construct_url(action='bank_accounts',
+                                   identifier=identifier)
         return self.__get(url)

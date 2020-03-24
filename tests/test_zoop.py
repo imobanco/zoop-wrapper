@@ -20,7 +20,8 @@ class ZoopTestCase(TestCase):
         action = 'teste'
         identifier = '123'
 
-        url = self.zoop._Zoop__construct_url(action=action, identifier=identifier)
+        url = self.zoop._Zoop__construct_url(action=action,
+                                             identifier=identifier)
 
         self.assertEqual(url, f'https://api.zoop.ws/v1/marketplaces/'
                               f'{MARKETPLACE_ID}/teste/123/')
@@ -138,8 +139,8 @@ class ZoopTestCase(TestCase):
 
     def test_add_individual_seller_duplicated(self):
         """
-        the zoop api returns 409 if theres a unique attribute duplicated on the DB.
-        such as taxpayer_id.
+        the zoop api returns 409 if theres a unique attribute
+        duplicated on the DB. Such as taxpayer_id.
         Got this taxpayer_id from sellers json dump.
         """
 
@@ -173,7 +174,8 @@ class ZoopTestCase(TestCase):
         Got the seller id from sellers dump.
 
         Args:
-            mocked_delete: mock of object 'delete' from 'requests' on file 'ZoopAPIWrapper.api'
+            mocked_delete: mock of object 'delete' from 'requests'
+                            on file 'ZoopAPIWrapper.api'
         """
 
         mocked_delete.return_value = MagicMock(content='{}', status_code=200)

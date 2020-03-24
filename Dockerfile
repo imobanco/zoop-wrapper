@@ -8,6 +8,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 COPY requirements.txt /requirements.txt
+COPY requirements-dev.txt /requirements-dev.txt
 
 # Note: If you need a specific version of pip use:
 # pip install --upgrade pip==x.x.x
@@ -18,4 +19,4 @@ COPY requirements.txt /requirements.txt
 # https://stackoverflow.com/a/60270281
 # ENV PIP_DISABLE_PIP_VERSION_CHECK=1
 RUN pip install --upgrade pip \
-&& pip install -r requirements.txt
+&& pip install -r requirements-dev.txt

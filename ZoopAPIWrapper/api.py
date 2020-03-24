@@ -1,9 +1,13 @@
 import json
+import logging
 
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
 from ZoopAPIWrapper.models.utils import get_instance_from_data
+
+
+logger = logging.getLogger('ZoopAPIWrapper.api')
 
 
 class Zoop:
@@ -65,6 +69,7 @@ class Zoop:
                 response.instance = get_instance_from_data(response.data)
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
+            logger.warning(f'respose has error: {response.error}')
         return response
 
     def __get(self, url):

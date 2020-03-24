@@ -1,3 +1,6 @@
+from ZoopAPIWrapper.models import logger
+
+
 class ZoopBase:
     __FIELDS = []
 
@@ -13,7 +16,7 @@ class ZoopBase:
         try:
             return cls._from_dict(**data)
         except TypeError as e:
-            print(e)
+            logger.warning(e)
             return None
 
     def to_dict(self):

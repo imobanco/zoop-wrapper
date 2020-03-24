@@ -19,5 +19,5 @@ def get_instance_from_data(data):
         klass = _get_model_class_from_resource(resource)
         return klass.from_dict(data)
     except ValueError as e:
-        logger.warning(e)
+        logger.info(e)
         return None

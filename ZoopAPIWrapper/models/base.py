@@ -16,7 +16,7 @@ class ZoopBase:
         try:
             return cls._from_dict(**data)
         except TypeError as e:
-            logger.warning(e)
+            logger.debug(e)
             return None
 
     def to_dict(self):

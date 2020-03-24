@@ -33,8 +33,9 @@ class ZoopBase:
 class ZoopModel(ZoopBase):
     __FIELDS = ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
 
-    def __init__(self, id, resource, uri, created_at, updated_at, metadata,
-                 **kwargs):
+    def __init__(self, id=None, resource=None, uri=None,
+                 created_at=None, updated_at=None,
+                 metadata=None, **kwargs):
         super().__init__(**kwargs)
         self.id = id
         self.resource = resource
@@ -54,7 +55,7 @@ class ZoopModel(ZoopBase):
 class ZoopMarketPlaceModel(ZoopModel):
     __FIELDS = ["marketplace_id"]
 
-    def __init__(self, marketplace_id, **kwargs):
+    def __init__(self, marketplace_id=None, **kwargs):
         super().__init__(**kwargs)
 
         self.marketplace_id = marketplace_id

@@ -23,7 +23,7 @@ class VerificationChecklist(ZoopBase):
 class BankAccount(ZoopModel):
     RESOURCE = 'bank_account'
 
-    __FIELDS = ["holder_name", "taxpayer_id", "description",
+    __FIELDS = ["holder_name", "description",
                 "bank_name", "bank_code", "type",
                 "last4_digits", "account_number",
                 "country_code", "routing_number",
@@ -31,24 +31,25 @@ class BankAccount(ZoopModel):
                 "debitable", "customer", "fingerprint",
                 "address", "verification_checklist"]
 
-    def __init__(self, holder_name, taxpayer_id, description,
-                 bank_name, bank_code, type, account_number,
-                 country_code, routing_number,
-                 phone_number, is_active, is_verified,
-                 debitable, customer, fingerprint,
-                 address, verification_checklist, last4_digits=None, **kwargs):
+    def __init__(self, holder_name, bank_code, routing_number,
+                 account_number,
+                 description=None, bank_name=None, type=None,
+                 country_code=None, phone_number=None,
+                 is_active=None, is_verified=None,
+                 debitable=None, customer=None, fingerprint=None,
+                 address=None, verification_checklist=None, last4_digits=None, **kwargs):
         super().__init__(**kwargs)
 
         self.holder_name = holder_name
-        self.taxpayer_id = taxpayer_id
+        self.bank_code = bank_code
+        self.routing_number = routing_number
+        self.account_number = account_number
+
         self.description = description
         self.bank_name = bank_name
-        self.bank_code = bank_code
         self.type = type
         self.last4_digits = last4_digits
-        self.account_number = account_number
         self.country_code = country_code
-        self.routing_number = routing_number
         self.phone_number = phone_number
         self.is_active = is_active
         self.is_verified = is_verified

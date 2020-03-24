@@ -1,5 +1,6 @@
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.bank_account import BankAccount
+from ZoopAPIWrapper.models.token import Token
 
 
 def _get_model_class_from_resource(resource):
@@ -7,6 +8,8 @@ def _get_model_class_from_resource(resource):
         return Seller
     elif resource == BankAccount.RESOURCE:
         return BankAccount
+    elif resource == Token.RESOURCE:
+        return Token
     else:
         raise ValueError(f'model não identificado para resource {resource}!')
 

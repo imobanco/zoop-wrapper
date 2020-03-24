@@ -5,15 +5,6 @@ from ZoopAPIWrapper.models.bank_account import (
 
 
 class BankAccountTestCase(TestCase):
-    def test_get_bank_account_class(self):
-        individual_klass = BankAccount.get_bank_account_class('taxpayer_id')
-        self.assertEqual(individual_klass, IndividualBankAccount)
-
-        business_klass = BankAccount.get_bank_account_class('ein')
-        self.assertEqual(business_klass, BusinessBankAccount)
-
-        self.assertRaises(ValueError, BankAccount.get_bank_account_class, 'test')
-
     def test_from_dict_individual(self):
         data = {
             'id': 'foo',

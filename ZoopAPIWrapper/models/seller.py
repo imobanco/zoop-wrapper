@@ -1,7 +1,8 @@
 from ZoopAPIWrapper.models.base import ZoopBase, ZoopMarketPlaceModel, Address
+from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin, classproperty
 
 
-class Seller(ZoopMarketPlaceModel):
+class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     RESOURCE = 'seller'
 
     __FIELDS = ["status", "type", "account_balance", "current_balance",
@@ -12,16 +13,15 @@ class Seller(ZoopMarketPlaceModel):
                 "delinquent", "payment_methods", "default_debit",
                 "default_credit", "merchant_code", "terminal_code"]
 
-    def __init__(self, status, type, account_balance, current_balance,
+    def __init__(self, status, account_balance, current_balance,
                  description, statement_descriptor, mcc, show_profile_online,
                  is_mobile, decline_on_fail_security_code,
                  decline_on_fail_zipcode, delinquent, payment_methods,
                  default_debit, default_credit, merchant_code, terminal_code,
-                 **kwargs):
+                 type=None, **kwargs):
         super().__init__(**kwargs)
 
         self.status = status
-        self.type = type
         self.account_balance = account_balance
         self.current_balance = current_balance
         self.description = description
@@ -38,25 +38,27 @@ class Seller(ZoopMarketPlaceModel):
         self.merchant_code = merchant_code
         self.terminal_code = terminal_code
 
+        self.type = type
+
+    # noinspection PyMethodParameters
+    @classproperty
+    def business_class(cls):
+        return BusinessSeller
+
+    # noinspection PyMethodParameters
+    @classproperty
+    def individual_class(cls):
+        return IndividualSeller
+
     @property
     def fields(self):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
-    @staticmethod
-    def get_seller_class(_type):
-        if _type == 'individual':
-            return IndividualSeller
-        elif _type == 'business':
-            return BusinessSeller
-        else:
-            raise ValueError('seller type não identificado')
-
     @classmethod
     def from_dict(cls, data):
-        _type = data.get('type')
-        klass = Seller.get_seller_class(_type)
+        klass = cls.get_class(data)
         return klass.from_dict(data)
 
 

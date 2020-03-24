@@ -1,4 +1,5 @@
 from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, Address
+from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin, classproperty
 
 
 class VerificationChecklist(ZoopBase):
@@ -20,7 +21,7 @@ class VerificationChecklist(ZoopBase):
         return list(super_fields)
 
 
-class BankAccount(ZoopModel):
+class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     RESOURCE = 'bank_account'
 
     __FIELDS = ["holder_name", "description",
@@ -60,33 +61,25 @@ class BankAccount(ZoopModel):
         self.verification_checklist = VerificationChecklist\
             .from_dict(verification_checklist)
 
+    # noinspection PyMethodParameters
+    @classproperty
+    def business_class(cls):
+        return BusinessBankAccount
+
+    # noinspection PyMethodParameters
+    @classproperty
+    def individual_class(cls):
+        return IndividualBankAccount
+
     @property
     def fields(self):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
-    @staticmethod
-    def get_bank_account_class(customer_identifier_type):
-        if customer_identifier_type == 'taxpayer_id':
-            return IndividualBankAccount
-        elif customer_identifier_type == 'ein':
-            return BusinessBankAccount
-        else:
-            raise ValueError('costumer_identifier type não identificado')
-
     @classmethod
     def from_dict(cls, data):
-        taxpayer_id = data.get('taxpayer_id')
-        ein = data.get('ein')
-        if taxpayer_id is None and ein is None:
-            raise TypeError('missing customer_identifier. Must be "taxpayer_id" or "ein"')
-        elif taxpayer_id is not None:
-            customer_identifier_type = 'taxpayer_id'
-        else:
-            customer_identifier_type = 'ein'
-
-        klass = BankAccount.get_bank_account_class(customer_identifier_type)
+        klass = BankAccount.get_class(data)
         return klass.from_dict(data)
 
 

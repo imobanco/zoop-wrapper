@@ -6,6 +6,8 @@ from ZoopAPIWrapper.models.mixins import (
 class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     RESOURCE = 'seller'
 
+    TYPE = None
+
     __FIELDS = ["status", "type", "account_balance", "current_balance",
                 "description", "statement_descriptor", "mcc",
                 "show_profile_online", "is_mobile",
@@ -63,6 +65,12 @@ class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
         klass = cls.get_class(data)
         return klass.from_dict(data)
 
+    @classmethod
+    def get_type(cls):
+        if cls.TYPE is None:
+            raise ValueError('TYPE must be set!')
+        return cls.TYPE
+
 
 class Owner(ZoopBase):
     __FIELDS = ["first_name", "last_name", "email",
@@ -92,6 +100,8 @@ class Owner(ZoopBase):
 class IndividualSeller(Seller, Owner):
     __FIELDS = ["website", "facebook", "twitter"]
 
+    TYPE = 'individuals'
+
     def __init__(self, website=None, facebook=None,
                  twitter=None, **kwargs):
         super().__init__(**kwargs)
@@ -112,6 +122,8 @@ class IndividualSeller(Seller, Owner):
 
 
 class BusinessSeller(Seller):
+    TYPE = 'business'
+
     __FIELDS = ["business_name", "business_phone",
                 "business_email", "business_website",
                 "business_description", "business_opening_date",

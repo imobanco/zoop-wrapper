@@ -122,7 +122,7 @@ class Zoop:
         seller_instance = Seller.from_dict(data)
         assert isinstance(seller_instance, Seller)
         url = self.__construct_url(action=f'sellers',
-                                   subaction=seller_instance.type)
+                                   subaction=seller_instance.get_type())
         return self.__post_instance(url, instance=seller_instance)
 
     def remove_seller(self, identifier):

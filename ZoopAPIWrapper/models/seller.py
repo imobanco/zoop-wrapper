@@ -5,6 +5,9 @@ from ZoopAPIWrapper.models.mixins import (
 
 class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     """
+    Represent a seller.
+    https://docs.zoop.co/reference#vendedor-1
+
     This class and it's subclasses have attributes.
 
     The __FIELDS list the attributes this class

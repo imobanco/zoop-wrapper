@@ -41,6 +41,9 @@ class VerificationChecklist(ZoopBase):
 
 class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     """
+    Represent a Bank Account.
+    https://docs.zoop.co/reference#conta-banc%C3%A1ria
+
     This class and it's subclasses have attributes.
 
     The __FIELDS list the attributes this class

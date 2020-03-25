@@ -11,6 +11,9 @@ class Token(ZoopModel):
     The __FIELDS list the attributes this class
     has responsability of constructing in the serialization to dict.
 
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
     Attributes:
         type: bank_account or card
         used: boolean of verification

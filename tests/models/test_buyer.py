@@ -31,6 +31,16 @@ class BuyerTestCase(TestCase):
             "taxpayer_id": "foo",
             "phone_number": "foo",
             "birthdate": 'foo',
+            "address": {
+                "line1": "foo",
+                "line2": "foo",
+                "line3": "foo",
+                "neighborhood": "foo",
+                "city": "foo",
+                "state": "foo",
+                "postal_code": "foo",
+                "country_code": "foo"
+            },
 
             "default_receipt_delivery_method": None
         }
@@ -40,7 +50,7 @@ class BuyerTestCase(TestCase):
 
         self.assertIsInstance(instance, Buyer)
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsNone(instance.address)
+        self.assertIsInstance(instance.address, AddressModel)
 
     def test_to_dict(self):
         data = self.data

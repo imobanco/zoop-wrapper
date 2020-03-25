@@ -29,4 +29,4 @@ jobs:
       - name: Config .env file
         run: echo "make config.env"
       - name: Test with pytest
-        run: echo "make test"
+        run: make test

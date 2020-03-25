@@ -1,11 +1,12 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.base import Address
+from ZoopAPIWrapper.models.base import AddressModel
 
 
 class AddressTestCase(TestCase):
-    def test_from_dict(self):
-        data = {
+    @property
+    def data(self):
+        return {
             "line1": 'foo',
             "line2": 'foo',
             "line3": 'foo',
@@ -15,23 +16,21 @@ class AddressTestCase(TestCase):
             "postal_code": 'foo',
             "country_code": 'foo'
         }
-        instance = Address.from_dict(data)
 
-        self.assertIsInstance(instance, Address)
+    def test_from_dict(self):
+        instance = AddressModel.from_dict(self.data)
+
+        self.assertIsInstance(instance, AddressModel)
         self.assertEqual(instance.line1, 'foo')
+        self.assertEqual(instance.line2, 'foo')
+        self.assertEqual(instance.line3, 'foo')
+        self.assertEqual(instance.neighborhood, 'foo')
+        self.assertEqual(instance.city, 'foo')
+        self.assertEqual(instance.state, 'foo')
+        self.assertEqual(instance.postal_code, 'foo')
+        self.assertEqual(instance.country_code, 'foo')
 
     def test_to_dict(self):
-        data = {
-            "line1": 'foo',
-            "line2": 'foo',
-            "line3": 'foo',
-            "neighborhood": 'foo',
-            "city": 'foo',
-            "state": 'foo',
-            "postal_code": 'foo',
-            "country_code": 'foo'
-        }
-        instance = Address.from_dict(data)
+        instance = AddressModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, Address)
-        self.assertEqual(instance.to_dict(), data)
+        self.assertEqual(instance.to_dict(), self.data)

@@ -2,7 +2,7 @@ import json
 
 import requests
 
-from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
+from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 
 

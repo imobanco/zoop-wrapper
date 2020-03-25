@@ -1,5 +1,6 @@
 from unittest import TestCase
 
+from ZoopAPIWrapper.models.factories.base import ZoopBaseFactory
 from ZoopAPIWrapper.models.base import ZoopBase
 
 
@@ -17,6 +18,10 @@ class ZoopBaseTestCase(TestCase):
     @property
     def data(self):
         return {}
+
+    def test_create(self):
+        instance = ZoopBaseFactory()
+        self.assertIsInstance(instance, ZoopBase)
 
     def test_from_dict(self):
         """

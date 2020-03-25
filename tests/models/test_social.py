@@ -1,6 +1,7 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.seller import SocialModel
+from ZoopAPIWrapper.models.base import SocialModel
+from ZoopAPIWrapper.models.factories.base import SocialModelFactory
 
 
 class SocialTestCase(TestCase):
@@ -10,6 +11,10 @@ class SocialTestCase(TestCase):
             "facebook": 'foo',
             "twitter": 'foo'
         }
+
+    def test_create(self):
+        instance = SocialModelFactory()
+        self.assertIsInstance(instance, SocialModel)
 
     def test_from_dict(self):
         instance = SocialModel.from_dict(self.data)

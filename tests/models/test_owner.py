@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.base import OwnerModel, AddressModel
+from ZoopAPIWrapper.models.factories.base import OwnerModelFactory
 
 
 class OwnerModelTestCase(TestCase):
@@ -24,6 +25,10 @@ class OwnerModelTestCase(TestCase):
                 "country_code": "foo"
             },
         }
+
+    def test_create(self):
+        instance = OwnerModelFactory()
+        self.assertIsInstance(instance, OwnerModel)
 
     def test_from_dict(self):
         instance = OwnerModel.from_dict(self.data)

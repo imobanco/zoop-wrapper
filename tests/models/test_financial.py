@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.base import FinancialModel
+from ZoopAPIWrapper.models.factories.base import FinancialModelFactory
 
 
 class FinancialTestCase(TestCase):
@@ -16,6 +17,10 @@ class FinancialTestCase(TestCase):
             "default_debit": 'foo',
             "default_credit": 'foo',
         }
+
+    def test_create(self):
+        instance = FinancialModelFactory()
+        self.assertIsInstance(instance, FinancialModel)
 
     def test_from_dict(self):
         instance = FinancialModel.from_dict(self.data)

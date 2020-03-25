@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.base import AddressModel
+from ZoopAPIWrapper.models.factories.base import AddressModelFactory
 
 
 class AddressTestCase(TestCase):
@@ -16,6 +17,10 @@ class AddressTestCase(TestCase):
             "postal_code": 'foo',
             "country_code": 'foo'
         }
+
+    def test_create(self):
+        instance = AddressModelFactory()
+        self.assertIsInstance(instance, AddressModel)
 
     def test_from_dict(self):
         instance = AddressModel.from_dict(self.data)

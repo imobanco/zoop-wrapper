@@ -82,7 +82,7 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.instance.id,
                          '27e17b778b404a83bf8e25ec995e2ffe')
 
-    def test_search_seller_individual(self):
+    def test_search_individual_seller(self):
         """
         Test search_individual_seller method.
         Got this seller taxpayer_id from the json dump of sellers.
@@ -95,7 +95,7 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.instance.id,
                          '29f1251bc7514b96ad5f6d873f9812a1')
 
-    def test_search_seller_business(self):
+    def test_search_business_seller(self):
         """
         Test search_business_seller method.
         Got this seller taxpayer_id from the json dump of sellers.

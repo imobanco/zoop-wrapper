@@ -33,7 +33,7 @@ class BusinessOrIndividualMixin:
         raise NotImplementedError()
 
     @classmethod
-    def __extract_identifier(cls, data):
+    def __extract_identifier(cls, data: dict):
         """
         extract a identifier type from data.
         Args:
@@ -60,7 +60,7 @@ class BusinessOrIndividualMixin:
         return identifier_type
 
     @classmethod
-    def get_class(cls, data):
+    def get_class(cls, data: dict):
         """
         get a class for this data.
         Args:

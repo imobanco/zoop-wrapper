@@ -59,8 +59,9 @@ class Zoop:
     @staticmethod
     def __process_response(response):
         response.data = json.loads(response.content)
-        if response.data.get('resource'):
-            if response.data.get('resource') == 'list':
+        resource = response.data.get('resource')
+        if resource is not None:
+            if resource == 'list':
                 response.instances = [get_instance_from_data(item)
                                       for item in response.data.get('items')]
             else:
@@ -117,7 +118,9 @@ class Zoop:
 
     def add_seller(self, data: dict):
         seller_instance = Seller.from_dict(data)
-        assert isinstance(seller_instance, Seller)
+        if not isinstance(seller_instance, Seller):
+            raise TypeError('Why is this not a Seller instance?')
+
         url = self.__construct_url(action=f'sellers',
                                    subaction=seller_instance.get_type())
         return self.__post_instance(url, instance=seller_instance)

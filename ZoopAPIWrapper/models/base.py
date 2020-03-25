@@ -165,7 +165,7 @@ class Address(ZoopBase):
         neighborhood: neighborhood
         city: city
         state: Código ISO 3166-2 para o estado
-        postal_code: psotal code
+        postal_code: postal code
         country_code: ISO 3166-1 alpha-2 - códigos de país de duas letras
     """
     __FIELDS = ["line1", "line2", "line3",

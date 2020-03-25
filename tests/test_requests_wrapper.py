@@ -21,7 +21,7 @@ class RequestWrapperTestCase(TestCase):
 
         self.assertEqual(url, f'foo/teste/123/')
 
-    def test_process_response(self):
+    def test_process_response_error(self):
         response = MagicMock(
             content='{"error": {"message": "foo"}}'
         )

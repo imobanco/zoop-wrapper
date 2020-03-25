@@ -28,14 +28,16 @@ class RequestsWrapper:
 
     @staticmethod
     def __process_response(response):
-        response.data = json.loads(response.content)
+        response.data = response.json()
 
-        resource = response.data.get('resource')
-        if resource == 'list':
-            response.instances = [get_instance_from_data(item)
-                                  for item in response.data.get('items')]
-        elif resource is not None:
-            response.instance = get_instance_from_data(response.data)
+        deleted = response.data.get('deleted')
+        if not deleted:
+            resource = response.data.get('resource')
+            if resource == 'list':
+                response.instances = [get_instance_from_data(item)
+                                      for item in response.data.get('items')]
+            elif resource is not None:
+                response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')

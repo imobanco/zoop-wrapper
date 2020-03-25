@@ -33,4 +33,11 @@ def config_logging(log_level):
 
 
 def get_logger(name):
+    """
+    Logger factory
+    Args:
+        name: subname to generate logger
+
+    Returns: a new logger for ZoopAPIWrapper.{name}
+    """
     return logging.getLogger(f'ZoopAPIWrapper.{name}')

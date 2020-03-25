@@ -45,13 +45,9 @@ class ZoopBase:
         Args:
             data: dict of data
 
-        Returns: instance initialized of class or None
+        Returns: instance initialized of class
         """
-        try:
-            return cls._from_dict(**data)
-        except TypeError as e:
-            logger.debug(e)
-            return None
+        return cls._from_dict(**data)
 
     def to_dict(self):
         """

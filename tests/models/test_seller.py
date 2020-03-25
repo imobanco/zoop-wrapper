@@ -5,15 +5,6 @@ from ZoopAPIWrapper.models.seller import (
 
 
 class SellerTestCase(TestCase):
-    def test_get_class_from_type(self):
-        individual_klass = Seller.get_seller_class('individual')
-        self.assertEqual(individual_klass, IndividualSeller)
-
-        business_klass = Seller.get_seller_class('business')
-        self.assertEqual(business_klass, BusinessSeller)
-
-        self.assertRaises(ValueError, Seller.get_seller_class, 'test')
-
     def test_seller_from_dict_business(self):
         data = {
             'id': 'foo',

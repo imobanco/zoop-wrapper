@@ -2,8 +2,15 @@ import json
 
 import requests
 
-from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID
+from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.utils import get_instance_from_data
+from ZoopAPIWrapper.utils import (
+    get_logger, config_logging
+)
+
+
+config_logging(LOG_LEVEL)
+logger = get_logger('wrapper')
 
 
 class RequestsWrapper:
@@ -29,6 +36,7 @@ class RequestsWrapper:
 
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
+            logger.warning(f'respose has error: {response.error}')
         return response
 
     def _construct_url(self, action=None, identifier=None,

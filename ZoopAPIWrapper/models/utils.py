@@ -1,5 +1,10 @@
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.bank_account import BankAccount
+from ZoopAPIWrapper.models.token import Token
+
+
+RESOURCE_CLASSES = [BankAccount, Seller, Token]
+RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 
 def _get_model_class_from_resource(resource):
@@ -20,12 +25,10 @@ def _get_model_class_from_resource(resource):
 
     Returns: ZoopModel subclass
     """
-    if resource == Seller.RESOURCE:
-        return Seller
-    elif resource == BankAccount.RESOURCE:
-        return BankAccount
-    else:
-        raise ValueError(f'model não identificado para resource {resource}!')
+    if resource in RESOURCES_DICT:
+        return RESOURCES_DICT.get(resource)
+
+    raise ValueError(f'model não identificado para resource {resource}!')
 
 
 def get_instance_from_data(data):

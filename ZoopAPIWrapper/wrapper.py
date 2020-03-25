@@ -46,7 +46,7 @@ class RequestsWrapper:
         Examples:
             >>> rw = RequestsWrapper()
             >>> rw._construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
-            'http://zoopapiurl.com/{marketplace_id}/seller/1/bank_accounts/search?account_number=1'
+            'rw.__base_url/seller/1/bank_accounts/search?account_number=1'
 
         Returns: full url for the request
 

@@ -34,7 +34,8 @@ class ZoopTestCase(TestCase):
         Test retrieve_seller method.
         Got this seller id from the json dump of sellers.
         """
-        response = self.client.retrieve_seller('27e17b778b404a83bf8e25ec995e2ffe')
+        response = self.client.retrieve_seller(
+            '27e17b778b404a83bf8e25ec995e2ffe')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'),
                          '27e17b778b404a83bf8e25ec995e2ffe')

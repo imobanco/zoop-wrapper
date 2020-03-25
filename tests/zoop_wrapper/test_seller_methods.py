@@ -1,15 +1,16 @@
 import json
-from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock
 
 from pycpfcnpj import gen
 
+from tests.utils import MockedPostDeleteTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
 from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
 
 
-class ZoopWrapperSellerMethodsTestCase(TestCase):
+class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
     def setUp(self):
+        super().setUp()
         self.client = ZoopWrapper()
 
     def tearDown(self):
@@ -68,15 +69,8 @@ class ZoopWrapperSellerMethodsTestCase(TestCase):
         self.assertEqual(response.instance.id,
                          '27e17b778b404a83bf8e25ec995e2ffe')
 
-    @patch('ZoopAPIWrapper.wrapper.requests.post')
-    def test_add_individual_seller(self, mocked_post):
-
-        mocked_post.return_value = MagicMock(
-            status_code=201,
-            json=MagicMock(
-                return_value={}
-            )
-        )
+    def test_add_individual_seller(self):
+        self.set_post_mock(201, {})
 
         data = {
             "taxpayer_id": gen.cpf(),
@@ -107,6 +101,8 @@ class ZoopWrapperSellerMethodsTestCase(TestCase):
         duplicated on the DB. Such as taxpayer_id.
         Got this taxpayer_id from sellers json dump.
         """
+        self.set_post_mock(409, {})
+
         data = {
             "taxpayer_id": 12685293892,
             'first_name': 'foo',
@@ -130,27 +126,13 @@ class ZoopWrapperSellerMethodsTestCase(TestCase):
         response = self.client.add_seller(data)
         self.assertEqual(response.status_code, 409, msg=response.data)
 
-    @patch('ZoopAPIWrapper.wrapper.requests.delete')
-    def test_remove_seller(self, mocked_delete):
-        """
-        Test remove_seller method.
-        Got the seller id from sellers dump.
-
-        Args:
-            mocked_delete: mock of object 'delete' from 'requests'
-                            on file 'ZoopAPIWrapper.wrapper'
-        """
-        mocked_delete.return_value = MagicMock(
-            status_code=200,
-            json=MagicMock(
-                return_value={'id': '0b6dbebcb5f24473ac730537e873b4d8', 'resource': 'seller', 'deleted': True}
-            )
-        )
+    def test_remove_seller(self):
+        self.set_delete_mock(200, {'id': '0b6dbebcb5f24473ac730537e873b4d8', 'resource': 'seller', 'deleted': True})
 
         response = self.client.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
         self.assertEqual(response.status_code, 200, msg=response.data)
 
-        mocked_delete.assert_called_once_with(
+        self.mocked_delete.assert_called_once_with(
             f'https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/'
             f'sellers/0b6dbebcb5f24473ac730537e873b4d8/', auth=(ZOOP_KEY, ''))
 

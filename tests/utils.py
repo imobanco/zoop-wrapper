@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
 
-class BuildMockResponseMixin:
+class BuildResponseMockMixin:
     @staticmethod
     def build_response_mock(status_code=200, content=None):
         return MagicMock(
@@ -13,7 +13,7 @@ class BuildMockResponseMixin:
         )
 
 
-class MockedPostDeleteTestCase(TestCase, BuildMockResponseMixin):
+class MockedPostDeleteTestCase(TestCase, BuildResponseMockMixin):
     def setUp(self):
         super().setUp()
 

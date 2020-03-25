@@ -1,12 +1,13 @@
 import json
-from unittest import TestCase
 
+from tests.utils import MockedPostDeleteTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.bank_account import BankAccount
 
 
-class ZoopWrapperBankAccountsMethodsTestCase(TestCase):
+class ZoopWrapperBankAccountsMethodsTestCase(MockedPostDeleteTestCase):
     def setUp(self):
+        super().setUp()
         self.client = ZoopWrapper()
 
     def tearDown(self):

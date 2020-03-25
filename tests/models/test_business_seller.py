@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from ZoopAPIWrapper.models.seller import (
     BusinessSeller, OwnerModel, AddressModel)
+from ZoopAPIWrapper.models.factories.seller import BusinessSellerFactory
 
 
 class BusinessSellerTestCase(TestCase):
@@ -73,6 +74,10 @@ class BusinessSellerTestCase(TestCase):
                 }
             }
         }
+
+    def test_create(self):
+        instance = BusinessSellerFactory()
+        self.assertIsInstance(instance, BusinessSeller)
 
     def test_from_dict(self):
         instance = BusinessSeller.from_dict(self.data)

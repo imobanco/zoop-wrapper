@@ -5,8 +5,9 @@ from ZoopAPIWrapper.models.bank_account import (
 
 
 class BusinessBankAccountTestCase(TestCase):
-    def test_from_dict(self):
-        data = {
+    @property
+    def data(self):
+        return {
             'id': 'foo',
             'resource': 'foo',
             'uri': 'foo',
@@ -37,7 +38,9 @@ class BusinessBankAccountTestCase(TestCase):
                 "deposit_check": "foo"
             }
         }
-        instance = BusinessBankAccount.from_dict(data)
+
+    def test_from_dict(self):
+        instance = BusinessBankAccount.from_dict(self.data)
 
         self.assertIsInstance(instance, BusinessBankAccount)
         self.assertEqual(instance.id, 'foo')
@@ -53,37 +56,8 @@ class BusinessBankAccountTestCase(TestCase):
         self.assertEqual(instance.verification_checklist.deposit_check, 'foo')
 
     def test_to_dict(self):
-        data = {
-            'id': 'foo',
-            'resource': 'foo',
-            'uri': 'foo',
-            'metadata': {},
-            'created_at': 'foo',
-            'updated_at': 'foo',
+        data = self.data
 
-            "holder_name": "foo",
-            "ein": "foo",
-            "description": "foo",
-            "bank_name": "foo",
-            "bank_code": "foo",
-            "type": "foo",
-            "last4_digits": "foo",
-            "account_number": "foo",
-            "country_code": "foo",
-            "routing_number": "foo",
-            "phone_number": 'foo',
-            "is_active": 'foo',
-            "is_verified": 'foo',
-            "debitable": 'foo',
-            "customer": "foo",
-            "fingerprint": "foo",
-            "address": None,
-            "verification_checklist": {
-                "postal_code_check": "foo",
-                "address_line1_check": "foo",
-                "deposit_check": "foo"
-            }
-        }
         instance = BusinessBankAccount.from_dict(data)
 
         """We remove the address because it's value is none.

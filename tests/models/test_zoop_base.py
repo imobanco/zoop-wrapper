@@ -14,13 +14,16 @@ class ZoopBaseTestCase(TestCase):
     def tearDown(self) -> None:
         ZoopBase._ZoopBase__FIELDS = []
 
+    @property
+    def data(self):
+        return {}
+
     def test_from_dict(self):
         """
         ZoopBase model doesn't have any attribute.
         So we can create a instance with an empty dict
         """
-        data = {}
-        instance = ZoopBase.from_dict(data)
+        instance = ZoopBase.from_dict(self.data)
 
         self.assertIsInstance(instance, ZoopBase)
 
@@ -29,10 +32,10 @@ class ZoopBaseTestCase(TestCase):
         ZoopBase model doesn't have any attribute.
         So we can manipulate it's attributes to test to_dict method
         """
-        data = {
-            "id": '1',
-            "name": None
-        }
+        data = self.data
+        data["id"] = '1'
+        data["name"] = None
+
         instance = ZoopBase.from_dict(data)
 
         instance.id = '1'

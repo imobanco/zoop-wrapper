@@ -4,8 +4,9 @@ from ZoopAPIWrapper.models.base import ZoopModel
 
 
 class ZoopModelTestCase(TestCase):
-    def test_from_dict(self):
-        data = {
+    @property
+    def data(self):
+        return {
             'id': 'foo',
             'resource': 'foo',
             'uri': 'foo',
@@ -13,7 +14,9 @@ class ZoopModelTestCase(TestCase):
             'created_at': 'foo',
             'updated_at': 'foo'
         }
-        instance = ZoopModel.from_dict(data)
+
+    def test_from_dict(self):
+        instance = ZoopModel.from_dict(self.data)
 
         self.assertIsInstance(instance, ZoopModel)
         self.assertEqual(instance.id, 'foo')
@@ -24,15 +27,6 @@ class ZoopModelTestCase(TestCase):
         self.assertEqual(instance.updated_at, 'foo')
 
     def test_to_dict(self):
-        data = {
-            'id': 'foo',
-            'resource': 'foo',
-            'uri': 'foo',
-            'metadata': {},
-            'created_at': 'foo',
-            'updated_at': 'foo'
-        }
-        instance = ZoopModel.from_dict(data)
+        instance = ZoopModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, ZoopModel)
-        self.assertEqual(instance.to_dict(), data)
+        self.assertEqual(instance.to_dict(), self.data)

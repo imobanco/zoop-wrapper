@@ -4,8 +4,9 @@ from ZoopAPIWrapper.models.base import ZoopMarketPlaceModel
 
 
 class ZoopMarketPlaceModelTestCase(TestCase):
-    def test_from_dict(self):
-        data = {
+    @property
+    def data(self):
+        return {
             'id': 'foo',
             'resource': 'foo',
             'uri': 'foo',
@@ -15,24 +16,15 @@ class ZoopMarketPlaceModelTestCase(TestCase):
 
             'marketplace_id': 'foo'
         }
-        instance = ZoopMarketPlaceModel.from_dict(data)
+
+    def test_from_dict(self):
+        instance = ZoopMarketPlaceModel.from_dict(self.data)
 
         self.assertIsInstance(instance, ZoopMarketPlaceModel)
         self.assertEqual(instance.id, 'foo')
         self.assertEqual(instance.marketplace_id, 'foo')
 
     def test_to_dict(self):
-        data = {
-            'id': 'foo',
-            'resource': 'foo',
-            'uri': 'foo',
-            'metadata': {},
-            'created_at': 'foo',
-            'updated_at': 'foo',
+        instance = ZoopMarketPlaceModel.from_dict(self.data)
 
-            'marketplace_id': 'foo'
-        }
-        instance = ZoopMarketPlaceModel.from_dict(data)
-
-        self.assertIsInstance(instance, ZoopMarketPlaceModel)
-        self.assertEqual(instance.to_dict(), data)
+        self.assertEqual(instance.to_dict(), self.data)

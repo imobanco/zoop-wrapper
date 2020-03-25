@@ -157,7 +157,7 @@ class ZoopMarketPlaceModel(ZoopModel):
         return list(super_fields)
 
 
-class Address(ZoopBase):
+class AddressModel(ZoopBase):
     """
     This class and it's subclasses have attributes.
 
@@ -191,6 +191,133 @@ class Address(ZoopBase):
         self.state = state
         self.postal_code = postal_code
         self.country_code = country_code
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
+class OwnerModel(ZoopBase):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        address: Address model
+        birthdate: birthdate
+        email: email
+        first_name: first name
+        last_name: last name
+        phone_number: phone number
+        taxpayer_id: cpf
+    """
+    __FIELDS = ["first_name", "last_name", "email",
+                "taxpayer_id", "phone_number",
+                "birthdate", "address"]
+
+    def __init__(self, first_name, last_name, email,
+                 taxpayer_id, phone_number, birthdate,
+                 address, **kwargs):
+        super().__init__(**kwargs)
+
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.taxpayer_id = taxpayer_id
+        self.phone_number = phone_number
+        self.birthdate = birthdate
+        self.address = AddressModel.from_dict(address)
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
+class SocialModel(ZoopBase):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        facebook: facebook profile url?
+        twitter: twitter profile url?
+    """
+    __FIELDS = ["facebook", "twitter"]
+
+    def __init__(self, facebook=None,
+                 twitter=None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.facebook = facebook
+        self.twitter = twitter
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
+class FinancialModel(ZoopBase):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        status: pending or active string
+        account_balance: amount of balance
+        current_balance: curent amount of balance
+        description: description
+        delinquent: bolean of verification
+        payment_methods: ?
+        default_debit: ?
+        default_credit: ?
+    """
+    __FIELDS = ['status', 'account_balance', 'current_balance',
+                'description', 'delinquent', 'payment_methods',
+                'default_debit', 'default_credit']
+
+    def __init__(self, status=None, account_balance=None, current_balance=None,
+                 description=None, delinquent=None, payment_methods=None,
+                 default_debit=None, default_credit=None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.status = status
+        self.account_balance = account_balance
+        self.current_balance = current_balance
+        self.description = description
+        self.delinquent = delinquent
+        self.payment_methods = payment_methods
+        self.default_debit = default_debit
+        self.default_credit = default_credit
 
     @property
     def fields(self):

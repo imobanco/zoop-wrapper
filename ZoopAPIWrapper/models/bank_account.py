@@ -53,23 +53,24 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     Remember the resource on ZoopModel? BAM!
 
     Attributes:
-        holder_name: name of owner
-        bank_code: code of bank
-        routing_number: agency code in BR
         account_number: account number
-        description: description
+        bank_code: code of bank
+        holder_name: name of owner
+        routing_number: agency code in BR
+
+        address: Address model
         bank_name: name of bank
-        type: type of account
         country_code: country code
-        phone_number: phone number
+        customer: id of owner
+        description: description
+        debitable:  boolean of verification
+        fingerprint: ?
         is_active: boolean of verification
         is_verified: boolean of verification
-        debitable:  boolean of verification
-        customer: id of owner
-        fingerprint: ?
-        address: Address
-        verification_checklist: VerificationCheckList
         last4_digits: last 4 digits of account number
+        phone_number: phone number
+        type: type of account
+        verification_checklist: VerificationCheckList model
     """
     RESOURCE = 'bank_account'
 
@@ -165,7 +166,7 @@ class BusinessBankAccount(BankAccount):
     has responsability of constructing in the serialization to dict.
 
     Attributes:
-        ein: cnpj
+        ein: (Employer Identification Number) is equivalent to CNPJ
     """
     __FIELDS = ["ein"]
 

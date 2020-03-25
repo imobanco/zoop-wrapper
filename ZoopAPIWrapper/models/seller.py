@@ -16,7 +16,8 @@ class Seller(ZoopMarketPlaceModel, BusinessOrIndividualMixin):
     The RESOURCE attribute of this class is used to identify this Model.
     Remember the resource on ZoopModel? BAM!
 
-    The TYPE attribute of this class is used on Zoop.api.
+    The TYPE attribute of this class is to be inherited and modified
+    on IndividualSeller and BusinessSeller to be used on Zoop.api.
 
     Attributes:
         type: individual or business string
@@ -145,13 +146,13 @@ class Owner(ZoopBase):
     has responsability of constructing in the serialization to dict.
 
     Attributes:
+        address: Address model
+        birthdate: birthdate
+        email: email
         first_name: first name
         last_name: last name
-        email: email
-        taxpayer_id: cpf
         phone_number: phone number
-        birthdate: birthdate
-        address: Address
+        taxpayer_id: cpf
     """
     __FIELDS = ["first_name", "last_name", "email",
                 "taxpayer_id", "phone_number",
@@ -196,7 +197,6 @@ class IndividualSeller(Seller, Owner):
         website: website url?
         facebook: facebook profile url?
         twitter: twitter profile url?
-
     """
     __FIELDS = ["website", "facebook", "twitter"]
 
@@ -245,14 +245,14 @@ class BusinessSeller(Seller):
     The TYPE attribute of this class is used on Zoop.api.
 
     Attributes:
-        ein: npj
+        ein: (Employer Identification Number) is equivalent to CNPJ
         business_name: name
         business_phone: phone number
         business_email: email
         business_website: website url
         business_opening_date: date of openning
         owner: Owner
-        business_address: Address
+        business_address: Address model
         business_description: description
         business_facebook: facebook profile url?
         business_twitter: twitter profile url?

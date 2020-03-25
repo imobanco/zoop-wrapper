@@ -161,7 +161,7 @@ class Address(ZoopBase):
     Attributes:
         line1: complete street name
         line2: number
-        line3: comlement
+        line3: complement
         neighborhood: neighborhood
         city: city
         state: Código ISO 3166-2 para o estado

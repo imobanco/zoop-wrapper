@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock
 
-from ZoopAPIWrapper.api import RequestsWrapper
+from ZoopAPIWrapper.wrapper import RequestsWrapper
 
 
 class RequestWrapperTestCase(TestCase):

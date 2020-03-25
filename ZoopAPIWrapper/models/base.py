@@ -188,6 +188,22 @@ class AddressModel(ZoopBase):
         self.postal_code = postal_code
         self.country_code = country_code
 
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of class or None
+        """
+        try:
+            return super().from_dict(data)
+        except TypeError as e:
+            logger.debug(e)
+            return None
+
     @property
     def fields(self):
         """
@@ -223,7 +239,7 @@ class OwnerModel(ZoopBase):
 
     def __init__(self, first_name, last_name, email,
                  taxpayer_id, phone_number, birthdate,
-                 address, **kwargs):
+                 address=None, **kwargs):
         super().__init__(**kwargs)
 
         self.first_name = first_name

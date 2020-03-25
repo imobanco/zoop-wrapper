@@ -1,13 +1,7 @@
-import json
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
-from pycpfcnpj import gen
-
-from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
-from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
-from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.buyer import Buyer
+from ZoopAPIWrapper.wrapper import ZoopWrapper, ZOOP_KEY
 
 
 class ZoopWrapperTestCase(TestCase):
@@ -28,4 +22,3 @@ class ZoopWrapperTestCase(TestCase):
 
         self.assertIsInstance(mocked_post, MagicMock)
         mocked_post.assert_called_once_with('bla', data=instance.to_dict())
-

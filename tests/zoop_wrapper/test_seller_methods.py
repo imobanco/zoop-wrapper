@@ -1,5 +1,4 @@
 import json
-from unittest.mock import MagicMock
 
 from pycpfcnpj import gen
 
@@ -127,7 +126,9 @@ class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
         self.assertEqual(response.status_code, 409, msg=response.data)
 
     def test_remove_seller(self):
-        self.set_delete_mock(200, {'id': '0b6dbebcb5f24473ac730537e873b4d8', 'resource': 'seller', 'deleted': True})
+        self.set_delete_mock(
+            200, {'id': '0b6dbebcb5f24473ac730537e873b4d8',
+                  'resource': 'seller', 'deleted': True})
 
         response = self.client.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -146,4 +147,3 @@ class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
         self.assertTrue(items)
-

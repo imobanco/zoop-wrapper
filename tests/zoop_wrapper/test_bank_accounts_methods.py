@@ -40,4 +40,3 @@ class ZoopWrapperBankAccountsMethodsTestCase(MockedPostDeleteTestCase):
         self.assertIsInstance(response.instance, BankAccount)
         self.assertEqual(response.instance.id,
                          '064d3c7846b142e591896d2fb69dac3f')
-

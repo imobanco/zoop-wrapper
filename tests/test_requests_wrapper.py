@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
 
 from tests.utils import BuildResponseMockMixin
 from ZoopAPIWrapper.wrapper import RequestsWrapper
@@ -24,7 +24,8 @@ class RequestWrapperTestCase(TestCase, BuildResponseMockMixin):
 
     @patch('ZoopAPIWrapper.wrapper.logger')
     def test_process_response_error(self, mocked_logger):
-        response = self.build_response_mock(content={"error": {"message": "foo"}})
+        response = self.build_response_mock(
+            content={"error": {"message": "foo"}})
 
         processed_response = self.client.\
             _RequestsWrapper__process_response(response)
@@ -40,7 +41,8 @@ class RequestWrapperTestCase(TestCase, BuildResponseMockMixin):
 
     def test_process_response_resource_list(self):
         response = self.build_response_mock(
-            content={"resource": "list", "items": [{"resource": "test", "message": "foo"}]}
+            content={"resource": "list", "items": [
+                {"resource": "test", "message": "foo"}]}
         )
 
         processed_response = self.client.\

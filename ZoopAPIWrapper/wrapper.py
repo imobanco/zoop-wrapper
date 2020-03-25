@@ -1,5 +1,3 @@
-import json
-
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL

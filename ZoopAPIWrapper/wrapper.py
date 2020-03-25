@@ -166,13 +166,32 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='bank_accounts')
         return self._get(url)
 
-    def list_seller_bank_accounts(self, identifier):
-        url = self._construct_url(action='sellers',
-                                  identifier=identifier,
-                                  subaction='bank_accounts')
-        return self._get(url)
-
     def retrieve_bank_account(self, identifier):
         url = self._construct_url(action='bank_accounts',
                                   identifier=identifier)
         return self._get(url)
+
+    def __get_buyers(self, action='buyers', identifier=None, search=None):
+        url = self._construct_url(action=action,
+                                  identifier=identifier,
+                                  search=search)
+        return self._get(url)
+
+    def list_buyers(self):
+        return self.__get_buyers()
+
+    def retrieve_buyer(self, identifier):
+        return self.__get_buyers(identifier=identifier)
+
+    def search_buyer(self, identifier):
+        return self.__get_buyers(search=f'taxpayer_id={identifier}')
+
+    def add_buyer(self, data: dict):
+        instance = Buyer.from_dict(data)
+        url = self._construct_url(action=f'buyers')
+        return self._post_instance(url, instance=instance)
+
+    def remove_buyer(self, identifier):
+        url = self._construct_url(action=f'buyers',
+                                  identifier=identifier)
+        return self._delete(url)

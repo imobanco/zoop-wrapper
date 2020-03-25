@@ -23,7 +23,9 @@ class RequestWrapperTestCase(TestCase):
 
     def test_process_response_error(self):
         response = MagicMock(
-            content='{"error": {"message": "foo"}}'
+            json=MagicMock(
+                return_value={"error": {"message": "foo"}}
+            )
         )
 
         processed_response = self.client.\
@@ -33,7 +35,9 @@ class RequestWrapperTestCase(TestCase):
 
     def test_process_response_resource(self):
         response = MagicMock(
-            content='{"resource": "test"}'
+            json=MagicMock(
+                return_value={"resource": "test"}
+            )
         )
 
         processed_response = self.client.\
@@ -42,8 +46,9 @@ class RequestWrapperTestCase(TestCase):
 
     def test_process_response_resource_list(self):
         response = MagicMock(
-            content='{"resource": "list", "items": '
-                    '[{"resource": "test", "message": "foo"}]}'
+            json=MagicMock(
+                return_value={"resource": "list", "items": [{"resource": "test", "message": "foo"}]}
+            )
         )
 
         processed_response = self.client.\

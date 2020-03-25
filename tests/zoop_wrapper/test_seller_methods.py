@@ -71,7 +71,12 @@ class ZoopWrapperSellerMethodsTestCase(TestCase):
     @patch('ZoopAPIWrapper.wrapper.requests.post')
     def test_add_individual_seller(self, mocked_post):
 
-        mocked_post.return_value = MagicMock(content='{}', status_code=201)
+        mocked_post.return_value = MagicMock(
+            status_code=201,
+            json=MagicMock(
+                return_value={}
+            )
+        )
 
         data = {
             "taxpayer_id": gen.cpf(),
@@ -133,9 +138,14 @@ class ZoopWrapperSellerMethodsTestCase(TestCase):
 
         Args:
             mocked_delete: mock of object 'delete' from 'requests'
-                            on file 'ZoopAPIWrapper.api'
+                            on file 'ZoopAPIWrapper.wrapper'
         """
-        mocked_delete.return_value = MagicMock(content='{}', status_code=200)
+        mocked_delete.return_value = MagicMock(
+            status_code=200,
+            json=MagicMock(
+                return_value={'id': '0b6dbebcb5f24473ac730537e873b4d8', 'resource': 'seller', 'deleted': True}
+            )
+        )
 
         response = self.client.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
         self.assertEqual(response.status_code, 200, msg=response.data)

@@ -206,8 +206,20 @@ class BusinessSeller(Seller):
         self.business_email = business_email
         self.business_website = business_website
         self.business_opening_date = business_opening_date
-        self.business_address = AddressModel.from_dict(business_address)
-        self.owner = OwnerModel.from_dict(owner)
+
+        if isinstance(business_address, AddressModel):
+            self.business_address = business_address
+        elif isinstance(business_address, dict):
+            self.business_address = AddressModel.from_dict(business_address)
+        else:
+            self.business_address = None
+
+        if isinstance(owner, OwnerModel):
+            self.owner = owner
+        elif isinstance(owner, dict):
+            self.owner = OwnerModel.from_dict(owner)
+        else:
+            self.owner = None
 
         self.business_description = business_description
         self.business_facebook = business_facebook

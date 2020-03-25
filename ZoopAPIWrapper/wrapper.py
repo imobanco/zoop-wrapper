@@ -16,8 +16,23 @@ class RequestsWrapper:
     def __init__(self, base_url):
         self.__base_url = base_url
 
-    def __construct_url(self, action=None, identifier=None,
-                        subaction=None, search=None):
+    @staticmethod
+    def __process_response(response):
+        response.data = json.loads(response.content)
+
+        resource = response.data.get('resource')
+        if resource == 'list':
+            response.instances = [get_instance_from_data(item)
+                                  for item in response.data.get('items')]
+        elif resource is not None:
+            response.instance = get_instance_from_data(response.data)
+
+        if response.data.get('error'):
+            response.error = response.data.get('error').get('message')
+        return response
+
+    def _construct_url(self, action=None, identifier=None,
+                       subaction=None, search=None):
         # noinspection PyProtectedMember
         """
         construct url for the request
@@ -30,7 +45,7 @@ class RequestsWrapper:
 
         Examples:
             >>> rw = RequestsWrapper()
-            >>> rw._RequestsWrapper__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
+            >>> rw._construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
             'http://zoopapiurl.com/{marketplace_id}/seller/1/bank_accounts/search?account_number=1'
 
         Returns: full url for the request
@@ -48,36 +63,21 @@ class RequestsWrapper:
         return url
 
     @property
-    def __auth(self):
+    def _auth(self):
         raise NotImplementedError('Must implement auth function!')
 
-    @staticmethod
-    def __process_response(response):
-        response.data = json.loads(response.content)
-
-        resource = response.data.get('resource')
-        if resource == 'list':
-            response.instances = [get_instance_from_data(item)
-                                  for item in response.data.get('items')]
-        elif resource is not None:
-            response.instance = get_instance_from_data(response.data)
-
-        if response.data.get('error'):
-            response.error = response.data.get('error').get('message')
-        return response
-
-    def __get(self, url):
-        response = requests.get(url, auth=self.__auth)
+    def _get(self, url):
+        response = requests.get(url, auth=self._auth)
         response = self.__process_response(response)
         return response
 
-    def __post(self, url, data):
-        response = requests.post(url, data=data, auth=self.__auth)
+    def _post(self, url, data):
+        response = requests.post(url, data=data, auth=self._auth)
         response = self.__process_response(response)
         return response
 
-    def __delete(self, url):
-        response = requests.delete(url, auth=self.__auth)
+    def _delete(self, url):
+        response = requests.delete(url, auth=self._auth)
         response = self.__process_response(response)
         return response
 
@@ -101,21 +101,21 @@ class ZoopWrapper(RequestsWrapper):
         )
 
     @property
-    def __auth(self):
+    def _auth(self):
         return self.__key, ''
 
     def list_sellers(self):
-        url = self.__construct_url(action='sellers')
-        return self.__get(url)
+        url = self._construct_url(action='sellers')
+        return self._get(url)
 
     def retrieve_seller(self, identifier):
-        url = self.__construct_url(action='sellers', identifier=identifier)
-        return self.__get(url)
+        url = self._construct_url(action='sellers', identifier=identifier)
+        return self._get(url)
 
     def _search_seller(self, id_type, identifier):
-        url = self.__construct_url(action='sellers',
-                                   search=f"{id_type}={identifier}")
-        return self.__get(url)
+        url = self._construct_url(action='sellers',
+                                  search=f"{id_type}={identifier}")
+        return self._get(url)
 
     def search_business_seller(self, identifier):
         """
@@ -131,8 +131,8 @@ class ZoopWrapper(RequestsWrapper):
         return self._search_seller('taxpayer_id', identifier)
 
     def _add_seller(self, seller_type, seller):
-        url = self.__construct_url(action=f'sellers', subaction=seller_type)
-        return self.__post(url, data=seller)
+        url = self._construct_url(action=f'sellers', subaction=seller_type)
+        return self._post(url, data=seller)
 
     def add_individual_seller(self, seller):
         return self._add_seller('individuals', seller)
@@ -141,20 +141,20 @@ class ZoopWrapper(RequestsWrapper):
         return self._add_seller('business', seller)
 
     def remove_seller(self, identifier):
-        url = self.__construct_url(action='sellers', identifier=identifier)
-        return self.__delete(url)
+        url = self._construct_url(action='sellers', identifier=identifier)
+        return self._delete(url)
 
     def list_bank_accounts(self):
-        url = self.__construct_url(action='bank_accounts')
-        return self.__get(url)
+        url = self._construct_url(action='bank_accounts')
+        return self._get(url)
 
     def list_seller_bank_accounts(self, identifier):
-        url = self.__construct_url(action='sellers',
-                                   identifier=identifier,
-                                   subaction='bank_accounts')
-        return self.__get(url)
+        url = self._construct_url(action='sellers',
+                                  identifier=identifier,
+                                  subaction='bank_accounts')
+        return self._get(url)
 
     def retrieve_bank_account(self, identifier):
-        url = self.__construct_url(action='bank_accounts',
-                                   identifier=identifier)
-        return self.__get(url)
+        url = self._construct_url(action='bank_accounts',
+                                  identifier=identifier)
+        return self._get(url)

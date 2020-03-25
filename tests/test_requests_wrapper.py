@@ -6,7 +6,7 @@ from ZoopAPIWrapper.wrapper import RequestsWrapper
 
 class RequestWrapperTestCase(TestCase):
     def setUp(self):
-        self.client = RequestsWrapper('url')
+        self.client = RequestsWrapper('foo')
 
     def tearDown(self):
         del self.client
@@ -15,11 +15,11 @@ class RequestWrapperTestCase(TestCase):
         action = 'teste'
         identifier = '123'
 
-        url = self.client._RequestsWrapper__construct_url(
+        url = self.client._construct_url(
             action=action,
             identifier=identifier)
 
-        self.assertEqual(url, f'bla/teste/123/')
+        self.assertEqual(url, f'foo/teste/123/')
 
     def test_process_response(self):
         response = MagicMock(

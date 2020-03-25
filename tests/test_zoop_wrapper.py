@@ -68,7 +68,7 @@ class ZoopTestCase(TestCase):
         self.assertEqual(response.instance.id,
                          '27e17b778b404a83bf8e25ec995e2ffe')
 
-    @patch('ZoopAPIWrapper.api.requests.post')
+    @patch('ZoopAPIWrapper.wrapper.requests.post')
     def test_add_individual_seller(self, mocked_post):
 
         mocked_post.return_value = MagicMock(content='{}', status_code=201)
@@ -125,7 +125,7 @@ class ZoopTestCase(TestCase):
         response = self.client.add_individual_seller(data)
         self.assertEqual(response.status_code, 409, msg=response.data)
 
-    @patch('ZoopAPIWrapper.api.requests.delete')
+    @patch('ZoopAPIWrapper.wrapper.requests.delete')
     def test_remove_seller(self, mocked_delete):
         """
         Test remove_seller method.

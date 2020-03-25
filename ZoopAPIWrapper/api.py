@@ -3,7 +3,9 @@ import json
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MAIN_SELLER, MARKETPLACE_ID
+from ZoopAPIWrapper.models.base import ZoopModel
 from ZoopAPIWrapper.models.utils import get_instance_from_data
+from ZoopAPIWrapper.models.seller import Seller
 
 
 class Zoop:
@@ -57,8 +59,9 @@ class Zoop:
     @staticmethod
     def __process_response(response):
         response.data = json.loads(response.content)
-        if response.data.get('resource'):
-            if response.data.get('resource') == 'list':
+        resource = response.data.get('resource')
+        if resource is not None:
+            if resource == 'list':
                 response.instances = [get_instance_from_data(item)
                                       for item in response.data.get('items')]
             else:
@@ -76,6 +79,11 @@ class Zoop:
         response = requests.post(url, data=data, auth=self.__auth)
         response = self.__process_response(response)
         return response
+
+    def __post_instance(self, url, instance: ZoopModel):
+        if not isinstance(instance, ZoopModel):
+            raise TypeError('instance must be a ZoopModel')
+        return self.__post(url, data=instance.to_dict())
 
     def __delete(self, url):
         response = requests.delete(url, auth=self.__auth)
@@ -108,15 +116,14 @@ class Zoop:
     def search_individual_seller(self, identifier):
         return self._search_seller('taxpayer_id', identifier)
 
-    def _add_seller(self, seller_type, seller):
-        url = self.__construct_url(action=f'sellers', subaction=seller_type)
-        return self.__post(url, data=seller)
+    def add_seller(self, data: dict):
+        seller_instance = Seller.from_dict(data)
+        if not isinstance(seller_instance, Seller):
+            raise TypeError('Why is this not a Seller instance?')
 
-    def add_individual_seller(self, seller):
-        return self._add_seller('individuals', seller)
-
-    def add_business_seller(self, seller):
-        return self._add_seller('business', seller)
+        url = self.__construct_url(action=f'sellers',
+                                   subaction=seller_instance.get_type())
+        return self.__post_instance(url, instance=seller_instance)
 
     def remove_seller(self, identifier):
         url = self.__construct_url(action='sellers', identifier=identifier)

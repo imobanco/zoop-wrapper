@@ -13,14 +13,14 @@ class OwnerTestCase(TestCase):
             "phone_number": "foo",
             "birthdate": 'foo',
             "address": {
-                "line1": "Avenida Senador Casimiro da Rocha",
-                "line2": "1000",
-                "line3": "de 0741/742 a 1095/1096",
-                "neighborhood": "Mirand\u00f3polis",
+                "line1": "foo",
+                "line2": "foo",
+                "line3": "foo",
+                "neighborhood": "foo",
                 "city": "foo",
-                "state": "SP",
-                "postal_code": "04047002",
-                "country_code": "BR"
+                "state": "foo",
+                "postal_code": "foo",
+                "country_code": "foo"
             },
         }
         instance = Owner.from_dict(data)
@@ -39,14 +39,14 @@ class OwnerTestCase(TestCase):
             "phone_number": "foo",
             "birthdate": 'foo',
             "address": {
-                "line1": "Avenida Senador Casimiro da Rocha",
-                "line2": "1000",
-                "line3": "de 0741/742 a 1095/1096",
-                "neighborhood": "Mirand\u00f3polis",
+                "line1": "foo",
+                "line2": "foo",
+                "line3": "foo",
+                "neighborhood": "foo",
                 "city": "foo",
-                "state": "SP",
-                "postal_code": "04047002",
-                "country_code": "BR"
+                "state": "foo",
+                "postal_code": "foo",
+                "country_code": "foo"
             },
         }
         instance = Owner.from_dict(data)

@@ -6,21 +6,19 @@ from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 
 
-class Zoop:
+class RequestsWrapper:
     """
-    This class wraps the zoop API to ease use in python
+    requests lib wrapper
+
+    Attributes:
+        __base_url: base url to construct requests
     """
-
-    def __init__(self):
-        self._base_url = 'https://api.zoop.ws/v1/marketplaces'
-
-        self.__marketplace_id = MARKETPLACE_ID
-        self.__key = ZOOP_KEY
-
-        self.__main_seller = MAIN_SELLER
+    def __init__(self, base_url):
+        self.__base_url = base_url
 
     def __construct_url(self, action=None, identifier=None,
                         subaction=None, search=None):
+        # noinspection PyProtectedMember
         """
         construct url for the request
 
@@ -31,15 +29,14 @@ class Zoop:
             search: query with urls args to be researched
 
         Examples:
-            >>> zoop = Zoop()
-            >>> zoop._Zoop__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
+            >>> rw = RequestsWrapper()
+            >>> rw._RequestsWrapper__construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
             'http://zoopapiurl.com/{marketplace_id}/seller/1/bank_accounts/search?account_number=1'
 
         Returns: full url for the request
 
         """
-        url = f"{self._base_url}/"
-        url += f"{self.__marketplace_id}/"
+        url = f"{self.__base_url}/"
         if action:
             url += f"{action}/"
         if identifier:
@@ -52,17 +49,19 @@ class Zoop:
 
     @property
     def __auth(self):
-        return ZOOP_KEY, ''
+        raise NotImplementedError('Must implement auth function!')
 
     @staticmethod
     def __process_response(response):
         response.data = json.loads(response.content)
-        if response.data.get('resource'):
-            if response.data.get('resource') == 'list':
-                response.instances = [get_instance_from_data(item)
-                                      for item in response.data.get('items')]
-            else:
-                response.instance = get_instance_from_data(response.data)
+
+        resource = response.data.get('resource')
+        if resource == 'list':
+            response.instances = [get_instance_from_data(item)
+                                  for item in response.data.get('items')]
+        elif resource is not None:
+            response.instance = get_instance_from_data(response.data)
+
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
         return response

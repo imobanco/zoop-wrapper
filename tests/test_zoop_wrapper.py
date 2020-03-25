@@ -191,3 +191,16 @@ class ZoopTestCase(TestCase):
     # def test_list_transactions(self):
     #     response_as_dict = self.zoop.list_transactions(MAIN_SELLER)
     #     print(response_as_dict)
+    def test_list_buyers(self):
+        """
+        Test list_buyers method.
+        And create a dump with all buyers.
+        """
+
+        response = self.client.list_buyers()
+        self.assertEqual(response.status_code, 200, msg=response.data)
+        items = response.data.get('items')
+        self.assertTrue(items)
+        json_object = json.dumps(items, indent=4)
+        with open("data/buyers.json", "w") as outfile:
+            outfile.write(json_object)

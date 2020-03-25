@@ -81,6 +81,29 @@ class RequestsWrapper:
         response = self.__process_response(response)
         return response
 
+
+class ZoopWrapper(RequestsWrapper):
+    """
+    Zoop API methods wrapper
+
+    Attributes:
+        __marketplace_id: marketplace id from zoop for the zoop account
+        __key: zoop auth token
+    """
+
+    def __init__(self):
+        self.__marketplace_id = MARKETPLACE_ID
+        self.__key = ZOOP_KEY
+
+        super().__init__(
+            base_url=f'https://api.zoop.ws/v1/marketplaces/'
+                     f'{self.__marketplace_id}'
+        )
+
+    @property
+    def __auth(self):
+        return self.__key, ''
+
     def list_sellers(self):
         url = self.__construct_url(action='sellers')
         return self.__get(url)

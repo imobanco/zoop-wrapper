@@ -94,7 +94,7 @@ class ZoopTestCase(TestCase):
             # }
         }
 
-        response = self.client.add_individual_seller(data)
+        response = self.client.add_seller(data)
         self.assertEqual(response.status_code, 201, msg=response.error)
 
     def test_add_individual_seller_duplicated(self):
@@ -123,7 +123,7 @@ class ZoopTestCase(TestCase):
             # }
         }
 
-        response = self.client.add_individual_seller(data)
+        response = self.client.add_seller(data)
         self.assertEqual(response.status_code, 409, msg=response.data)
 
     @patch('ZoopAPIWrapper.wrapper.requests.delete')

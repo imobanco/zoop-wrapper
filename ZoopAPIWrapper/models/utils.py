@@ -1,7 +1,10 @@
-from ZoopAPIWrapper.models import logger
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.utils import get_logger
+
+
+logger = get_logger('models')
 
 
 RESOURCE_CLASSES = [BankAccount, Seller, Token]

@@ -1,4 +1,7 @@
-from ZoopAPIWrapper.models import logger
+from ZoopAPIWrapper.utils import get_logger
+
+
+logger = get_logger('models')
 
 
 class ZoopBase:

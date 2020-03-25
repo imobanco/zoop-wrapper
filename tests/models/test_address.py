@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.base import AddressModel
+from ZoopAPIWrapper.models.base import Address
 
 
 class AddressTestCase(TestCase):
@@ -18,9 +18,9 @@ class AddressTestCase(TestCase):
         }
 
     def test_from_dict(self):
-        instance = AddressModel.from_dict(self.data)
+        instance = Address.from_dict(self.data)
 
-        self.assertIsInstance(instance, AddressModel)
+        self.assertIsInstance(instance, Address)
         self.assertEqual(instance.line1, 'foo')
         self.assertEqual(instance.line2, 'foo')
         self.assertEqual(instance.line3, 'foo')
@@ -31,6 +31,6 @@ class AddressTestCase(TestCase):
         self.assertEqual(instance.country_code, 'foo')
 
     def test_to_dict(self):
-        instance = AddressModel.from_dict(self.data)
+        instance = Address.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)

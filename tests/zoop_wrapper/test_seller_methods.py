@@ -1,13 +1,14 @@
-import json
-
 from pycpfcnpj import gen
 
-from tests.utils import MockedPostDeleteTestCase
+from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
 from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
+from ZoopAPIWrapper.models.factories.seller import (
+    BusinessSellerFactory, IndividualSellerFactory
+)
 
 
-class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
+class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
     def setUp(self):
         super().setUp()
         self.client = ZoopWrapper()
@@ -18,27 +19,30 @@ class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
     def test_list_sellers(self):
         """
         Test list_sellers method.
-        And create a dump with all sellers.
         """
+        self.set_get_mock(200, {'items': 'true'})
+
         response = self.client.list_sellers()
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
         self.assertTrue(items)
-        json_object = json.dumps(items, indent=4)
-        with open("data/sellers.json", "w") as outfile:
-            outfile.write(json_object)
 
     def test_retrieve_seller(self):
         """
         Test retrieve_seller method.
-        Got this seller id from the json dump of sellers.
         """
+        self.set_get_mock(
+            200,
+            IndividualSellerFactory(
+                id='27e17b778b404a83bf8e25ec995e2ffe'
+            ).to_dict())
+
         response = self.client.retrieve_seller(
             '27e17b778b404a83bf8e25ec995e2ffe')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'),
                          '27e17b778b404a83bf8e25ec995e2ffe')
-        self.assertIsInstance(response.instance, BusinessSeller)
+        self.assertIsInstance(response.instance, IndividualSeller)
         self.assertEqual(response.instance.id,
                          '27e17b778b404a83bf8e25ec995e2ffe')
 
@@ -47,6 +51,13 @@ class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
         Test search_individual_seller method.
         Got this seller taxpayer_id from the json dump of sellers.
         """
+        self.set_get_mock(
+            200,
+            IndividualSellerFactory(
+                id='29f1251bc7514b96ad5f6d873f9812a1',
+                taxpayer_id='12685293892'
+            ).to_dict())
+
         response = self.client.search_individual_seller('12685293892')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'),
@@ -60,6 +71,13 @@ class ZoopWrapperSellerMethodsTestCase(MockedPostDeleteTestCase):
         Test search_business_seller method.
         Got this seller taxpayer_id from the json dump of sellers.
         """
+        self.set_get_mock(
+            200,
+            BusinessSellerFactory(
+                id='27e17b778b404a83bf8e25ec995e2ffe',
+                ein='24103314000188'
+            ).to_dict())
+
         response = self.client.search_business_seller('24103314000188')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'),

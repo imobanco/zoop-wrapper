@@ -5,18 +5,30 @@ from ZoopAPIWrapper.models.base import ZoopBase
 
 class ZoopBaseTestCase(TestCase):
     def setUp(self) -> None:
+        """
+        ZoopBase model doesn't have any attribute.
+        So we can manipulate it's attributes to test to_dict method
+        """
         ZoopBase._ZoopBase__FIELDS = ['id', 'name']
 
     def tearDown(self) -> None:
         ZoopBase._ZoopBase__FIELDS = []
 
     def test_from_dict(self):
+        """
+        ZoopBase model doesn't have any attribute.
+        So we can create a instance with an empty dict
+        """
         data = {}
         instance = ZoopBase.from_dict(data)
 
         self.assertIsInstance(instance, ZoopBase)
 
     def test_to_dict(self):
+        """
+        ZoopBase model doesn't have any attribute.
+        So we can manipulate it's attributes to test to_dict method
+        """
         data = {
             "id": '1',
             "name": None
@@ -26,6 +38,8 @@ class ZoopBaseTestCase(TestCase):
         instance.id = '1'
         instance.name = None
 
+        """We remove the name because it's value is none.
+        So it won't return on to_dict method"""
         data.pop('name')
 
         self.assertIsInstance(instance, ZoopBase)

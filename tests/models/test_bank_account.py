@@ -134,6 +134,8 @@ class BankAccountTestCase(TestCase):
         }
         instance = BankAccount.from_dict(data)
 
+        """We remove the address because it's value is none.
+        So it won't return on to_dict method"""
         data.pop('address')
 
         self.assertIsInstance(instance, IndividualBankAccount)

@@ -27,6 +27,6 @@ jobs:
       - name: Install dependencies
         run: echo "make pip.install"
       - name: Config .env file
-        run: echo "make config.env"
+        run: make config.env
       - name: Test with pytest
         run: make test

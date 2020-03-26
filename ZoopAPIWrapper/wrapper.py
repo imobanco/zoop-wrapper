@@ -1,11 +1,8 @@
-import json
-
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ZoopModel
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -166,12 +163,6 @@ class ZoopWrapper(RequestsWrapper):
 
     def list_bank_accounts(self):
         url = self._construct_url(action='bank_accounts')
-        return self._get(url)
-
-    def list_seller_bank_accounts(self, identifier):
-        url = self._construct_url(action='sellers',
-                                  identifier=identifier,
-                                  subaction='bank_accounts')
         return self._get(url)
 
     def retrieve_bank_account(self, identifier):

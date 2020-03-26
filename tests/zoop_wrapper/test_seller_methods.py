@@ -6,6 +6,9 @@ from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
 from ZoopAPIWrapper.models.factories.seller import (
     BusinessSellerFactory, IndividualSellerFactory
 )
+from ZoopAPIWrapper.models.factories.bank_account import (
+    IndividualBankAccountFactory
+)
 
 
 class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
@@ -20,7 +23,12 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         """
         Test list_sellers method.
         """
-        self.set_get_mock(200, {'items': 'true'})
+        self.set_get_mock(
+            200,
+            {
+                'items': [IndividualSellerFactory()]
+            }
+        )
 
         response = self.client.list_sellers()
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -160,6 +168,16 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         Test list_seller_bank_accounts method.
         Got this costumer (seller_id) from the json dump of bank_accounts.
         """
+        self.set_get_mock(
+            200,
+            {
+                'items': [
+                    IndividualBankAccountFactory(
+                        customer='ee7e4b3683f8461a89e173dfb9d41d2c'
+                    )
+                ]
+            }
+        )
         response = self.client.list_seller_bank_accounts(
             'ee7e4b3683f8461a89e173dfb9d41d2c')
         self.assertEqual(response.status_code, 200, msg=response.data)

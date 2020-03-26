@@ -6,11 +6,12 @@ from ZoopAPIWrapper.models.seller import (
     Seller, IndividualSeller, BusinessSeller)
 from ZoopAPIWrapper.models.factories.base import (
     ZoopMarketPlaceModelFactory, OwnerModelFactory,
-    SocialModelFactory, FinancialModelFactory, AddressModelFactory
+    # SocialModelFactory, FinancialModelFactory,
+    AddressModelFactory
 )
 
 
-class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
+class SellerFactory(ZoopMarketPlaceModelFactory):
     class Meta:
         model = Seller
 
@@ -26,12 +27,22 @@ class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
     terminal_code = None
     type = None
 
+    status = Faker('random_element', elements=['active', 'pending'])
+    account_balance = Faker('pyfloat', positive=True, min_value=0.0)
+    current_balance = Faker('pyfloat', positive=True, min_value=0.0)
+    description = Faker('sentence', nb_words=5)
+    delinquent = Faker('pybool')
+    default_debit = Faker('pybool')
+    default_credit = Faker('pybool')
+    payment_methods = None
 
-class IndividualSellerFactory(SellerFactory, OwnerModelFactory,
-                              SocialModelFactory):
+
+class IndividualSellerFactory(SellerFactory, OwnerModelFactory):
     class Meta:
         model = IndividualSeller
 
+    twitter = Faker('uri')
+    facebook = Faker('uri')
     website = Faker('uri')
     type = 'individual'
 

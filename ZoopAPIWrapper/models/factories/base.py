@@ -4,9 +4,11 @@ from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.base import (
     ZoopBase, ZoopModel, ZoopMarketPlaceModel,
-    OwnerModel, AddressModel,
-    SocialModel, FinancialModel
+    Address as AddressModel
+    # OwnerModel, AddressModel,
+    # SocialModel, FinancialModel
 )
+from ZoopAPIWrapper.models.seller import Owner as OwnerModel
 
 
 class ZoopBaseFactory(Factory):
@@ -60,23 +62,23 @@ class OwnerModelFactory(ZoopBaseFactory):
     address = SubFactory(AddressModelFactory)
 
 
-class SocialModelFactory(ZoopBaseFactory):
-    class Meta:
-        model = SocialModel
-
-    twitter = Faker('uri')
-    facebook = Faker('uri')
-
-
-class FinancialModelFactory(ZoopBaseFactory):
-    class Meta:
-        model = FinancialModel
-
-    status = Faker('random_element', elements=['active', 'pending'])
-    account_balance = Faker('pyfloat', positive=True, min_value=0.0)
-    current_balance = Faker('pyfloat', positive=True, min_value=0.0)
-    description = Faker('sentence', nb_words=5)
-    delinquent = Faker('pybool')
-    default_debit = Faker('pybool')
-    default_credit = Faker('pybool')
-    payment_methods = None
+# class SocialModelFactory(ZoopBaseFactory):
+#     class Meta:
+#         model = SocialModel
+#
+#     twitter = Faker('uri')
+#     facebook = Faker('uri')
+#
+#
+# class FinancialModelFactory(ZoopBaseFactory):
+#     class Meta:
+#         model = FinancialModel
+#
+#     status = Faker('random_element', elements=['active', 'pending'])
+#     account_balance = Faker('pyfloat', positive=True, min_value=0.0)
+#     current_balance = Faker('pyfloat', positive=True, min_value=0.0)
+#     description = Faker('sentence', nb_words=5)
+#     delinquent = Faker('pybool')
+#     default_debit = Faker('pybool')
+#     default_credit = Faker('pybool')
+#     payment_methods = None

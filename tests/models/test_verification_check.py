@@ -1,7 +1,8 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.bank_account import VerificationChecklist
-from ZoopAPIWrapper.models.factories.bank_account import VerificationChecklistFactory
+from ZoopAPIWrapper.models.factories.bank_account import (
+    VerificationChecklistFactory)
 
 
 class VerificationChecklistTestCase(TestCase):

@@ -2,7 +2,8 @@ from factory import SubFactory, LazyFunction
 from factory.faker import Faker
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.models.seller import Seller, IndividualSeller, BusinessSeller
+from ZoopAPIWrapper.models.seller import (
+    Seller, IndividualSeller, BusinessSeller)
 from ZoopAPIWrapper.models.factories.base import (
     ZoopMarketPlaceModelFactory, OwnerModelFactory,
     SocialModelFactory, FinancialModelFactory, AddressModelFactory
@@ -26,7 +27,8 @@ class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
     type = None
 
 
-class IndividualSellerFactory(SellerFactory, OwnerModelFactory, SocialModelFactory):
+class IndividualSellerFactory(SellerFactory, OwnerModelFactory,
+                              SocialModelFactory):
     class Meta:
         model = IndividualSeller
 

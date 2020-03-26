@@ -20,7 +20,7 @@ class AddressTestCase(TestCase):
 
     def test_create(self):
         instance = AddressModelFactory()
-        self.assertIsInstance(instance, AddressModel)
+        self.assertIsInstance(instance, Address)
 
     def test_from_dict(self):
         instance = Address.from_dict(self.data)

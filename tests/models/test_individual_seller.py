@@ -3,6 +3,7 @@ from unittest import TestCase
 from ZoopAPIWrapper.models.seller import IndividualSeller, AddressModel
 from ZoopAPIWrapper.models.factories.seller import IndividualSellerFactory
 
+
 class IndividualSellerTestCase(TestCase):
     @property
     def data(self):

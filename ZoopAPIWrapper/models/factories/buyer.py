@@ -1,6 +1,7 @@
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopMarketPlaceModelFactory, OwnerModelFactory, SocialModelFactory, FinancialModelFactory)
+    ZoopMarketPlaceModelFactory, OwnerModelFactory,
+    SocialModelFactory, FinancialModelFactory)
 
 
 class BuyerFactory(ZoopMarketPlaceModelFactory, OwnerModelFactory,

@@ -1,10 +1,11 @@
 from unittest import TestCase
-from unittest.mock import MagicMock
+from unittest.mock import patch
 
+from tests.utils import BuildResponseMockMixin
 from ZoopAPIWrapper.wrapper import RequestsWrapper
 
 
-class RequestWrapperTestCase(TestCase):
+class RequestWrapperTestCase(TestCase, BuildResponseMockMixin):
     def setUp(self):
         self.client = RequestsWrapper('foo')
 
@@ -21,10 +22,10 @@ class RequestWrapperTestCase(TestCase):
 
         self.assertEqual(url, f'foo/teste/123/')
 
-    def test_process_response_error(self):
-        response = MagicMock(
-            content='{"error": {"message": "foo"}}'
-        )
+    @patch('ZoopAPIWrapper.wrapper.logger')
+    def test_process_response_error(self, mocked_logger):
+        response = self.build_response_mock(
+            content={"error": {"message": "foo"}})
 
         processed_response = self.client.\
             _RequestsWrapper__process_response(response)
@@ -32,18 +33,16 @@ class RequestWrapperTestCase(TestCase):
         self.assertEqual(processed_response.error, "foo")
 
     def test_process_response_resource(self):
-        response = MagicMock(
-            content='{"resource": "test"}'
-        )
+        response = self.build_response_mock(content={"resource": "test"})
 
         processed_response = self.client.\
             _RequestsWrapper__process_response(response)
         self.assertIsNone(processed_response.instance)
 
     def test_process_response_resource_list(self):
-        response = MagicMock(
-            content='{"resource": "list", "items": '
-                    '[{"resource": "test", "message": "foo"}]}'
+        response = self.build_response_mock(
+            content={"resource": "list", "items": [
+                {"resource": "test", "message": "foo"}]}
         )
 
         processed_response = self.client.\

@@ -204,6 +204,13 @@ class Address(ZoopBase):
         self.postal_code = postal_code
         self.country_code = country_code
 
+    @classmethod
+    def from_dict(cls, data):
+        try:
+            return super().from_dict(data)
+        except TypeError:
+            return None
+
     @property
     def fields(self):
         """

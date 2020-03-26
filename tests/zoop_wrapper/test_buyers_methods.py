@@ -16,8 +16,7 @@ class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
 
     def test_list_buyers(self):
         """
-        Test list_buyers method.
-        And create a dump with all buyers.
+        Test list_buyers method
         """
         self.set_get_mock(
             200,

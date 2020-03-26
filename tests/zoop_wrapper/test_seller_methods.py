@@ -113,7 +113,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         """
         the zoop api returns 409 if theres a unique attribute
         duplicated on the DB. Such as taxpayer_id.
-        Got this taxpayer_id from sellers json dump.
         """
         self.set_post_mock(409, {})
 
@@ -159,8 +158,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
 
     def test_list_seller_bank_accounts(self):
         """
-        Test list_seller_bank_accounts method.
-        Got this costumer (seller_id) from the json dump of bank_accounts.
+        Test list_seller_bank_accounts method
         """
         self.set_get_mock(
             200,

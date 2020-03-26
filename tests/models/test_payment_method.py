@@ -9,6 +9,13 @@ class PaymentMethodTestCase(TestCase):
     @property
     def data(self):
         return {
+            'id': 'foo',
+            'resource': 'foo',
+            'uri': 'foo',
+            'metadata': {},
+            'created_at': 'foo',
+            'updated_at': 'foo',
+
             'description': 'foo',
             'customer': 'foo',
             'address': {
@@ -31,6 +38,9 @@ class PaymentMethodTestCase(TestCase):
         instance = PaymentMethod.from_dict(self.data)
 
         self.assertIsInstance(instance, PaymentMethod)
+        self.assertEqual(instance.id, 'foo')
+        self.assertEqual(instance.resource, 'foo')
+        self.assertEqual(instance.uri, 'foo')
         self.assertEqual(instance.description, 'foo')
         self.assertEqual(instance.customer, 'foo')
         self.assertIsInstance(instance.address, AddressModel)

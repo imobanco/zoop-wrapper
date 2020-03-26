@@ -1,0 +1,2 @@
+class AddressCreationException(Exception):
+    pass

@@ -1,13 +1,11 @@
-import json
-
 from pycpfcnpj import gen
 
-from tests.utils import MockedPostDeleteTestCase
+from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.buyer import Buyer
 
 
-class ZoopWrapperBuyerMethodsTestCase(MockedPostDeleteTestCase):
+class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
     def setUp(self):
         super().setUp()
         self.client = ZoopWrapper()
@@ -25,9 +23,6 @@ class ZoopWrapperBuyerMethodsTestCase(MockedPostDeleteTestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
         self.assertTrue(items)
-        json_object = json.dumps(items, indent=4)
-        with open("data/buyers.json", "w") as outfile:
-            outfile.write(json_object)
 
     def test_retrieve_buyer(self):
         """

@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.base import AddressModel
+from ZoopAPIWrapper.models.factories.buyer import BuyerFactory
 
 
 class BuyerTestCase(TestCase):
@@ -44,6 +45,10 @@ class BuyerTestCase(TestCase):
 
             "default_receipt_delivery_method": None
         }
+
+    def test_create(self):
+        instance = BuyerFactory()
+        self.assertIsInstance(instance, Buyer)
 
     def test_from_dict(self):
         instance = Buyer.from_dict(self.data)

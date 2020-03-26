@@ -49,6 +49,22 @@ class ZoopBase:
         """
         return cls._from_dict(**data)
 
+    @classmethod
+    def from_dict_or_instance(cls, data):
+        """
+        check if data is already a ZoopModel or subclass.
+        If not call from_dict
+
+        Args:
+            data: dict of data or instance
+
+        Returns: instance initialized of class
+        """
+        if isinstance(data, cls):
+            return data
+        else:
+            return cls.from_dict(data)
+
     def to_dict(self):
         """
         serialize the instance to dict
@@ -233,12 +249,7 @@ class OwnerModel(ZoopBase):
         self.phone_number = phone_number
         self.birthdate = birthdate
 
-        if isinstance(address, AddressModel):
-            self.address = address
-        elif isinstance(address, dict):
-            self.address = AddressModel.from_dict(address)
-        else:
-            self.address = None
+        self.address = AddressModel.from_dict_or_instance(address)
 
     @property
     def fields(self):

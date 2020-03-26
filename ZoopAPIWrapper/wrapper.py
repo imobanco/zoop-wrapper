@@ -6,6 +6,7 @@ from ZoopAPIWrapper.models.bank_account import (
     BankAccount, IndividualBankAccount, BusinessBankAccount)
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
+from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -299,26 +300,44 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    def __add_bank_account_token(self, bank_account: BankAccount):
+    def __add_token(self, bank_account: BankAccount):
+        """
+        add bank account token
+
+        Args:
+            bank_account: BankAccount model
+
+        Returns: response with instance of BankAccount
+        """
         url = self._construct_url(action='bank_accounts', subaction='tokens')
         return self._post_instance(url, instance=bank_account)
 
     def add_bank_account(self, data: dict):
+        """
+        add bank account
+
+        Args:
+            data: dict of data
+
+        Returns: response with instance of BankAccount
+        """
         bank_account_instance = BankAccount.from_dict(data)
-        assert isinstance(bank_account_instance, BankAccount)
+        if not isinstance(bank_account_instance, BankAccount):
+            raise TypeError('this is not supposed to happen!')
 
         if isinstance(bank_account_instance, IndividualBankAccount):
             seller_response = self.search_individual_seller(
                 bank_account_instance.taxpayer_id)
-        else:
-            assert isinstance(bank_account_instance, BusinessBankAccount)
+        elif isinstance(bank_account_instance, BusinessBankAccount):
             seller_response = self.search_business_seller(
                 bank_account_instance.ein)
+        else:
+            raise TypeError('this is not supposed to happen!')
 
         seller_instance = seller_response.instance
         assert isinstance(seller_instance, Seller)
 
-        token_response = self.__add_bank_account_token(bank_account_instance)
+        token_response = self.__add_token(bank_account_instance)
         token_instance = token_response.instance
         assert isinstance(token_instance, Token)
 
@@ -327,7 +346,9 @@ class ZoopWrapper(RequestsWrapper):
             "token": token_instance.id
         }
 
-        url = self.__construct_url(action='bank_accounts')
+        url = self._construct_url(action='bank_accounts')
+        return self._post(url, data=data)
+
     def __get_buyers(self, action='buyers', identifier=None, search=None):
         """
         get method for buyers actions

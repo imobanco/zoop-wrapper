@@ -45,7 +45,7 @@ class BankAccountFactory(ZoopModelFactory):
     description = Faker('sentence', nb_words=5)
     bank_name = Faker('company')
     type = Faker('random_element', elements=['savings', 'checkings'])
-    last4_digits = Faker('pyint', min_value=0, max_value=9999, step=1)
+    last4_digits = Faker('pyint', min_value=1000, max_value=9999, step=1)
     country_code = Faker('country_code', representation='alpha-2')
     phone_number = Faker('phone_number')
     is_active = Faker('pybool')

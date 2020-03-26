@@ -255,7 +255,7 @@ class ZoopWrapper(RequestsWrapper):
         Returns: response with instance of Seller
         """
         instance = Seller.from_dict(data)
-        url = self._construct_url(action=f'sellers',
+        url = self._construct_url(action='sellers',
                                   subaction=instance.get_type())
         return self._post_instance(url, instance=instance)
 
@@ -348,7 +348,7 @@ class ZoopWrapper(RequestsWrapper):
         Returns: response with instance of Buyer
         """
         instance = Buyer.from_dict(data)
-        url = self._construct_url(action=f'buyers')
+        url = self._construct_url(action='buyers')
         return self._post_instance(url, instance=instance)
 
     def remove_buyer(self, identifier):
@@ -360,6 +360,6 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response without instance
         """
-        url = self._construct_url(action=f'buyers',
+        url = self._construct_url(action='buyers',
                                   identifier=identifier)
         return self._delete(url)

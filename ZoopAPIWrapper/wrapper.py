@@ -375,6 +375,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Examples:
             data = {
+                'taxpayer_id' or 'ein': 'foo',
                 'holder_name': 'foo',
                 'bank_code': 'foo',
                 'routing_number': 'foo',

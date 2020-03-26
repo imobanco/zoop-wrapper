@@ -4,7 +4,7 @@ from ZoopAPIWrapper.models.base import (
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
 from ZoopAPIWrapper.models.seller import (
-    Seller, BusinessSeller, IndividualSeller)
+    BusinessSeller, IndividualSeller)
 
 
 class VerificationChecklist(ZoopBaseCreationSuppresed):

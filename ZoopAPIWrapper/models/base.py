@@ -1,5 +1,5 @@
 from ZoopAPIWrapper.utils import get_logger
-from ZoopAPIWrapper.exceptions import AddressCreationException
+from ZoopAPIWrapper.exceptions import ZoopBaseCreationException
 
 
 logger = get_logger('models')
@@ -98,6 +98,26 @@ class ZoopBase:
         return list(self.__FIELDS)
 
 
+class ZoopBaseCreationSuppresed(ZoopBase):
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+        May return None
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls or None
+        """
+        try:
+            return super().from_dict(data)
+        except TypeError:
+            e = ZoopBaseCreationException(f'{cls} could not be created!')
+            logger.warning(e)
+            return None
+
+
 class ZoopModel(ZoopBase):
     """
     This class and it's subclasses have attributes.
@@ -170,7 +190,7 @@ class ZoopMarketPlaceModel(ZoopModel):
         return list(super_fields)
 
 
-class AddressModel(ZoopBase):
+class AddressModel(ZoopBaseCreationSuppresed):
     """
     This class and it's subclasses have attributes.
 
@@ -204,24 +224,6 @@ class AddressModel(ZoopBase):
         self.state = state
         self.postal_code = postal_code
         self.country_code = country_code
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-        May return None
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of cls or None
-        """
-        try:
-            return super().from_dict(data)
-        except TypeError:
-            e = AddressCreationException('address could not be created!')
-            logger.warning(e)
-            return None
 
     @property
     def fields(self):

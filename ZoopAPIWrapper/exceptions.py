@@ -1,2 +1,2 @@
-class AddressCreationException(Exception):
+class ZoopBaseCreationException(Exception):
     pass

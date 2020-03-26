@@ -1,9 +1,13 @@
-from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, AddressModel
+from ZoopAPIWrapper.models.base import (
+    ZoopBaseCreationSuppresed, ZoopModel, AddressModel
+)
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
+from ZoopAPIWrapper.models.seller import (
+    Seller, BusinessSeller, IndividualSeller)
 
 
-class VerificationChecklist(ZoopBase):
+class VerificationChecklist(ZoopBaseCreationSuppresed):
     """
     This class and it's subclasses have attributes.
 

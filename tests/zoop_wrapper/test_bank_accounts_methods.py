@@ -16,7 +16,6 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
     def test_list_bank_accounts(self):
         """
         Test list_bank_accounts method.
-        And create a dump with all bank_accounts.
         """
         self.set_get_mock(
             200,
@@ -30,7 +29,6 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
     def test_retrieve_bank_account(self):
         """
         Test retrieve_bank_account method.
-        Got this bank_account id from the json dump of bank_accounts.
         """
         self.set_get_mock(
             200,

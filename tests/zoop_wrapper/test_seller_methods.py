@@ -57,7 +57,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
     def test_search_individual_seller(self):
         """
         Test search_individual_seller method.
-        Got this seller taxpayer_id from the json dump of sellers.
         """
         self.set_get_mock(
             200,
@@ -77,7 +76,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
     def test_search_business_seller(self):
         """
         Test search_business_seller method.
-        Got this seller taxpayer_id from the json dump of sellers.
         """
         self.set_get_mock(
             200,

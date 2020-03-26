@@ -417,7 +417,7 @@ class PaymentMethod(ZoopModel):
 
         self.description = description
         self.customer = customer
-        self.addres = AddressModel.from_dict_or_instance(address)
+        self.address = AddressModel.from_dict_or_instance(address)
 
     @property
     def fields(self):

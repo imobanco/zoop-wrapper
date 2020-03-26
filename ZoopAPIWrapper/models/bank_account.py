@@ -1,9 +1,10 @@
-from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, AddressModel
+from ZoopAPIWrapper.models.base import (
+    ZoopModel, AddressModel, VerificationChecklist)
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
 
 
-class VerificationChecklist(ZoopBase):
+class BankAccountVerificationChecklist(VerificationChecklist):
     """
     This class and it's subclasses have attributes.
 
@@ -11,19 +12,13 @@ class VerificationChecklist(ZoopBase):
     has responsability of constructing in the serialization to dict.
 
     Attributes:
-        postal_code_check: boolean of verification
-        address_line1_check: boolean of verification
         deposit_check: boolean of verification
     """
-    __FIELDS = ["postal_code_check", "address_line1_check",
-                "deposit_check"]
+    __FIELDS = ["deposit_check"]
 
-    def __init__(self, postal_code_check, address_line1_check,
-                 deposit_check, **kwargs):
+    def __init__(self, deposit_check, **kwargs):
         super().__init__(**kwargs)
 
-        self.postal_code_check = postal_code_check
-        self.address_line1_check = address_line1_check
         self.deposit_check = deposit_check
 
     @property
@@ -110,7 +105,7 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         self.fingerprint = fingerprint
 
         self.address = AddressModel.from_dict_or_instance(address)
-        self.verification_checklist = VerificationChecklist\
+        self.verification_checklist = BankAccountVerificationChecklist\
             .from_dict_or_instance(verification_checklist)
 
     # noinspection PyMethodParameters

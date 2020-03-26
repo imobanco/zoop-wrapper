@@ -31,4 +31,4 @@ class BankAccountVerificationChecklistTestCase(TestCase):
     def test_to_dict(self):
         instance = BankAccountVerificationChecklist.from_dict(self.data)
 
-        self.assertIsInstance(instance, BankAccountVerificationChecklist)
+        self.assertEqual(instance.to_dict(), self.data)

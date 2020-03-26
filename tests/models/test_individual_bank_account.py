@@ -1,5 +1,4 @@
-from unittest import TestCase
-
+from tests.utils import MockedAddressLoggerTestCase as TestCase
 from ZoopAPIWrapper.models.bank_account import (
     IndividualBankAccount, VerificationChecklist)
 from ZoopAPIWrapper.models.factories.bank_account import (

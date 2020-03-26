@@ -209,7 +209,8 @@ class BusinessSeller(Seller):
         self.business_website = business_website
         self.business_opening_date = business_opening_date
 
-        self.business_address = AddressModel.from_dict_or_instance(business_address)
+        self.business_address = AddressModel\
+            .from_dict_or_instance(business_address)
         self.owner = OwnerModel.from_dict_or_instance(owner)
         self.business_description = business_description
         self.business_facebook = business_facebook

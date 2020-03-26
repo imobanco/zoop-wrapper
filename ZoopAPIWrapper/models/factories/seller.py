@@ -34,7 +34,8 @@ class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
     type = None
 
 
-class IndividualSellerFactory(SellerFactory, OwnerModelFactory, SocialModelFactory):
+class IndividualSellerFactory(SellerFactory, OwnerModelFactory,
+                              SocialModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.

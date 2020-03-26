@@ -2,6 +2,8 @@ import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.bank_account import (
+    BankAccount, IndividualBankAccount, BusinessBankAccount)
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
@@ -169,3 +171,33 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='bank_accounts',
                                   identifier=identifier)
         return self._get(url)
+
+    def __add_bank_account_token(self, bank_account: BankAccount):
+        url = self._construct_url(action='bank_accounts', subaction='tokens')
+        return self._post_instance(url, instance=bank_account)
+
+    def add_bank_account(self, data: dict):
+        bank_account_instance = BankAccount.from_dict(data)
+        assert isinstance(bank_account_instance, BankAccount)
+
+        if isinstance(bank_account_instance, IndividualBankAccount):
+            seller_response = self.search_individual_seller(
+                bank_account_instance.taxpayer_id)
+        else:
+            assert isinstance(bank_account_instance, BusinessBankAccount)
+            seller_response = self.search_business_seller(
+                bank_account_instance.ein)
+
+        seller_instance = seller_response.instance
+        assert isinstance(seller_instance, Seller)
+
+        token_response = self.__add_bank_account_token(bank_account_instance)
+        token_instance = token_response.instance
+        assert isinstance(token_instance, Token)
+
+        data = {
+            "customer": seller_instance.id,
+            "token": token_instance.id
+        }
+
+        url = self.__construct_url(action='bank_accounts')

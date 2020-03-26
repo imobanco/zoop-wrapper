@@ -38,19 +38,14 @@ class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
         """
         self.set_get_mock(
             200,
-            BuyerFactory(
-                id='093bad87c86649528e0286388a325867'
-            ).to_dict()
+            BuyerFactory(id='foo').to_dict()
         )
 
-        response = self.client.retrieve_buyer(
-            '093bad87c86649528e0286388a325867')
+        response = self.client.retrieve_buyer('foo')
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'),
-                         '093bad87c86649528e0286388a325867')
+        self.assertEqual(response.data.get('id'), 'foo')
         self.assertIsInstance(response.instance, Buyer)
-        self.assertEqual(response.instance.id,
-                         '093bad87c86649528e0286388a325867')
+        self.assertEqual(response.instance.id, 'foo')
 
     def test_search_buyer(self):
         """
@@ -60,19 +55,16 @@ class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
         self.set_get_mock(
             200,
             BuyerFactory(
-                id='d8a5299cc72b4971b42845ed68cbf75c',
-                taxpayer_id='13398287409'
+                id='foo',
+                taxpayer_id='bar'
             ).to_dict()
         )
 
-        response = self.client.search_buyer(
-            '13398287409')
+        response = self.client.search_buyer('bar')
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(response.data.get('id'),
-                         'd8a5299cc72b4971b42845ed68cbf75c')
+        self.assertEqual(response.data.get('id'), 'foo')
         self.assertIsInstance(response.instance, Buyer)
-        self.assertEqual(response.instance.id,
-                         'd8a5299cc72b4971b42845ed68cbf75c')
+        self.assertEqual(response.instance.id, 'foo')
 
     def test_add_buyer(self):
         self.set_post_mock(
@@ -109,11 +101,11 @@ class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
         self.set_delete_mock(
             200,
             {
-                'id': 'a12c6bf830854b5d9c1d2d36cb1478a0',
+                'id': 'foo',
                 'resource': 'buyer',
                 'deleted': True
             }
         )
 
-        response = self.client.remove_buyer('a12c6bf830854b5d9c1d2d36cb1478a0')
+        response = self.client.remove_buyer('foo')
         self.assertEqual(response.status_code, 200, msg=response.data)

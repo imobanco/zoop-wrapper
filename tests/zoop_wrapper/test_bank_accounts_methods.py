@@ -33,15 +33,12 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         self.set_get_mock(
             200,
             IndividualBankAccountFactory(
-                id='064d3c7846b142e591896d2fb69dac3f'
+                id='foo'
             ).to_dict()
         )
-        response = self.client.retrieve_bank_account(
-            '064d3c7846b142e591896d2fb69dac3f')
+        response = self.client.retrieve_bank_account('foo')
         self.assertEqual(response.status_code, 200, msg=response.data)
         data = response.data
-        self.assertEqual(data.get('id'), '064d3c7846b142e591896d2fb69dac3f',
-                         msg=data)
+        self.assertEqual(data.get('id'), 'foo', msg=data)
         self.assertIsInstance(response.instance, BankAccount)
-        self.assertEqual(response.instance.id,
-                         '064d3c7846b142e591896d2fb69dac3f')
+        self.assertEqual(response.instance.id, 'foo')

@@ -26,6 +26,16 @@ class RequestsWrapper:
 
     @staticmethod
     def __process_response(response):
+        """
+        add 'data' attribute to response from json content.
+        add 'instance' or 'instances' attribute to response by resource.
+        add 'error' attribute to response if had errors
+
+        Args:
+            response: http response
+
+        Returns: processed http response
+        """
         response.data = response.json()
 
         deleted = response.data.get('deleted')
@@ -75,19 +85,50 @@ class RequestsWrapper:
 
     @property
     def _auth(self):
+        """
+        property of authentication
+
+        Raises:
+            NotImplementedError: it's a abstract method
+        """
         raise NotImplementedError('Must implement auth function!')
 
     def _get(self, url):
+        """
+        http get request wrapper
+
+        Args:
+            url: url to be requested
+
+        Returns: processed response
+        """
         response = requests.get(url, auth=self._auth)
         response = self.__process_response(response)
         return response
 
     def _post(self, url, data):
+        """
+        http post request wrapper
+
+        Args:
+            url: url to be requested
+            data: data to be posted
+
+        Returns: processed response
+        """
         response = requests.post(url, data=data, auth=self._auth)
         response = self.__process_response(response)
         return response
 
     def _delete(self, url):
+        """
+        http delete request wrapper
+
+        Args:
+            url: url to be requested
+
+        Returns: processed response
+        """
         response = requests.delete(url, auth=self._auth)
         response = self.__process_response(response)
         return response
@@ -113,9 +154,23 @@ class ZoopWrapper(RequestsWrapper):
 
     @property
     def _auth(self):
+        """
+        property of authentication
+
+        Returns: tuple with ZoopKey
+        """
         return self.__key, ''
 
     def _post_instance(self, url, instance: ZoopModel):
+        """
+        http post request wrapper with instance
+        
+        Args:
+            url: url to be requested
+            instance: instance to be posted
+
+        Returns: processed response
+        """
         if not isinstance(instance, ZoopModel):
             raise TypeError('instance must be a ZoopModel')
         return self._post(url, data=instance.to_dict())

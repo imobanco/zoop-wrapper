@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, Address
+from ZoopAPIWrapper.models.base import ZoopBase, ZoopModel, AddressModel
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
 
@@ -109,7 +109,7 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         self.customer = customer
         self.fingerprint = fingerprint
 
-        self.address = Address.from_dict_or_instance(address)
+        self.address = AddressModel.from_dict_or_instance(address)
         self.verification_checklist = VerificationChecklist\
             .from_dict_or_instance(verification_checklist)
 

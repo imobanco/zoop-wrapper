@@ -1,6 +1,5 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase
-from ZoopAPIWrapper.models.seller import (
-    Owner as OwnerModel, Address as AddressModel)
+from ZoopAPIWrapper.models.base import OwnerModel, AddressModel
 from ZoopAPIWrapper.models.factories.base import OwnerModelFactory
 
 

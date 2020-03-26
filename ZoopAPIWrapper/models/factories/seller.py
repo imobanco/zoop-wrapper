@@ -12,6 +12,12 @@ from ZoopAPIWrapper.models.factories.base import (
 
 
 class SellerFactory(ZoopMarketPlaceModelFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = Seller
 
@@ -38,6 +44,12 @@ class SellerFactory(ZoopMarketPlaceModelFactory):
 
 
 class IndividualSellerFactory(SellerFactory, OwnerModelFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = IndividualSeller
 
@@ -48,6 +60,12 @@ class IndividualSellerFactory(SellerFactory, OwnerModelFactory):
 
 
 class BusinessSellerFactory(SellerFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = BusinessSeller
 

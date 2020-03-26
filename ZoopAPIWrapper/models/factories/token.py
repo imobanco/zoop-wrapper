@@ -6,6 +6,12 @@ from ZoopAPIWrapper.models.factories.base import (
 
 
 class TokenFactory(ZoopModelFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = Token
 

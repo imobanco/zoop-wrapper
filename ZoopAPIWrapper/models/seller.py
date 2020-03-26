@@ -121,13 +121,15 @@ class Seller(ZoopMarketPlaceModel, FinancialModel, BusinessOrIndividualMixin):
 
 class IndividualSeller(Seller, OwnerModel, SocialModel):
     """
-    This class and it's subclassses have attributes.
+    This class and it's subclasses have attributes.
 
     The __FIELDS list the attributes this class
     has responsability of constructing in the serialization to dict.
 
     The TYPE attribute of this class is used on Zoop.api.
 
+    Attributes:
+        website: uri
     """
     __FIELDS = ['website']
 
@@ -207,8 +209,7 @@ class BusinessSeller(Seller):
         self.business_website = business_website
         self.business_opening_date = business_opening_date
 
-        self.business_address = AddressModel\
-            .from_dict_or_instance(business_address)
+        self.business_address = AddressModel.from_dict_or_instance(business_address)
         self.owner = OwnerModel.from_dict_or_instance(owner)
         self.business_description = business_description
         self.business_facebook = business_facebook

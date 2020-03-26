@@ -14,7 +14,20 @@ class BuildResponseMockMixin:
         )
 
 
-class RequestsMockedTestCase(TestCase, BuildResponseMockMixin):
+class MockedAddressLoggerTestCase(TestCase):
+    def setUp(self):
+        super().setUp()
+
+        self.patcher_address_loggger = patch(
+            "ZoopAPIWrapper.models.base.logger")
+
+        self.mocked_address_logger = self.patcher_address_loggger.start()
+
+        self.addCleanup(self.patcher_address_loggger.stop)
+
+
+class RequestsMockedTestCase(MockedAddressLoggerTestCase,
+                             BuildResponseMockMixin):
     def setUp(self):
         super().setUp()
 

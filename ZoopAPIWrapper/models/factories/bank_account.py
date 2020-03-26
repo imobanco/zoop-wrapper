@@ -12,6 +12,12 @@ from ZoopAPIWrapper.models.factories.base import (
 
 
 class VerificationChecklistFactory(ZoopBaseFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = VerificationChecklist
 
@@ -21,6 +27,12 @@ class VerificationChecklistFactory(ZoopBaseFactory):
 
 
 class BankAccountFactory(ZoopModelFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = BankAccount
 
@@ -47,6 +59,12 @@ class BankAccountFactory(ZoopModelFactory):
 
 
 class BusinessBankAccountFactory(BankAccountFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = BusinessBankAccount
 
@@ -54,6 +72,12 @@ class BusinessBankAccountFactory(BankAccountFactory):
 
 
 class IndividualBankAccountFactory(BankAccountFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = IndividualBankAccount
 

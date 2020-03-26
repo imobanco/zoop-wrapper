@@ -57,7 +57,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
     def test_search_individual_seller(self):
         """
         Test search_individual_seller method.
-        Got this seller taxpayer_id from the json dump of sellers.
         """
         self.set_get_mock(
             200,
@@ -77,7 +76,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
     def test_search_business_seller(self):
         """
         Test search_business_seller method.
-        Got this seller taxpayer_id from the json dump of sellers.
         """
         self.set_get_mock(
             200,
@@ -95,10 +93,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
                          '27e17b778b404a83bf8e25ec995e2ffe')
 
     def test_add_individual_seller(self):
-        self.set_post_mock(
-            201,
-            IndividualSellerFactory().to_dict()
-        )
+        self.set_post_mock(201, {})
 
         data = {
             "taxpayer_id": gen.cpf(),
@@ -107,6 +102,17 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
             'email': 'foo@bar.com',
             'phone_number': '+55 84 99999-9999',
             'birthdate': '1994-12-27',
+
+            # 'address': {
+            #     'line1': 'foo',
+            #     'line2': '123',
+            #     'line3': 'barbar',
+            #     'neighborhood': 'fooofoo',
+            #     'city': 'Natal',
+            #     'state': 'BR-RN',
+            #     'postal_code': '59152250',
+            #     'country_code': "BR"
+            # }
         }
 
         response = self.client.add_seller(data)
@@ -144,17 +150,9 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         self.assertEqual(response.status_code, 409, msg=response.data)
 
     def test_remove_seller(self):
-        """
-        the zoop api returns 200 and this content on delete request
-        """
         self.set_delete_mock(
-            200,
-            {
-                'id': '0b6dbebcb5f24473ac730537e873b4d8',
-                'resource': 'seller',
-                'deleted': True
-            }
-        )
+            200, {'id': '0b6dbebcb5f24473ac730537e873b4d8',
+                  'resource': 'seller', 'deleted': True})
 
         response = self.client.remove_seller('0b6dbebcb5f24473ac730537e873b4d8')
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -178,7 +176,6 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
                 ]
             }
         )
-
         response = self.client.list_seller_bank_accounts(
             'ee7e4b3683f8461a89e173dfb9d41d2c')
         self.assertEqual(response.status_code, 200, msg=response.data)

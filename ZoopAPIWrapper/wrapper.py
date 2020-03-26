@@ -257,6 +257,63 @@ class ZoopWrapper(RequestsWrapper):
         """
         add seller
 
+        Examples:
+            data = {
+                'taxpayer_id': 'foo',
+                'first_name': 'foo',
+                'last_name': 'foo',
+                'email': 'foo@bar.com',
+                'phone_number': '+55 84 99999-9999',
+                'birthdate': '1994-12-27',
+                'address': {
+                    'line1': 'foo',
+                    'line2': '123',
+                    'line3': 'barbar',
+                    'neighborhood': 'fooofoo',
+                    'city': 'Natal',
+                    'state': 'BR-RN',
+                    'postal_code': '59152250',
+                    'country_code': "BR"
+                }
+            }
+
+            data = {
+                "business_name": "foo",
+                "business_phone": "foo",
+                "business_email": "foo",
+                "business_website": "foo",
+                "business_opening_date": "foo",
+                "ein": "foo",
+                'owner': {
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "email": "foo",
+                    "taxpayer_id": "foo",
+                    "phone_number": "foo",
+                    "birthdate": 'foo',
+                    "address": {
+                        "line1": "foo",
+                        "line2": "foo",
+                        "line3": "foo",
+                        "neighborhood": "foo",
+                        "city": "foo",
+                        "state": "foo",
+                        "postal_code": "foo",
+                        "country_code": "foo"
+                    }
+                }
+                "business_address": {
+                    "line1": "foo",
+                    "line2": "foo",
+                    "line3": "foo",
+                    "neighborhood": "foo",
+                    "city": "foo",
+                    "state": "foo",
+                    "postal_code": "foo",
+                    "country_code": "foo"
+                }
+            }
+
         Args:
             data: dict of data
 
@@ -315,6 +372,16 @@ class ZoopWrapper(RequestsWrapper):
     def add_bank_account(self, data: dict):
         """
         add bank account
+
+        Examples:
+            data = {
+                'holder_name': 'foo',
+                'bank_code': 'foo',
+                'routing_number': 'foo',
+                'account_number': 'foo',
+                'taxpayer_id': 'foo',
+                'type': 'foo'
+            }
 
         Args:
             data: dict of data
@@ -398,6 +465,26 @@ class ZoopWrapper(RequestsWrapper):
     def add_buyer(self, data: dict):
         """
         add buyer
+
+        Examples:
+            data = {
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo",
+                "taxpayer_id": "foo",
+                "phone_number": "foo",
+                "birthdate": 'foo',
+                "address": {
+                    "line1": "foo",
+                    "line2": "foo",
+                    "line3": "foo",
+                    "neighborhood": "foo",
+                    "city": "foo",
+                    "state": "foo",
+                    "postal_code": "foo",
+                    "country_code": "foo"
+                }
+            }
 
         Args:
             data: dict of data

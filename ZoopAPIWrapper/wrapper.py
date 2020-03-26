@@ -169,7 +169,7 @@ class ZoopWrapper(RequestsWrapper):
     def _post_instance(self, url, instance: ZoopModel):
         """
         http post request wrapper with instance
-        
+
         Args:
             url: url to be requested
             instance: instance to be posted

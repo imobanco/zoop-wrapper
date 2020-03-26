@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.bank_account import VerificationChecklist
+from ZoopAPIWrapper.models.factories.bank_account import VerificationChecklistFactory
 
 
 class VerificationChecklistTestCase(TestCase):
@@ -11,6 +12,10 @@ class VerificationChecklistTestCase(TestCase):
             "address_line1_check": 'foo',
             "deposit_check": 'foo'
         }
+
+    def test_create(self):
+        instance = VerificationChecklistFactory()
+        self.assertIsInstance(instance, VerificationChecklist)
 
     def test_from_dict(self):
         instance = VerificationChecklist.from_dict(self.data)

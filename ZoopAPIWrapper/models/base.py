@@ -282,6 +282,10 @@ class OwnerModel(ZoopBase):
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
 
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
+
 
 class SocialModel(ZoopBase):
     """

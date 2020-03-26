@@ -1,9 +1,10 @@
+# Módulo Factories
 Essa magia toda tem várias etapas/partes
 
-# Faker
+## Faker
 Ele gera atributos randomicos dos [providers](https://faker.readthedocs.io/en/latest/providers.html)
 
-# Factory
+## Factory
 O Factory que é um Factory Pattern.
 
 1. [Aqui o Factory configura o `model_class` pegando do `Meta`](https://github.com/FactoryBoy/factory_boy/blob/a8da29e21b42544fe208b8f641836ca2f2b222c2/factory/base.py#L207)

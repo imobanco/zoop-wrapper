@@ -45,13 +45,25 @@ class ZoopBase:
         Args:
             data: dict of data
 
-        Returns: instance initialized of class or None
+        Returns: instance initialized of class
         """
-        try:
-            return cls._from_dict(**data)
-        except TypeError as e:
-            logger.debug(e)
-            return None
+        return cls._from_dict(**data)
+
+    @classmethod
+    def from_dict_or_instance(cls, data):
+        """
+        check if data is already a ZoopModel or subclass.
+        If not call from_dict
+
+        Args:
+            data: dict of data or instance
+
+        Returns: instance initialized of class
+        """
+        if isinstance(data, cls):
+            return data
+        else:
+            return cls.from_dict(data)
 
     def to_dict(self):
         """

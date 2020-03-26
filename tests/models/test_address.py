@@ -1,5 +1,5 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase
-from ZoopAPIWrapper.models.base import Address
+from ZoopAPIWrapper.models.base import AddressModel
 from ZoopAPIWrapper.models.factories.base import AddressModelFactory
 
 
@@ -19,12 +19,12 @@ class AddressTestCase(TestCase):
 
     def test_create(self):
         instance = AddressModelFactory()
-        self.assertIsInstance(instance, Address)
+        self.assertIsInstance(instance, AddressModel)
 
     def test_from_dict(self):
-        instance = Address.from_dict(self.data)
+        instance = AddressModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, Address)
+        self.assertIsInstance(instance, AddressModel)
         self.assertEqual(instance.line1, 'foo')
         self.assertEqual(instance.line2, 'foo')
         self.assertEqual(instance.line3, 'foo')
@@ -35,6 +35,6 @@ class AddressTestCase(TestCase):
         self.assertEqual(instance.country_code, 'foo')
 
     def test_to_dict(self):
-        instance = Address.from_dict(self.data)
+        instance = AddressModel.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)

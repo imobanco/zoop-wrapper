@@ -1,7 +1,8 @@
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.factories.bank_account import IndividualBankAccountFactory
+from ZoopAPIWrapper.models.factories.bank_account import (
+    IndividualBankAccountFactory)
 
 
 class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):

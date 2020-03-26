@@ -1,6 +1,7 @@
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.bank_account import BankAccount
+from ZoopAPIWrapper.models.factories.bank_account import IndividualBankAccountFactory
 
 
 class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
@@ -16,6 +17,10 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         Test list_bank_accounts method.
         And create a dump with all bank_accounts.
         """
+        self.set_get_mock(
+            200,
+            {'items': [IndividualBankAccountFactory().to_dict()]}
+        )
         response = self.client.list_bank_accounts()
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get('items')
@@ -26,6 +31,12 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         Test retrieve_bank_account method.
         Got this bank_account id from the json dump of bank_accounts.
         """
+        self.set_get_mock(
+            200,
+            IndividualBankAccountFactory(
+                id='064d3c7846b142e591896d2fb69dac3f'
+            ).to_dict()
+        )
         response = self.client.retrieve_bank_account(
             '064d3c7846b142e591896d2fb69dac3f')
         self.assertEqual(response.status_code, 200, msg=response.data)

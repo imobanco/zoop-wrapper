@@ -27,8 +27,13 @@ class RequestsWrapper:
     @staticmethod
     def __process_response(response):
         """
-        add 'data' attribute to response from json content.
+        add 'data' attribute to response from json content of response.
+
         add 'instance' or 'instances' attribute to response by resource.
+        Only add 'instance' or 'instances' if there's no `deleted` attribute
+        which is set on all delete response (200 ok) and if there's the
+        `resource` attribute on response
+
         add 'error' attribute to response if had errors
 
         Args:

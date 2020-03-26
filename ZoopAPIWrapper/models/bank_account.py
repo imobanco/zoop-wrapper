@@ -108,9 +108,10 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         self.debitable = debitable
         self.customer = customer
         self.fingerprint = fingerprint
-        self.address = AddressModel.from_dict(address)
+
+        self.address = AddressModel.from_dict_or_instance(address)
         self.verification_checklist = VerificationChecklist\
-            .from_dict(verification_checklist)
+            .from_dict_or_instance(verification_checklist)
 
     # noinspection PyMethodParameters
     @classproperty

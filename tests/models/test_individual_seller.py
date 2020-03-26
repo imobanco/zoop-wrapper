@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.seller import IndividualSeller, Address
-
+from ZoopAPIWrapper.models.seller import IndividualSeller, AddressModel
+from ZoopAPIWrapper.models.factories.seller import IndividualSellerFactory
 
 class IndividualSellerTestCase(TestCase):
     @property
@@ -55,6 +55,10 @@ class IndividualSellerTestCase(TestCase):
             },
         }
 
+    def test_create(self):
+        instance = IndividualSellerFactory()
+        self.assertIsInstance(instance, IndividualSeller)
+
     def test_from_dict(self):
         instance = IndividualSeller.from_dict(self.data)
 
@@ -63,7 +67,7 @@ class IndividualSellerTestCase(TestCase):
         self.assertEqual(instance.marketplace_id, 'foo')
         self.assertEqual(instance.type, 'foo')
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsInstance(instance.address, Address)
+        self.assertIsInstance(instance.address, AddressModel)
         self.assertEqual(instance.address.city, 'foo')
 
     def test_to_dict(self):

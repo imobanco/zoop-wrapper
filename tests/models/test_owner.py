@@ -1,9 +1,10 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.seller import Owner, Address
+from ZoopAPIWrapper.models.base import OwnerModel, AddressModel
+from ZoopAPIWrapper.models.factories.base import OwnerModelFactory
 
 
-class OwnerTestCase(TestCase):
+class OwnerModelTestCase(TestCase):
     @property
     def data(self):
         return {
@@ -25,15 +26,19 @@ class OwnerTestCase(TestCase):
             },
         }
 
-    def test_from_dict(self):
-        instance = Owner.from_dict(self.data)
+    def test_create(self):
+        instance = OwnerModelFactory()
+        self.assertIsInstance(instance, OwnerModel)
 
-        self.assertIsInstance(instance, Owner)
+    def test_from_dict(self):
+        instance = OwnerModel.from_dict(self.data)
+
+        self.assertIsInstance(instance, OwnerModel)
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsInstance(instance.address, Address)
+        self.assertIsInstance(instance.address, AddressModel)
         self.assertEqual(instance.address.city, 'foo')
 
     def test_to_dict(self):
-        instance = Owner.from_dict(self.data)
+        instance = OwnerModel.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)

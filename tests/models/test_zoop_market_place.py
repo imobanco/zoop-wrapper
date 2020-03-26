@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.base import ZoopMarketPlaceModel
+from ZoopAPIWrapper.models.factories.base import ZoopMarketPlaceModelFactory
 
 
 class ZoopMarketPlaceModelTestCase(TestCase):
@@ -16,6 +17,10 @@ class ZoopMarketPlaceModelTestCase(TestCase):
 
             'marketplace_id': 'foo'
         }
+
+    def test_create(self):
+        instance = ZoopMarketPlaceModelFactory()
+        self.assertIsInstance(instance, ZoopMarketPlaceModel)
 
     def test_from_dict(self):
         instance = ZoopMarketPlaceModel.from_dict(self.data)

@@ -2,6 +2,7 @@ import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (

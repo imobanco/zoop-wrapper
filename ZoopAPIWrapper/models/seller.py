@@ -160,7 +160,7 @@ class Owner(ZoopBase):
 
     def __init__(self, first_name, last_name, email,
                  taxpayer_id, phone_number, birthdate,
-                 address, **kwargs):
+                 address=None, **kwargs):
         super().__init__(**kwargs)
 
         self.first_name = first_name
@@ -169,7 +169,7 @@ class Owner(ZoopBase):
         self.taxpayer_id = taxpayer_id
         self.phone_number = phone_number
         self.birthdate = birthdate
-        self.address = Address.from_dict(address)
+        self.address = Address.from_dict_or_instance(address)
 
     @property
     def fields(self):
@@ -278,9 +278,9 @@ class BusinessSeller(Seller):
         self.business_email = business_email
         self.business_website = business_website
         self.business_opening_date = business_opening_date
-        self.business_address = Address.from_dict(business_address)
-        self.owner = Owner.from_dict(owner)
 
+        self.business_address = Address.from_dict_or_instance(business_address)
+        self.owner = Owner.from_dict_or_instance(owner)
         self.business_description = business_description
         self.business_facebook = business_facebook
         self.business_twitter = business_twitter

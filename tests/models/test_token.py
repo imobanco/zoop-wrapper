@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.models.factories.token import TokenFactory
 
 
 class TokenTestCase(TestCase):
@@ -17,6 +18,10 @@ class TokenTestCase(TestCase):
             "used": False,
             "type": 'foo'
         }
+
+    def test_create(self):
+        instance = TokenFactory()
+        self.assertIsInstance(instance, Token)
 
     def test_from_dict(self):
         instance = Token.from_dict(self.data)

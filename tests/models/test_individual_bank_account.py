@@ -1,7 +1,9 @@
-from unittest import TestCase
-
+from tests.utils import MockedAddressLoggerTestCase as TestCase
 from ZoopAPIWrapper.models.bank_account import (
     IndividualBankAccount, VerificationChecklist)
+from ZoopAPIWrapper.models.factories.bank_account import (
+    IndividualBankAccountFactory
+)
 
 
 class IndividualBankAccountTestCase(TestCase):
@@ -38,6 +40,10 @@ class IndividualBankAccountTestCase(TestCase):
                 "deposit_check": "foo"
             }
         }
+
+    def test_create(self):
+        instance = IndividualBankAccountFactory()
+        self.assertIsInstance(instance, IndividualBankAccount)
 
     def test_from_dict(self):
         instance = IndividualBankAccount.from_dict(self.data)

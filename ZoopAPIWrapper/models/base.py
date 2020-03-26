@@ -1,4 +1,5 @@
 from ZoopAPIWrapper.utils import get_logger
+from ZoopAPIWrapper.exceptions import AddressCreationException
 
 
 logger = get_logger('models')
@@ -45,13 +46,25 @@ class ZoopBase:
         Args:
             data: dict of data
 
-        Returns: instance initialized of class or None
+        Returns: instance initialized of cls
         """
-        try:
-            return cls._from_dict(**data)
-        except TypeError as e:
-            logger.debug(e)
-            return None
+        return cls._from_dict(**data)
+
+    @classmethod
+    def from_dict_or_instance(cls, data):
+        """
+        check if data is already a ZoopModel or subclass.
+        If not call from_dict
+
+        Args:
+            data: dict of data or instance
+
+        Returns: instance initialized of cls
+        """
+        if isinstance(data, cls):
+            return data
+        else:
+            return cls.from_dict(data)
 
     def to_dict(self):
         """
@@ -191,6 +204,24 @@ class Address(ZoopBase):
         self.state = state
         self.postal_code = postal_code
         self.country_code = country_code
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+        May return None
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls or None
+        """
+        try:
+            return super().from_dict(data)
+        except TypeError:
+            e = AddressCreationException('address could not be created!')
+            logger.warning(e)
+            return None
 
     @property
     def fields(self):

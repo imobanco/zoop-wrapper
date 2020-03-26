@@ -1,6 +1,6 @@
-from unittest import TestCase
-
+from tests.utils import MockedAddressLoggerTestCase as TestCase
 from ZoopAPIWrapper.models.base import Address
+from ZoopAPIWrapper.models.factories.base import AddressModelFactory
 
 
 class AddressTestCase(TestCase):
@@ -16,6 +16,10 @@ class AddressTestCase(TestCase):
             "postal_code": 'foo',
             "country_code": 'foo'
         }
+
+    def test_create(self):
+        instance = AddressModelFactory()
+        self.assertIsInstance(instance, Address)
 
     def test_from_dict(self):
         instance = Address.from_dict(self.data)

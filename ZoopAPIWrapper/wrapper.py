@@ -1,8 +1,8 @@
-import json
-
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
+from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -25,14 +25,16 @@ class RequestsWrapper:
 
     @staticmethod
     def __process_response(response):
-        response.data = json.loads(response.content)
+        response.data = response.json()
 
-        resource = response.data.get('resource')
-        if resource == 'list':
-            response.instances = [get_instance_from_data(item)
-                                  for item in response.data.get('items')]
-        elif resource is not None:
-            response.instance = get_instance_from_data(response.data)
+        deleted = response.data.get('deleted')
+        if not deleted:
+            resource = response.data.get('resource')
+            if resource == 'list':
+                response.instances = [get_instance_from_data(item)
+                                      for item in response.data.get('items')]
+            elif resource is not None:
+                response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
             response.error = response.data.get('error').get('message')
@@ -112,12 +114,23 @@ class ZoopWrapper(RequestsWrapper):
     def _auth(self):
         return self.__key, ''
 
+    def _post_instance(self, url, instance: ZoopModel):
+        if not isinstance(instance, ZoopModel):
+            raise TypeError('instance must be a ZoopModel')
+        return self._post(url, data=instance.to_dict())
+
     def list_sellers(self):
         url = self._construct_url(action='sellers')
         return self._get(url)
 
     def retrieve_seller(self, identifier):
         url = self._construct_url(action='sellers', identifier=identifier)
+        return self._get(url)
+
+    def list_seller_bank_accounts(self, identifier):
+        url = self._construct_url(action='sellers',
+                                  identifier=identifier,
+                                  subaction='bank_accounts')
         return self._get(url)
 
     def _search_seller(self, id_type, identifier):
@@ -138,15 +151,11 @@ class ZoopWrapper(RequestsWrapper):
     def search_individual_seller(self, identifier):
         return self._search_seller('taxpayer_id', identifier)
 
-    def _add_seller(self, seller_type, seller):
-        url = self._construct_url(action=f'sellers', subaction=seller_type)
-        return self._post(url, data=seller)
-
-    def add_individual_seller(self, seller):
-        return self._add_seller('individuals', seller)
-
-    def add_business_seller(self, seller):
-        return self._add_seller('business', seller)
+    def add_seller(self, data: dict):
+        instance = Seller.from_dict(data)
+        url = self._construct_url(action=f'sellers',
+                                  subaction=instance.get_type())
+        return self._post_instance(url, instance=instance)
 
     def remove_seller(self, identifier):
         url = self._construct_url(action='sellers', identifier=identifier)
@@ -154,12 +163,6 @@ class ZoopWrapper(RequestsWrapper):
 
     def list_bank_accounts(self):
         url = self._construct_url(action='bank_accounts')
-        return self._get(url)
-
-    def list_seller_bank_accounts(self, identifier):
-        url = self._construct_url(action='sellers',
-                                  identifier=identifier,
-                                  subaction='bank_accounts')
         return self._get(url)
 
     def retrieve_bank_account(self, identifier):

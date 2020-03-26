@@ -1,7 +1,8 @@
-from unittest import TestCase
-
+from tests.utils import MockedAddressLoggerTestCase as TestCase
 from ZoopAPIWrapper.models.seller import (
-    Seller, BusinessSeller, IndividualSeller, Owner, Address)
+    Seller, BusinessSeller, IndividualSeller,
+    Owner as OwnerModel, Address as AddressModel)
+from ZoopAPIWrapper.models.factories.seller import SellerFactory
 
 
 class SellerTestCase(TestCase):
@@ -34,6 +35,10 @@ class SellerTestCase(TestCase):
             "merchant_code": 'foo',
             "terminal_code": 'foo',
         }
+
+    def test_create(self):
+        instance = SellerFactory()
+        self.assertIsInstance(instance, Seller)
 
     def test_seller_from_dict_business(self):
         data = self.data
@@ -82,9 +87,9 @@ class SellerTestCase(TestCase):
         self.assertEqual(instance.marketplace_id, 'foo')
         self.assertEqual(instance.type, 'foo')
         self.assertEqual(instance.business_name, 'foo')
-        self.assertIsInstance(instance.business_address, Address)
+        self.assertIsInstance(instance.business_address, AddressModel)
         self.assertEqual(instance.business_address.city, 'foo')
-        self.assertIsInstance(instance.owner, Owner)
+        self.assertIsInstance(instance.owner, OwnerModel)
         self.assertEqual(instance.owner.first_name, 'foo')
 
     def test_seller_from_dict_individual(self):
@@ -117,5 +122,5 @@ class SellerTestCase(TestCase):
         self.assertEqual(instance.marketplace_id, 'foo')
         self.assertEqual(instance.type, 'foo')
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsInstance(instance.address, Address)
+        self.assertIsInstance(instance.address, AddressModel)
         self.assertEqual(instance.address.city, 'foo')

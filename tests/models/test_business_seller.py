@@ -1,7 +1,7 @@
 from unittest import TestCase
 
 from ZoopAPIWrapper.models.seller import (
-    BusinessSeller, OwnerModel, AddressModel)
+    BusinessSeller, Owner as OwnerModel, Address as AddressModel)
 from ZoopAPIWrapper.models.factories.seller import BusinessSellerFactory
 
 

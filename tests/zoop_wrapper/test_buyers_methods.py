@@ -103,6 +103,9 @@ class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
         self.assertEqual(response.status_code, 201, msg=response.data)
 
     def test_remove_buyer(self):
+        """
+        the zoop api returns 200 and this content on delete request
+        """
         self.set_delete_mock(
             200,
             {

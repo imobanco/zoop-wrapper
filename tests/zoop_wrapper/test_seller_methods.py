@@ -144,6 +144,9 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         self.assertEqual(response.status_code, 409, msg=response.data)
 
     def test_remove_seller(self):
+        """
+        the zoop api returns 200 and this content on delete request
+        """
         self.set_delete_mock(
             200,
             {

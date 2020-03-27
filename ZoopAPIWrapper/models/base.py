@@ -388,3 +388,71 @@ class FinancialModel(ZoopBase):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+
+class VerificationChecklist(ZoopBaseCreationSuppresed):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        postal_code_check: boolean of verification
+        address_line1_check: boolean of verification
+    """
+    __FIELDS = ["postal_code_check", "address_line1_check"]
+
+    def __init__(self, postal_code_check, address_line1_check,
+                 **kwargs):
+        super().__init__(**kwargs)
+
+        self.postal_code_check = postal_code_check
+        self.address_line1_check = address_line1_check
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
+class PaymentMethod(ZoopModel):
+    """
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    Attributes:
+        description: text description
+        customer: uuid id
+        address: Address Model
+    """
+    __FIELDS = ['description', 'customer', 'address']
+
+    def __init__(self, description, customer,
+                 address=None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.description = description
+        self.customer = customer
+        self.address = AddressModel.from_dict_or_instance(address)
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)

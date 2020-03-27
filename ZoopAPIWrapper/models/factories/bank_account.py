@@ -4,14 +4,15 @@ from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, BusinessBankAccount,
-    IndividualBankAccount, VerificationChecklist
+    IndividualBankAccount, BankAccountVerificationChecklist
 )
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopModelFactory, ZoopBaseFactory, AddressModelFactory
+    ZoopModelFactory, AddressModelFactory,
+    VerificationCheckListFactory
 )
 
 
-class VerificationChecklistFactory(ZoopBaseFactory):
+class BankAccountVerificationChecklistFactory(VerificationCheckListFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -19,10 +20,8 @@ class VerificationChecklistFactory(ZoopBaseFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = VerificationChecklist
+        model = BankAccountVerificationChecklist
 
-    postal_code_check = Faker('pybool')
-    address_line1_check = Faker('pybool')
     deposit_check = Faker('pybool')
 
 
@@ -55,7 +54,7 @@ class BankAccountFactory(ZoopModelFactory):
     customer = Faker('uuid4')
     fingerprint = Faker('uuid4')
     address = SubFactory(AddressModelFactory)
-    verification_checklist = SubFactory(VerificationChecklistFactory)
+    verification_checklist = SubFactory(BankAccountVerificationChecklistFactory)
 
 
 class BusinessBankAccountFactory(BankAccountFactory):

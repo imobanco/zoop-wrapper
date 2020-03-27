@@ -5,7 +5,8 @@ from pycpfcnpj import gen
 from ZoopAPIWrapper.models.base import (
     ZoopBase, ZoopModel, ZoopMarketPlaceModel,
     OwnerModel, AddressModel,
-    SocialModel, FinancialModel
+    SocialModel, FinancialModel,
+    VerificationChecklist, PaymentMethod
 )
 
 
@@ -89,6 +90,12 @@ class OwnerModelFactory(ZoopBaseFactory):
 
 
 class SocialModelFactory(ZoopBaseFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = SocialModel
 
@@ -97,6 +104,12 @@ class SocialModelFactory(ZoopBaseFactory):
 
 
 class FinancialModelFactory(ZoopBaseFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
     class Meta:
         model = FinancialModel
 
@@ -108,3 +121,32 @@ class FinancialModelFactory(ZoopBaseFactory):
     default_debit = Faker('pybool')
     default_credit = Faker('pybool')
     payment_methods = None
+
+
+class VerificationCheckListFactory(ZoopBaseFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
+    class Meta:
+        model = VerificationChecklist
+
+    postal_code_check = Faker('pybool')
+    address_line1_check = Faker('pybool')
+
+
+class PaymentMethodFactory(ZoopBaseFactory):
+    """
+    Factory for instances with fake attributes.
+    The Meta.model dictates which instance to be created.
+
+    https://faker.readthedocs.io/en/latest/providers.html
+    """
+    class Meta:
+        model = PaymentMethod
+
+    description = Faker('sentence', nb_words=5)
+    customer = Faker('uuid4')
+    address = SubFactory(AddressModelFactory)

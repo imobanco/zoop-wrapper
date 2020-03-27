@@ -37,6 +37,32 @@ class Token(ZoopModel):
         self.type = type
         self.used = used
 
+    @classmethod
+    def from_dict(cls, data):
+        card = data.get('card', False)
+        bank_account = data.get('bank_account', False)
+
+        if card:
+            return CardToken.from_dict(data)
+
+        if bank_account:
+            return BankAccountToken.from_dict(data)
+
+        return super().from_dict(data)
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
 class BankAccountToken(BusinessOrIndividualMixin, Token):
     """
     Token is a resource used to link a BankAccount and a Customer

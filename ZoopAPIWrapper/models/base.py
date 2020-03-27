@@ -19,7 +19,8 @@ class ZoopBase:
         Args:
             **kwargs: dictionary of args
         """
-        for field_name in self.fields:
+        fields = self.get_fields()
+        for field_name in self.get_fields():
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
@@ -65,7 +66,7 @@ class ZoopBase:
         Returns: dict of instance
         """
         data = {}
-        for field in self.fields:
+        for field in self.get_fields():
             try:
                 """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
@@ -93,7 +94,7 @@ class ZoopBase:
 
         """
         errors = []
-        for required_field in self.required_fields:
+        for required_field in self.get_required_fields():
             value = getattr(self, required_field, None)
             if value is None:
                 errors.append(required_field)
@@ -110,17 +111,17 @@ class ZoopBase:
         ):
             raise ValidationError(errors)
 
-    @property
-    def fields(self):
+    @classmethod
+    def get_fields(cls):
         """
         list of all fields
 
         Returns: list of fields
         """
-        return self.required_fields + self.non_required_fields
+        return cls.get_required_fields() + cls.get_non_required_fields()
 
-    @property
-    def required_fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
         list of required fields
 
@@ -128,8 +129,8 @@ class ZoopBase:
         """
         return []
 
-    @property
-    def non_required_fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
         list of non required fields
 
@@ -154,12 +155,12 @@ class ZoopModel(ZoopBase):
         metadata: dict with metadata
     """
 
-    @property
-    def required_fields(self):
+    @classmethod
+    def get_required_fields(cls):
         return []
 
-    @property
-    def non_required_fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         return ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
 
 
@@ -181,7 +182,7 @@ class ZoopMarketPlaceModel(ZoopModel):
         self.marketplace_id = marketplace_id
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -229,7 +230,7 @@ class AddressModel(ZoopBase):
         self.country_code = country_code
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -276,7 +277,7 @@ class OwnerModel(ZoopBase):
         self.address = AddressModel.from_dict_or_instance(address)
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -313,7 +314,7 @@ class SocialModel(ZoopBase):
         self.twitter = twitter
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -361,7 +362,7 @@ class FinancialModel(ZoopBase):
         self.default_credit = default_credit
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -394,7 +395,7 @@ class VerificationChecklist(ZoopBase):
         self.address_line1_check = address_line1_check
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
@@ -429,7 +430,7 @@ class PaymentMethod(ZoopModel):
         self.address = AddressModel.from_dict_or_instance(address)
 
     @property
-    def fields(self):
+    def get_fields(self):
         """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.

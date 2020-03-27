@@ -107,17 +107,8 @@ class ZoopBaseCreationSuppresed(ZoopBase):
 
     This class has the attribute __FIELDS with the list of attributes it has.
     The purpose of this is to construct the dict of the object.
-
-    Examples:
-        >>>data = None
-        >>>print(**data)
-        Traceback (most recent call last):
-          File "<input>", line 1, in <module>
-        TypeError: print() argument after ** must be a mapping, not NoneType
-
-        >>>instance = ZoopBaseCreationException.from_dict(data=None)
-        instance = None
     """
+
     @classmethod
     def from_dict(cls, data):
         """
@@ -126,6 +117,16 @@ class ZoopBaseCreationSuppresed(ZoopBase):
 
         Args:
             data: dict of data
+
+        Examples:
+            >>>data = None
+            >>>print(**data)
+            Traceback (most recent call last):
+              File "<input>", line 1, in <module>
+            TypeError: print() argument after ** must be a mapping, not NoneType
+
+            >>>instance = cls.from_dict(data=None)
+            instance = None
 
         Returns: instance initialized of cls or None
         """

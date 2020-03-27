@@ -36,7 +36,7 @@ class BankAccountVerificationChecklist(VerificationChecklist):
         return list(super_fields)
 
 
-class BankAccount(ZoopModel, BusinessOrIndividualMixin):
+class BankAccount(BusinessOrIndividualMixin, ZoopModel):
     """
     Represent a Bank Account.
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
@@ -80,8 +80,8 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
                 "address", "verification_checklist"]
 
     def __init__(self, holder_name, bank_code, routing_number,
-                 account_number, customer=None,
-                 description=None, bank_name=None, type=None,
+                 account_number, type, customer=None,
+                 description=None, bank_name=None,
                  country_code=None, phone_number=None,
                  is_active=None, is_verified=None,
                  debitable=None, fingerprint=None,
@@ -141,21 +141,6 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         return list(super_fields)
 
     @classmethod
-    def from_dict(cls, data):
-        """
-        construct a IndividualBankAccount or BusinessBankAccount
-        depending on BusinessOrIndividualMixin.
-        Factory pattern
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of BankAccount
-        """
-        klass = BankAccount.get_class(data)
-        return klass.from_dict(data)
-
-    @classmethod
     def from_dict_and_seller(cls, seller, data):
         data['holder_name'] = seller.full_name
         return cls.from_dict(data)
@@ -178,6 +163,18 @@ class BusinessBankAccount(BankAccount):
 
         self.ein = ein
 
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls
+        """
+        return cls._from_dict(**data)
+
     @property
     def fields(self):
         """
@@ -189,18 +186,6 @@ class BusinessBankAccount(BankAccount):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict.
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of class or None
-        """
-        return cls._from_dict(**data)
 
     @classmethod
     def from_dict_and_seller(cls, seller: BusinessSeller, data):
@@ -225,6 +210,18 @@ class IndividualBankAccount(BankAccount):
 
         self.taxpayer_id = taxpayer_id
 
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls
+        """
+        return cls._from_dict(**data)
+
     @property
     def fields(self):
         """
@@ -236,18 +233,6 @@ class IndividualBankAccount(BankAccount):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of class or None
-        """
-        return cls._from_dict(**data)
 
     @classmethod
     def from_dict_and_seller(cls, seller: IndividualSeller, data):

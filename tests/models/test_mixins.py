@@ -67,3 +67,17 @@ class BusinessOrIndividualTestCase(TestCase):
 
         klass = BusinessOrIndividualMixin.get_class(data)
         self.assertEqual(klass, mocked_class)
+
+    @patch('ZoopAPIWrapper.models.mixins.BusinessOrIndividualMixin.get_class')
+    def test_from_dict(self, mocked_get_class):
+        mocked_from_dict = MagicMock(
+            return_value=True
+        )
+
+        mocked_get_class.return_value = MagicMock(
+            from_dict=mocked_from_dict
+        )
+
+        BusinessOrIndividualMixin.from_dict({})
+        mocked_get_class.assert_called_once_with({})
+        mocked_from_dict.assert_called_once_with({})

@@ -80,3 +80,17 @@ class BusinessOrIndividualMixin:
             return cls.business_class
         else:
             raise ValueError('costumer_identifier type not identified')
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a Individual or Business depending on BusinessOrIndividualMixin.
+        Factory pattern
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls
+        """
+        klass = cls.get_class(data)
+        return klass.from_dict(data)

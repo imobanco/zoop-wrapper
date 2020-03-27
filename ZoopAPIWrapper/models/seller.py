@@ -4,7 +4,7 @@ from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
 
 
-class Seller(ZoopMarketPlaceModel, FinancialModel, BusinessOrIndividualMixin):
+class Seller(BusinessOrIndividualMixin, ZoopMarketPlaceModel, FinancialModel):
     """
     Represent a seller.
     https://docs.zoop.co/reference#vendedor-1
@@ -90,21 +90,6 @@ class Seller(ZoopMarketPlaceModel, FinancialModel, BusinessOrIndividualMixin):
         return list(super_fields)
 
     @classmethod
-    def from_dict(cls, data):
-        """
-        construct a IndividualSeller or BusinessSeller
-        depending on BusinessOrIndividualMixin.
-        Factory pattern
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of Seller
-        """
-        klass = cls.get_class(data)
-        return klass.from_dict(data)
-
-    @classmethod
     def get_type(cls):
         """
         getter for TYPE attribute
@@ -148,7 +133,7 @@ class IndividualSeller(Seller, OwnerModel, SocialModel):
         Args:
             data: dict of data
 
-        Returns: instance initialized of class or None
+        Returns: instance initialized of cls
         """
         return cls._from_dict(**data)
 
@@ -224,7 +209,7 @@ class BusinessSeller(Seller):
         Args:
             data: dict of data
 
-        Returns: instance initialized of class or None
+        Returns: instance initialized of cls
         """
         return cls._from_dict(**data)
 

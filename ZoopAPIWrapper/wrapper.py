@@ -534,3 +534,42 @@ class ZoopWrapper(RequestsWrapper):
         """
         url = self._construct_url(action='cards', subaction='tokens')
         return self._post_instance(url, instance=card_token)
+
+    def add_card(self, data: dict, buyer_identifier):
+        """
+        add card
+
+        Examples:
+            data = {
+                "holder_name": "foo",
+                "expiration_month": "foo",
+                "expiration_year": "foo",
+                "card_number": "foo",
+                "security_code": "foo"
+            }
+
+        Args:
+            data: dict of data
+            buyer_identifier: uuid of buyer
+
+        Returns: response with instance of BankAccount
+        """
+        card_token = CardToken.from_dict(data)
+        if not isinstance(card_token, CardToken):
+            raise TypeError('this is not supposed to happen!')
+
+        token_response = self.__add_card_token(card_token)
+        token_instance = token_response.instance
+        assert isinstance(token_instance, Token)
+
+        buyer_response = self.retrieve_buyer(buyer_identifier)
+        buyer_instance = buyer_response.instance
+        assert isinstance(buyer_instance, Buyer)
+
+        data = {
+            "customer": buyer_instance.id,
+            "token": token_instance.id
+        }
+
+        url = self._construct_url(action='cards')
+        return self._post(url, data=data)

@@ -436,7 +436,7 @@ class PaymentMethod(ZoopModel):
     """
     __FIELDS = ['description', 'customer', 'address']
 
-    def __init__(self, description, customer,
+    def __init__(self, customer=None, description=None,
                  address=None, **kwargs):
         super().__init__(**kwargs)
 

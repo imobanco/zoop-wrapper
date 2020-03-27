@@ -49,11 +49,13 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
 
     def test_add_bank_account_token(self):
         """
-        Test __add_token method.
+        Test __add_bank_account_token method.
         """
         self.set_post_mock(
             201,
-            TokenFactory().to_dict()
+            TokenFactory(
+                type='bank_account'
+            ).to_dict()
         )
 
         bank_account = BankAccountFactory()
@@ -68,7 +70,9 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         Test add_bank_account method.
         """
         mocked_add_token.return_value = MagicMock(
-            instance=TokenFactory()
+            instance=TokenFactory(
+                type='bank_account'
+            )
         )
 
         data = IndividualBankAccountFactory(

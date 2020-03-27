@@ -68,8 +68,8 @@ class Card(PaymentMethod):
 
     def __init__(self, card_brand, first4_digits, last4_digits,
                  expiration_month, expiration_year, holder_name,
-                 is_active, is_valid, is_verified, fingerprint,
-                 verification_checklist, **kwargs):
+                 is_active=None, is_valid=None, is_verified=None, fingerprint=None,
+                 verification_checklist=None, **kwargs):
         super().__init__(**kwargs)
 
         self.card_brand = card_brand

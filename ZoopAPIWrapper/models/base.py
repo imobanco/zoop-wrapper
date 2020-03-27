@@ -132,7 +132,7 @@ class ZoopBaseCreationSuppresed(ZoopBase):
         try:
             return super().from_dict(data)
         except TypeError as e:
-            e.args = e.args + (f'{cls} could not be created!',)
+            e.args = (f'{cls} could not be created!',)
             logger.warning(e)
             return None
 

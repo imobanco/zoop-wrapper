@@ -69,7 +69,7 @@ class ZoopBaseTestCase(TestCase):
     def test_create_dont_allow_empty(self):
         self.assertRaises(ValidationError, ZoopBaseFactory)
 
-    def test_validate(self):
+    def test_validate_allow_empty(self):
         instance = ZoopBaseFactory(allow_empty=True)
         self.assertIsInstance(instance, ZoopBase)
 
@@ -82,6 +82,14 @@ class ZoopBaseTestCase(TestCase):
         instance.id = None
 
         self.assertRaises(ValidationError, instance.validate_required_fields)
+
+    def test_validate_raise_false(self):
+        instance = ZoopBaseFactory(id=1)
+        self.assertIsInstance(instance, ZoopBase)
+
+        instance.id = None
+
+        instance.validate_required_fields(raise_exception=False)
 
     def test_from_dict_empty(self):
         data = {}

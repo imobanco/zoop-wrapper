@@ -1,4 +1,13 @@
-from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.base import (
+    ZoopModel
+)
+from ZoopAPIWrapper.models.bank_account import BankAccount
+from ZoopAPIWrapper.models.card import Card
+from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin
+from ZoopAPIWrapper.utils import classproperty, get_logger
+
+
+logger = get_logger('models')
 
 
 class Token(ZoopModel):
@@ -27,6 +36,47 @@ class Token(ZoopModel):
 
         self.type = type
         self.used = used
+
+class CardToken(Token):
+    """
+    Token is a resource used to link a Card and a Customer
+    https://docs.zoop.co/reference#post_v1-marketplaces-marketplace-id-cards-tokens
+
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
+    Attributes:
+        holder_name: name of owner
+        card_number: number of card
+        expiration_month: month of expiration
+        expiration_year: year of expiration
+        security_code: security code
+        card: Card model
+    """
+    __FIELDS = ['holder_name', 'card_number', 'expiration_month',
+                'expiration_year', 'security_code', 'card']
+
+    def __init__(self, holder_name, card_number, expiration_month,
+                 expiration_year, security_code,
+                 card=None, **kwargs):
+        super().__init__(type=None, used=None, **kwargs)
+
+        self.holder_name = holder_name
+        self.card_number = card_number
+        self.expiration_month = expiration_month
+        self.expiration_year = expiration_year
+        self.security_code = security_code
+        try:
+            self.card = Card.from_dict_or_instance(card)
+        except TypeError as e:
+            e.args = (f'{Card} could not be created!',)
+            logger.warning(e)
+            self.card = None
 
     @property
     def fields(self):

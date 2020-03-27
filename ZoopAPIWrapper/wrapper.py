@@ -522,3 +522,15 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='cards',
                                   identifier=identifier)
         return self._get(url)
+
+    def __add_card_token(self, card_token: CardToken):
+        """
+        add card token
+
+        Args:
+            card_token: CardToken model
+
+        Returns: response with instance of CardToken
+        """
+        url = self._construct_url(action='cards', subaction='tokens')
+        return self._post_instance(url, instance=card_token)

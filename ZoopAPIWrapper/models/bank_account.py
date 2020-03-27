@@ -156,7 +156,7 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         return klass.from_dict(data)
 
     @classmethod
-    def from_dict_for_seller(cls, seller, data):
+    def from_dict_and_seller(cls, seller, data):
         data['holder_name'] = seller.full_name
         return cls.from_dict(data)
 
@@ -203,9 +203,9 @@ class BusinessBankAccount(BankAccount):
         return cls._from_dict(**data)
 
     @classmethod
-    def from_dict_for_seller(cls, seller: BusinessSeller, data):
+    def from_dict_and_seller(cls, seller: BusinessSeller, data):
         data[seller.BUSINESS_IDENTIFIER] = seller.ein
-        return super().from_dict_for_seller(seller, data)
+        return super().from_dict_and_seller(seller, data)
 
 
 class IndividualBankAccount(BankAccount):
@@ -250,6 +250,6 @@ class IndividualBankAccount(BankAccount):
         return cls._from_dict(**data)
 
     @classmethod
-    def from_dict_for_seller(cls, seller: IndividualSeller, data):
+    def from_dict_and_seller(cls, seller: IndividualSeller, data):
         data[seller.INDIVIDUAL_IDENTIFIER] = seller.taxpayer_id
-        return super().from_dict_for_seller(seller, data)
+        return super().from_dict_and_seller(seller, data)

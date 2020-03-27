@@ -1,5 +1,4 @@
 from ZoopAPIWrapper.utils import get_logger
-from ZoopAPIWrapper.exceptions import ZoopBaseCreationException
 
 
 logger = get_logger('models')
@@ -132,8 +131,8 @@ class ZoopBaseCreationSuppresed(ZoopBase):
         """
         try:
             return super().from_dict(data)
-        except TypeError:
-            e = ZoopBaseCreationException(f'{cls} could not be created!')
+        except TypeError as e:
+            e.args = e.args + (f'{cls} could not be created!',)
             logger.warning(e)
             return None
 

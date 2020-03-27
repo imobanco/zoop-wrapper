@@ -5,6 +5,7 @@ from ZoopAPIWrapper.models.base import ZoopModel
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, IndividualBankAccount, BusinessBankAccount)
 from ZoopAPIWrapper.models.buyer import Buyer
+from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.utils import get_instance_from_data
@@ -357,14 +358,14 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    def __add_token(self, bank_account: BankAccount):
+    def __add_bank_account_token(self, bank_account: BankAccount):
         """
         add bank account token
 
         Args:
             bank_account: BankAccount model
 
-        Returns: response with instance of BankAccount
+        Returns: response with instance of Token
         """
         url = self._construct_url(action='bank_accounts', subaction='tokens')
         return self._post_instance(url, instance=bank_account)
@@ -405,7 +406,7 @@ class ZoopWrapper(RequestsWrapper):
         seller_instance = seller_response.instance
         assert isinstance(seller_instance, Seller)
 
-        token_response = self.__add_token(bank_account_instance)
+        token_response = self.__add_bank_account_token(bank_account_instance)
         token_instance = token_response.instance
         assert isinstance(token_instance, Token)
 

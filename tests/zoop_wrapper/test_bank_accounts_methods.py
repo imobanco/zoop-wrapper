@@ -59,10 +59,10 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         bank_account = BankAccountFactory()
 
         response = self.client.\
-            _ZoopWrapper__add_token(bank_account)
+            _ZoopWrapper__add_bank_account_token(bank_account)
         self.assertEqual(response.status_code, 201, msg=response.data)
 
-    @patch('ZoopAPIWrapper.wrapper.ZoopWrapper._ZoopWrapper__add_token')
+    @patch('ZoopAPIWrapper.wrapper.ZoopWrapper._ZoopWrapper__add_bank_account_token')
     def test_add_bank_account(self, mocked_add_token):
         """
         Test add_bank_account method.

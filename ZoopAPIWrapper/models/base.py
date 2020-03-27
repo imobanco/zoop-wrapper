@@ -1,4 +1,5 @@
 from ZoopAPIWrapper.utils import get_logger
+from ZoopAPIWrapper.exceptions import ValidationError
 
 
 logger = get_logger('models')
@@ -14,7 +15,7 @@ class ZoopBase:
     The purpose of this is to construct the dict of the object.
     """
 
-    def __init__(self, **kwargs):
+    def __init__(self, allow_empty=False, **kwargs):
         """
         constructor
 
@@ -25,31 +26,25 @@ class ZoopBase:
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
-        self.validate_required_field()
+        self.__raise_exception_on_validation = not allow_empty
+
+        self.validate_required_fields()
 
     @classmethod
-    def _from_dict(cls, **entries):
-        """
-        construct a instance of this class from **entries
-
-        Args:
-            **entries:
-
-        Returns: instance initialized of class
-        """
-        return cls(**entries)
-
-    @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data, allow_empty=False):
         """
         construct a instance of this class from dict
 
         Args:
             data: dict of data
+            allow_empty: boolean
 
         Returns: instance initialized of cls
         """
-        return cls._from_dict(**data)
+        if data is None:
+            data = {}
+
+        return cls(allow_empty, **data)
 
     @classmethod
     def from_dict_or_instance(cls, data):
@@ -84,7 +79,7 @@ class ZoopBase:
                 attr = getattr(self, required_field)
 
             if attr is None:
-                self.validate_required_field()
+                self.validate_required_fields()
 
             data[required_field] = attr
 
@@ -104,15 +99,24 @@ class ZoopBase:
 
         return data
 
-    def validate_required_field(self, raise_exception=True):
+    def validate_required_fields(self, raise_exception=None):
         errors = []
         for required_field in self.required_fields:
             value = getattr(self, required_field, None)
             if value is None:
                 errors.append(required_field)
 
-        if raise_exception and errors:
-            raise ValueError(errors)
+        if (
+                errors and
+                (
+                        raise_exception or
+                        (
+                                raise_exception is None and
+                                self.__raise_exception_on_validation
+                        )
+                )
+        ):
+            raise ValidationError(errors)
 
     @property
     def fields(self):
@@ -130,46 +134,6 @@ class ZoopBase:
     @property
     def non_required_fields(self):
         return []
-
-
-class ZoopBaseCreationSuppresed(ZoopBase):
-    """
-    This class represent a bare ZoopBase object which doesn't have
-    to be created. It may return None on `from_dict` method.
-
-    A instance of this class doesn't have attributes.
-
-    This class has the attribute __FIELDS with the list of attributes it has.
-    The purpose of this is to construct the dict of the object.
-    """
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-        May return None
-
-        Args:
-            data: dict of data
-
-        Examples:
-            >>>data = None
-            >>>print(**data)
-            Traceback (most recent call last):
-              File "<input>", line 1, in <module>
-            TypeError: print() argument after ** must be a mapping, not NoneType
-
-            >>>instance = cls.from_dict(data=None)
-            instance = None
-
-        Returns: instance initialized of cls or None
-        """
-        try:
-            return super().from_dict(data)
-        except ValueError as e:
-            e.args = (f'{cls} could not be created!',)
-            logger.warning(e)
-            return None
 
 
 class ZoopModel(ZoopBase):
@@ -227,7 +191,7 @@ class ZoopMarketPlaceModel(ZoopModel):
         return list(super_fields)
 
 
-class AddressModel(ZoopBaseCreationSuppresed):
+class AddressModel(ZoopBase):
     """
     This class and it's subclasses have attributes.
 
@@ -407,7 +371,7 @@ class FinancialModel(ZoopBase):
         return list(super_fields)
 
 
-class VerificationChecklist(ZoopBaseCreationSuppresed):
+class VerificationChecklist(ZoopBase):
     """
     This class and it's subclasses have attributes.
 

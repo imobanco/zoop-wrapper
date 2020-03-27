@@ -9,14 +9,11 @@ from ZoopAPIWrapper.models.base import ZoopBase
 class ZoopBaseTestCase(TestCase):
     def setUp(self) -> None:
         self.patcher_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.fields',
-            new_callable=PropertyMock)
+            'ZoopAPIWrapper.models.base.ZoopBase.get_fields')
         self.patcher_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.required_fields',
-            new_callable=PropertyMock)
+            'ZoopAPIWrapper.models.base.ZoopBase.get_required_fields')
         self.patcher_non_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.non_required_fields',
-            new_callable=PropertyMock)
+            'ZoopAPIWrapper.models.base.ZoopBase.get_non_required_fields')
 
         self.mocked_fields = self.patcher_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
@@ -40,9 +37,9 @@ class ZoopBaseTestCase(TestCase):
     def test_init(self):
         validate = MagicMock()
         instance = MagicMock(
-            fields=['id', 'name'],
-            required_fields=['id'],
-            non_required_fields=['name'],
+            get_fields=MagicMock(return_value=['id', 'name']),
+            get_required_fields=MagicMock(return_value=['id']),
+            get_non_required_fields=MagicMock(return_value=['name']),
             validate_required_fields=validate
         )
 

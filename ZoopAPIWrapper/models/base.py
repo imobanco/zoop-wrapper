@@ -10,9 +10,6 @@ class ZoopBase:
     This class represent a bare ZoopBase object.
 
     A instance of this class doesn't have attributes.
-
-    This class has the attribute __FIELDS with the list of attributes it has.
-    The purpose of this is to construct the dict of the object.
     """
 
     def __init__(self, allow_empty=False, **kwargs):
@@ -84,6 +81,17 @@ class ZoopBase:
         return data
 
     def validate_required_fields(self, raise_exception=None):
+        """
+        Validate all required_fields
+
+        Args:
+            raise_exception: boolean to raise or not exception
+
+        Raises:
+            ValidationError: if there's some required_field missing
+            and __allow_empty is false and raise_exception is true
+
+        """
         errors = []
         for required_field in self.required_fields:
             value = getattr(self, required_field, None)
@@ -105,18 +113,28 @@ class ZoopBase:
     @property
     def fields(self):
         """
-        the fields of ZoopBase are it's __FIELDS attrs.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        list of all fields
+
+        Returns: list of fields
         """
         return self.required_fields + self.non_required_fields
 
     @property
     def required_fields(self):
+        """
+        list of required fields
+
+        Returns: list of fields
+        """
         return []
 
     @property
     def non_required_fields(self):
+        """
+        list of non required fields
+
+        Returns: list of fields
+        """
         return []
 
 

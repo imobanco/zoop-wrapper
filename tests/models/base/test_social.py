@@ -12,6 +12,18 @@ class SocialTestCase(TestCase):
             "twitter": 'foo'
         }
 
+    def test_required_fields(self):
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(SocialModel.get_required_fields())
+        )
+
+    def test_non_required_fields(self):
+        self.assertEqual(
+            SocialModel.get_non_required_fields(),
+            {'facebook', 'twitter'}
+        )
+
     def test_create(self):
         instance = SocialModelFactory()
         self.assertIsInstance(instance, SocialModel)

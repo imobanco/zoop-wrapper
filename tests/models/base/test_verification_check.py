@@ -13,6 +13,18 @@ class VerificationChecklistTestCase(TestCase):
             "address_line1_check": 'foo'
         }
 
+    def test_required_fields(self):
+        fields = {'postal_code_check', 'address_line1_check'}
+        self.assertTrue(
+            fields.issuperset(VerificationChecklist.get_required_fields())
+        )
+
+    def test_non_required_fields(self):
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(VerificationChecklist.get_non_required_fields())
+        )
+
     def test_create(self):
         instance = VerificationCheckListFactory()
         self.assertIsInstance(instance, VerificationChecklist)

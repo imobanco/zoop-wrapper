@@ -19,16 +19,15 @@ class ZoopMarketPlaceModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        self.assertEqual(
-            ZoopMarketPlaceModel.get_required_fields(),
-            []
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(ZoopMarketPlaceModel.get_required_fields())
         )
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            ZoopMarketPlaceModel.get_non_required_fields(),
-            ["id", "resource", "uri", "created_at",
-             "updated_at", "metadata", 'marketplace_id']
+        fields = {'marketplace_id'}
+        self.assertTrue(
+            fields.issubset(ZoopMarketPlaceModel.get_non_required_fields())
         )
 
     def test_create(self):

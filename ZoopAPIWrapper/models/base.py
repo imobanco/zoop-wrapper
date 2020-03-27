@@ -62,6 +62,7 @@ class ZoopBase(object):
 
         Args:
             data: dict of data or instance
+            allow_empty: boolean
 
         Returns: instance initialized of cls
         """
@@ -124,38 +125,36 @@ class ZoopBase(object):
     @classmethod
     def get_fields(cls):
         """
-        list of all fields
+        set of all fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
-        return cls.get_required_fields() + cls.get_non_required_fields()
+        required_fields = cls.get_required_fields()
+        non_required_fields = cls.get_non_required_fields()
+        return required_fields.union(non_required_fields)
 
     @classmethod
     def get_required_fields(cls):
         """
-        list of required fields
+        set of required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
-        return []
+        return set()
 
     @classmethod
     def get_non_required_fields(cls):
         """
-        list of non required fields
+        set of non required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
-        return []
+        return set()
 
 
 class ZoopModel(ZoopBase):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     Attributes:
         id: identifier string
@@ -169,24 +168,19 @@ class ZoopModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        list of non required fields
+        set of non required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
         fields = super().get_non_required_fields()
-        fields.extend(
-            ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
+        return fields.union(
+            {"id", "resource", "uri", "created_at", "updated_at", "metadata"}
         )
-        return fields
 
 
 class ZoopMarketPlaceModel(ZoopModel):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     Attributes:
         marketplace_id: identifier string
@@ -195,19 +189,17 @@ class ZoopMarketPlaceModel(ZoopModel):
     @classmethod
     def get_non_required_fields(cls):
         """
-        list of non required fields
+        set of non required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
         fields = super().get_non_required_fields()
-        fields.extend(
-            ['marketplace_id']
+        return fields.union(
+            {'marketplace_id'}
         )
-        return fields
 
 
 class AddressModel(ZoopBase):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -225,26 +217,21 @@ class AddressModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        list of non required fields
+        set of non required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
         fields = super().get_non_required_fields()
-        fields.extend(
-            ["line1", "line2", "line3",
+        return fields.union(
+            {"line1", "line2", "line3",
              "neighborhood", "city", "state",
-             "postal_code", "country_code"]
+             "postal_code", "country_code"}
         )
-        return fields
 
 
 class OwnerModel(ZoopBase):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     Attributes:
         address: Address model
@@ -264,17 +251,16 @@ class OwnerModel(ZoopBase):
     @classmethod
     def get_required_fields(cls):
         """
-        list of required fields
+        set of required fields
 
-        Returns: list of fields
+        Returns: set of fields
         """
         fields = super().get_required_fields()
-        fields.extend(
-            ["first_name", "last_name", "email",
+        return fields.union(
+            {"first_name", "last_name", "email",
              "taxpayer_id", "phone_number",
-             "birthdate", "address"]
+             "birthdate", "address"}
         )
-        return fields
 
     @property
     def full_name(self):
@@ -282,45 +268,32 @@ class OwnerModel(ZoopBase):
 
 
 class SocialModel(ZoopBase):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     Attributes:
         facebook: facebook profile url?
         twitter: twitter profile url?
     """
-    __FIELDS = ["facebook", "twitter"]
 
-    def __init__(self, facebook=None,
-                 twitter=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.facebook = facebook
-        self.twitter = twitter
-
-    @property
-    def get_fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"facebook", "twitter"}
+        )
 
 
 class FinancialModel(ZoopBase):
-    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
-    The __FIELDS list the attributes this class
+    The __FIELDS set the attributes this class
     has responsability of constructing in the serialization to dict.
 
     Attributes:
@@ -333,73 +306,70 @@ class FinancialModel(ZoopBase):
         default_debit: ?
         default_credit: ?
     """
-    __FIELDS = ['status', 'account_balance', 'current_balance',
-                'description', 'delinquent', 'payment_methods',
-                'default_debit', 'default_credit']
 
+    @classmethod
+    def get_non_required_fields(cls):
+        """
+        set of non required fields
 
-    @property
-    def get_fields(self):
+        Returns: set of fields
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'status', 'account_balance', 'current_balance',
+             'description', 'delinquent', 'payment_methods',
+             'default_debit', 'default_credit'}
+        )
 
 
 class VerificationChecklist(ZoopBase):
     """
     This class and it's subclasses have attributes.
 
-    The __FIELDS list the attributes this class
+    The __FIELDS set the attributes this class
     has responsability of constructing in the serialization to dict.
 
     Attributes:
         postal_code_check: boolean of verification
         address_line1_check: boolean of verification
     """
-    __FIELDS = ["postal_code_check", "address_line1_check"]
 
+    @classmethod
+    def get_required_fields(cls):
+        """
+        set of required fields
 
-    @property
-    def get_fields(self):
+        Returns: set of fields
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {"postal_code_check", "address_line1_check"}
+        )
 
 
 class PaymentMethod(ZoopModel):
     """
     This class and it's subclasses have attributes.
 
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
-
     Attributes:
         description: text description
         customer: uuid id
         address: Address Model
     """
-    __FIELDS = ['description', 'customer', 'address']
 
-    @property
-    def get_fields(self):
+    def __init__(self, address, **kwargs):
+        setattr(self, 'address', AddressModel.from_dict_or_instance(address, allow_empty=True))
+
+        super().__init__(**kwargs)
+
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        set of required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {'description', 'customer', 'address'}
+        )

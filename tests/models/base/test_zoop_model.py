@@ -17,16 +17,16 @@ class ZoopModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        self.assertEqual(
-            ZoopModel.get_required_fields(),
-            []
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(ZoopModel.get_required_fields())
         )
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            ZoopModel.get_non_required_fields(),
-            ["id", "resource", "uri", "created_at",
-             "updated_at", "metadata"]
+        fields = {"id", "resource", "uri", "created_at",
+                  "updated_at", "metadata"}
+        self.assertTrue(
+            fields.issuperset(ZoopModel.get_non_required_fields())
         )
 
     def test_create(self):

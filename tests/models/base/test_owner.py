@@ -26,17 +26,17 @@ class OwnerModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        self.assertEqual(
-            OwnerModel.get_required_fields(),
-            ["first_name", "last_name", "email",
-             "taxpayer_id", "phone_number",
-             "birthdate", "address"]
+        fields = {"first_name", "last_name", "email",
+                  "taxpayer_id", "phone_number",
+                  "birthdate", "address"}
+        self.assertTrue(
+            fields.issuperset(OwnerModel.get_required_fields())
         )
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            OwnerModel.get_non_required_fields(),
-            []
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(OwnerModel.get_non_required_fields())
         )
 
     def test_create(self):

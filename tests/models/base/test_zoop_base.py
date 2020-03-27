@@ -23,9 +23,9 @@ class ZoopBaseTestCase(TestCase):
         self.addCleanup(self.patcher_required_fields.stop)
         self.addCleanup(self.patcher_non_required_fields.stop)
 
-        self.mocked_fields.return_value = ['id', 'name']
-        self.mocked_required_fields.return_value = ['id']
-        self.mocked_non_required_fields.return_value = ['name']
+        self.mocked_fields.return_value = {'id', 'name'}
+        self.mocked_required_fields.return_value = {'id'}
+        self.mocked_non_required_fields.return_value = {'name'}
 
     @property
     def data(self):
@@ -37,9 +37,9 @@ class ZoopBaseTestCase(TestCase):
     def test_init(self):
         validate = MagicMock()
         instance = MagicMock(
-            get_fields=MagicMock(return_value=['id', 'name']),
-            get_required_fields=MagicMock(return_value=['id']),
-            get_non_required_fields=MagicMock(return_value=['name']),
+            get_fields=MagicMock(return_value={'id', 'name'}),
+            get_required_fields=MagicMock(return_value={'id'}),
+            get_non_required_fields=MagicMock(return_value={'name'}),
             validate_required_fields=validate,
         )
         setattr(instance, 'id', None)
@@ -124,10 +124,19 @@ class ZoopBaseTestCase(TestCase):
         self.assertEqual(instance.to_dict(), self.data)
 
     def test_fields(self):
-        self.assertEqual(ZoopBase.get_fields(), ['id', 'name'])
+        fields = {"id", 'name'}
+        self.assertTrue(
+            fields.issuperset(ZoopBase.get_fields())
+        )
 
     def test_required_fields(self):
-        self.assertEqual(ZoopBase.get_required_fields(), ['id'])
+        fields = {"id"}
+        self.assertTrue(
+            fields.issuperset(ZoopBase.get_required_fields())
+        )
 
     def test_non_required_fields(self):
-        self.assertEqual(ZoopBase.get_non_required_fields(), ["name"])
+        fields = {"name"}
+        self.assertTrue(
+            fields.issuperset(ZoopBase.get_non_required_fields())
+        )

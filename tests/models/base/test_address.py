@@ -18,17 +18,17 @@ class AddressTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        self.assertEqual(
-            AddressModel.get_required_fields(),
-            []
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(AddressModel.get_required_fields())
         )
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            AddressModel.get_non_required_fields(),
-            ["line1", "line2", "line3",
-             "neighborhood", "city", "state",
-             "postal_code", "country_code"]
+        fields = {"line1", "line2", "line3",
+                  "neighborhood", "city", "state",
+                  "postal_code", "country_code"}
+        self.assertTrue(
+            fields.issuperset(AddressModel.get_non_required_fields())
         )
 
     def test_create(self):

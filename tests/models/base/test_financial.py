@@ -18,6 +18,20 @@ class FinancialTestCase(TestCase):
             "default_credit": 'foo',
         }
 
+    def test_required_fields(self):
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(FinancialModel.get_required_fields())
+        )
+
+    def test_non_required_fields(self):
+        fields = {'status', 'account_balance', 'current_balance',
+                  'description', 'delinquent', 'payment_methods',
+                  'default_debit', 'default_credit'}
+        self.assertTrue(
+                fields.issuperset(FinancialModel.get_non_required_fields())
+        )
+
     def test_create(self):
         instance = FinancialModelFactory()
         self.assertIsInstance(instance, FinancialModel)

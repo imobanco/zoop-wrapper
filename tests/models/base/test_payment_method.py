@@ -23,6 +23,18 @@ class PaymentMethodTestCase(TestCase):
             }
         }
 
+    def test_required_fields(self):
+        fields = {'description', 'customer', 'address'}
+        self.assertTrue(
+            fields.issuperset(PaymentMethod.get_required_fields())
+        )
+
+    def test_non_required_fields(self):
+        fields = set()
+        self.assertTrue(
+            fields.issubset(PaymentMethod.get_non_required_fields())
+        )
+
     def test_create(self):
         instance = PaymentMethodFactory()
         self.assertIsInstance(instance, PaymentMethod)

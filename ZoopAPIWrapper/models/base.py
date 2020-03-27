@@ -13,17 +13,19 @@ class ZoopBase:
     This class has the attribute __FIELDS with the list of attributes it has.
     The purpose of this is to construct the dict of the object.
     """
-    __FIELDS = []
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         """
         constructor
 
         Args:
-            *args:
-            **kwargs:
+            **kwargs: dictionary of args
         """
-        pass
+        for field_name in self.fields:
+            value = kwargs.get(field_name, None)
+            setattr(self, field_name, value)
+
+        self.validate_required_field()
 
     @classmethod
     def _from_dict(cls, **entries):

@@ -108,14 +108,15 @@ class BankAccountToken(BusinessOrIndividualMixin, Token):
     @classproperty
     def business_class(cls):
         return BusinessBankAccountToken
+
     # noinspection PyMethodParameters
     @classproperty
     def individual_class(cls):
         return IndividualBankAccountToken
 
     @property
-        """
     def fields(self):
+        """
         the fields of ZoopBase are it's
         __FIELDS extended with it's father fields.
         it's important to be a new list (high order function)
@@ -124,6 +125,104 @@ class BankAccountToken(BusinessOrIndividualMixin, Token):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+
+class BusinessBankAccountToken(BankAccountToken):
+    """
+    Token is a resource used to link a BankAccount and a Customer
+    https://docs.zoop.co/reference#post_v1-marketplaces-marketplace-id-bank-accounts-tokens
+
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
+    Attributes:
+        ein: CNPJ
+    """
+    __FIELDS = ['ein']
+
+    def __init__(self, ein, **kwargs):
+        super().__init__(**kwargs)
+
+        self.ein = ein
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls
+        """
+        return cls._from_dict(**data)
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
+class IndividualBankAccountToken(BankAccountToken):
+    """
+    Token is a resource used to link a BankAccount and a Customer
+    https://docs.zoop.co/reference#post_v1-marketplaces-marketplace-id-bank-accounts-tokens
+
+    This class and it's subclasses have attributes.
+
+    The __FIELDS list the attributes this class
+    has responsability of constructing in the serialization to dict.
+
+    The RESOURCE attribute of this class is used to identify this Model.
+    Remember the resource on ZoopModel? BAM!
+
+    Attributes:
+        taxpayer_id: CPF
+    """
+    __FIELDS = ['taxpayer_id']
+
+    def __init__(self, taxpayer_id, **kwargs):
+        super().__init__(**kwargs)
+
+        self.taxpayer_id = taxpayer_id
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data
+
+        Returns: instance initialized of cls
+        """
+        return cls._from_dict(**data)
+
+    @property
+    def fields(self):
+        """
+        the fields of ZoopBase are it's
+        __FIELDS extended with it's father fields.
+        it's important to be a new list (high order function)
+        Returns: new list of attributes
+        """
+        super_fields = super().fields
+        super_fields.extend(self.__FIELDS)
+        return list(super_fields)
+
+
 class CardToken(Token):
     """
     Token is a resource used to link a Card and a Customer

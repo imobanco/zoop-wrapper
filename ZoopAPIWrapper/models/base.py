@@ -326,9 +326,6 @@ class VerificationChecklist(ZoopBase):
     """
     This class and it's subclasses have attributes.
 
-    The __FIELDS set the attributes this class
-    has responsability of constructing in the serialization to dict.
-
     Attributes:
         postal_code_check: boolean of verification
         address_line1_check: boolean of verification

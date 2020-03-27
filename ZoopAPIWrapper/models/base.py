@@ -26,7 +26,7 @@ class ZoopBase:
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
-        self.__raise_exception_on_validation = not allow_empty
+        self.__allow_empty = allow_empty
 
         self.validate_required_fields()
 
@@ -68,34 +68,18 @@ class ZoopBase:
         Returns: dict of instance
         """
         data = {}
-        for required_field in self.required_fields:
+        for field in self.fields:
             try:
                 """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
-                attr = getattr(self, required_field).to_dict()
+                attr = getattr(self, field).to_dict()
             except AttributeError:
                 """our attr doesn't have to_dict() method.
                 Oh snap! It's not a ZoopBase instance!"""
-                attr = getattr(self, required_field)
+                attr = getattr(self, field)
 
-            if attr is None:
-                self.validate_required_fields()
-
-            data[required_field] = attr
-
-        for non_required_field in self.non_required_fields:
-            try:
-                """our attr may be a ZoopBase instance.
-                Let's try to get its serialized value!"""
-                attr = getattr(self, non_required_field).to_dict()
-            except AttributeError:
-                """our attr doesn't have to_dict() method.
-                Oh snap! It's not a ZoopBase instance!"""
-                attr = getattr(self, non_required_field)
-
-            if attr is not None:
-                """only serialize values which are not None"""
-                data[non_required_field] = attr
+            if attr is not None or self.__allow_empty:
+                data[field] = attr
 
         return data
 
@@ -112,7 +96,7 @@ class ZoopBase:
                         raise_exception or
                         (
                                 raise_exception is None and
-                                self.__raise_exception_on_validation
+                                not self.__allow_empty
                         )
                 )
         ):

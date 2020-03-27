@@ -109,3 +109,9 @@ class ZoopBaseTestCase(TestCase):
 
         self.assertIsInstance(instance, ZoopBase)
         self.assertEqual(instance.to_dict(), data)
+
+    def test_to_dict_allow_empty(self):
+        instance = ZoopBase.from_dict(self.data, allow_empty=True)
+
+        self.assertIsInstance(instance, ZoopBase)
+        self.assertEqual(instance.to_dict(), self.data)

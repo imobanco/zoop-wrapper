@@ -239,3 +239,7 @@ class BusinessSeller(Seller):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+    @property
+    def full_name(self):
+        return self.owner.full_name

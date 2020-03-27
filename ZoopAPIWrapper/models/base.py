@@ -1,5 +1,4 @@
 from ZoopAPIWrapper.utils import get_logger
-from ZoopAPIWrapper.exceptions import AddressCreationException
 
 
 logger = get_logger('models')
@@ -98,6 +97,46 @@ class ZoopBase:
         return list(self.__FIELDS)
 
 
+class ZoopBaseCreationSuppresed(ZoopBase):
+    """
+    This class represent a bare ZoopBase object which doesn't have
+    to be created. It may return None on `from_dict` method.
+
+    A instance of this class doesn't have attributes.
+
+    This class has the attribute __FIELDS with the list of attributes it has.
+    The purpose of this is to construct the dict of the object.
+    """
+
+    @classmethod
+    def from_dict(cls, data):
+        """
+        construct a instance of this class from dict
+        May return None
+
+        Args:
+            data: dict of data
+
+        Examples:
+            >>>data = None
+            >>>print(**data)
+            Traceback (most recent call last):
+              File "<input>", line 1, in <module>
+            TypeError: print() argument after ** must be a mapping, not NoneType
+
+            >>>instance = cls.from_dict(data=None)
+            instance = None
+
+        Returns: instance initialized of cls or None
+        """
+        try:
+            return super().from_dict(data)
+        except TypeError as e:
+            e.args = (f'{cls} could not be created!',)
+            logger.warning(e)
+            return None
+
+
 class ZoopModel(ZoopBase):
     """
     This class and it's subclasses have attributes.
@@ -170,7 +209,7 @@ class ZoopMarketPlaceModel(ZoopModel):
         return list(super_fields)
 
 
-class AddressModel(ZoopBase):
+class AddressModel(ZoopBaseCreationSuppresed):
     """
     This class and it's subclasses have attributes.
 
@@ -204,24 +243,6 @@ class AddressModel(ZoopBase):
         self.state = state
         self.postal_code = postal_code
         self.country_code = country_code
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-        May return None
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of cls or None
-        """
-        try:
-            return super().from_dict(data)
-        except TypeError:
-            e = AddressCreationException('address could not be created!')
-            logger.warning(e)
-            return None
 
     @property
     def fields(self):
@@ -281,6 +302,10 @@ class OwnerModel(ZoopBase):
         super_fields = super().fields
         super_fields.extend(self.__FIELDS)
         return list(super_fields)
+
+    @property
+    def full_name(self):
+        return f'{self.first_name} {self.last_name}'
 
 
 class SocialModel(ZoopBase):
@@ -364,7 +389,7 @@ class FinancialModel(ZoopBase):
         return list(super_fields)
 
 
-class VerificationChecklist(ZoopBase):
+class VerificationChecklist(ZoopBaseCreationSuppresed):
     """
     This class and it's subclasses have attributes.
 

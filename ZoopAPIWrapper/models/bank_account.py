@@ -2,6 +2,8 @@ from ZoopAPIWrapper.models.base import (
     ZoopModel, AddressModel, VerificationChecklist)
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin, classproperty)
+from ZoopAPIWrapper.models.seller import (
+    BusinessSeller, IndividualSeller)
 
 
 class BankAccountVerificationChecklist(VerificationChecklist):
@@ -78,11 +80,11 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
                 "address", "verification_checklist"]
 
     def __init__(self, holder_name, bank_code, routing_number,
-                 account_number,
+                 account_number, customer=None,
                  description=None, bank_name=None, type=None,
                  country_code=None, phone_number=None,
                  is_active=None, is_verified=None,
-                 debitable=None, customer=None, fingerprint=None,
+                 debitable=None, fingerprint=None,
                  address=None, verification_checklist=None,
                  last4_digits=None, **kwargs):
         super().__init__(**kwargs)
@@ -153,6 +155,11 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
         klass = BankAccount.get_class(data)
         return klass.from_dict(data)
 
+    @classmethod
+    def from_dict_and_seller(cls, seller, data):
+        data['holder_name'] = seller.full_name
+        return cls.from_dict(data)
+
 
 class BusinessBankAccount(BankAccount):
     """
@@ -195,6 +202,11 @@ class BusinessBankAccount(BankAccount):
         """
         return cls._from_dict(**data)
 
+    @classmethod
+    def from_dict_and_seller(cls, seller: BusinessSeller, data):
+        data[seller.BUSINESS_IDENTIFIER] = seller.ein
+        return super().from_dict_and_seller(seller, data)
+
 
 class IndividualBankAccount(BankAccount):
     """
@@ -236,3 +248,8 @@ class IndividualBankAccount(BankAccount):
         Returns: instance initialized of class or None
         """
         return cls._from_dict(**data)
+
+    @classmethod
+    def from_dict_and_seller(cls, seller: IndividualSeller, data):
+        data[seller.INDIVIDUAL_IDENTIFIER] = seller.taxpayer_id
+        return super().from_dict_and_seller(seller, data)

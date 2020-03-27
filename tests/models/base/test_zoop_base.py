@@ -40,8 +40,10 @@ class ZoopBaseTestCase(TestCase):
             get_fields=MagicMock(return_value=['id', 'name']),
             get_required_fields=MagicMock(return_value=['id']),
             get_non_required_fields=MagicMock(return_value=['name']),
-            validate_required_fields=validate
+            validate_required_fields=validate,
         )
+        setattr(instance, 'id', None)
+        setattr(instance, 'name', None)
 
         # noinspection PyCallByClass
         ZoopBase.__init__(instance, **self.data)
@@ -120,3 +122,12 @@ class ZoopBaseTestCase(TestCase):
 
         self.assertIsInstance(instance, ZoopBase)
         self.assertEqual(instance.to_dict(), self.data)
+
+    def test_fields(self):
+        self.assertEqual(ZoopBase.get_fields(), ['id', 'name'])
+
+    def test_required_fields(self):
+        self.assertEqual(ZoopBase.get_required_fields(), ['id'])
+
+    def test_non_required_fields(self):
+        self.assertEqual(ZoopBase.get_non_required_fields(), ["name"])

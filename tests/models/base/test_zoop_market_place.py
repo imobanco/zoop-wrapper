@@ -18,6 +18,19 @@ class ZoopMarketPlaceModelTestCase(TestCase):
             'marketplace_id': 'foo'
         }
 
+    def test_required_fields(self):
+        self.assertEqual(
+            ZoopMarketPlaceModel.get_required_fields(),
+            []
+        )
+
+    def test_non_required_fields(self):
+        self.assertEqual(
+            ZoopMarketPlaceModel.get_non_required_fields(),
+            ["id", "resource", "uri", "created_at",
+             "updated_at", "metadata", 'marketplace_id']
+        )
+
     def test_create(self):
         instance = ZoopMarketPlaceModelFactory()
         self.assertIsInstance(instance, ZoopMarketPlaceModel)

@@ -5,11 +5,14 @@ from ZoopAPIWrapper.exceptions import ValidationError
 logger = get_logger('models')
 
 
-class ZoopBase:
+class ZoopBase(object):
     """
     This class represent a bare ZoopBase object.
 
     A instance of this class doesn't have attributes.
+
+    Attributes:
+        __allow_empty: boolean
     """
 
     def __init__(self, allow_empty=False, **kwargs):
@@ -19,8 +22,12 @@ class ZoopBase:
         Args:
             **kwargs: dictionary of args
         """
-        fields = self.get_fields()
+
         for field_name in self.get_fields():
+            my_value = getattr(self, field_name, None)
+            if my_value is not None:
+                continue
+
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
@@ -40,12 +47,15 @@ class ZoopBase:
         Returns: instance initialized of cls
         """
         if data is None:
-            data = {}
+            _data = {}
+        else:
+            _data = {key: value for key, value in data.items()}
 
-        return cls(allow_empty, **data)
+        _data['allow_empty'] = allow_empty
+        return cls(**_data)
 
     @classmethod
-    def from_dict_or_instance(cls, data):
+    def from_dict_or_instance(cls, data, allow_empty=False):
         """
         check if data is already a ZoopModel or subclass.
         If not call from_dict
@@ -58,7 +68,7 @@ class ZoopBase:
         if isinstance(data, cls):
             return data
         else:
-            return cls.from_dict(data)
+            return cls.from_dict(data, allow_empty)
 
     def to_dict(self):
         """
@@ -140,6 +150,7 @@ class ZoopBase:
 
 
 class ZoopModel(ZoopBase):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -156,15 +167,21 @@ class ZoopModel(ZoopBase):
     """
 
     @classmethod
-    def get_required_fields(cls):
-        return []
-
-    @classmethod
     def get_non_required_fields(cls):
-        return ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
+        """
+        list of non required fields
+
+        Returns: list of fields
+        """
+        fields = super().get_non_required_fields()
+        fields.extend(
+            ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
+        )
+        return fields
 
 
 class ZoopMarketPlaceModel(ZoopModel):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -174,32 +191,25 @@ class ZoopMarketPlaceModel(ZoopModel):
     Attributes:
         marketplace_id: identifier string
     """
-    __FIELDS = ["marketplace_id"]
 
-    def __init__(self, marketplace_id=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.marketplace_id = marketplace_id
-
-    @property
-    def get_fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        list of non required fields
+
+        Returns: list of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        fields.extend(
+            ['marketplace_id']
+        )
+        return fields
 
 
 class AddressModel(ZoopBase):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     Attributes:
         line1: complete street name
@@ -211,38 +221,25 @@ class AddressModel(ZoopBase):
         postal_code: postal code
         country_code: ISO 3166-1 alpha-2 - códigos de país de duas letras
     """
-    __FIELDS = ["line1", "line2", "line3",
-                "neighborhood", "city", "state",
-                "postal_code", "country_code"]
 
-    def __init__(self, line1, line2, line3,
-                 neighborhood, city, state,
-                 postal_code, country_code, **kwargs):
-        super().__init__(**kwargs)
-
-        self.line1 = line1
-        self.line2 = line2
-        self.line3 = line3
-        self.neighborhood = neighborhood
-        self.city = city
-        self.state = state
-        self.postal_code = postal_code
-        self.country_code = country_code
-
-    @property
-    def get_fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        list of non required fields
+
+        Returns: list of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        fields.extend(
+            ["line1", "line2", "line3",
+             "neighborhood", "city", "state",
+             "postal_code", "country_code"]
+        )
+        return fields
 
 
 class OwnerModel(ZoopBase):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -258,35 +255,26 @@ class OwnerModel(ZoopBase):
         phone_number: phone number
         taxpayer_id: cpf
     """
-    __FIELDS = ["first_name", "last_name", "email",
-                "taxpayer_id", "phone_number",
-                "birthdate", "address"]
 
-    def __init__(self, first_name, last_name, email,
-                 taxpayer_id, phone_number, birthdate=None,
-                 address=None, **kwargs):
+    def __init__(self, address, **kwargs):
+        setattr(self, 'address', AddressModel.from_dict_or_instance(address, allow_empty=True))
+
         super().__init__(**kwargs)
 
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.taxpayer_id = taxpayer_id
-        self.phone_number = phone_number
-        self.birthdate = birthdate
-
-        self.address = AddressModel.from_dict_or_instance(address)
-
-    @property
-    def get_fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        list of required fields
+
+        Returns: list of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        fields.extend(
+            ["first_name", "last_name", "email",
+             "taxpayer_id", "phone_number",
+             "birthdate", "address"]
+        )
+        return fields
 
     @property
     def full_name(self):
@@ -294,6 +282,7 @@ class OwnerModel(ZoopBase):
 
 
 class SocialModel(ZoopBase):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -327,6 +316,7 @@ class SocialModel(ZoopBase):
 
 
 class FinancialModel(ZoopBase):
+    # noinspection PyUnresolvedReferences
     """
     This class and it's subclasses have attributes.
 
@@ -347,19 +337,6 @@ class FinancialModel(ZoopBase):
                 'description', 'delinquent', 'payment_methods',
                 'default_debit', 'default_credit']
 
-    def __init__(self, status=None, account_balance=None, current_balance=None,
-                 description=None, delinquent=None, payment_methods=None,
-                 default_debit=None, default_credit=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.status = status
-        self.account_balance = account_balance
-        self.current_balance = current_balance
-        self.description = description
-        self.delinquent = delinquent
-        self.payment_methods = payment_methods
-        self.default_debit = default_debit
-        self.default_credit = default_credit
 
     @property
     def get_fields(self):
@@ -387,12 +364,6 @@ class VerificationChecklist(ZoopBase):
     """
     __FIELDS = ["postal_code_check", "address_line1_check"]
 
-    def __init__(self, postal_code_check, address_line1_check,
-                 **kwargs):
-        super().__init__(**kwargs)
-
-        self.postal_code_check = postal_code_check
-        self.address_line1_check = address_line1_check
 
     @property
     def get_fields(self):
@@ -420,14 +391,6 @@ class PaymentMethod(ZoopModel):
         address: Address Model
     """
     __FIELDS = ['description', 'customer', 'address']
-
-    def __init__(self, description, customer,
-                 address=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.description = description
-        self.customer = customer
-        self.address = AddressModel.from_dict_or_instance(address)
 
     @property
     def get_fields(self):

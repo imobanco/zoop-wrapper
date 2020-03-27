@@ -25,6 +25,20 @@ class OwnerModelTestCase(TestCase):
             }
         }
 
+    def test_required_fields(self):
+        self.assertEqual(
+            OwnerModel.get_required_fields(),
+            ["first_name", "last_name", "email",
+             "taxpayer_id", "phone_number",
+             "birthdate", "address"]
+        )
+
+    def test_non_required_fields(self):
+        self.assertEqual(
+            OwnerModel.get_non_required_fields(),
+            []
+        )
+
     def test_create(self):
         instance = OwnerModelFactory()
         self.assertIsInstance(instance, OwnerModel)

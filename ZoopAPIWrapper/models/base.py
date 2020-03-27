@@ -73,21 +73,46 @@ class ZoopBase:
         Returns: dict of instance
         """
         data = {}
-        for field in self.fields:
+        for required_field in self.required_fields:
             try:
                 """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
-                attr = getattr(self, field).to_dict()
+                attr = getattr(self, required_field).to_dict()
             except AttributeError:
                 """our attr doesn't have to_dict() method.
                 Oh snap! It's not a ZoopBase instance!"""
-                attr = getattr(self, field)
+                attr = getattr(self, required_field)
+
+            if attr is None:
+                self.validate_required_field()
+
+            data[required_field] = attr
+
+        for non_required_field in self.non_required_fields:
+            try:
+                """our attr may be a ZoopBase instance.
+                Let's try to get its serialized value!"""
+                attr = getattr(self, non_required_field).to_dict()
+            except AttributeError:
+                """our attr doesn't have to_dict() method.
+                Oh snap! It's not a ZoopBase instance!"""
+                attr = getattr(self, non_required_field)
 
             if attr is not None:
                 """only serialize values which are not None"""
-                data[field] = attr
+                data[non_required_field] = attr
 
         return data
+
+    def validate_required_field(self, raise_exception=True):
+        errors = []
+        for required_field in self.required_fields:
+            value = getattr(self, required_field, None)
+            if value is None:
+                errors.append(required_field)
+
+        if raise_exception and errors:
+            raise ValueError(errors)
 
     @property
     def fields(self):
@@ -96,7 +121,15 @@ class ZoopBase:
         it's important to be a new list (high order function)
         Returns: new list of attributes
         """
-        return list(self.__FIELDS)
+        return self.required_fields + self.non_required_fields
+
+    @property
+    def required_fields(self):
+        return []
+
+    @property
+    def non_required_fields(self):
+        return []
 
 
 class ZoopBaseCreationSuppresed(ZoopBase):
@@ -133,7 +166,7 @@ class ZoopBaseCreationSuppresed(ZoopBase):
         """
         try:
             return super().from_dict(data)
-        except TypeError as e:
+        except ValueError as e:
             e.args = (f'{cls} could not be created!',)
             logger.warning(e)
             return None
@@ -154,31 +187,14 @@ class ZoopModel(ZoopBase):
         updated_at: date of update
         metadata: dict with metadata
     """
-    __FIELDS = ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
-
-    def __init__(self, id=None, resource=None, uri=None,
-                 created_at=None, updated_at=None,
-                 metadata=None, **kwargs):
-        super().__init__(**kwargs)
-        self.id = id
-        self.resource = resource
-        self.uri = uri
-
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.metadata = metadata
 
     @property
-    def fields(self):
-        """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+    def required_fields(self):
+        return []
+
+    @property
+    def non_required_fields(self):
+        return ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
 
 
 class ZoopMarketPlaceModel(ZoopModel):

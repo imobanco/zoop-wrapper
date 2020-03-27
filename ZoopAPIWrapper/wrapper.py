@@ -7,7 +7,7 @@ from ZoopAPIWrapper.models.bank_account import (
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.models.token import Token, CardToken
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -437,6 +437,7 @@ class ZoopWrapper(RequestsWrapper):
     def list_buyers(self):
         """
         list all buyers
+
         Returns: response with instances of Buyer
         """
         return self.__get_buyers()
@@ -447,7 +448,6 @@ class ZoopWrapper(RequestsWrapper):
 
         Args:
             identifier: uuid id
-
 
         Returns: response with instance of Buyer
         """
@@ -509,3 +509,16 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='buyers',
                                   identifier=identifier)
         return self._delete(url)
+
+    def retrieve_card(self, identifier):
+        """
+        retrieve card
+
+        Args:
+            identifier: uuid id
+
+        Returns: response without instance
+        """
+        url = self._construct_url(action='cards',
+                                  identifier=identifier)
+        return self._get(url)

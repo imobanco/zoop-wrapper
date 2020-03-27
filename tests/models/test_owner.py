@@ -22,7 +22,7 @@ class OwnerModelTestCase(TestCase):
                 "state": "foo",
                 "postal_code": "foo",
                 "country_code": "foo"
-            },
+            }
         }
 
     def test_create(self):

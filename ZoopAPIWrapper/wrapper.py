@@ -2,8 +2,11 @@ import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.bank_account import (
+    BankAccount, IndividualBankAccount, BusinessBankAccount)
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
+from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -254,6 +257,63 @@ class ZoopWrapper(RequestsWrapper):
         """
         add seller
 
+        Examples:
+            data = {
+                'taxpayer_id': 'foo',
+                'first_name': 'foo',
+                'last_name': 'foo',
+                'email': 'foo@bar.com',
+                'phone_number': '+55 84 99999-9999',
+                'birthdate': '1994-12-27',
+                'address': {
+                    'line1': 'foo',
+                    'line2': '123',
+                    'line3': 'barbar',
+                    'neighborhood': 'fooofoo',
+                    'city': 'Natal',
+                    'state': 'BR-RN',
+                    'postal_code': '59152250',
+                    'country_code': "BR"
+                }
+            }
+
+            data = {
+                "business_name": "foo",
+                "business_phone": "foo",
+                "business_email": "foo",
+                "business_website": "foo",
+                "business_opening_date": "foo",
+                "ein": "foo",
+                'owner': {
+                    "first_name": "foo",
+                    "last_name": "foo",
+                    "email": "foo",
+                    "taxpayer_id": "foo",
+                    "phone_number": "foo",
+                    "birthdate": 'foo',
+                    "address": {
+                        "line1": "foo",
+                        "line2": "foo",
+                        "line3": "foo",
+                        "neighborhood": "foo",
+                        "city": "foo",
+                        "state": "foo",
+                        "postal_code": "foo",
+                        "country_code": "foo"
+                    }
+                }
+                "business_address": {
+                    "line1": "foo",
+                    "line2": "foo",
+                    "line3": "foo",
+                    "neighborhood": "foo",
+                    "city": "foo",
+                    "state": "foo",
+                    "postal_code": "foo",
+                    "country_code": "foo"
+                }
+            }
+
         Args:
             data: dict of data
 
@@ -296,6 +356,66 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='bank_accounts',
                                   identifier=identifier)
         return self._get(url)
+
+    def __add_token(self, bank_account: BankAccount):
+        """
+        add bank account token
+
+        Args:
+            bank_account: BankAccount model
+
+        Returns: response with instance of BankAccount
+        """
+        url = self._construct_url(action='bank_accounts', subaction='tokens')
+        return self._post_instance(url, instance=bank_account)
+
+    def add_bank_account(self, data: dict):
+        """
+        add bank account
+
+        Examples:
+            data = {
+                'taxpayer_id' or 'ein': 'foo',
+                'holder_name': 'foo',
+                'bank_code': 'foo',
+                'routing_number': 'foo',
+                'account_number': 'foo',
+                'taxpayer_id': 'foo',
+                'type': 'foo'
+            }
+
+        Args:
+            data: dict of data
+
+        Returns: response with instance of BankAccount
+        """
+        bank_account_instance = BankAccount.from_dict(data)
+        if not isinstance(bank_account_instance, BankAccount):
+            raise TypeError('this is not supposed to happen!')
+
+        if isinstance(bank_account_instance, IndividualBankAccount):
+            seller_response = self.search_individual_seller(
+                bank_account_instance.taxpayer_id)
+        elif isinstance(bank_account_instance, BusinessBankAccount):
+            seller_response = self.search_business_seller(
+                bank_account_instance.ein)
+        else:
+            raise TypeError('this is not supposed to happen!')
+
+        seller_instance = seller_response.instance
+        assert isinstance(seller_instance, Seller)
+
+        token_response = self.__add_token(bank_account_instance)
+        token_instance = token_response.instance
+        assert isinstance(token_instance, Token)
+
+        data = {
+            "customer": seller_instance.id,
+            "token": token_instance.id
+        }
+
+        url = self._construct_url(action='bank_accounts')
+        return self._post(url, data=data)
 
     def __get_buyers(self, action='buyers', identifier=None, search=None):
         """
@@ -346,6 +466,26 @@ class ZoopWrapper(RequestsWrapper):
     def add_buyer(self, data: dict):
         """
         add buyer
+
+        Examples:
+            data = {
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo",
+                "taxpayer_id": "foo",
+                "phone_number": "foo",
+                "birthdate": 'foo',
+                "address": {
+                    "line1": "foo",
+                    "line2": "foo",
+                    "line3": "foo",
+                    "neighborhood": "foo",
+                    "city": "foo",
+                    "state": "foo",
+                    "postal_code": "foo",
+                    "country_code": "foo"
+                }
+            }
 
         Args:
             data: dict of data

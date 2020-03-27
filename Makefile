@@ -11,3 +11,6 @@ config: config.data config.env
 
 test:
 	python -m unittest
+
+flake8:
+	flake8 .

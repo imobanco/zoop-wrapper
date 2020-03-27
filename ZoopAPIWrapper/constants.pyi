@@ -1,0 +1,3 @@
+ZOOP_KEY: str
+MARKETPLACE_ID: str
+LOG_LEVEL: int

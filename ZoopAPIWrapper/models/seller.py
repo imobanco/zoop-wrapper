@@ -17,7 +17,6 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
     Remember the resource on ZoopModel? BAM!
 
     Attributes:
-        type: individual or business string
         statement_descriptor: ?
         mcc: ?
         show_profile_online:
@@ -26,6 +25,8 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
         decline_on_fail_zipcode: bolean of verification
         merchant_code: ?
         terminal_code: ?
+
+        type: individual or business string
 
         website: Optional[str]
         taxpayer_id: Optional[str]

@@ -6,6 +6,17 @@ from typing import Any, Optional
 class Seller(ZoopMarketPlaceModel, FinancialModel, SocialModel, OwnerModel, BusinessOrIndividualMixin):
     RESOURCE: str = ...
 
+    type: str
+
+    statement_descriptor: Optional[Any]
+    mcc: Optional[Any]
+    show_profile_online: Optional[bool]
+    is_mobile: Optional[bool]
+    decline_on_fail_security_code: Optional[bool]
+    decline_on_fail_zipcode: Optional[bool]
+    merchant_code: Optional[Any]
+    terminal_code: Optional[Any]
+
     taxpayer_id: Optional[str]
     address: Optional[AddressModel]
     birthdate: Optional[str]

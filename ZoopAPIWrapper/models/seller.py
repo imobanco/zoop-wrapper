@@ -27,20 +27,20 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
         merchant_code: ?
         terminal_code: ?
 
-        website: Optional string
-        taxpayer_id: Optional string
+        website: Optional[str]
+        taxpayer_id: Optional[str]
 
-        ein: Optional string
-        owner: Optional string
-        business_name: Optional string
-        business_phone: Optional string
-        business_email: Optional string
-        business_website: Optional string
-        business_opening_date: Optional string
-        business_address: Optional string
-        business_description: Optional string
-        business_facebook: Optional string
-        business_twitter: Optional string
+        ein: Optional[str]
+        owner: Optional[OwnerModel]
+        business_address: Optional[AddressModel]
+        business_name: Optional[str]
+        business_phone: Optional[str]
+        business_email: Optional[str]
+        business_website: Optional[str]
+        business_opening_date: Optional[str]
+        business_description: Optional[str]
+        business_facebook: Optional[str]
+        business_twitter: Optional[str]
     """
     RESOURCE = 'seller'
 

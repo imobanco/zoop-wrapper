@@ -23,7 +23,7 @@ class ZoopBase(object):
             **kwargs: dictionary of args
         """
 
-        for field_name in self.get_fields():
+        for field_name in self.get_all_fields():
             my_value = getattr(self, field_name, None)
             if my_value is not None:
                 continue
@@ -33,7 +33,7 @@ class ZoopBase(object):
 
         self.__allow_empty = allow_empty
 
-        self.validate_required_fields()
+        self.validate_fields()
 
     @classmethod
     def from_dict(cls, data, allow_empty=False):
@@ -77,7 +77,7 @@ class ZoopBase(object):
         Returns: dict of instance
         """
         data = {}
-        for field in self.get_fields():
+        for field in self.get_all_fields():
             try:
                 """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
@@ -92,7 +92,7 @@ class ZoopBase(object):
 
         return data
 
-    def validate_required_fields(self, raise_exception=None):
+    def validate_fields(self, raise_exception=None):
         """
         Validate all required_fields
 
@@ -105,10 +105,10 @@ class ZoopBase(object):
 
         """
         errors = []
-        for required_field in self.get_required_fields():
-            value = getattr(self, required_field, None)
+        for validation_field in self.get_validation_fields():
+            value = getattr(self, validation_field, None)
             if value is None:
-                errors.append(required_field)
+                errors.append(validation_field)
 
         if (
                 errors and
@@ -121,6 +121,12 @@ class ZoopBase(object):
                 )
         ):
             raise ValidationError(errors)
+
+    def get_validation_fields(self):
+        return self.get_required_fields()
+
+    def get_all_fields(self):
+        return self.get_fields()
 
     @classmethod
     def get_fields(cls):
@@ -164,6 +170,7 @@ class ZoopModel(ZoopBase):
         updated_at: date of update
         metadata: dict with metadata
     """
+    RESOURCE = None
 
     @classmethod
     def get_non_required_fields(cls):
@@ -244,7 +251,7 @@ class OwnerModel(ZoopBase):
     """
 
     def __init__(self, address, **kwargs):
-        setattr(self, 'address', AddressModel.from_dict_or_instance(address, allow_empty=True))
+        self.address = AddressModel.from_dict_or_instance(address, allow_empty=True)
 
         super().__init__(**kwargs)
 

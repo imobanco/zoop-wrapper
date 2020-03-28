@@ -36,6 +36,91 @@ class SellerTestCase(TestCase):
             "terminal_code": 'foo',
         }
 
+    def test_required_fields(self):
+        fields = set()
+        self.assertTrue(
+            fields.issuperset(Seller.get_required_fields())
+        )
+
+    def test_non_required_fields(self):
+        fields = {"type", "statement_descriptor", "mcc",
+                  "show_profile_online", "is_mobile",
+                  "decline_on_fail_security_code",
+                  "decline_on_fail_zipcode",
+                  "merchant_code", "terminal_code"}
+        self.assertTrue(
+            fields.issubset(Seller.get_non_required_fields())
+        )
+
+    def test_individual_required_fields(self):
+        fields = {'taxpayer_id'}
+        self.assertTrue(
+            fields.issubset(Seller.get_individual_required_fields())
+        )
+
+    def test_individual_non_required_fields(self):
+        fields = {'website'}
+        self.assertTrue(
+            fields.issubset(Seller.get_individual_non_required_fields())
+        )
+
+    def test_individual_get_all_fields(self):
+        instance = IndividualSellerFactory()
+        self.assertIsInstance(instance, Seller)
+
+        fields = {'taxpayer_id', 'website'}
+        self.assertTrue(
+            fields.issubset(instance.get_all_fields())
+        )
+
+    def test_individual_get_validation_fields(self):
+        instance = IndividualSellerFactory()
+        self.assertIsInstance(instance, Seller)
+
+        fields = {'taxpayer_id'}
+        self.assertTrue(
+            fields.issubset(instance.get_validation_fields())
+        )
+
+    def test_business_required_fields(self):
+        fields = {'ein', 'business_name', 'business_phone',
+                  'business_email', 'business_website',
+                  'business_opening_date', 'owner', 'business_address'}
+        self.assertTrue(
+            fields.issubset(Seller.get_business_required_fields())
+        )
+
+    def test_business_non_required_fields(self):
+        fields = {'business_description', 'business_facebook',
+                  'business_twitter'}
+        self.assertTrue(
+            fields.issubset(Seller.get_business_non_required_fields())
+        )
+
+    def test_business_get_all_fields(self):
+        instance = BusinessSellerFactory()
+        self.assertIsInstance(instance, Seller)
+
+        fields = {'ein', 'business_name', 'business_phone',
+                  'business_email', 'business_website',
+                  'business_opening_date', 'owner',
+                  'business_address', 'business_description',
+                  'business_facebook', 'business_twitter'}
+        self.assertTrue(
+            fields.issubset(instance.get_all_fields())
+        )
+
+    def test_business_get_validation_fields(self):
+        instance = BusinessSellerFactory()
+        self.assertIsInstance(instance, Seller)
+
+        fields = {'ein', 'business_name', 'business_phone',
+                  'business_email', 'business_website',
+                  'business_opening_date', 'owner', 'business_address'}
+        self.assertTrue(
+            fields.issubset(instance.get_validation_fields())
+        )
+
     def test_create(self):
         self.assertRaises(TypeError, SellerFactory)
 

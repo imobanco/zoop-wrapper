@@ -1,5 +1,5 @@
 from unittest import TestCase
-from unittest.mock import patch, MagicMock, PropertyMock
+from unittest.mock import patch, MagicMock
 
 from ZoopAPIWrapper.exceptions import ValidationError
 from ZoopAPIWrapper.models.factories.base import ZoopBaseFactory
@@ -37,10 +37,8 @@ class ZoopBaseTestCase(TestCase):
     def test_init(self):
         validate = MagicMock()
         instance = MagicMock(
-            get_fields=MagicMock(return_value={'id', 'name'}),
-            get_required_fields=MagicMock(return_value={'id'}),
-            get_non_required_fields=MagicMock(return_value={'name'}),
-            validate_required_fields=validate,
+            get_all_fields=MagicMock(return_value={'id', 'name'}),
+            validate_fields=validate,
         )
         setattr(instance, 'id', None)
         setattr(instance, 'name', None)
@@ -52,7 +50,7 @@ class ZoopBaseTestCase(TestCase):
         self.assertIsNone(instance.name, 1)
         validate.assert_called_once()
 
-    @patch('ZoopAPIWrapper.models.base.ZoopBase.validate_required_fields')
+    @patch('ZoopAPIWrapper.models.base.ZoopBase.validate_fields')
     def test_init_call_validate(self, mocked_validate):
         ZoopBaseFactory(id=1)
         mocked_validate.assert_called_once()
@@ -72,7 +70,7 @@ class ZoopBaseTestCase(TestCase):
         instance = ZoopBaseFactory(allow_empty=True)
         self.assertIsInstance(instance, ZoopBase)
 
-        instance.validate_required_fields()
+        instance.validate_fields()
 
     def test_validate_raise(self):
         instance = ZoopBaseFactory(id=1)
@@ -80,7 +78,7 @@ class ZoopBaseTestCase(TestCase):
 
         instance.id = None
 
-        self.assertRaises(ValidationError, instance.validate_required_fields)
+        self.assertRaises(ValidationError, instance.validate_fields)
 
     def test_validate_raise_false(self):
         instance = ZoopBaseFactory(id=1)
@@ -88,7 +86,7 @@ class ZoopBaseTestCase(TestCase):
 
         instance.id = None
 
-        instance.validate_required_fields(raise_exception=False)
+        instance.validate_fields(raise_exception=False)
 
     def test_from_dict_empty(self):
         data = {}

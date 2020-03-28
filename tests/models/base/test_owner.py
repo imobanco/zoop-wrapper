@@ -55,3 +55,9 @@ class OwnerModelTestCase(TestCase):
         instance = OwnerModel.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)
+
+    def test_full_name(self):
+        instance = OwnerModelFactory(first_name='foo', last_name='bar')
+        self.assertIsInstance(instance, OwnerModel)
+
+        self.assertEqual(instance.full_name, 'foo bar')

@@ -57,7 +57,8 @@ class Seller(BusinessOrIndividualModel, Person,
 
         if self.get_type() == self.BUSINESS_TYPE:
             self.owner = Person.from_dict_or_instance(owner)
-            self.business_address = Address.from_dict_or_instance(business_address)
+            self.business_address = Address\
+                .from_dict_or_instance(business_address)
 
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             Person.__init__(self, **kwargs)

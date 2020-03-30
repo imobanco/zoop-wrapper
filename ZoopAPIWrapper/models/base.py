@@ -383,7 +383,10 @@ class PaymentMethod(ResourceModel):
     """
 
     def __init__(self, address, **kwargs):
-        setattr(self, 'address', Address.from_dict_or_instance(address, allow_empty=True))
+        setattr(
+            self,
+            'address',
+            Address.from_dict_or_instance(address, allow_empty=True))
 
         super().__init__(**kwargs)
 
@@ -446,8 +449,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
         """
-        has_individual_identifier = getattr(self, self.INDIVIDUAL_IDENTIFIER, False)
-        has_business_identifier = getattr(self, self.BUSINESS_IDENTIFIER, False)
+        has_individual_identifier = getattr(
+            self, self.INDIVIDUAL_IDENTIFIER, False)
+        has_business_identifier = getattr(
+            self, self.BUSINESS_IDENTIFIER, False)
 
         if ((not has_business_identifier and not has_individual_identifier) or
                 (has_business_identifier and has_individual_identifier)):
@@ -537,4 +542,3 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         return fields.union(
             {'taxpayer_id'}
         )
-

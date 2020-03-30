@@ -1,4 +1,3 @@
-from ZoopAPIWrapper.models.base import ZoopObject
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller

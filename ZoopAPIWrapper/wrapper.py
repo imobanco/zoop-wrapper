@@ -388,23 +388,23 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        bank_account_instance = BankAccount.from_dict(data)
-        if not isinstance(bank_account_instance, BankAccount):
+        instance = BankAccount.from_dict(data)
+        if not isinstance(instance, BankAccount):
             raise TypeError('this is not supposed to happen!')
 
-        if bank_account_instance.get_type() == bank_account_instance.INDIVIDUAL_TYPE:
+        if instance.get_type() == instance.INDIVIDUAL_TYPE:
             seller_response = self.search_individual_seller(
-                bank_account_instance.taxpayer_id)
-        elif bank_account_instance.get_type() == bank_account_instance.BUSINESS_TYPE:
+                instance.taxpayer_id)
+        elif instance.get_type() == instance.BUSINESS_TYPE:
             seller_response = self.search_business_seller(
-                bank_account_instance.ein)
+                instance.ein)
         else:
             raise TypeError('this is not supposed to happen!')
 
         seller_instance = seller_response.instance
         assert isinstance(seller_instance, Seller)
 
-        token_response = self.__add_token(bank_account_instance)
+        token_response = self.__add_token(instance)
         token_instance = token_response.instance
         assert isinstance(token_instance, Token)
 

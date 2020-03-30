@@ -17,7 +17,8 @@ class ZoopObjectTestCase(SetTestCase):
 
         self.mocked_fields = self.patcher_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
-        self.mocked_non_required_fields = self.patcher_non_required_fields.start()
+        self.mocked_non_required_fields = self.patcher_non_required_fields\
+            .start()
 
         self.addCleanup(self.patcher_fields.stop)
         self.addCleanup(self.patcher_required_fields.stop)

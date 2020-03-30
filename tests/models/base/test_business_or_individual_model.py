@@ -8,12 +8,16 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_set_identifier_empty(self):
         instance = MagicMock()
 
-        self.assertRaises(TypeError, BusinessOrIndividualModel.set_identifier, instance, None, None)
+        self.assertRaises(TypeError,
+                          BusinessOrIndividualModel.set_identifier,
+                          instance, None, None)
 
     def test_set_identifier_both(self):
         instance = MagicMock()
 
-        self.assertRaises(TypeError, BusinessOrIndividualModel.set_identifier, instance, 'foo', 'foo')
+        self.assertRaises(TypeError,
+                          BusinessOrIndividualModel.set_identifier,
+                          instance, 'foo', 'foo')
 
     def test_set_identifier_taxpayer_id(self):
         instance = MagicMock(
@@ -34,24 +38,32 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_type_empty_raise(self):
         instance = MagicMock(ein=None, taxpayer_id=None)
 
-        self.assertRaises(TypeError, BusinessOrIndividualModel.get_type, instance)
+        self.assertRaises(TypeError,
+                          BusinessOrIndividualModel.get_type,
+                          instance)
 
     def test_get_type_both_raise(self):
         instance = MagicMock(ein='foo', taxpayer_id='foo')
 
-        self.assertRaises(TypeError, BusinessOrIndividualModel.get_type, instance)
+        self.assertRaises(TypeError,
+                          BusinessOrIndividualModel.get_type,
+                          instance)
 
     def test_get_type_business(self):
-        instance = MagicMock(ein='foo', taxpayer_id=None, BUSINESS_IDENTIFIER='ein',
+        instance = MagicMock(ein='foo', taxpayer_id=None,
+                             BUSINESS_IDENTIFIER='ein',
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
-        self.assertEqual(BusinessOrIndividualModel.get_type(instance), instance.BUSINESS_TYPE)
+        self.assertEqual(BusinessOrIndividualModel.get_type(instance),
+                         instance.BUSINESS_TYPE)
 
     def test_get_type_individual(self):
-        instance = MagicMock(ein=None, taxpayer_id='foo', BUSINESS_IDENTIFIER='ein',
+        instance = MagicMock(ein=None, taxpayer_id='foo',
+                             BUSINESS_IDENTIFIER='ein',
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
-        self.assertEqual(BusinessOrIndividualModel.get_type(instance), instance.INDIVIDUAL_TYPE)
+        self.assertEqual(BusinessOrIndividualModel.get_type(instance),
+                         instance.INDIVIDUAL_TYPE)
 
     def test_get_type_uri_business(self):
         instance = MagicMock(ein='foo')

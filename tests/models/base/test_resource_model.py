@@ -1,10 +1,9 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.factories.base import ResourceModelFactory
 from ZoopAPIWrapper.models.base import ResourceModel
 
 
-class ResourceModelTestCase(TestCase):
+class ResourceModelTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -17,16 +16,16 @@ class ResourceModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(ResourceModel.get_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            ResourceModel.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = {"id", "resource", "uri", "created_at",
-                  "updated_at", "metadata"}
-        self.assertTrue(
-            fields.issuperset(ResourceModel.get_non_required_fields())
+        self.assertIsSuperSet(
+            {"id", "resource", "uri", "created_at",
+             "updated_at", "metadata"},
+            ResourceModel.get_non_required_fields()
         )
 
     def test_create(self):

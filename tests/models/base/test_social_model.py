@@ -1,10 +1,9 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import SocialModel
 from ZoopAPIWrapper.models.factories.base import SocialModelFactory
 
 
-class SocialTestCase(TestCase):
+class SocialTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -13,15 +12,15 @@ class SocialTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(SocialModel.get_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            SocialModel.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            SocialModel.get_non_required_fields(),
-            {'facebook', 'twitter'}
+        self.assertIsSuperSet(
+            {'facebook', 'twitter'},
+            SocialModel.get_non_required_fields()
         )
 
     def test_create(self):

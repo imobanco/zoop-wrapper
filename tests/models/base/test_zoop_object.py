@@ -1,12 +1,12 @@
-from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.exceptions import ValidationError
 from ZoopAPIWrapper.models.factories.base import ZoopObjectFactory
 from ZoopAPIWrapper.models.base import ZoopObject
 
 
-class ZoopObjectTestCase(TestCase):
+class ZoopObjectTestCase(SetTestCase):
     def setUp(self) -> None:
         self.patcher_fields = patch(
             'ZoopAPIWrapper.models.base.ZoopObject.get_fields')
@@ -121,20 +121,36 @@ class ZoopObjectTestCase(TestCase):
         self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), self.data)
 
+    def test_get_all_fields(self):
+        instance = ZoopObject(allow_empty=True)
+
+        self.assertIsSuperSet(
+            instance.get_all_fields(),
+            ZoopObject.get_fields()
+        )
+
+    def test_get_validation_fields(self):
+        instance = ZoopObject(allow_empty=True)
+
+        self.assertIsSuperSet(
+            instance.get_validation_fields(),
+            ZoopObject.get_required_fields()
+        )
+
     def test_fields(self):
-        fields = {"id", 'name'}
-        self.assertTrue(
-            fields.issuperset(ZoopObject.get_fields())
+        self.assertIsSuperSet(
+            {"id", 'name'},
+            ZoopObject.get_fields()
         )
 
     def test_required_fields(self):
-        fields = {"id"}
-        self.assertTrue(
-            fields.issuperset(ZoopObject.get_required_fields())
+        self.assertIsSuperSet(
+            {'id'},
+            ZoopObject.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = {"name"}
-        self.assertTrue(
-            fields.issuperset(ZoopObject.get_non_required_fields())
+        self.assertIsSuperSet(
+            {'name'},
+            ZoopObject.get_non_required_fields()
         )

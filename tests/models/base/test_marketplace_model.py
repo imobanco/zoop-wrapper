@@ -1,10 +1,9 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import MarketPlaceModel
 from ZoopAPIWrapper.models.factories.base import MarketPlaceModelFactory
 
 
-class MarketPlaceModelTestCase(TestCase):
+class MarketPlaceModelTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -19,15 +18,15 @@ class MarketPlaceModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(MarketPlaceModel.get_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            MarketPlaceModel.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = {'marketplace_id'}
-        self.assertTrue(
-            fields.issubset(MarketPlaceModel.get_non_required_fields())
+        self.assertIsSubSet(
+            {'marketplace_id'},
+            MarketPlaceModel.get_non_required_fields()
         )
 
     def test_create(self):

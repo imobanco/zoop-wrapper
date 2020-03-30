@@ -1,11 +1,10 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import PaymentMethod, Address
 from ZoopAPIWrapper.models.factories.base import (
     PaymentMethodFactory)
 
 
-class PaymentMethodTestCase(TestCase):
+class PaymentMethodTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -24,15 +23,15 @@ class PaymentMethodTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = {'description', 'customer', 'address'}
-        self.assertTrue(
-            fields.issuperset(PaymentMethod.get_required_fields())
+        self.assertIsSuperSet(
+            {'description', 'customer', 'address'},
+            PaymentMethod.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issubset(PaymentMethod.get_non_required_fields())
+        self.assertIsSubSet(
+            set(),
+            PaymentMethod.get_non_required_fields()
         )
 
     def test_create(self):

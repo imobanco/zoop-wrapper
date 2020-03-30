@@ -1,11 +1,10 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import VerificationModel
 from ZoopAPIWrapper.models.factories.base import (
     VerificationModelFactory)
 
 
-class VerificationModelTestCase(TestCase):
+class VerificationModelTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -14,15 +13,15 @@ class VerificationModelTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = {'postal_code_check', 'address_line1_check'}
-        self.assertTrue(
-            fields.issuperset(VerificationModel.get_required_fields())
+        self.assertIsSuperSet(
+            {'postal_code_check', 'address_line1_check'},
+            VerificationModel.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(VerificationModel.get_non_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            VerificationModel.get_non_required_fields()
         )
 
     def test_create(self):

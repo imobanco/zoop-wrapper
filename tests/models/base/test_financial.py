@@ -1,10 +1,9 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import FinancialModel
 from ZoopAPIWrapper.models.factories.base import FinancialModelFactory
 
 
-class FinancialTestCase(TestCase):
+class FinancialTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -19,17 +18,17 @@ class FinancialTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(FinancialModel.get_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            FinancialModel.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = {'status', 'account_balance', 'current_balance',
-                  'description', 'delinquent', 'payment_methods',
-                  'default_debit', 'default_credit'}
-        self.assertTrue(
-                fields.issuperset(FinancialModel.get_non_required_fields())
+        self.assertIsSuperSet(
+            {'status', 'account_balance', 'current_balance',
+             'description', 'delinquent', 'payment_methods',
+             'default_debit', 'default_credit'},
+            FinancialModel.get_non_required_fields()
         )
 
     def test_create(self):

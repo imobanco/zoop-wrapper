@@ -1,9 +1,9 @@
-from tests.utils import MockedAddressLoggerTestCase as TestCase
+from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Person, Address
 from ZoopAPIWrapper.models.factories.base import PersonFactory
 
 
-class PersonTestCase(TestCase):
+class PersonTestCase(TestCase, SetTestCase):
     @property
     def data(self):
         return {
@@ -26,17 +26,17 @@ class PersonTestCase(TestCase):
         }
 
     def test_required_fields(self):
-        fields = {"first_name", "last_name", "email",
-                  "taxpayer_id", "phone_number",
-                  "birthdate", "address"}
-        self.assertTrue(
-            fields.issuperset(Person.get_required_fields())
+        self.assertIsSuperSet(
+            {"first_name", "last_name", "email",
+             "taxpayer_id", "phone_number",
+             "birthdate", "address"},
+            Person.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        fields = set()
-        self.assertTrue(
-            fields.issuperset(Person.get_non_required_fields())
+        self.assertIsSuperSet(
+            set(),
+            Person.get_non_required_fields()
         )
 
     def test_create(self):

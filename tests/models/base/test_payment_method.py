@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.base import PaymentMethod, AddressModel
+from ZoopAPIWrapper.models.base import PaymentMethod, Address
 from ZoopAPIWrapper.models.factories.base import (
     PaymentMethodFactory)
 
@@ -45,7 +45,7 @@ class PaymentMethodTestCase(TestCase):
         self.assertIsInstance(instance, PaymentMethod)
         self.assertEqual(instance.description, 'foo')
         self.assertEqual(instance.customer, 'foo')
-        self.assertIsInstance(instance.address, AddressModel)
+        self.assertIsInstance(instance.address, Address)
 
     def test_to_dict(self):
         instance = PaymentMethod.from_dict(self.data)

@@ -21,7 +21,7 @@ class ZoopObject:
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class SourceModel(ZoopObject):
+class ResourceModel(ZoopObject):
     id: str
     resource: str
     uri: str
@@ -32,7 +32,7 @@ class SourceModel(ZoopObject):
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class MarketPlaceModel(SourceModel):
+class MarketPlaceModel(ResourceModel):
     marketplace_id: str
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
@@ -87,7 +87,7 @@ class VerificationModel(ZoopObject):
     @classmethod
     def get_required_fields(cls: Any) -> set: ...
 
-class PaymentMethod(SourceModel):
+class PaymentMethod(ResourceModel):
     description: str
     customer: str
     address: Address = ...

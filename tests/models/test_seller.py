@@ -1,6 +1,6 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase
 from ZoopAPIWrapper.models.seller import (
-    Seller, OwnerModel, AddressModel)
+    Seller, Person, Address)
 from ZoopAPIWrapper.models.factories.seller import (
     SellerFactory, IndividualSellerFactory, BusinessSellerFactory)
 
@@ -181,9 +181,9 @@ class SellerTestCase(TestCase):
         self.assertEqual(instance.marketplace_id, 'foo')
         self.assertEqual(instance.type, 'foo')
         self.assertEqual(instance.business_name, 'foo')
-        self.assertIsInstance(instance.business_address, AddressModel)
+        self.assertIsInstance(instance.business_address, Address)
         self.assertEqual(instance.business_address.city, 'foo')
-        self.assertIsInstance(instance.owner, OwnerModel)
+        self.assertIsInstance(instance.owner, Person)
         self.assertEqual(instance.owner.first_name, 'foo')
 
     def test_seller_from_dict_individual(self):
@@ -216,5 +216,5 @@ class SellerTestCase(TestCase):
         self.assertEqual(instance.marketplace_id, 'foo')
         self.assertEqual(instance.type, 'foo')
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsInstance(instance.address, AddressModel)
+        self.assertIsInstance(instance.address, Address)
         self.assertEqual(instance.address.city, 'foo')

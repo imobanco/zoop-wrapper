@@ -26,7 +26,7 @@ class BankAccount(BusinessOrIndividualModel):
     last4_digits: Optional[str]
     phone_number: Optional[str]
     type: Optional[str]
-    def __init__(self, address: Optional[Union[Dict[str, Any], Address]] = ..., verification_checklist: Optional[Dict[str, Any], BankAccountVerificationModel] = ..., **kwargs: Any) -> None: ...    @classmethod
+    def __init__(self, address: Optional[Union[Dict[str, Any], Address]] = ..., verification_checklist: Optional[Union[Dict[str, Any], BankAccountVerificationModel]] = ..., **kwargs: Any) -> None: ...
     @classmethod
     def get_required_fields(cls) -> set: ...
     @classmethod

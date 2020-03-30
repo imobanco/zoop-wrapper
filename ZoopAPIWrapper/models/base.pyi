@@ -50,13 +50,13 @@ class Address(ZoopObject):
     def get_non_required_fields(cls) -> set: ...
 
 class Person(ZoopObject):
-    address: Address
-    birthdate: str
-    email: str
-    first_name: str
-    last_name: str
-    phone_number: str
-    taxpayer_id: str
+    address: Optional[Address]
+    birthdate: Optional[str]
+    email: Optional[str]
+    first_name: Optional[str]
+    last_name: Optional[str]
+    phone_number: Optional[str]
+    taxpayer_id: Optional[str]
     def __init__(self, address: Union[Dict[str, Any], Address], **kwargs: Any) -> None: ...
     @classmethod
     def get_required_fields(cls) -> set: ...

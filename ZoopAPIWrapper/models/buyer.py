@@ -17,6 +17,11 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
 
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'default_receipt_delivery_method'}

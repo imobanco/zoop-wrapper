@@ -15,16 +15,7 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     merchant_code: Optional[Any]
     terminal_code: Optional[Any]
 
-    address: Optional[Address]
-    birthdate: Optional[str]
-    email: Optional[str]
-    first_name: Optional[str]
-    last_name: Optional[str]
-    phone_number: Optional[str]
-    taxpayer_id: Optional[str]
     website: Optional[str]
-    facebook: Optional[str]
-    twitter: Optional[str]
 
     owner: Optional[Person]
     business_address: Optional[Address]
@@ -51,3 +42,5 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     def get_individual_required_fields(cls): ...
     @property
     def full_name(self): ...
+    @classmethod
+    def from_dict(cls, data: Dict[str, Any], allow_empty: bool=...) -> Seller: ...

@@ -1,6 +1,6 @@
 from ZoopAPIWrapper.models.base import Address as Address, FinancialModel as FinancialModel, Person as Person, SocialModel as SocialModel, MarketPlaceModel as MarketPlaceModel
 from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin as BusinessOrIndividualMixin
-from typing import Any, Optional
+from typing import Any, Optional, Union, Dict
 
 
 class Seller(MarketPlaceModel, Person, FinancialModel, SocialModel, BusinessOrIndividualMixin):
@@ -41,7 +41,7 @@ class Seller(MarketPlaceModel, Person, FinancialModel, SocialModel, BusinessOrIn
     business_facebook: Optional[str]
     business_twitter: Optional[str]
 
-    def __init__(self, taxpayer_id: Optional[Any] = ..., ein: Optional[Any] = ..., business_address: Optional[Any] = ..., owner: Optional[Any] = ..., **kwargs: Any) -> None: ...
+    def __init__(self, taxpayer_id: Optional[str] = ..., ein: Optional[str] = ..., business_address: Optional[Union[Dict[str, Any], Address]] = ..., owner: Optional[Union[Dict[str, Any], Person]] = ..., **kwargs: Any) -> None: ...
     def get_validation_fields(self) -> set: ...
     def get_all_fields(self) -> set: ...
     @classmethod

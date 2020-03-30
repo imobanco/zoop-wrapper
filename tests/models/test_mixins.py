@@ -1,69 +1,68 @@
 from unittest import TestCase
-from unittest.mock import patch, MagicMock
 
 from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin
 
 
 class BusinessOrIndividualTestCase(TestCase):
-    def test_extract_identifier_missing(self):
-        data = {}
+    def test_set_identifier_empty(self):
+        instance = BusinessOrIndividualMixin()
 
-        self.assertRaises(
-            TypeError,
-            BusinessOrIndividualMixin.
-                _BusinessOrIndividualMixin__extract_identifier,  # noqa
-            data
-        )
+        self.assertRaises(TypeError, instance.set_identifier, None, None)
 
-    def test_extract_identifier_both(self):
-        data = {
-            'taxpayer_id': 'foo',
-            'ein': 'foo'
-        }
+    def test_set_identifier_both(self):
+        instance = BusinessOrIndividualMixin()
 
-        self.assertRaises(
-            TypeError,
-            BusinessOrIndividualMixin.
-                _BusinessOrIndividualMixin__extract_identifier,  # noqa
-            data
-        )
+        self.assertRaises(TypeError, instance.set_identifier, 'foo', 'foo')
 
-    def test_extract_identifier_individual(self):
-        data = {
-            'taxpayer_id': 'foo'
-        }
+    def test_set_identifier_taxpayer_id(self):
+        instance = BusinessOrIndividualMixin()
 
-        indentifier_type = BusinessOrIndividualMixin\
-            ._BusinessOrIndividualMixin__extract_identifier(data)
-        self.assertEqual(indentifier_type, 'taxpayer_id')
+        instance.set_identifier(taxpayer_id='foo')
+        self.assertEqual(instance.taxpayer_id, 'foo')
 
-    def test_extract_identifier_business(self):
-        data = {
-            'ein': 'foo'
-        }
+    def test_set_identifier_ein(self):
+        instance = BusinessOrIndividualMixin()
 
-        indentifier_type = BusinessOrIndividualMixin\
-            ._BusinessOrIndividualMixin__extract_identifier(data)
-        self.assertEqual(indentifier_type, 'ein')
+        instance.set_identifier(ein='foo')
+        self.assertEqual(instance.ein, 'foo')
 
-    @patch('ZoopAPIWrapper.models.mixins.BusinessOrIndividualMixin.individual_class')  # noqa
-    def test_get_class_individual(self, mocked_class):
-        self.assertIsInstance(mocked_class, MagicMock)
+    def test_get_type_empty_raise(self):
+        instance = BusinessOrIndividualMixin()
 
-        data = {
-            'taxpayer_id': 'foo'
-        }
+        self.assertRaises(TypeError, instance.get_type)
 
-        klass = BusinessOrIndividualMixin.get_class(data)
-        self.assertEqual(klass, mocked_class)
+    def test_get_type_both_raise(self):
+        instance = BusinessOrIndividualMixin()
 
-    @patch('ZoopAPIWrapper.models.mixins.BusinessOrIndividualMixin.business_class')  # noqa
-    def test_get_class_business(self, mocked_class):
-        self.assertIsInstance(mocked_class, MagicMock)
+        setattr(instance, instance.BUSINESS_IDENTIFIER, 'foo')
+        setattr(instance, instance.INDIVIDUAL_IDENTIFIER, 'foo')
 
-        data = {
-            'ein': 'foo'
-        }
+        self.assertRaises(TypeError, instance.get_type)
 
-        klass = BusinessOrIndividualMixin.get_class(data)
-        self.assertEqual(klass, mocked_class)
+    def test_get_type_business(self):
+        instance = BusinessOrIndividualMixin()
+
+        setattr(instance, instance.BUSINESS_IDENTIFIER, 'foo')
+
+        self.assertEqual(instance.get_type(), instance.BUSINESS_TYPE)
+
+    def test_get_type_individual(self):
+        instance = BusinessOrIndividualMixin()
+
+        setattr(instance, instance.INDIVIDUAL_IDENTIFIER, 'foo')
+
+        self.assertEqual(instance.get_type(), instance.INDIVIDUAL_TYPE)
+
+    def test_get_type_uri_business(self):
+        instance = BusinessOrIndividualMixin()
+
+        setattr(instance, instance.BUSINESS_IDENTIFIER, 'foo')
+
+        self.assertEqual(instance.get_type_uri(), instance.URI.get(instance.BUSINESS_TYPE))
+
+    def test_get_type_uri_individual(self):
+        instance = BusinessOrIndividualMixin()
+
+        setattr(instance, instance.INDIVIDUAL_IDENTIFIER, 'foo')
+
+        self.assertEqual(instance.get_type_uri(), instance.URI.get(instance.INDIVIDUAL_TYPE))

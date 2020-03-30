@@ -5,11 +5,11 @@ class BusinessOrIndividualMixin:
     Attributes:
         BUSINESS_IDENTIFIER: 'ein'
         BUSINESS_TYPE: 'business'
-        BUSINESS_URI: BUSINESS_TYPE
 
         INDIVIDUAL_IDENTIFIER: 'taxpayer_id'
         INDIVIDUAL_TYPE: 'individual'
-        INDIVIDUAL_URI: 'individuals'
+
+        URI: dict with uris for individuals and business
     """
     BUSINESS_IDENTIFIER = 'ein'
     BUSINESS_TYPE = 'business'
@@ -47,7 +47,7 @@ class BusinessOrIndividualMixin:
     def get_type_uri(self):
         return self.URI.get(self.get_type())
 
-    def set_identifier(self, taxpayer_id, ein):
+    def set_identifier(self, taxpayer_id=None, ein=None):
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
             raise TypeError(f'Identifier error! '

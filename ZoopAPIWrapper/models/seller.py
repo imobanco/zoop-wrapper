@@ -1,12 +1,9 @@
 from ZoopAPIWrapper.models.base import (
-    MarketPlaceModel, Person, SocialModel, Address, FinancialModel)
-from ZoopAPIWrapper.models.mixins import (
-    BusinessOrIndividualMixin)
+    BusinessOrIndividualModel, Person, SocialModel, Address, FinancialModel)
 
 
-class Seller(MarketPlaceModel, Person,
-             FinancialModel, SocialModel,
-             BusinessOrIndividualMixin):
+class Seller(BusinessOrIndividualModel, Person,
+             FinancialModel, SocialModel):
     """
     Represent a seller.
     https://docs.zoop.co/reference#vendedor-1
@@ -45,43 +42,18 @@ class Seller(MarketPlaceModel, Person,
     """
     RESOURCE = 'seller'
 
-    def __init__(self, taxpayer_id=None, ein=None,
-                 business_address=None, owner=None, **kwargs):
-        self.set_identifier(taxpayer_id, ein)
+    def __init__(self, business_address=None, owner=None, **kwargs):
 
         if self.get_type() == self.BUSINESS_TYPE:
             self.owner = Person.from_dict_or_instance(owner)
             self.business_address = Address.from_dict_or_instance(business_address)
 
             # noinspection PyCallByClass
-            MarketPlaceModel.__init__(self, **kwargs)
+            BusinessOrIndividualModel.__init__(self, **kwargs)
             FinancialModel.__init__(self, **kwargs)
 
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             super().__init__(**kwargs)
-        else:
-            raise TypeError('Type no identified!')
-
-    def get_validation_fields(self):
-        if self.get_type() == self.BUSINESS_TYPE:
-            return self.get_business_required_fields()
-        elif self.get_type() == self.INDIVIDUAL_TYPE:
-            return self.get_individual_required_fields()
-        else:
-            raise TypeError('Type no identified!')
-
-    def get_all_fields(self):
-        fields = set()
-        if self.get_type() == self.BUSINESS_TYPE:
-            return fields.union(
-                self.get_business_non_required_fields(),
-                self.get_business_required_fields()
-            )
-        elif self.get_type() == self.INDIVIDUAL_TYPE:
-            return fields.union(
-                self.get_individual_non_required_fields(),
-                self.get_individual_required_fields()
-            )
         else:
             raise TypeError('Type no identified!')
 
@@ -94,7 +66,7 @@ class Seller(MarketPlaceModel, Person,
         """
         fields = set()
         return fields.union(
-            MarketPlaceModel.get_non_required_fields(),
+            BusinessOrIndividualModel.get_non_required_fields(),
             FinancialModel.get_non_required_fields(),
             {"type", "statement_descriptor", "mcc",
              "show_profile_online", "is_mobile",
@@ -112,49 +84,66 @@ class Seller(MarketPlaceModel, Person,
         """
         fields = set()
         return fields.union(
-            MarketPlaceModel.get_required_fields(),
+            BusinessOrIndividualModel.get_required_fields(),
             FinancialModel.get_required_fields()
         )
 
     @classmethod
-    def get_individual_non_required_fields(cls):
-        fields = set()
-        fields = fields.union(
-            cls.get_non_required_fields(),
-            SocialModel.get_non_required_fields(),
-            Person.get_non_required_fields()
-        )
-        return fields.union(
-            {'website'}
-        )
-
-    @classmethod
-    def get_individual_required_fields(cls):
-        fields = set()
-        return fields.union(
-            cls.get_required_fields(),
-            SocialModel.get_required_fields(),
-            Person.get_required_fields(),
-            {'taxpayer_id'}
-        )
-
-    @classmethod
     def get_business_non_required_fields(cls):
-        fields = set()
+        """
+        get set of non required fields for Business
+
+        Returns: set of fields
+        """
+        fields = cls.get_non_required_fields()
         return fields.union(
-            cls.get_non_required_fields(),
+            super().get_business_non_required_fields(),
             {'business_description', 'business_facebook',
              'business_twitter'}
         )
 
     @classmethod
     def get_business_required_fields(cls):
-        fields = set()
+        """
+        get set of required fields for Business
+
+        Returns: set of fields
+        """
+        fields = cls.get_required_fields()
         return fields.union(
-            cls.get_required_fields(),
-            {'ein', 'business_name', 'business_phone',
+            super().get_business_required_fields(),
+            {'business_name', 'business_phone',
              'business_email', 'business_website',
              'business_opening_date', 'owner', 'business_address'}
+        )
+
+    @classmethod
+    def get_individual_non_required_fields(cls):
+        """
+        get set of non required fields for Individual
+
+        Returns: set of fields
+        """
+        fields = cls.get_non_required_fields()
+        return fields.union(
+            super().get_individual_non_required_fields(),
+            SocialModel.get_non_required_fields(),
+            Person.get_non_required_fields(),
+            {'website'}
+        )
+
+    @classmethod
+    def get_individual_required_fields(cls):
+        """
+        get set of required fields for Individual
+
+        Returns: set of fields
+        """
+        fields = cls.get_required_fields()
+        return fields.union(
+            super().get_individual_required_fields(),
+            SocialModel.get_required_fields(),
+            Person.get_required_fields()
         )
 
     @property

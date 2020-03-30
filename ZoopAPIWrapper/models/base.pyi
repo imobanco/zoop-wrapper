@@ -3,13 +3,13 @@ from typing import Any, Optional
 
 logger: Logger
 
-class ZoopBase:
+class ZoopObject:
     __allow_empty: bool
     def __init__(self, allow_empty: bool=..., **kwargs: Any) -> None: ...
     @classmethod
-    def from_dict(cls: Any, data: Any, allow_empty: bool=...) -> ZoopBase: ...
+    def from_dict(cls: Any, data: Any, allow_empty: bool=...) -> ZoopObject: ...
     @classmethod
-    def from_dict_or_instance(cls: Any, data: Any, allow_empty: bool=...) -> ZoopBase: ...
+    def from_dict_or_instance(cls: Any, data: Any, allow_empty: bool=...) -> ZoopObject: ...
     def to_dict(self) -> dict: ...
     def validate_fields(self, raise_exception: Optional[bool]=...) -> None: ...
     def get_validation_fields(self) -> set: ...
@@ -21,7 +21,7 @@ class ZoopBase:
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class ZoopModel(ZoopBase):
+class SourceModel(ZoopObject):
     id: str
     resource: str
     uri: str
@@ -32,12 +32,12 @@ class ZoopModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class ZoopMarketPlaceModel(ZoopModel):
+class MarketPlaceModel(SourceModel):
     marketplace_id: str
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class AddressModel(ZoopBase):
+class Address(ZoopObject):
     line1: str
     line2: str
     line3: str
@@ -49,8 +49,8 @@ class AddressModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class OwnerModel(ZoopBase):
-    address: AddressModel
+class Person(ZoopObject):
+    address: Address
     birthdate: str
     email: str
     first_name: str
@@ -63,13 +63,13 @@ class OwnerModel(ZoopBase):
     @property
     def full_name(self) -> str: ...
 
-class SocialModel(ZoopBase):
+class SocialModel(ZoopObject):
     facebook: str
     twitter: str
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class FinancialModel(ZoopBase):
+class FinancialModel(ZoopObject):
     status: str
     account_balance: float
     current_balance: float
@@ -81,16 +81,16 @@ class FinancialModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls: Any) -> set: ...
 
-class VerificationChecklist(ZoopBase):
+class VerificationModel(ZoopObject):
     postal_code_check: bool
     address_line1_check: bool
     @classmethod
     def get_required_fields(cls: Any) -> set: ...
 
-class PaymentMethod(ZoopModel):
+class PaymentMethod(SourceModel):
     description: str
     customer: str
-    address: AddressModel = ...
+    address: Address = ...
     def __init__(self, address: Any, **kwargs: Any) -> None: ...
     @classmethod
     def get_required_fields(cls: Any) -> set: ...

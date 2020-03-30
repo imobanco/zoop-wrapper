@@ -1,9 +1,9 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase
-from ZoopAPIWrapper.models.base import OwnerModel, AddressModel
-from ZoopAPIWrapper.models.factories.base import OwnerModelFactory
+from ZoopAPIWrapper.models.base import Person, Address
+from ZoopAPIWrapper.models.factories.base import PersonFactory
 
 
-class OwnerModelTestCase(TestCase):
+class PersonTestCase(TestCase):
     @property
     def data(self):
         return {
@@ -30,34 +30,34 @@ class OwnerModelTestCase(TestCase):
                   "taxpayer_id", "phone_number",
                   "birthdate", "address"}
         self.assertTrue(
-            fields.issuperset(OwnerModel.get_required_fields())
+            fields.issuperset(Person.get_required_fields())
         )
 
     def test_non_required_fields(self):
         fields = set()
         self.assertTrue(
-            fields.issuperset(OwnerModel.get_non_required_fields())
+            fields.issuperset(Person.get_non_required_fields())
         )
 
     def test_create(self):
-        instance = OwnerModelFactory()
-        self.assertIsInstance(instance, OwnerModel)
+        instance = PersonFactory()
+        self.assertIsInstance(instance, Person)
 
     def test_from_dict(self):
-        instance = OwnerModel.from_dict(self.data)
+        instance = Person.from_dict(self.data)
 
-        self.assertIsInstance(instance, OwnerModel)
+        self.assertIsInstance(instance, Person)
         self.assertEqual(instance.first_name, 'foo')
-        self.assertIsInstance(instance.address, AddressModel)
+        self.assertIsInstance(instance.address, Address)
         self.assertEqual(instance.address.city, 'foo')
 
     def test_to_dict(self):
-        instance = OwnerModel.from_dict(self.data)
+        instance = Person.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)
 
     def test_full_name(self):
-        instance = OwnerModelFactory(first_name='foo', last_name='bar')
-        self.assertIsInstance(instance, OwnerModel)
+        instance = PersonFactory(first_name='foo', last_name='bar')
+        self.assertIsInstance(instance, Person)
 
         self.assertEqual(instance.full_name, 'foo bar')

@@ -2,18 +2,18 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
 from ZoopAPIWrapper.exceptions import ValidationError
-from ZoopAPIWrapper.models.factories.base import ZoopBaseFactory
-from ZoopAPIWrapper.models.base import ZoopBase
+from ZoopAPIWrapper.models.factories.base import ZoopObjectFactory
+from ZoopAPIWrapper.models.base import ZoopObject
 
 
-class ZoopBaseTestCase(TestCase):
+class ZoopObjectTestCase(TestCase):
     def setUp(self) -> None:
         self.patcher_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.get_fields')
+            'ZoopAPIWrapper.models.base.ZoopObject.get_fields')
         self.patcher_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.get_required_fields')
+            'ZoopAPIWrapper.models.base.ZoopObject.get_required_fields')
         self.patcher_non_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopBase.get_non_required_fields')
+            'ZoopAPIWrapper.models.base.ZoopObject.get_non_required_fields')
 
         self.mocked_fields = self.patcher_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
@@ -44,45 +44,45 @@ class ZoopBaseTestCase(TestCase):
         setattr(instance, 'name', None)
 
         # noinspection PyCallByClass
-        ZoopBase.__init__(instance, **self.data)
+        ZoopObject.__init__(instance, **self.data)
 
         self.assertEqual(instance.id, 1)
         self.assertIsNone(instance.name, 1)
         validate.assert_called_once()
 
-    @patch('ZoopAPIWrapper.models.base.ZoopBase.validate_fields')
+    @patch('ZoopAPIWrapper.models.base.ZoopObject.validate_fields')
     def test_init_call_validate(self, mocked_validate):
-        ZoopBaseFactory(id=1)
+        ZoopObjectFactory(id=1)
         mocked_validate.assert_called_once()
 
     def test_create(self):
-        instance = ZoopBaseFactory(id=1)
-        self.assertIsInstance(instance, ZoopBase)
+        instance = ZoopObjectFactory(id=1)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_create_allow_empty(self):
-        instance = ZoopBaseFactory(allow_empty=True)
-        self.assertIsInstance(instance, ZoopBase)
+        instance = ZoopObjectFactory(allow_empty=True)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_create_dont_allow_empty(self):
-        self.assertRaises(ValidationError, ZoopBaseFactory)
+        self.assertRaises(ValidationError, ZoopObjectFactory)
 
     def test_validate_allow_empty(self):
-        instance = ZoopBaseFactory(allow_empty=True)
-        self.assertIsInstance(instance, ZoopBase)
+        instance = ZoopObjectFactory(allow_empty=True)
+        self.assertIsInstance(instance, ZoopObject)
 
         instance.validate_fields()
 
     def test_validate_raise(self):
-        instance = ZoopBaseFactory(id=1)
-        self.assertIsInstance(instance, ZoopBase)
+        instance = ZoopObjectFactory(id=1)
+        self.assertIsInstance(instance, ZoopObject)
 
         instance.id = None
 
         self.assertRaises(ValidationError, instance.validate_fields)
 
     def test_validate_raise_false(self):
-        instance = ZoopBaseFactory(id=1)
-        self.assertIsInstance(instance, ZoopBase)
+        instance = ZoopObjectFactory(id=1)
+        self.assertIsInstance(instance, ZoopObject)
 
         instance.id = None
 
@@ -90,51 +90,51 @@ class ZoopBaseTestCase(TestCase):
 
     def test_from_dict_empty(self):
         data = {}
-        self.assertRaises(ValidationError, ZoopBase.from_dict, data)
+        self.assertRaises(ValidationError, ZoopObject.from_dict, data)
 
     def test_from_dict_allow_empty(self):
         data = {}
-        instance = ZoopBase.from_dict(data, allow_empty=True)
+        instance = ZoopObject.from_dict(data, allow_empty=True)
 
-        self.assertIsInstance(instance, ZoopBase)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_from_dict(self):
-        instance = ZoopBase.from_dict(self.data)
+        instance = ZoopObject.from_dict(self.data)
 
-        self.assertIsInstance(instance, ZoopBase)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_to_dict(self):
         data = self.data
 
-        instance = ZoopBase.from_dict(data)
+        instance = ZoopObject.from_dict(data)
 
         """We remove the name because it's value is none.
         So it won't return on to_dict method"""
         data.pop('name')
 
-        self.assertIsInstance(instance, ZoopBase)
+        self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), data)
 
     def test_to_dict_allow_empty(self):
-        instance = ZoopBase.from_dict(self.data, allow_empty=True)
+        instance = ZoopObject.from_dict(self.data, allow_empty=True)
 
-        self.assertIsInstance(instance, ZoopBase)
+        self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), self.data)
 
     def test_fields(self):
         fields = {"id", 'name'}
         self.assertTrue(
-            fields.issuperset(ZoopBase.get_fields())
+            fields.issuperset(ZoopObject.get_fields())
         )
 
     def test_required_fields(self):
         fields = {"id"}
         self.assertTrue(
-            fields.issuperset(ZoopBase.get_required_fields())
+            fields.issuperset(ZoopObject.get_required_fields())
         )
 
     def test_non_required_fields(self):
         fields = {"name"}
         self.assertTrue(
-            fields.issuperset(ZoopBase.get_non_required_fields())
+            fields.issuperset(ZoopObject.get_non_required_fields())
         )

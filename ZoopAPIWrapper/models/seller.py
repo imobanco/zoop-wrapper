@@ -1,11 +1,11 @@
 from ZoopAPIWrapper.models.base import (
-    ZoopMarketPlaceModel, OwnerModel, SocialModel, AddressModel, FinancialModel)
+    MarketPlaceModel, Person, SocialModel, Address, FinancialModel)
 from ZoopAPIWrapper.models.mixins import (
     BusinessOrIndividualMixin)
 
 
-class Seller(ZoopMarketPlaceModel, FinancialModel,
-             SocialModel, OwnerModel,
+class Seller(MarketPlaceModel, Person,
+             FinancialModel, SocialModel,
              BusinessOrIndividualMixin):
     """
     Represent a seller.
@@ -50,10 +50,11 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
         self.set_identifier(taxpayer_id, ein)
 
         if self.get_type() == self.BUSINESS_TYPE:
-            self.owner = OwnerModel.from_dict_or_instance(owner)
-            self.business_address = AddressModel.from_dict_or_instance(business_address)
+            self.owner = Person.from_dict_or_instance(owner)
+            self.business_address = Address.from_dict_or_instance(business_address)
 
-            ZoopMarketPlaceModel.__init__(self, **kwargs)
+            # noinspection PyCallByClass
+            MarketPlaceModel.__init__(self, **kwargs)
             FinancialModel.__init__(self, **kwargs)
 
         elif self.get_type() == self.INDIVIDUAL_TYPE:
@@ -87,13 +88,13 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
         fields = set()
         return fields.union(
-            ZoopMarketPlaceModel.get_non_required_fields(),
+            MarketPlaceModel.get_non_required_fields(),
             FinancialModel.get_non_required_fields(),
             {"type", "statement_descriptor", "mcc",
              "show_profile_online", "is_mobile",
@@ -105,13 +106,13 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
     @classmethod
     def get_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
         fields = set()
         return fields.union(
-            ZoopMarketPlaceModel.get_required_fields(),
+            MarketPlaceModel.get_required_fields(),
             FinancialModel.get_required_fields()
         )
 
@@ -121,7 +122,7 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
         fields = fields.union(
             cls.get_non_required_fields(),
             SocialModel.get_non_required_fields(),
-            OwnerModel.get_non_required_fields()
+            Person.get_non_required_fields()
         )
         return fields.union(
             {'website'}
@@ -131,8 +132,9 @@ class Seller(ZoopMarketPlaceModel, FinancialModel,
     def get_individual_required_fields(cls):
         fields = set()
         return fields.union(
+            cls.get_required_fields(),
             SocialModel.get_required_fields(),
-            OwnerModel.get_required_fields(),
+            Person.get_required_fields(),
             {'taxpayer_id'}
         )
 

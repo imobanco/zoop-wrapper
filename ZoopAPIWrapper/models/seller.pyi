@@ -1,9 +1,9 @@
-from ZoopAPIWrapper.models.base import AddressModel as AddressModel, FinancialModel as FinancialModel, OwnerModel as OwnerModel, SocialModel as SocialModel, ZoopMarketPlaceModel as ZoopMarketPlaceModel
+from ZoopAPIWrapper.models.base import Address as Address, FinancialModel as FinancialModel, Person as Person, SocialModel as SocialModel, MarketPlaceModel as MarketPlaceModel
 from ZoopAPIWrapper.models.mixins import BusinessOrIndividualMixin as BusinessOrIndividualMixin
 from typing import Any, Optional
 
 
-class Seller(ZoopMarketPlaceModel, FinancialModel, SocialModel, OwnerModel, BusinessOrIndividualMixin):
+class Seller(MarketPlaceModel, Person, FinancialModel, SocialModel, BusinessOrIndividualMixin):
     RESOURCE: str = ...
 
     type: str
@@ -18,7 +18,7 @@ class Seller(ZoopMarketPlaceModel, FinancialModel, SocialModel, OwnerModel, Busi
     terminal_code: Optional[Any]
 
     taxpayer_id: Optional[str]
-    address: Optional[AddressModel]
+    address: Optional[Address]
     birthdate: Optional[str]
     email: Optional[str]
     first_name: Optional[str]
@@ -30,8 +30,8 @@ class Seller(ZoopMarketPlaceModel, FinancialModel, SocialModel, OwnerModel, Busi
     twitter: Optional[str]
 
     ein: Optional[str]
-    owner: Optional[OwnerModel]
-    business_address: Optional[AddressModel]
+    owner: Optional[Person]
+    business_address: Optional[Address]
     business_name: Optional[str]
     business_phone: Optional[str]
     business_email: Optional[str]

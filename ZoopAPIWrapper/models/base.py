@@ -5,11 +5,9 @@ from ZoopAPIWrapper.exceptions import ValidationError
 logger = get_logger('models')
 
 
-class ZoopBase(object):
+class ZoopObject(object):
     """
-    This class represent a bare ZoopBase object.
-
-    A instance of this class doesn't have attributes.
+    This class represent a bare Zoop object.
 
     Attributes:
         __allow_empty: boolean
@@ -17,9 +15,13 @@ class ZoopBase(object):
 
     def __init__(self, allow_empty=False, **kwargs):
         """
-        constructor
+        initialize all fields from get_fields method as
+        attributes from kwargs on instance.
+
+        Then validates fields.
 
         Args:
+            allow_empty: boolean which disable validation of required fields
             **kwargs: dictionary of args
         """
 
@@ -94,7 +96,8 @@ class ZoopBase(object):
 
     def validate_fields(self, raise_exception=None):
         """
-        Validate all required_fields
+        Validate fields returned from method
+        get_validation_fields.
 
         Args:
             raise_exception: boolean to raise or not exception
@@ -123,15 +126,35 @@ class ZoopBase(object):
             raise ValidationError(errors)
 
     def get_validation_fields(self):
+        """
+        Get validation fields for instance.
+        This is necessary for classes/instances with
+        different fields based on type.
+        Such as Seller and BankAccount.
+
+        Defaults to get_required_fields.
+
+        Returns: set of fields to validate
+        """
         return self.get_required_fields()
 
     def get_all_fields(self):
+        """
+        get all fields for instance.
+        This is necessary for classes/instances with
+        different fields based on type.
+        Such as Seller and BankAccount.
+
+        Defaults to get_fields.
+
+        Returns: set of all fields
+        """
         return self.get_fields()
 
     @classmethod
     def get_fields(cls):
         """
-        set of all fields
+        get set of all fields
 
         Returns: set of fields
         """
@@ -142,7 +165,7 @@ class ZoopBase(object):
     @classmethod
     def get_required_fields(cls):
         """
-        set of required fields
+        get set of required fields
 
         Returns: set of fields
         """
@@ -151,16 +174,16 @@ class ZoopBase(object):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
         return set()
 
 
-class ZoopModel(ZoopBase):
+class ResourceModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
+    Represents a Model that is a resource.
 
     Attributes:
         id: identifier string
@@ -175,7 +198,7 @@ class ZoopModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
@@ -185,9 +208,10 @@ class ZoopModel(ZoopBase):
         )
 
 
-class ZoopMarketPlaceModel(ZoopModel):
+class MarketPlaceModel(ResourceModel):
     """
-    This class and it's subclasses have attributes.
+    This class represents a Model which belongs
+    to the marketplace from Zoop.
 
     Attributes:
         marketplace_id: identifier string
@@ -196,7 +220,7 @@ class ZoopMarketPlaceModel(ZoopModel):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
@@ -206,9 +230,9 @@ class ZoopMarketPlaceModel(ZoopModel):
         )
 
 
-class AddressModel(ZoopBase):
+class Address(ZoopObject):
     """
-    This class and it's subclasses have attributes.
+    Represents a physical address.
 
     Attributes:
         line1: complete street name
@@ -224,7 +248,7 @@ class AddressModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
@@ -236,9 +260,9 @@ class AddressModel(ZoopBase):
         )
 
 
-class OwnerModel(ZoopBase):
+class Person(ZoopObject):
     """
-    This class and it's subclasses have attributes.
+    Represents a person.
 
     Attributes:
         address: Address model
@@ -251,14 +275,14 @@ class OwnerModel(ZoopBase):
     """
 
     def __init__(self, address, **kwargs):
-        self.address = AddressModel.from_dict_or_instance(address, allow_empty=True)
+        self.address = Address.from_dict_or_instance(address, allow_empty=True)
 
         super().__init__(**kwargs)
 
     @classmethod
     def get_required_fields(cls):
         """
-        set of required fields
+        get set of required fields
 
         Returns: set of fields
         """
@@ -274,9 +298,9 @@ class OwnerModel(ZoopBase):
         return f'{self.first_name} {self.last_name}'
 
 
-class SocialModel(ZoopBase):
+class SocialModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
+    Have social sites uri's
 
     Attributes:
         facebook: facebook profile url?
@@ -286,7 +310,7 @@ class SocialModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
@@ -296,12 +320,9 @@ class SocialModel(ZoopBase):
         )
 
 
-class FinancialModel(ZoopBase):
+class FinancialModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS set the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have financial attributes.
 
     Attributes:
         status: pending or active string
@@ -317,7 +338,7 @@ class FinancialModel(ZoopBase):
     @classmethod
     def get_non_required_fields(cls):
         """
-        set of non required fields
+        get set of non required fields
 
         Returns: set of fields
         """
@@ -329,9 +350,9 @@ class FinancialModel(ZoopBase):
         )
 
 
-class VerificationChecklist(ZoopBase):
+class VerificationModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
+    Have some verification attributes.
 
     Attributes:
         postal_code_check: boolean of verification
@@ -341,7 +362,7 @@ class VerificationChecklist(ZoopBase):
     @classmethod
     def get_required_fields(cls):
         """
-        set of required fields
+        get set of required fields
 
         Returns: set of fields
         """
@@ -351,9 +372,9 @@ class VerificationChecklist(ZoopBase):
         )
 
 
-class PaymentMethod(ZoopModel):
+class PaymentMethod(ResourceModel):
     """
-    This class and it's subclasses have attributes.
+    Have some payment method attributes
 
     Attributes:
         description: text description
@@ -362,14 +383,14 @@ class PaymentMethod(ZoopModel):
     """
 
     def __init__(self, address, **kwargs):
-        setattr(self, 'address', AddressModel.from_dict_or_instance(address, allow_empty=True))
+        setattr(self, 'address', Address.from_dict_or_instance(address, allow_empty=True))
 
         super().__init__(**kwargs)
 
     @classmethod
     def get_required_fields(cls):
         """
-        set of required fields
+        get set of required fields
 
         Returns: set of fields
         """

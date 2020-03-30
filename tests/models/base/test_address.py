@@ -1,6 +1,6 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase
-from ZoopAPIWrapper.models.base import AddressModel
-from ZoopAPIWrapper.models.factories.base import AddressModelFactory
+from ZoopAPIWrapper.models.base import Address
+from ZoopAPIWrapper.models.factories.base import AddressFactory
 
 
 class AddressTestCase(TestCase):
@@ -20,7 +20,7 @@ class AddressTestCase(TestCase):
     def test_required_fields(self):
         fields = set()
         self.assertTrue(
-            fields.issuperset(AddressModel.get_required_fields())
+            fields.issuperset(Address.get_required_fields())
         )
 
     def test_non_required_fields(self):
@@ -28,17 +28,17 @@ class AddressTestCase(TestCase):
                   "neighborhood", "city", "state",
                   "postal_code", "country_code"}
         self.assertTrue(
-            fields.issuperset(AddressModel.get_non_required_fields())
+            fields.issuperset(Address.get_non_required_fields())
         )
 
     def test_create(self):
-        instance = AddressModelFactory()
-        self.assertIsInstance(instance, AddressModel)
+        instance = AddressFactory()
+        self.assertIsInstance(instance, Address)
 
     def test_from_dict(self):
-        instance = AddressModel.from_dict(self.data)
+        instance = Address.from_dict(self.data)
 
-        self.assertIsInstance(instance, AddressModel)
+        self.assertIsInstance(instance, Address)
         self.assertEqual(instance.line1, 'foo')
         self.assertEqual(instance.line2, 'foo')
         self.assertEqual(instance.line3, 'foo')
@@ -49,6 +49,6 @@ class AddressTestCase(TestCase):
         self.assertEqual(instance.country_code, 'foo')
 
     def test_to_dict(self):
-        instance = AddressModel.from_dict(self.data)
+        instance = Address.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)

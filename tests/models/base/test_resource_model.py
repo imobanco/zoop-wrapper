@@ -1,10 +1,10 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.factories.base import ZoopModelFactory
-from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.factories.base import ResourceModelFactory
+from ZoopAPIWrapper.models.base import SourceModel
 
 
-class ZoopModelTestCase(TestCase):
+class ResourceModelTestCase(TestCase):
     @property
     def data(self):
         return {
@@ -19,24 +19,24 @@ class ZoopModelTestCase(TestCase):
     def test_required_fields(self):
         fields = set()
         self.assertTrue(
-            fields.issuperset(ZoopModel.get_required_fields())
+            fields.issuperset(SourceModel.get_required_fields())
         )
 
     def test_non_required_fields(self):
         fields = {"id", "resource", "uri", "created_at",
                   "updated_at", "metadata"}
         self.assertTrue(
-            fields.issuperset(ZoopModel.get_non_required_fields())
+            fields.issuperset(SourceModel.get_non_required_fields())
         )
 
     def test_create(self):
-        instance = ZoopModelFactory()
-        self.assertIsInstance(instance, ZoopModel)
+        instance = ResourceModelFactory()
+        self.assertIsInstance(instance, SourceModel)
 
     def test_from_dict(self):
-        instance = ZoopModel.from_dict(self.data)
+        instance = SourceModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, ZoopModel)
+        self.assertIsInstance(instance, SourceModel)
         self.assertEqual(instance.id, 'foo')
         self.assertEqual(instance.resource, 'foo')
         self.assertEqual(instance.uri, 'foo')
@@ -45,6 +45,6 @@ class ZoopModelTestCase(TestCase):
         self.assertEqual(instance.updated_at, 'foo')
 
     def test_to_dict(self):
-        instance = ZoopModel.from_dict(self.data)
+        instance = SourceModel.from_dict(self.data)
 
         self.assertEqual(instance.to_dict(), self.data)

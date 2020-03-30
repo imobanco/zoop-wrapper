@@ -4,13 +4,13 @@ from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopMarketPlaceModelFactory, OwnerModelFactory,
+    MarketPlaceModelFactory, PersonFactory,
     SocialModelFactory, FinancialModelFactory,
-    AddressModelFactory
+    AddressFactory
 )
 
 
-class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
+class SellerFactory(MarketPlaceModelFactory, FinancialModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -33,7 +33,7 @@ class SellerFactory(ZoopMarketPlaceModelFactory, FinancialModelFactory):
     type = None
 
 
-class IndividualSellerFactory(SellerFactory, OwnerModelFactory,
+class IndividualSellerFactory(SellerFactory, PersonFactory,
                               SocialModelFactory):
     """
     Factory for instances with fake attributes.
@@ -65,8 +65,8 @@ class BusinessSellerFactory(SellerFactory):
     business_email = Faker('safe_email')
     business_website = Faker('uri')
     business_opening_date = Faker('date_this_month')
-    business_address = SubFactory(AddressModelFactory)
-    owner = SubFactory(OwnerModelFactory)
+    business_address = SubFactory(AddressFactory)
+    owner = SubFactory(PersonFactory)
 
     business_description = Faker('sentence', nb_words=5)
     business_facebook = Faker('uri')

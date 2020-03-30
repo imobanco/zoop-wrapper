@@ -3,16 +3,14 @@ from factory.faker import Faker
 from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.bank_account import (
-    BankAccount, BusinessBankAccount,
-    IndividualBankAccount, BankAccountVerificationChecklist
+    BankAccount, BankAccountVerificationModel
 )
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopModelFactory, AddressModelFactory,
-    VerificationCheckListFactory
+    MarketPlaceModelFactory, AddressFactory, VerificationModelFactory
 )
 
 
-class BankAccountVerificationChecklistFactory(VerificationCheckListFactory):
+class BankAccountVerificationModelFactory(VerificationModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -20,12 +18,12 @@ class BankAccountVerificationChecklistFactory(VerificationCheckListFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = BankAccountVerificationChecklist
+        model = BankAccountVerificationModel
 
     deposit_check = Faker('pybool')
 
 
-class BankAccountFactory(ZoopModelFactory):
+class BankAccountFactory(MarketPlaceModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -53,8 +51,8 @@ class BankAccountFactory(ZoopModelFactory):
     debitable = Faker('pybool')
     customer = Faker('uuid4')
     fingerprint = Faker('uuid4')
-    address = SubFactory(AddressModelFactory)
-    verification_checklist = SubFactory(BankAccountVerificationChecklistFactory)
+    address = SubFactory(AddressFactory)
+    verification_checklist = SubFactory(BankAccountVerificationModelFactory)
 
 
 class BusinessBankAccountFactory(BankAccountFactory):
@@ -65,7 +63,7 @@ class BusinessBankAccountFactory(BankAccountFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = BusinessBankAccount
+        model = BankAccount
 
     ein = LazyFunction(gen.cnpj)
 
@@ -78,6 +76,6 @@ class IndividualBankAccountFactory(BankAccountFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = IndividualBankAccount
+        model = BankAccount
 
     taxpayer_id = LazyFunction(gen.cpf)

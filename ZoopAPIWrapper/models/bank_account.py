@@ -1,50 +1,32 @@
 from ZoopAPIWrapper.models.base import (
-    ZoopModel, AddressModel, VerificationChecklist)
-from ZoopAPIWrapper.models.mixins import (
-    BusinessOrIndividualMixin, classproperty)
-from ZoopAPIWrapper.models.seller import (
-    BusinessSeller, IndividualSeller)
+    BusinessOrIndividualModel, MarketPlaceModel, Address, VerificationModel)
 
 
-class BankAccountVerificationChecklist(VerificationChecklist):
+class BankAccountVerificationModel(VerificationModel):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have some bank account verification attributes.
 
     Attributes:
         deposit_check: boolean of verification
     """
-    __FIELDS = ["deposit_check"]
 
-    def __init__(self, deposit_check, **kwargs):
-        super().__init__(**kwargs)
-
-        self.deposit_check = deposit_check
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {'deposit_check'}
+        )
 
 
-class BankAccount(ZoopModel, BusinessOrIndividualMixin):
+class BankAccount(BusinessOrIndividualModel):
     """
     Represent a Bank Account.
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
-
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     The RESOURCE attribute of this class is used to identify this Model.
     Remember the resource on ZoopModel? BAM!
@@ -71,185 +53,51 @@ class BankAccount(ZoopModel, BusinessOrIndividualMixin):
     """
     RESOURCE = 'bank_account'
 
-    __FIELDS = ["holder_name", "description",
-                "bank_name", "bank_code", "type",
-                "last4_digits", "account_number",
-                "country_code", "routing_number",
-                "phone_number", "is_active", "is_verified",
-                "debitable", "customer", "fingerprint",
-                "address", "verification_checklist"]
-
-    def __init__(self, holder_name, bank_code, routing_number,
-                 account_number, customer=None,
-                 description=None, bank_name=None, type=None,
-                 country_code=None, phone_number=None,
-                 is_active=None, is_verified=None,
-                 debitable=None, fingerprint=None,
-                 address=None, verification_checklist=None,
-                 last4_digits=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.holder_name = holder_name
-        self.bank_code = bank_code
-        self.routing_number = routing_number
-        self.account_number = account_number
-
-        self.description = description
-        self.bank_name = bank_name
-        self.type = type
-        self.last4_digits = last4_digits
-        self.country_code = country_code
-        self.phone_number = phone_number
-        self.is_active = is_active
-        self.is_verified = is_verified
-        self.debitable = debitable
-        self.customer = customer
-        self.fingerprint = fingerprint
-
-        self.address = AddressModel.from_dict_or_instance(address)
-        self.verification_checklist = BankAccountVerificationChecklist\
-            .from_dict_or_instance(verification_checklist)
-
-    # noinspection PyMethodParameters
-    @classproperty
-    def business_class(cls):
+    def __init__(self, address=None, verification_checklist=None,
+                 **kwargs):
         """
-        getter for individual class
-        Returns: IndividualBankAccount
-        """
-        return BusinessBankAccount
-
-    # noinspection PyMethodParameters
-    @classproperty
-    def individual_class(cls):
-        """
-        getter for business class
-        Returns: BusinessBankAccount
-        """
-        return IndividualBankAccount
-
-    @property
-    def fields(self):
-        """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a IndividualBankAccount or BusinessBankAccount
-        depending on BusinessOrIndividualMixin.
-        Factory pattern
+        BankAccount init must call its superclasses init's methods individually.
+        Because MRO its not trusted to Business/Individual type
 
         Args:
-            data: dict of data
-
-        Returns: instance initialized of BankAccount
+            address: Address instance or data
+            verification_checklist: BankAccountVerification instance or data
+            **kwargs:
         """
-        klass = BankAccount.get_class(data)
-        return klass.from_dict(data)
+        # noinspection PyCallByClass
+        BusinessOrIndividualModel.__init__(self, **kwargs)
+
+        self.address = Address.from_dict_or_instance(address, allow_empty=True)
+        self.verification_checklist = BankAccountVerificationModel\
+            .from_dict_or_instance(verification_checklist, allow_empty=True)
+
+        # noinspection PyCallByClass
+        MarketPlaceModel.__init__(self, **kwargs)
+
+    @classmethod
+    def get_required_fields(cls):
+        """
+        get set of required fields
+
+        Returns: set of fields
+        """
+        fields = super().get_required_fields()
+        return fields.union(
+            {"holder_name", "description",
+             "bank_name", "bank_code"}
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"type", "last4_digits", "account_number",
+             "country_code", "routing_number", "phone_number",
+             "is_active", "is_verified", "debitable", "customer",
+             "fingerprint", "address", "verification_checklist"}
+        )
 
     @classmethod
     def from_dict_and_seller(cls, seller, data):
         data['holder_name'] = seller.full_name
         return cls.from_dict(data)
-
-
-class BusinessBankAccount(BankAccount):
-    """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
-
-    Attributes:
-        ein: (Employer Identification Number) is equivalent to CNPJ
-    """
-    __FIELDS = ["ein"]
-
-    def __init__(self, ein, **kwargs):
-        super().__init__(**kwargs)
-
-        self.ein = ein
-
-    @property
-    def fields(self):
-        """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict.
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of class or None
-        """
-        return cls._from_dict(**data)
-
-    @classmethod
-    def from_dict_and_seller(cls, seller: BusinessSeller, data):
-        data[seller.BUSINESS_IDENTIFIER] = seller.ein
-        return super().from_dict_and_seller(seller, data)
-
-
-class IndividualBankAccount(BankAccount):
-    """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
-
-    Attributes:
-        taxpayer_id: cpf
-    """
-    __FIELDS = ["taxpayer_id"]
-
-    def __init__(self, taxpayer_id, **kwargs):
-        super().__init__(**kwargs)
-
-        self.taxpayer_id = taxpayer_id
-
-    @property
-    def fields(self):
-        """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-
-        Args:
-            data: dict of data
-
-        Returns: instance initialized of class or None
-        """
-        return cls._from_dict(**data)
-
-    @classmethod
-    def from_dict_and_seller(cls, seller: IndividualSeller, data):
-        data[seller.INDIVIDUAL_IDENTIFIER] = seller.taxpayer_id
-        return super().from_dict_and_seller(seller, data)

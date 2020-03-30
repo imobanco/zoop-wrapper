@@ -28,12 +28,6 @@ class PaymentMethodTestCase(SetTestCase):
             PaymentMethod.get_required_fields()
         )
 
-    def test_non_required_fields(self):
-        self.assertIsSubSet(
-            set(),
-            PaymentMethod.get_non_required_fields()
-        )
-
     def test_create(self):
         instance = PaymentMethodFactory()
         self.assertIsInstance(instance, PaymentMethod)

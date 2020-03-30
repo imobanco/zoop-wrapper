@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import ZoopBase
+from ZoopAPIWrapper.models.base import ZoopObject
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
@@ -9,11 +9,11 @@ from ZoopAPIWrapper.utils import get_logger
 logger = get_logger('models')
 
 
-RESOURCE_CLASSES = [BankAccount, Buyer, Seller, Token]
+RESOURCE_CLASSES = [Buyer, BankAccount, Seller, Token]
 RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 
-def _get_model_class_from_resource(resource) -> ZoopBase:
+def _get_model_class_from_resource(resource):
     """
     getter for model from resource
 

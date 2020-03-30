@@ -33,12 +33,6 @@ class PersonTestCase(TestCase, SetTestCase):
             Person.get_required_fields()
         )
 
-    def test_non_required_fields(self):
-        self.assertIsSuperSet(
-            set(),
-            Person.get_non_required_fields()
-        )
-
     def test_create(self):
         instance = PersonFactory()
         self.assertIsInstance(instance, Person)

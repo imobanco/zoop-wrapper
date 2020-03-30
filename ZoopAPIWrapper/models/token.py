@@ -1,15 +1,10 @@
-from ZoopAPIWrapper.models.base import ZoopModel
+from ZoopAPIWrapper.models.base import ResourceModel
 
 
-class Token(ZoopModel):
+class Token(ResourceModel):
     """
     Token is a resource used to link a BankAccount Or Card and a Customer
     https://docs.zoop.co/reference#token-1
-
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
 
     The RESOURCE attribute of this class is used to identify this Model.
     Remember the resource on ZoopModel? BAM!
@@ -20,22 +15,14 @@ class Token(ZoopModel):
     """
     RESOURCE = 'token'
 
-    __FIELDS = ['type', 'used']
-
-    def __init__(self, type, used, **kwargs):
-        super().__init__(**kwargs)
-
-        self.type = type
-        self.used = used
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'type', 'used'}
+        )

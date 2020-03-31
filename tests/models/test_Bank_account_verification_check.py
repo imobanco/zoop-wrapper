@@ -1,8 +1,8 @@
 from unittest import TestCase
 
-from ZoopAPIWrapper.models.bank_account import BankAccountVerificationChecklist
+from ZoopAPIWrapper.models.bank_account import BankAccountVerificationModel
 from ZoopAPIWrapper.models.factories.bank_account import (
-    BankAccountVerificationChecklistFactory
+    BankAccountVerificationModelFactory
 )
 
 
@@ -17,18 +17,18 @@ class BankAccountVerificationChecklistTestCase(TestCase):
         }
 
     def test_create(self):
-        instance = BankAccountVerificationChecklistFactory()
-        self.assertIsInstance(instance, BankAccountVerificationChecklist)
+        instance = BankAccountVerificationModelFactory()
+        self.assertIsInstance(instance, BankAccountVerificationModel)
 
     def test_from_dict(self):
-        instance = BankAccountVerificationChecklist.from_dict(self.data)
+        instance = BankAccountVerificationModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, BankAccountVerificationChecklist)
+        self.assertIsInstance(instance, BankAccountVerificationModel)
         self.assertEqual(instance.postal_code_check, 'foo')
         self.assertEqual(instance.address_line1_check, 'foo')
         self.assertEqual(instance.deposit_check, 'foo')
 
     def test_to_dict(self):
-        instance = BankAccountVerificationChecklist.from_dict(self.data)
+        instance = BankAccountVerificationModel.from_dict(self.data)
 
-        self.assertIsInstance(instance, BankAccountVerificationChecklist)
+        self.assertIsInstance(instance, BankAccountVerificationModel)

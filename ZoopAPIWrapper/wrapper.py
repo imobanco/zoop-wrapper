@@ -1,9 +1,8 @@
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
-from ZoopAPIWrapper.models.base import ZoopModel
-from ZoopAPIWrapper.models.bank_account import (
-    BankAccount, IndividualBankAccount, BusinessBankAccount)
+from ZoopAPIWrapper.models.base import ResourceModel
+from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
@@ -169,7 +168,7 @@ class ZoopWrapper(RequestsWrapper):
         """
         return self.__key, ''
 
-    def _post_instance(self, url, instance: ZoopModel):
+    def _post_instance(self, url, instance: ResourceModel):
         """
         http post request wrapper with instance
 
@@ -179,7 +178,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: processed response
         """
-        if not isinstance(instance, ZoopModel):
+        if not isinstance(instance, ResourceModel):
             raise TypeError('instance must be a ZoopModel')
         return self._post(url, data=instance.to_dict())
 
@@ -389,23 +388,23 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        bank_account_instance = BankAccount.from_dict(data)
-        if not isinstance(bank_account_instance, BankAccount):
+        instance = BankAccount.from_dict(data)
+        if not isinstance(instance, BankAccount):
             raise TypeError('this is not supposed to happen!')
 
-        if isinstance(bank_account_instance, IndividualBankAccount):
+        if instance.get_type() == instance.INDIVIDUAL_TYPE:
             seller_response = self.search_individual_seller(
-                bank_account_instance.taxpayer_id)
-        elif isinstance(bank_account_instance, BusinessBankAccount):
+                instance.taxpayer_id)
+        elif instance.get_type() == instance.BUSINESS_TYPE:
             seller_response = self.search_business_seller(
-                bank_account_instance.ein)
+                instance.ein)
         else:
             raise TypeError('this is not supposed to happen!')
 
         seller_instance = seller_response.instance
         assert isinstance(seller_instance, Seller)
 
-        token_response = self.__add_token(bank_account_instance)
+        token_response = self.__add_token(instance)
         token_instance = token_response.instance
         assert isinstance(token_instance, Token)
 

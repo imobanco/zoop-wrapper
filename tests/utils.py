@@ -2,6 +2,20 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
 
+class SetTestCase(TestCase):
+    def assertIsSubSet(self, subset: set, set_2: set):
+        self.assertTrue(
+            subset.issubset(set_2),
+            msg=f'set {subset} is not a subset of {set_2}'
+        )
+
+    def assertIsSuperSet(self, superset: set, set_2: set):
+        self.assertTrue(
+            superset.issuperset(set_2),
+            msg=f'set {superset} is not a superset of {set_2}'
+        )
+
+
 class BuildResponseMockMixin:
     @staticmethod
     def build_response_mock(status_code=200, content=None):

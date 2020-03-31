@@ -1,5 +1,5 @@
 from ZoopAPIWrapper.models.base import (
-    BusinessOrIndividualModel, MarketPlaceModel, Address, VerificationModel)
+    BusinessOrIndividualModel, Address, VerificationModel)
 
 
 class BankAccountVerificationModel(VerificationModel):
@@ -53,26 +53,18 @@ class BankAccount(BusinessOrIndividualModel):
     """
     RESOURCE = 'bank_account'
 
-    def __init__(self, address=None, verification_checklist=None,
-                 **kwargs):
-        """
-        BankAccount init must call its superclasses init's methods individually.
-        Because MRO its not trusted to Business/Individual type
+    def init_custom_fields(self, address=None, verification_checklist=None,
+                           **kwargs):
+        self.set_identifier(**kwargs)
 
-        Args:
-            address: Address instance or data
-            verification_checklist: BankAccountVerification instance or data
-            **kwargs:
-        """
-        # noinspection PyCallByClass
-        BusinessOrIndividualModel.__init__(self, **kwargs)
+        setattr(self, 'address',
+                Address.from_dict_or_instance(address, allow_empty=True))
 
-        self.address = Address.from_dict_or_instance(address, allow_empty=True)
-        self.verification_checklist = BankAccountVerificationModel\
-            .from_dict_or_instance(verification_checklist, allow_empty=True)
-
-        # noinspection PyCallByClass
-        MarketPlaceModel.__init__(self, **kwargs)
+        setattr(
+            self,
+            'verification_checklist',
+            BankAccountVerificationModel.from_dict_or_instance(
+                verification_checklist, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):

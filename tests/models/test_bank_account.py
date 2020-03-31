@@ -15,7 +15,6 @@ class BankAccountTestCase(TestCase, SetTestCase):
             'id': 'foo',
             'resource': 'foo',
             'uri': 'foo',
-            'metadata': {},
             'created_at': 'foo',
             'updated_at': 'foo',
 
@@ -35,14 +34,14 @@ class BankAccountTestCase(TestCase, SetTestCase):
             "customer": "foo",
             "fingerprint": "foo",
             "address": {
-                'state': None,
-                'country_code': None,
-                'postal_code': None,
-                'line2': None,
-                'neighborhood': None,
-                'city': None,
-                'line3': None,
-                'line1': None
+                'state': 'foo',
+                'country_code': 'foo',
+                'postal_code': 'foo',
+                'line2': 'foo',
+                'neighborhood': 'foo',
+                'city': 'foo',
+                'line3': 'foo',
+                'line1': 'foo'
             },
             "verification_checklist": {
                 "postal_code_check": "foo",

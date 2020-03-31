@@ -10,7 +10,6 @@ class MarketPlaceModelTestCase(SetTestCase):
             'id': 'foo',
             'resource': 'foo',
             'uri': 'foo',
-            'metadata': {},
             'created_at': 'foo',
             'updated_at': 'foo',
 

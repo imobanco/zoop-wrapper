@@ -44,6 +44,8 @@ class ResourceModelTestCase(SetTestCase):
         self.assertEqual(instance.updated_at, 'foo')
 
     def test_to_dict(self):
-        instance = ResourceModel.from_dict(self.data)
+        data = self.data
+        instance = ResourceModel.from_dict(data)
 
-        self.assertEqual(instance.to_dict(), self.data)
+        data.pop('metadata')
+        self.assertEqual(instance.to_dict(), data)

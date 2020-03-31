@@ -94,7 +94,7 @@ class ZoopObject(object):
                 Oh snap! It's not a ZoopBase instance!"""
                 attr = getattr(self, field)
 
-            if attr is not None or self.__allow_empty:
+            if attr is not None and attr != {}:
                 data[field] = attr
 
         return data
@@ -387,8 +387,9 @@ class PaymentMethod(ResourceModel):
     """
 
     def init_custom_fields(self, address, **kwargs):
-        setattr(self, 'address',
-                Address.from_dict_or_instance(address, allow_empty=True))
+        setattr(
+            self, 'address',
+            Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):

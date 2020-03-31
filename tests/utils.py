@@ -13,7 +13,7 @@ class SetTestCase(TestCase):
             msg=self.__get_msg(container, contained)
         )
 
-    def assertIsSuperSet(self, contained: set, container: set):
+    def assertIsSuperSet(self, container: set, contained: set):
         self.assertTrue(
             container.issuperset(contained),
             msg=self.__get_msg(container, contained)

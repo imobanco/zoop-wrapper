@@ -1,11 +1,10 @@
-from unittest import TestCase
-
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.base import Address
 from ZoopAPIWrapper.models.factories.buyer import BuyerFactory
 
 
-class BuyerTestCase(TestCase):
+class BuyerTestCase(SetTestCase):
     @property
     def data(self):
         return {
@@ -46,17 +45,11 @@ class BuyerTestCase(TestCase):
             "default_receipt_delivery_method": None
         }
 
-    def test_required_fields(self):
-        fields = {'first_name'}
-        self.assertTrue(
-            fields.issubset(Buyer.get_required_fields())
-        )
-
     def test_non_required_fields(self):
-        fields = {"default_receipt_delivery_method", 'marketplace_id',
-                  'resource'}
-        self.assertTrue(
-            fields.issubset(Buyer.get_non_required_fields())
+        self.assertIsSubSet(
+            {"default_receipt_delivery_method", 'marketplace_id',
+             'resource'},
+            Buyer.get_non_required_fields()
         )
 
     def test_create(self):

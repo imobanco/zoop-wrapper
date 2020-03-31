@@ -25,6 +25,8 @@ class ZoopObject(object):
             **kwargs: dictionary of args
         """
 
+        self.init_custom_fields(**kwargs)
+
         for field_name in self.get_all_fields():
             my_value = getattr(self, field_name, None)
             if my_value is not None:
@@ -36,6 +38,9 @@ class ZoopObject(object):
         self.__allow_empty = allow_empty
 
         self.validate_fields()
+
+    def init_custom_fields(self, **kwargs):
+        pass
 
     @classmethod
     def from_dict(cls, data, allow_empty=False):
@@ -274,10 +279,9 @@ class Person(ZoopObject):
         taxpayer_id: cpf
     """
 
-    def __init__(self, address, **kwargs):
-        self.address = Address.from_dict_or_instance(address, allow_empty=True)
-
-        super().__init__(**kwargs)
+    def init_custom_fields(self, address, **kwargs):
+        setattr(self, 'address',
+                Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):
@@ -382,13 +386,9 @@ class PaymentMethod(ResourceModel):
         address: Address Model
     """
 
-    def __init__(self, address, **kwargs):
-        setattr(
-            self,
-            'address',
-            Address.from_dict_or_instance(address, allow_empty=True))
-
-        super().__init__(**kwargs)
+    def init_custom_fields(self, address, **kwargs):
+        setattr(self, 'address',
+                Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):
@@ -427,17 +427,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         INDIVIDUAL_TYPE: 'individuals'
     }
 
-    # noinspection PyMissingConstructor
-    def __init__(self, taxpayer_id=None, ein=None, **kwargs):
-        """
-        The init of BusinessOrIndividualModel doesn't call super() init.
-        Because it will break the MRO for the Business type
-        calling Person.__init__()
-        Args:
-            taxpayer_id: cpf
-            ein: cnpj
-            **kwargs:
-        """
+    def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         self.set_identifier(taxpayer_id, ein)
 
     def get_type(self):
@@ -467,7 +457,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def get_type_uri(self):
         return self.URI.get(self.get_type())
 
-    def set_identifier(self, taxpayer_id=None, ein=None):
+    def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
             raise TypeError(f'Identifier error! '

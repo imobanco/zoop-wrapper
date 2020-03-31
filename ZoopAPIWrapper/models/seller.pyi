@@ -27,7 +27,7 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     business_description: Optional[str]
     business_facebook: Optional[str]
     business_twitter: Optional[str]
-    def __init__(self, business_address: Optional[Union[Dict[str, str], Address]] = ..., owner: Optional[Union[Dict[str, str], Person]] = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(self, business_address=Optional[Union[Dict[str, str], Address]], owner=Optional[Union[Dict[str, str], Person]], **kwargs) -> None: ...  # type: ignore
     @classmethod
     def get_non_required_fields(cls): ...
     @classmethod

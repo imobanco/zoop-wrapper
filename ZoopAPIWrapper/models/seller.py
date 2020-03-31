@@ -42,31 +42,17 @@ class Seller(BusinessOrIndividualModel, Person,
     """
     RESOURCE = 'seller'
 
-    def __init__(self, business_address=None, owner=None, **kwargs):
-        """
-        Seller init must call its superclasses init's methods individually.
-        Because MRO its not trusted to Business/Individual type
-
-        Args:
-            business_address: Address instance or data
-            owner: Person instance or data
-            **kwargs:
-        """
-        # noinspection PyCallByClass
-        BusinessOrIndividualModel.__init__(self, **kwargs)
+    def init_custom_fields(self, business_address=None, owner=None, **kwargs):
+        self.set_identifier(**kwargs)
 
         if self.get_type() == self.BUSINESS_TYPE:
-            self.owner = Person.from_dict_or_instance(owner)
-            self.business_address = Address\
-                .from_dict_or_instance(business_address)
-
+            setattr(self, 'owner', Person.from_dict_or_instance(owner))
+            setattr(self, 'business_address',
+                    Address.from_dict_or_instance(business_address))
         elif self.get_type() == self.INDIVIDUAL_TYPE:
-            Person.__init__(self, **kwargs)
-            SocialModel.__init__(self, **kwargs)
+            Person.init_custom_fields(self, **kwargs)
         else:
             raise TypeError('Type no identified!')
-
-        FinancialModel.__init__(self, **kwargs)
 
     @classmethod
     def get_non_required_fields(cls):

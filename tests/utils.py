@@ -3,16 +3,20 @@ from unittest.mock import patch, MagicMock
 
 
 class SetTestCase(TestCase):
-    def assertIsSubSet(self, subset: set, set_2: set):
+    @staticmethod
+    def __get_msg(container, contained):
+        return f'set {container} does not contains {contained}'
+
+    def assertIsSubSet(self, contained: set, container: set):
         self.assertTrue(
-            subset.issubset(set_2),
-            msg=f'set {subset} is not a subset of {set_2}'
+            contained.issubset(container),
+            msg=self.__get_msg(container, contained)
         )
 
-    def assertIsSuperSet(self, superset: set, set_2: set):
+    def assertIsSuperSet(self, contained: set, container: set):
         self.assertTrue(
-            superset.issuperset(set_2),
-            msg=f'set {superset} is not a superset of {set_2}'
+            container.issuperset(contained),
+            msg=self.__get_msg(container, contained)
         )
 
 

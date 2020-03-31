@@ -24,8 +24,14 @@ class PaymentMethodTestCase(SetTestCase):
 
     def test_required_fields(self):
         self.assertIsSuperSet(
-            {'description', 'customer', 'address'},
+            {'customer', 'address'},
             PaymentMethod.get_required_fields()
+        )
+
+    def test_non_required_fields(self):
+        self.assertIsSuperSet(
+            {'description'},
+            PaymentMethod.get_non_required_fields()
         )
 
     def test_create(self):

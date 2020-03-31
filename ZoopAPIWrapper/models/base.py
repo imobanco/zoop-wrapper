@@ -400,7 +400,14 @@ class PaymentMethod(ResourceModel):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {'description', 'customer', 'address'}
+            {'customer', 'address'}
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'description'}
         )
 
 

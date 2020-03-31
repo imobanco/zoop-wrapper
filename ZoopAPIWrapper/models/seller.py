@@ -46,9 +46,12 @@ class Seller(BusinessOrIndividualModel, Person,
         self.set_identifier(**kwargs)
 
         if self.get_type() == self.BUSINESS_TYPE:
-            setattr(self, 'owner', Person.from_dict_or_instance(owner))
-            setattr(self, 'business_address',
-                    Address.from_dict_or_instance(business_address))
+            setattr(
+                self, 'owner',
+                Person.from_dict_or_instance(owner))
+            setattr(
+                self, 'business_address',
+                Address.from_dict_or_instance(business_address))
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             Person.init_custom_fields(self, **kwargs)
         else:

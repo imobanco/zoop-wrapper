@@ -4,7 +4,7 @@ from typing import Any, Optional, Dict, Union
 logger: Logger
 
 class ZoopObject:
-    __allow_empty: bool
+    _allow_empty: bool
     def __init__(self, allow_empty: bool=..., **kwargs: Any) -> None: ...
     def init_custom_fields(self, **kwargs: Any) -> None: ...
     @staticmethod

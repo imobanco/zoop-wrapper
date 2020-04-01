@@ -26,7 +26,7 @@ class ZoopObject(object):
             allow_empty: boolean which disable validation of required fields
             **kwargs: dictionary of args
         """
-
+        self._allow_empty = allow_empty
         self.init_custom_fields(**kwargs)
 
         for field_name in self.get_all_fields():
@@ -36,8 +36,6 @@ class ZoopObject(object):
 
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
-
-        self.__allow_empty = allow_empty
 
         self.validate_fields()
 
@@ -134,7 +132,7 @@ class ZoopObject(object):
                         raise_exception or
                         (
                                 raise_exception is None and
-                                not self.__allow_empty
+                                not self._allow_empty
                         )
                 )
         ):
@@ -396,7 +394,7 @@ class PaymentMethod(ResourceModel):
         address: Address Model
     """
 
-    def init_custom_fields(self, address, **kwargs):
+    def init_custom_fields(self, address=None, **kwargs):
         setattr(
             self, 'address',
             Address.from_dict_or_instance(address, allow_empty=True))

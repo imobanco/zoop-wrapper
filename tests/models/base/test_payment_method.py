@@ -29,7 +29,7 @@ class PaymentMethodTestCase(SetTestCase):
         )
 
     def test_non_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertIsSubSet(
             {'description'},
             PaymentMethod.get_non_required_fields()
         )

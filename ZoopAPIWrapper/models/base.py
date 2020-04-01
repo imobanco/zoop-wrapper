@@ -1,3 +1,5 @@
+import copy
+
 from ZoopAPIWrapper.utils import get_logger
 from ZoopAPIWrapper.exceptions import ValidationError
 
@@ -42,41 +44,49 @@ class ZoopObject(object):
     def init_custom_fields(self, **kwargs):
         pass
 
+    @staticmethod
+    def make_data_copy_with_kwargs(data, **kwargs):
+        if data is None:
+            _data = {}
+        else:
+            _data = copy.deepcopy(data)
+
+        for key, value in kwargs.items():
+            _data[key] = value
+
+        return _data
+
     @classmethod
-    def from_dict(cls, data, allow_empty=False):
+    def from_dict(cls, data, allow_empty=False, **kwargs):
         """
         construct a instance of this class from dict
 
         Args:
             data: dict of data
             allow_empty: boolean
+            **kwargs: kwargs
 
         Returns: instance initialized of cls
         """
-        if data is None:
-            _data = {}
-        else:
-            _data = {key: value for key, value in data.items()}
-
-        _data['allow_empty'] = allow_empty
+        _data = cls.make_data_copy_with_kwargs(data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 
     @classmethod
-    def from_dict_or_instance(cls, data, allow_empty=False):
+    def from_dict_or_instance(cls, data, **kwargs):
         """
         check if data is already a ZoopModel or subclass.
         If not call from_dict
 
         Args:
             data: dict of data or instance
-            allow_empty: boolean
+            **kwargs: kwargs
 
         Returns: instance initialized of cls
         """
         if isinstance(data, cls):
             return data
         else:
-            return cls.from_dict(data, allow_empty)
+            return cls.from_dict(data, **kwargs)
 
     def to_dict(self):
         """

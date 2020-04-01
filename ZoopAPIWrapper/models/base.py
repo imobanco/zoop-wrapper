@@ -17,7 +17,7 @@ class ZoopObject(object):
 
     def __init__(self, allow_empty=False, **kwargs):
         """
-        initialize all fields from get_fields method as
+        initialize all fields from get_all_fields method as
         attributes from kwargs on instance.
 
         Then validates fields.
@@ -40,10 +40,28 @@ class ZoopObject(object):
         self.validate_fields()
 
     def init_custom_fields(self, **kwargs):
+        """
+        this method exists to set custom attributes such
+        as ZoopObject instances. Since all attributes set on
+        __init__ are dict's or variables.
+
+        Args:
+            **kwargs: dictionary of args
+        """
         pass
 
     @staticmethod
     def make_data_copy_with_kwargs(data, **kwargs):
+        """
+        make a new data dict from previous data dict
+        with added kwargs
+
+        Args:
+            data: dict of data
+            **kwargs: dict of kwargs
+
+        Returns: new dict of data
+        """
         if data is None:
             _data = {}
         else:
@@ -135,7 +153,9 @@ class ZoopObject(object):
         Get validation fields for instance.
         This is necessary for classes/instances with
         different fields based on type.
-        Such as Seller and BankAccount.
+        Such as Seller, BankAccount and BillingConfiguration.
+
+        if allow_empty is true return empty set!
 
         Defaults to get_required_fields.
 
@@ -150,7 +170,7 @@ class ZoopObject(object):
         get all fields for instance.
         This is necessary for classes/instances with
         different fields based on type.
-        Such as Seller and BankAccount.
+        Such as Seller, BankAccount and BillingConfiguration.
 
         Defaults to get_fields.
 
@@ -389,6 +409,13 @@ class PaymentMethod(ResourceModel):
     """
 
     def init_custom_fields(self, address=None, **kwargs):
+        """
+        initialize address attribute with Address model
+
+        Args:
+            address: dict of data or instance
+            **kwargs: dic of kwargs
+        """
         setattr(
             self, 'address',
             Address.from_dict_or_instance(address, allow_empty=True))
@@ -407,6 +434,11 @@ class PaymentMethod(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'description'}
@@ -438,55 +470,118 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     }
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
+        """
+        call set_identifier.
+        If allow_empty is True don't call!
+
+        Args:
+            taxpayer_id: cpf value
+            ein: cnpj value
+            **kwargs: dict of kwargs
+        """
+        if self._allow_empty:
+            return
         self.set_identifier(taxpayer_id, ein)
+
+    @classmethod
+    def validate_identifiers(cls, taxpayer_id, ein):
+        """
+        validate tuple of identifiers values
+
+        Raises:
+            TypeError: when it's passed both identifiers or none
+        """
+        if ((taxpayer_id is not None and ein is not None) or
+                (taxpayer_id is None and ein is None)):
+            raise TypeError(f'Identifier error! '
+                            f'Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
+                            f'"{cls.BUSINESS_IDENTIFIER}"')
 
     def get_type(self):
         """
         get the type from instance
 
-        Raises:
-            TypeError: when it's passed both identifiers or none
-
         Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
         """
-        has_individual_identifier = getattr(
-            self, self.INDIVIDUAL_IDENTIFIER, False)
-        has_business_identifier = getattr(
-            self, self.BUSINESS_IDENTIFIER, False)
+        individual_identifier = getattr(
+            self, self.INDIVIDUAL_IDENTIFIER, None)
+        business_identifier = getattr(
+            self, self.BUSINESS_IDENTIFIER, None)
 
-        if ((not has_business_identifier and not has_individual_identifier) or
-                (has_business_identifier and has_individual_identifier)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{self.BUSINESS_IDENTIFIER}"')
-        elif has_individual_identifier:
+        self.validate_identifiers(individual_identifier, business_identifier)
+
+        if individual_identifier:
             return self.INDIVIDUAL_TYPE
         else:
             return self.BUSINESS_TYPE
 
     def get_type_uri(self):
+        """
+        get the type uri for instance based on get_type
+
+        Returns: uri string for type
+        """
         return self.URI.get(self.get_type())
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
-        if ((taxpayer_id is not None and ein is not None) or
-                (taxpayer_id is None and ein is None)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{self.BUSINESS_IDENTIFIER}"')
-        elif taxpayer_id:
+        """
+        set taxpayer_id or ein identifier. Exactly one of then have
+        to be not None.
+
+        **kwargs are there to be called from Seller and BankAccount without
+        getting taxpayer_id or ein variables.
+
+        Args:
+            taxpayer_id: cpf
+            ein: cnpj
+            **kwargs: dict of kwargs
+        """
+        self.validate_identifiers(taxpayer_id, ein)
+
+        if taxpayer_id:
             setattr(self, self.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
             setattr(self, self.BUSINESS_IDENTIFIER, ein)
 
     def get_validation_fields(self):
+        """
+        Get validation fields for instance.
+
+        if instance is individual type call
+        get_individual_required_fields()
+
+        if instance is business type call
+        get_business_required_fields()
+
+        Raises:
+            TypeError: when the type couldn't be identified. This shouldn't be raised as
+                get_type validate the identifiers!
+
+        Returns: set of fields to validate
+        """
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             return self.get_individual_required_fields()
         else:
-            raise TypeError('Type no identified!')
+            raise TypeError('Type no identified! This is not supposed to happen!!!')
 
     def get_all_fields(self):
+        """
+        get all fields for instance.
+
+        if instance is individual type call
+        get_individual_required_fields() and get_individual_non_required_fields()
+
+        if instance is business type call
+        get_business_required_fields() and get_business_non_required_fields()
+
+        Raises:
+            TypeError: when the type couldn't be identified. This shouldn't be raised as
+                get_type validate the identifiers!
+
+        Returns: set of all fields
+        """
         fields = set()
         if self.get_type() == self.BUSINESS_TYPE:
             return fields.union(
@@ -499,7 +594,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_individual_required_fields()
             )
         else:
-            raise TypeError('Type no identified!')
+            raise TypeError('Type no identified! This is not supposed to happen!!!')
 
     @classmethod
     def get_business_non_required_fields(cls):

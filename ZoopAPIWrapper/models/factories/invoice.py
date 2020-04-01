@@ -1,10 +1,11 @@
+from factory import SubFactory
 from factory.faker import Faker
 
 from ZoopAPIWrapper.models.invoice import (
-    BillingConfiguration
+    BillingConfiguration, BillingInstructions
 )
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopObjectFactory, PaymentMethodFactory
+    ZoopObjectFactory,
 )
 
 
@@ -44,3 +45,12 @@ class PercentDiscountFactory(DiscountFactory):
 class FixedDiscountFactory(DiscountFactory):
     mode = BillingConfiguration.FIXED_MODE
     amount = Faker('pyfloat', positive=True, max_value=99)
+
+
+class BillingInstructionsFactory(ZoopObjectFactory):
+    class Meta:
+        model = BillingInstructions
+
+    late_fee = SubFactory(FixedFeeFactory)
+    interest = SubFactory(PercentFeeFactory)
+    discount = SubFactory(FixedDiscountFactory)

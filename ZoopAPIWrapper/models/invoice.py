@@ -14,6 +14,9 @@ class BillingConfiguration(ZoopObject):
     MODES = PERCENT_MODES.union({FIXED_MODE})
 
     def init_custom_fields(self, mode=None, is_discount=False, **kwarg):
+        if self._allow_empty:
+            return
+
         self.config_mode(mode, is_discount)
 
     def config_mode(self, mode, is_discount):
@@ -23,6 +26,9 @@ class BillingConfiguration(ZoopObject):
         setattr(self, 'is_discount', is_discount)
 
     def get_validation_fields(self):
+        if self._allow_empty:
+            return set()
+
         mode = getattr(self, 'mode', None)
         is_discount = getattr(self, 'is_discount', None)
         if is_discount is None or mode is None or mode not in self.MODES:
@@ -140,7 +146,7 @@ class Invoice(PaymentMethod):
     def get_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union(
-            {'expiration_date', 'billing_instructions'}
+            {'expiration_date'}
         )
 
     @classmethod
@@ -150,5 +156,6 @@ class Invoice(PaymentMethod):
             {'zoop_boleto_id', 'status', 'reference_number',
              'document_number', 'recipient', 'bank_code', 'sequence',
              'url', 'accepted', 'printed', 'downloaded', 'fingerprint',
-             'paid_at', 'barcode', 'payment_limit_date', 'body_instructions'}
+             'paid_at', 'barcode', 'payment_limit_date', 'body_instructions',
+             'billing_instructions'}
         )

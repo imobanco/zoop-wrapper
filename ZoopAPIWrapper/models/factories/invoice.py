@@ -2,10 +2,10 @@ from factory import SubFactory
 from factory.faker import Faker
 
 from ZoopAPIWrapper.models.invoice import (
-    BillingConfiguration, BillingInstructions
+    BillingConfiguration, BillingInstructions, Invoice
 )
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopObjectFactory,
+    ZoopObjectFactory, PaymentMethodFactory
 )
 
 
@@ -54,3 +54,28 @@ class BillingInstructionsFactory(ZoopObjectFactory):
     late_fee = SubFactory(FixedFeeFactory)
     interest = SubFactory(PercentFeeFactory)
     discount = SubFactory(FixedDiscountFactory)
+
+
+class InvoiceFactory(PaymentMethodFactory):
+    class Meta:
+        model = Invoice
+
+    expiration_date = Faker('date_this_month')
+
+    zoop_boleto_id = Faker('uuid4')
+    status = 'not_paid'
+    reference_number = Faker('pyint')
+    document_number = Faker('pyint')
+    recipient = Faker('company')
+    bank_code = Faker('pyint')
+    sequence = Faker('pyint')
+    url = Faker('uri')
+    accepted = Faker('pybool')
+    printed = Faker('pybool')
+    downloaded = Faker('pybool')
+    fingerprint = Faker('uuid4')
+    paid_at = Faker('date_this_month')
+    barcode = Faker('pyint')
+    payment_limit_date = Faker('date_this_month')
+    body_instructions = ['pague este boleto!']
+    billing_instructions = SubFactory(BillingInstructionsFactory)

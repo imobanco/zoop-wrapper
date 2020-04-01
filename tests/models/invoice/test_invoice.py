@@ -1,0 +1,43 @@
+from unittest.mock import MagicMock
+
+from tests.utils import SetTestCase
+from ZoopAPIWrapper.models.invoice import (
+    Invoice, BillingInstructions
+)
+from ZoopAPIWrapper.models.factories.invoice import (
+    BillingInstructionsFactory, InvoiceFactory
+)
+
+
+class InvoiceTestCase(SetTestCase):
+    def test_required_fields(self):
+        self.assertIsSubSet(
+            {'expiration_date'},
+            Invoice.get_required_fields()
+        )
+
+    def test_non_required_fields(self):
+        self.assertIsSubSet(
+            {'zoop_boleto_id', 'status', 'reference_number',
+             'document_number', 'recipient', 'bank_code', 'sequence',
+             'url', 'accepted', 'printed', 'downloaded', 'fingerprint',
+             'paid_at', 'barcode', 'payment_limit_date', 'body_instructions',
+             'billing_instructions'},
+            Invoice.get_non_required_fields()
+        )
+
+    def test_init_custom_fields(self):
+        instance = MagicMock(
+            spec=Invoice
+        )
+
+        billing_instructions = BillingInstructionsFactory().to_dict()
+
+        Invoice.init_custom_fields(
+            instance, billing_instructions=billing_instructions)
+
+        self.assertIsInstance(instance.billing_instructions, BillingInstructions)
+
+    def test_create(self):
+        instance = InvoiceFactory()
+        self.assertIsInstance(instance, Invoice)

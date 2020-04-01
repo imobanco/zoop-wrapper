@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.base import Address
@@ -15,3 +17,9 @@ class BuyerTestCase(SetTestCase):
     def test_create(self):
         instance = BuyerFactory()
         self.assertIsInstance(instance, Buyer)
+
+    def test_init_custom_fields(self):
+        instance = MagicMock()
+
+        Buyer.init_custom_fields(instance)
+        self.assertIsInstance(instance.address, Address)

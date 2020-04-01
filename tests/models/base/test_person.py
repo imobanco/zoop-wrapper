@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Person, Address
 from ZoopAPIWrapper.models.factories.base import PersonFactory
@@ -21,3 +23,9 @@ class PersonTestCase(TestCase, SetTestCase):
         self.assertIsInstance(instance, Person)
 
         self.assertEqual(instance.full_name, 'foo bar')
+
+    def test_init_custom_fields(self):
+        instance = MagicMock()
+
+        Person.init_custom_fields(instance)
+        self.assertIsInstance(instance.address, Address)

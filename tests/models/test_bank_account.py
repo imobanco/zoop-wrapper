@@ -1,3 +1,5 @@
+from unittest.mock import MagicMock
+
 from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Address
 from ZoopAPIWrapper.models.bank_account import (
@@ -37,3 +39,11 @@ class BankAccountTestCase(TestCase, SetTestCase):
         instance = BusinessBankAccountFactory()
 
         self.assertIsInstance(instance, BankAccount)
+
+    def test_init_custom_fields_business(self):
+        instance = MagicMock()
+
+        BankAccount.init_custom_fields(instance)
+        self.assertIsInstance(instance.address, Address)
+        self.assertIsInstance(instance.verification_checklist,
+                              BankAccountVerificationModel)

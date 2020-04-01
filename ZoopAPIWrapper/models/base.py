@@ -281,7 +281,7 @@ class Person(ZoopObject):
         taxpayer_id: cpf
     """
 
-    def init_custom_fields(self, address, **kwargs):
+    def init_custom_fields(self, address=None, **kwargs):
         setattr(self, 'address',
                 Address.from_dict_or_instance(address, allow_empty=True))
 

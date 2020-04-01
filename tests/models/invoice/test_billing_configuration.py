@@ -10,14 +10,6 @@ from ZoopAPIWrapper.models.factories.invoice import (
 
 
 class BillingConfigurationTestCase(SetTestCase):
-    @property
-    def data(self):
-        return {
-            "mode": BillingConfiguration.FIXED_MODE,
-            "amount": 'foo',
-            "start_date": 'foo'
-        }
-
     def test_create_config_mode_fail(self):
         self.assertRaises(
             TypeError,
@@ -43,6 +35,7 @@ class BillingConfigurationTestCase(SetTestCase):
     @patch('ZoopAPIWrapper.models.invoice.BillingConfiguration.config_mode')
     def test_init_custom_fields(self, mocked_config_mode):
         instance = MagicMock(
+            _allow_empty=False,
             config_mode=mocked_config_mode
         )
 
@@ -148,16 +141,3 @@ class BillingConfigurationTestCase(SetTestCase):
             {'mode', 'start_date', 'percentage'},
             instance.get_validation_fields()
         )
-
-    def test_from_dict(self):
-        instance = BillingConfiguration.from_dict(self.data)
-
-        self.assertIsInstance(instance, BillingConfiguration)
-        self.assertEqual(instance.mode, BillingConfiguration.FIXED_MODE)
-        self.assertEqual(instance.amount, 'foo')
-        self.assertEqual(instance.start_date, 'foo')
-
-    def test_to_dict(self):
-        instance = BillingConfiguration.from_dict(self.data)
-
-        self.assertEqual(instance.to_dict(), self.data)

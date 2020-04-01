@@ -107,7 +107,7 @@ class ZoopObject(object):
 
         return data
 
-    def validate_fields(self, raise_exception=None):
+    def validate_fields(self, raise_exception=True):
         """
         Validate fields returned from method
         get_validation_fields.
@@ -126,16 +126,7 @@ class ZoopObject(object):
             if value is None:
                 errors.append(validation_field)
 
-        if (
-                errors and
-                (
-                        raise_exception or
-                        (
-                                raise_exception is None and
-                                not self._allow_empty
-                        )
-                )
-        ):
+        if errors and raise_exception:
             raise ValidationError(errors)
 
     def get_validation_fields(self):
@@ -149,6 +140,8 @@ class ZoopObject(object):
 
         Returns: set of fields to validate
         """
+        if self._allow_empty:
+            return set()
         return self.get_required_fields()
 
     def get_all_fields(self):

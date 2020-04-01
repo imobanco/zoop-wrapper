@@ -116,49 +116,52 @@ class ZoopObjectTestCase(SetTestCase):
 
         instance.validate_fields(raise_exception=False)
 
-    #
-    # def test_to_dict(self):
-    #     data = self.data
-    #
-    #     instance = ZoopObject.from_dict(data)
-    #
-    #     """We remove the name because it's value is none.
-    #     So it won't return on to_dict method"""
-    #     data.pop('name')
-    #
-    #     self.assertIsInstance(instance, ZoopObject)
-    #     self.assertEqual(instance.to_dict(), data)
-    #
-    # def test_get_all_fields(self):
-    #     instance = ZoopObject(allow_empty=True)
-    #
-    #     self.assertIsSuperSet(
-    #         instance.get_all_fields(),
-    #         ZoopObject.get_fields()
-    #     )
-    #
-    # def test_get_validation_fields(self):
-    #     instance = ZoopObject(allow_empty=True)
-    #
-    #     self.assertIsSuperSet(
-    #         instance.get_validation_fields(),
-    #         ZoopObject.get_required_fields()
-    #     )
-    #
-    # def test_fields(self):
-    #     self.assertIsSuperSet(
-    #         {"id", 'name'},
-    #         ZoopObject.get_fields()
-    #     )
-    #
-    # def test_required_fields(self):
-    #     self.assertIsSuperSet(
-    #         {'id'},
-    #         ZoopObject.get_required_fields()
-    #     )
-    #
-    # def test_non_required_fields(self):
-    #     self.assertIsSuperSet(
-    #         {'name'},
-    #         ZoopObject.get_non_required_fields()
-    #     )
+    def test_to_dict(self):
+        data = self.data
+
+        instance = ZoopObject.from_dict(data)
+
+        """We remove the name because it's value is none.
+        So it won't return on to_dict method"""
+        data.pop('name')
+
+        self.assertIsInstance(instance, ZoopObject)
+        self.assertEqual(instance.to_dict(), data)
+
+    def test_get_all_fields(self):
+        instance = MagicMock(
+            _allow_empty=False
+        )
+
+        self.assertIsSuperSet(
+            instance.get_all_fields(instance),
+            ZoopObject.get_fields()
+        )
+
+    def test_get_validation_fields(self):
+        instance = MagicMock(
+            _allow_empty=False
+        )
+
+        self.assertIsSuperSet(
+            instance.get_validation_fields(instance),
+            ZoopObject.get_required_fields()
+        )
+
+    def test_fields(self):
+        self.assertIsSuperSet(
+            {"id", 'name'},
+            ZoopObject.get_fields()
+        )
+
+    def test_required_fields(self):
+        self.assertIsSuperSet(
+            {'id'},
+            ZoopObject.get_required_fields()
+        )
+
+    def test_non_required_fields(self):
+        self.assertIsSuperSet(
+            {'name'},
+            ZoopObject.get_non_required_fields()
+        )

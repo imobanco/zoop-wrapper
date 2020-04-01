@@ -5,23 +5,6 @@ from ZoopAPIWrapper.models.factories.base import (
 
 
 class PaymentMethodTestCase(SetTestCase):
-    @property
-    def data(self):
-        return {
-            'description': 'foo',
-            'customer': 'foo',
-            'address': {
-                "line1": 'foo',
-                "line2": 'foo',
-                "line3": 'foo',
-                "neighborhood": 'foo',
-                "city": 'foo',
-                "state": 'foo',
-                "postal_code": 'foo',
-                "country_code": 'foo'
-            }
-        }
-
     def test_required_fields(self):
         self.assertIsSuperSet(
             {'customer', 'address'},
@@ -37,16 +20,3 @@ class PaymentMethodTestCase(SetTestCase):
     def test_create(self):
         instance = PaymentMethodFactory()
         self.assertIsInstance(instance, PaymentMethod)
-
-    def test_from_dict(self):
-        instance = PaymentMethod.from_dict(self.data)
-
-        self.assertIsInstance(instance, PaymentMethod)
-        self.assertEqual(instance.description, 'foo')
-        self.assertEqual(instance.customer, 'foo')
-        self.assertIsInstance(instance.address, Address)
-
-    def test_to_dict(self):
-        instance = PaymentMethod.from_dict(self.data)
-
-        self.assertEqual(instance.to_dict(), self.data)

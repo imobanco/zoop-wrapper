@@ -93,6 +93,8 @@ class ZoopObjectTestCase(SetTestCase):
         instance = ZoopObject.from_dict(self.data)
 
         self.assertIsInstance(instance, ZoopObject)
+        self.assertEqual(instance.id, 1)
+        self.assertIsNone(instance.name)
 
     def test_validate_allow_empty(self):
         instance = ZoopObjectFactory(allow_empty=True)

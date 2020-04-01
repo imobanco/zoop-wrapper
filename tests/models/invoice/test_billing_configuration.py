@@ -49,7 +49,8 @@ class BillingConfigurationTestCase(SetTestCase):
             MODES=BillingConfiguration.MODES
         )
 
-        BillingConfiguration.config_mode(instance, BillingConfiguration.FIXED_MODE, True)
+        BillingConfiguration.config_mode(
+            instance, BillingConfiguration.FIXED_MODE, True)
         self.assertEqual(instance.mode, BillingConfiguration.FIXED_MODE)
         self.assertEqual(instance.is_discount, True)
 

@@ -10,7 +10,8 @@ class BillingConfiguration(ZoopObject):
     MONTHLY_PERCENTAGE_MODE = 'MONTHLY_PERCENTAGE'
     FIXED_MODE = 'FIXED'
 
-    PERCENT_MODES = {PERCENTAGE_MODE, DAILY_PERCENTAGE_MODE, MONTHLY_PERCENTAGE_MODE}
+    PERCENT_MODES = {PERCENTAGE_MODE, DAILY_PERCENTAGE_MODE,
+                     MONTHLY_PERCENTAGE_MODE}
     MODES = PERCENT_MODES.union({FIXED_MODE})
 
     def init_custom_fields(self, mode=None, is_discount=False, **kwarg):

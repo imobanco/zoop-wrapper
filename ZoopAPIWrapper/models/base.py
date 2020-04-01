@@ -66,7 +66,8 @@ class ZoopObject(object):
 
         Returns: instance initialized of cls
         """
-        _data = cls.make_data_copy_with_kwargs(data, allow_empty=allow_empty, **kwargs)
+        _data = cls.make_data_copy_with_kwargs(
+            data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 
     @classmethod

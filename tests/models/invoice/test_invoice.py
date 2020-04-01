@@ -36,7 +36,8 @@ class InvoiceTestCase(SetTestCase):
         Invoice.init_custom_fields(
             instance, billing_instructions=billing_instructions)
 
-        self.assertIsInstance(instance.billing_instructions, BillingInstructions)
+        self.assertIsInstance(instance.billing_instructions,
+                              BillingInstructions)
 
     def test_create(self):
         instance = InvoiceFactory()

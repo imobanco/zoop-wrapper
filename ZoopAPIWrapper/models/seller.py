@@ -145,6 +145,17 @@ class Seller(BusinessOrIndividualModel, Person,
 
     @property
     def full_name(self):
+        """
+        get full name for the seller.
+
+        If the seller is a Business Seller it will have
+        the owner attribute.
+
+        Else the seller is a Personal Seller. So we call
+        the super() which will find the method on Person class.
+
+        Returns: string with the full name
+        """
         owner = getattr(self, 'owner', None)
         if owner is not None:
             return owner.full_name

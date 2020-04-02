@@ -1,66 +1,33 @@
-from unittest import TestCase
+from unittest.mock import MagicMock
 
+from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.card import Card, CardVerificationChecklist
 from ZoopAPIWrapper.models.factories.card import (
     CardFactory
 )
 
 
-class CardTestCase(TestCase):
-    @property
-    def data(self):
-        return {
-            'id': 'foo',
-            'resource': 'foo',
-            'uri': 'foo',
-            'metadata': {},
-            'created_at': 'foo',
-            'updated_at': 'foo',
+class CardTestCase(SetTestCase):
+    def test_get_required_fields(self):
+        self.assertIsSubSet(
+            {"card_brand", "first4_digits", "last4_digits",
+             "expiration_month", "expiration_year", "holder_name"},
+            Card.get_required_fields()
+        )
 
-            'description': 'foo',
-            'customer': 'foo',
-            'address': {
-                "line1": 'foo',
-                "line2": 'foo',
-                "line3": 'foo',
-                "neighborhood": 'foo',
-                "city": 'foo',
-                "state": 'foo',
-                "postal_code": 'foo',
-                "country_code": 'foo'
-            },
+    def test_get_non_required_fields(self):
+        self.assertIsSubSet(
+            {"is_active", "is_valid", "is_verified", "fingerprint",
+             "verification_checklist"},
+            Card.get_non_required_fields()
+        )
 
-            "card_brand": 'foo',
-            "first4_digits": 'foo',
-            "last4_digits": 'foo',
-            "expiration_month": 'foo',
-            "expiration_year": 'foo',
-            "holder_name": 'foo',
-            "is_active": 'foo',
-            "is_valid": 'foo',
-            "is_verified": 'foo',
-            "fingerprint": 'foo',
-            "verification_checklist": {
-                "postal_code_check": 'foo',
-                "address_line1_check": 'foo',
+    def test_init_custom_fields(self):
+        instance = MagicMock()
 
-                "security_code_check": 'foo'
-            }
-        }
+        Card.init_custom_fields(instance)
+        self.assertIsInstance(instance.verification_checklist, CardVerificationChecklist)
 
     def test_create(self):
         instance = CardFactory()
         self.assertIsInstance(instance, Card)
-
-    def test_from_dict(self):
-        instance = Card.from_dict(self.data)
-
-        self.assertIsInstance(instance, Card)
-        self.assertEqual(instance.card_brand, 'foo')
-        self.assertEqual(instance.first4_digits, 'foo')
-        self.assertIsInstance(instance.verification_checklist, CardVerificationChecklist)
-
-    def test_to_dict(self):
-        instance = Card.from_dict(self.data)
-
-        self.assertEqual(instance.to_dict(), self.data)

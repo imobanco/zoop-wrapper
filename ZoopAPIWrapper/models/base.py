@@ -321,6 +321,11 @@ class Person(ZoopObject):
 
     @property
     def full_name(self):
+        """
+        get full name of the person
+
+        Returns: string with the full name
+        """
         return f'{self.first_name} {self.last_name}'
 
 

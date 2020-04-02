@@ -3,14 +3,14 @@ from unittest.mock import patch, MagicMock
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.exceptions import ValidationError
 from ZoopAPIWrapper.models.invoice import BillingConfiguration
-from tests.factories import (
+from tests.factories.invoice import (
     BillingConfigurationFactory, FixedDiscountFactory,
     PercentDiscountFactory, FixedFeeFactory, PercentFeeFactory
 )
 
 
 class BillingConfigurationTestCase(SetTestCase):
-    def test_create_config_mode_fail(self):
+    def test_create_set_type_fail(self):
         self.assertRaises(
             TypeError,
             BillingConfigurationFactory
@@ -33,16 +33,16 @@ class BillingConfigurationTestCase(SetTestCase):
         self.assertIsInstance(instance, BillingConfiguration)
 
     @patch('ZoopAPIWrapper.models.invoice.BillingConfiguration.set_type')
-    def test_init_custom_fields(self, mocked_config_mode):
+    def test_init_custom_fields(self, mocked_set_type):
         instance = MagicMock(
             _allow_empty=False,
-            set_type=mocked_config_mode
+            set_type=mocked_set_type
         )
 
         BillingConfiguration.init_custom_fields(instance, 'foo', 'foo')
 
-        self.assertIsInstance(mocked_config_mode, MagicMock)
-        mocked_config_mode.assert_called_once_with('foo', 'foo')
+        self.assertIsInstance(mocked_set_type, MagicMock)
+        mocked_set_type.assert_called_once_with('foo', 'foo')
 
     @staticmethod
     def test_validate_mode():
@@ -55,7 +55,7 @@ class BillingConfigurationTestCase(SetTestCase):
             'foo'
         )
 
-    def test_config_mode(self):
+    def test_set_type(self):
         instance = MagicMock(
             MODES=BillingConfiguration.MODES
         )

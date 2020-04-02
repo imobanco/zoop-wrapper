@@ -3,7 +3,7 @@ from pycpfcnpj import gen
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.buyer import Buyer
-from tests.factories import BuyerFactory
+from tests.factories.buyer import BuyerFactory
 
 
 class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):

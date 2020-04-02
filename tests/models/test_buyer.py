@@ -3,7 +3,7 @@ from unittest.mock import MagicMock
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.base import Address
-from tests.factories import BuyerFactory
+from tests.factories.buyer import BuyerFactory
 
 
 class BuyerTestCase(SetTestCase):

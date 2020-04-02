@@ -10,14 +10,14 @@ from tests.factories.card import (
 class CardTestCase(SetTestCase):
     def test_get_required_fields(self):
         self.assertIsSubSet(
-            {"card_brand", "first4_digits", "last4_digits",
-             "expiration_month", "expiration_year", "holder_name"},
+            {"expiration_month", "expiration_year", "holder_name"},
             Card.get_required_fields()
         )
 
     def test_get_non_required_fields(self):
         self.assertIsSubSet(
-            {"is_active", "is_valid", "is_verified", "fingerprint",
+            {"card_brand", "first4_digits", "last4_digits",
+             "is_active", "is_valid", "is_verified", "fingerprint",
              "verification_checklist"},
             Card.get_non_required_fields()
         )

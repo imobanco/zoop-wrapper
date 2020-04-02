@@ -13,6 +13,11 @@ class CardVerificationChecklist(VerificationModel):
 
     @classmethod
     def get_required_fields(cls):
+        """
+        get set of required fields
+
+        Returns: set of fields
+        """
         fields = super().get_required_fields()
         return fields.union(
             {"security_code_check"}
@@ -43,6 +48,13 @@ class Card(PaymentMethod):
     RESOURCE = 'card'
 
     def init_custom_fields(self, verification_checklist=None, **kwargs):
+        """
+        Initialize verification_checklist
+
+        Args:
+            verification_checklist: dict of data or CardVerificationChecklist instance
+            **kwargs: kwargs
+        """
         setattr(
             self, 'verification_checklist',
             CardVerificationChecklist.from_dict_or_instance(
@@ -51,6 +63,11 @@ class Card(PaymentMethod):
 
     @classmethod
     def get_required_fields(cls):
+        """
+        get set of required fields
+
+        Returns: set of fields
+        """
         fields = super().get_required_fields()
         return fields.union(
             {"card_brand", "first4_digits", "last4_digits",
@@ -59,6 +76,11 @@ class Card(PaymentMethod):
 
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"is_active", "is_valid", "is_verified", "fingerprint",

@@ -273,9 +273,11 @@ class Invoice(PaymentMethod):
 
     def init_custom_fields(self, billing_instructions=None, **kwargs):
         """
-        initilize billin_instructions
+        initialize billing_instructions
+
         Args:
-            billing_instructions: dict of data or BillinInstructions instance model
+            billing_instructions: dict of data or
+                BillingInstructions instance model
             **kwargs:
         """
         super().init_custom_fields(**kwargs)

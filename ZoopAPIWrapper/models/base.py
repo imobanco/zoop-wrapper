@@ -560,8 +560,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         get_business_required_fields()
 
         Raises:
-            TypeError: when the type couldn't be identified. This shouldn't be raised as
-                get_type validate the identifiers!
+            TypeError: when the type couldn't be identified.
+                This shouldn't be raised as get_type validate the identifiers!
 
         Returns: set of fields to validate
         """
@@ -573,21 +573,23 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             return self.get_individual_required_fields()
         else:
-            raise TypeError('Type no identified! This is not supposed to happen!!!')
+            raise TypeError('Type no identified! '
+                            'This is not supposed to happen!!!')
 
     def get_all_fields(self):
         """
         get all fields for instance.
 
         if instance is individual type call
-        get_individual_required_fields() and get_individual_non_required_fields()
+        get_individual_required_fields() and
+        get_individual_non_required_fields()
 
         if instance is business type call
         get_business_required_fields() and get_business_non_required_fields()
 
         Raises:
-            TypeError: when the type couldn't be identified. This shouldn't be raised as
-                get_type validate the identifiers!
+            TypeError: when the type couldn't be identified.
+                This shouldn't be raised as get_type validate the identifiers!
 
         Returns: set of all fields
         """
@@ -603,7 +605,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_individual_required_fields()
             )
         else:
-            raise TypeError('Type no identified! This is not supposed to happen!!!')
+            raise TypeError('Type no identified! '
+                            'This is not supposed to happen!!!')
 
     @classmethod
     def get_business_non_required_fields(cls):

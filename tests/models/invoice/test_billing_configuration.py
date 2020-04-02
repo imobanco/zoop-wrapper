@@ -32,11 +32,11 @@ class BillingConfigurationTestCase(SetTestCase):
         )
         self.assertIsInstance(instance, BillingConfiguration)
 
-    @patch('ZoopAPIWrapper.models.invoice.BillingConfiguration.config_mode')
+    @patch('ZoopAPIWrapper.models.invoice.BillingConfiguration.set_type')
     def test_init_custom_fields(self, mocked_config_mode):
         instance = MagicMock(
             _allow_empty=False,
-            config_mode=mocked_config_mode
+            set_type=mocked_config_mode
         )
 
         BillingConfiguration.init_custom_fields(instance, 'foo', 'foo')
@@ -44,26 +44,26 @@ class BillingConfigurationTestCase(SetTestCase):
         self.assertIsInstance(mocked_config_mode, MagicMock)
         mocked_config_mode.assert_called_once_with('foo', 'foo')
 
+    @staticmethod
+    def test_validate_mode():
+        BillingConfiguration.validate_mode(BillingConfiguration.FIXED_MODE)
+
+    def test_validate_mode_raise(self):
+        self.assertRaises(
+            TypeError,
+            BillingConfiguration.validate_mode,
+            'foo'
+        )
+
     def test_config_mode(self):
         instance = MagicMock(
             MODES=BillingConfiguration.MODES
         )
 
-        BillingConfiguration.config_mode(
+        BillingConfiguration.set_type(
             instance, BillingConfiguration.FIXED_MODE, True)
         self.assertEqual(instance.mode, BillingConfiguration.FIXED_MODE)
         self.assertEqual(instance.is_discount, True)
-
-    def test_config_mode_raise(self):
-        instance = MagicMock(
-            MODES=BillingConfiguration.MODES
-        )
-
-        self.assertRaises(
-            TypeError,
-            BillingConfiguration.config_mode,
-            instance, 'foo', True
-        )
 
     def test_required_fields(self):
         self.assertIsSuperSet(

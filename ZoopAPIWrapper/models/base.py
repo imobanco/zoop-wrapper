@@ -447,7 +447,11 @@ class PaymentMethod(ResourceModel):
 
 class BusinessOrIndividualModel(MarketPlaceModel):
     """
-    BusinessOrIndividualModel
+    Represents a Business Or Individual Model
+
+    It has dynamics types!
+
+    Can be Business or Individual.
 
     Attributes:
         BUSINESS_IDENTIFIER: 'ein'
@@ -547,6 +551,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         Get validation fields for instance.
 
+        if _allow_empty is true return empty set!
+
         if instance is individual type call
         get_individual_required_fields()
 
@@ -559,6 +565,9 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         Returns: set of fields to validate
         """
+        if self._allow_empty:
+            return set()
+
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:

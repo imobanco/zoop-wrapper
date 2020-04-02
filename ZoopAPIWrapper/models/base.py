@@ -88,6 +88,9 @@ class ZoopObject(object):
             data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 
+        _data['allow_empty'] = allow_empty
+        return cls(**_data)
+
     @classmethod
     def from_dict_or_instance(cls, data, **kwargs):
         """

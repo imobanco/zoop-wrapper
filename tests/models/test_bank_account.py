@@ -27,22 +27,6 @@ class BankAccountTestCase(TestCase, SetTestCase):
             BankAccount.get_non_required_fields()
         )
 
-    def test_required_fields(self):
-        self.assertIsSuperSet(
-            {"holder_name", "description",
-             "bank_name", "bank_code"},
-            BankAccount.get_required_fields()
-        )
-
-    def test_non_required_fields(self):
-        self.assertIsSubSet(
-            {"type", "last4_digits", "account_number",
-             "country_code", "routing_number", "phone_number",
-             "is_active", "is_verified", "debitable", "customer",
-             "fingerprint", "address", "verification_checklist"},
-            BankAccount.get_non_required_fields()
-        )
-
     def test_create(self):
         self.assertRaises(TypeError, BankAccountFactory)
 

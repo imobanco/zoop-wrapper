@@ -2,6 +2,24 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
 
+class SetTestCase(TestCase):
+    @staticmethod
+    def __get_msg(container, contained):
+        return f'set {container} does not contains {contained}'
+
+    def assertIsSubSet(self, contained: set, container: set):
+        self.assertTrue(
+            contained.issubset(container),
+            msg=self.__get_msg(container, contained)
+        )
+
+    def assertIsSuperSet(self, container: set, contained: set):
+        self.assertTrue(
+            container.issuperset(contained),
+            msg=self.__get_msg(container, contained)
+        )
+
+
 class BuildResponseMockMixin:
     @staticmethod
     def build_response_mock(status_code=200, content=None):

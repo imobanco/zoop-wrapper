@@ -1,10 +1,10 @@
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopMarketPlaceModelFactory, OwnerModelFactory,
+    MarketPlaceModelFactory, PersonFactory,
     SocialModelFactory, FinancialModelFactory)
 
 
-class BuyerFactory(ZoopMarketPlaceModelFactory, OwnerModelFactory,
+class BuyerFactory(MarketPlaceModelFactory, PersonFactory,
                    SocialModelFactory, FinancialModelFactory):
     class Meta:
         model = Buyer

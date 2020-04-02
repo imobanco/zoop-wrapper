@@ -14,3 +14,9 @@ test:
 
 flake8:
 	flake8 .
+
+stubgen:
+	stubgen ZoopAPIWrapper
+
+mypy:
+	mypy -m ZoopAPIWrapper

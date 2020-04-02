@@ -1,69 +1,82 @@
 from ZoopAPIWrapper.utils import get_logger
+from ZoopAPIWrapper.exceptions import ValidationError
 
 
 logger = get_logger('models')
 
 
-class ZoopBase:
+class ZoopObject(object):
     """
-    This class represent a bare ZoopBase object.
+    This class represent a bare Zoop object.
 
-    A instance of this class doesn't have attributes.
-
-    This class has the attribute __FIELDS with the list of attributes it has.
-    The purpose of this is to construct the dict of the object.
+    Attributes:
+        __allow_empty: boolean
     """
-    __FIELDS = []
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, allow_empty=False, **kwargs):
         """
-        constructor
+        initialize all fields from get_fields method as
+        attributes from kwargs on instance.
+
+        Then validates fields.
 
         Args:
-            *args:
-            **kwargs:
+            allow_empty: boolean which disable validation of required fields
+            **kwargs: dictionary of args
         """
+
+        self.init_custom_fields(**kwargs)
+
+        for field_name in self.get_all_fields():
+            my_value = getattr(self, field_name, None)
+            if my_value is not None:
+                continue
+
+            value = kwargs.get(field_name, None)
+            setattr(self, field_name, value)
+
+        self.__allow_empty = allow_empty
+
+        self.validate_fields()
+
+    def init_custom_fields(self, **kwargs):
         pass
 
     @classmethod
-    def _from_dict(cls, **entries):
-        """
-        construct a instance of this class from **entries
-
-        Args:
-            **entries:
-
-        Returns: instance initialized of class
-        """
-        return cls(**entries)
-
-    @classmethod
-    def from_dict(cls, data):
+    def from_dict(cls, data, allow_empty=False):
         """
         construct a instance of this class from dict
 
         Args:
             data: dict of data
+            allow_empty: boolean
 
         Returns: instance initialized of cls
         """
-        return cls._from_dict(**data)
+        if data is None:
+            _data = {}
+        else:
+            _data = {key: value for key, value in data.items()}
+
+        _data['allow_empty'] = allow_empty
+        return cls(**_data)
 
     @classmethod
-    def from_dict_or_instance(cls, data):
+    def from_dict_or_instance(cls, data, allow_empty=False):
         """
         check if data is already a ZoopModel or subclass.
         If not call from_dict
 
         Args:
             data: dict of data or instance
+            allow_empty: boolean
 
         Returns: instance initialized of cls
         """
         if isinstance(data, cls):
             return data
         else:
-            return cls.from_dict(data)
+            return cls.from_dict(data, allow_empty)
 
     def to_dict(self):
         """
@@ -71,7 +84,7 @@ class ZoopBase:
         Returns: dict of instance
         """
         data = {}
-        for field in self.fields:
+        for field in self.get_all_fields():
             try:
                 """our attr may be a ZoopBase instance.
                 Let's try to get its serialized value!"""
@@ -81,68 +94,101 @@ class ZoopBase:
                 Oh snap! It's not a ZoopBase instance!"""
                 attr = getattr(self, field)
 
-            if attr is not None:
-                """only serialize values which are not None"""
+            if attr is not None or self.__allow_empty:
                 data[field] = attr
 
         return data
 
-    @property
-    def fields(self):
+    def validate_fields(self, raise_exception=None):
         """
-        the fields of ZoopBase are it's __FIELDS attrs.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
-        """
-        return list(self.__FIELDS)
-
-
-class ZoopBaseCreationSuppresed(ZoopBase):
-    """
-    This class represent a bare ZoopBase object which doesn't have
-    to be created. It may return None on `from_dict` method.
-
-    A instance of this class doesn't have attributes.
-
-    This class has the attribute __FIELDS with the list of attributes it has.
-    The purpose of this is to construct the dict of the object.
-    """
-
-    @classmethod
-    def from_dict(cls, data):
-        """
-        construct a instance of this class from dict
-        May return None
+        Validate fields returned from method
+        get_validation_fields.
 
         Args:
-            data: dict of data
+            raise_exception: boolean to raise or not exception
 
-        Examples:
-            >>>data = None
-            >>>print(**data)
-            Traceback (most recent call last):
-              File "<input>", line 1, in <module>
-            TypeError: print() argument after ** must be a mapping, not NoneType
+        Raises:
+            ValidationError: if there's some required_field missing
+            and __allow_empty is false and raise_exception is true
 
-            >>>instance = cls.from_dict(data=None)
-            instance = None
-
-        Returns: instance initialized of cls or None
         """
-        try:
-            return super().from_dict(data)
-        except TypeError as e:
-            e.args = (f'{cls} could not be created!',)
-            logger.warning(e)
-            return None
+        errors = []
+        for validation_field in self.get_validation_fields():
+            value = getattr(self, validation_field, None)
+            if value is None:
+                errors.append(validation_field)
+
+        if (
+                errors and
+                (
+                        raise_exception or
+                        (
+                                raise_exception is None and
+                                not self.__allow_empty
+                        )
+                )
+        ):
+            raise ValidationError(errors)
+
+    def get_validation_fields(self):
+        """
+        Get validation fields for instance.
+        This is necessary for classes/instances with
+        different fields based on type.
+        Such as Seller and BankAccount.
+
+        Defaults to get_required_fields.
+
+        Returns: set of fields to validate
+        """
+        return self.get_required_fields()
+
+    def get_all_fields(self):
+        """
+        get all fields for instance.
+        This is necessary for classes/instances with
+        different fields based on type.
+        Such as Seller and BankAccount.
+
+        Defaults to get_fields.
+
+        Returns: set of all fields
+        """
+        return self.get_fields()
+
+    @classmethod
+    def get_fields(cls):
+        """
+        get set of all fields
+
+        Returns: set of fields
+        """
+        required_fields = cls.get_required_fields()
+        non_required_fields = cls.get_non_required_fields()
+        return required_fields.union(non_required_fields)
+
+    @classmethod
+    def get_required_fields(cls):
+        """
+        get set of required fields
+
+        Returns: set of fields
+        """
+        return set()
+
+    @classmethod
+    def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
+        return set()
 
 
-class ZoopModel(ZoopBase):
+class ResourceModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Represents a Model that is a resource.
 
     Attributes:
         id: identifier string
@@ -152,69 +198,46 @@ class ZoopModel(ZoopBase):
         updated_at: date of update
         metadata: dict with metadata
     """
-    __FIELDS = ["id", "resource", "uri", "created_at", "updated_at", "metadata"]
+    RESOURCE = None
 
-    def __init__(self, id=None, resource=None, uri=None,
-                 created_at=None, updated_at=None,
-                 metadata=None, **kwargs):
-        super().__init__(**kwargs)
-        self.id = id
-        self.resource = resource
-        self.uri = uri
-
-        self.created_at = created_at
-        self.updated_at = updated_at
-        self.metadata = metadata
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"id", "resource", "uri", "created_at", "updated_at", "metadata"}
+        )
 
 
-class ZoopMarketPlaceModel(ZoopModel):
+class MarketPlaceModel(ResourceModel):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    This class represents a Model which belongs
+    to the marketplace from Zoop.
 
     Attributes:
         marketplace_id: identifier string
     """
-    __FIELDS = ["marketplace_id"]
 
-    def __init__(self, marketplace_id=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.marketplace_id = marketplace_id
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'marketplace_id'}
+        )
 
 
-class AddressModel(ZoopBaseCreationSuppresed):
+class Address(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Represents a physical address.
 
     Attributes:
         line1: complete street name
@@ -226,43 +249,25 @@ class AddressModel(ZoopBaseCreationSuppresed):
         postal_code: postal code
         country_code: ISO 3166-1 alpha-2 - códigos de país de duas letras
     """
-    __FIELDS = ["line1", "line2", "line3",
-                "neighborhood", "city", "state",
-                "postal_code", "country_code"]
 
-    def __init__(self, line1, line2, line3,
-                 neighborhood, city, state,
-                 postal_code, country_code, **kwargs):
-        super().__init__(**kwargs)
-
-        self.line1 = line1
-        self.line2 = line2
-        self.line3 = line3
-        self.neighborhood = neighborhood
-        self.city = city
-        self.state = state
-        self.postal_code = postal_code
-        self.country_code = country_code
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"line1", "line2", "line3",
+             "neighborhood", "city", "state",
+             "postal_code", "country_code"}
+        )
 
 
-class OwnerModel(ZoopBase):
+class Person(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Represents a person.
 
     Attributes:
         address: Address model
@@ -273,80 +278,60 @@ class OwnerModel(ZoopBase):
         phone_number: phone number
         taxpayer_id: cpf
     """
-    __FIELDS = ["first_name", "last_name", "email",
-                "taxpayer_id", "phone_number",
-                "birthdate", "address"]
 
-    def __init__(self, first_name, last_name, email,
-                 taxpayer_id, phone_number, birthdate=None,
-                 address=None, **kwargs):
-        super().__init__(**kwargs)
+    def init_custom_fields(self, address, **kwargs):
+        setattr(self, 'address',
+                Address.from_dict_or_instance(address, allow_empty=True))
 
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.taxpayer_id = taxpayer_id
-        self.phone_number = phone_number
-        self.birthdate = birthdate
-
-        self.address = AddressModel.from_dict_or_instance(address)
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {"first_name", "last_name", "email",
+             "taxpayer_id", "phone_number",
+             "birthdate", "address"}
+        )
 
     @property
     def full_name(self):
+        """
+        get full name of the person
+
+        Returns: string with the full name
+        """
         return f'{self.first_name} {self.last_name}'
 
 
-class SocialModel(ZoopBase):
+class SocialModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have social sites uri's
 
     Attributes:
         facebook: facebook profile url?
         twitter: twitter profile url?
     """
-    __FIELDS = ["facebook", "twitter"]
 
-    def __init__(self, facebook=None,
-                 twitter=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.facebook = facebook
-        self.twitter = twitter
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"facebook", "twitter"}
+        )
 
 
-class FinancialModel(ZoopBase):
+class FinancialModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have financial attributes.
 
     Attributes:
         status: pending or active string
@@ -358,100 +343,197 @@ class FinancialModel(ZoopBase):
         default_debit: ?
         default_credit: ?
     """
-    __FIELDS = ['status', 'account_balance', 'current_balance',
-                'description', 'delinquent', 'payment_methods',
-                'default_debit', 'default_credit']
 
-    def __init__(self, status=None, account_balance=None, current_balance=None,
-                 description=None, delinquent=None, payment_methods=None,
-                 default_debit=None, default_credit=None, **kwargs):
-        super().__init__(**kwargs)
-
-        self.status = status
-        self.account_balance = account_balance
-        self.current_balance = current_balance
-        self.description = description
-        self.delinquent = delinquent
-        self.payment_methods = payment_methods
-        self.default_debit = default_debit
-        self.default_credit = default_credit
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_non_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of non required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'status', 'account_balance', 'current_balance',
+             'description', 'delinquent', 'payment_methods',
+             'default_debit', 'default_credit'}
+        )
 
 
-class VerificationChecklist(ZoopBaseCreationSuppresed):
+class VerificationModel(ZoopObject):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have some verification attributes.
 
     Attributes:
         postal_code_check: boolean of verification
         address_line1_check: boolean of verification
     """
-    __FIELDS = ["postal_code_check", "address_line1_check"]
 
-    def __init__(self, postal_code_check, address_line1_check,
-                 **kwargs):
-        super().__init__(**kwargs)
-
-        self.postal_code_check = postal_code_check
-        self.address_line1_check = address_line1_check
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {"postal_code_check", "address_line1_check"}
+        )
 
 
-class PaymentMethod(ZoopModel):
+class PaymentMethod(ResourceModel):
     """
-    This class and it's subclasses have attributes.
-
-    The __FIELDS list the attributes this class
-    has responsability of constructing in the serialization to dict.
+    Have some payment method attributes
 
     Attributes:
         description: text description
         customer: uuid id
         address: Address Model
     """
-    __FIELDS = ['description', 'customer', 'address']
 
-    def __init__(self, description, customer,
-                 address=None, **kwargs):
-        super().__init__(**kwargs)
+    def init_custom_fields(self, address, **kwargs):
+        setattr(self, 'address',
+                Address.from_dict_or_instance(address, allow_empty=True))
 
-        self.description = description
-        self.customer = customer
-        self.address = AddressModel.from_dict_or_instance(address)
-
-    @property
-    def fields(self):
+    @classmethod
+    def get_required_fields(cls):
         """
-        the fields of ZoopBase are it's
-        __FIELDS extended with it's father fields.
-        it's important to be a new list (high order function)
-        Returns: new list of attributes
+        get set of required fields
+
+        Returns: set of fields
         """
-        super_fields = super().fields
-        super_fields.extend(self.__FIELDS)
-        return list(super_fields)
+        fields = super().get_required_fields()
+        return fields.union(
+            {'description', 'customer', 'address'}
+        )
+
+
+class BusinessOrIndividualModel(MarketPlaceModel):
+    """
+    BusinessOrIndividualModel
+
+    Attributes:
+        BUSINESS_IDENTIFIER: 'ein'
+        BUSINESS_TYPE: 'business'
+
+        INDIVIDUAL_IDENTIFIER: 'taxpayer_id'
+        INDIVIDUAL_TYPE: 'individual'
+
+        URI: dict with uris for individuals and business
+    """
+    BUSINESS_IDENTIFIER = 'ein'
+    BUSINESS_TYPE = 'business'
+
+    INDIVIDUAL_IDENTIFIER = 'taxpayer_id'
+    INDIVIDUAL_TYPE = 'individual'
+
+    URI = {
+        BUSINESS_TYPE: 'business',
+        INDIVIDUAL_TYPE: 'individuals'
+    }
+
+    def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
+        self.set_identifier(taxpayer_id, ein)
+
+    def get_type(self):
+        """
+        get the type from instance
+
+        Raises:
+            TypeError: when it's passed both identifiers or none
+
+        Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
+        """
+        has_individual_identifier = getattr(
+            self, self.INDIVIDUAL_IDENTIFIER, False)
+        has_business_identifier = getattr(
+            self, self.BUSINESS_IDENTIFIER, False)
+
+        if ((not has_business_identifier and not has_individual_identifier) or
+                (has_business_identifier and has_individual_identifier)):
+            raise TypeError(f'Identifier error! '
+                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
+                            f'"{self.BUSINESS_IDENTIFIER}"')
+        elif has_individual_identifier:
+            return self.INDIVIDUAL_TYPE
+        else:
+            return self.BUSINESS_TYPE
+
+    def get_type_uri(self):
+        return self.URI.get(self.get_type())
+
+    def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
+        if ((taxpayer_id is not None and ein is not None) or
+                (taxpayer_id is None and ein is None)):
+            raise TypeError(f'Identifier error! '
+                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
+                            f'"{self.BUSINESS_IDENTIFIER}"')
+        elif taxpayer_id:
+            setattr(self, self.INDIVIDUAL_IDENTIFIER, taxpayer_id)
+        else:
+            setattr(self, self.BUSINESS_IDENTIFIER, ein)
+
+    def get_validation_fields(self):
+        if self.get_type() == self.BUSINESS_TYPE:
+            return self.get_business_required_fields()
+        elif self.get_type() == self.INDIVIDUAL_TYPE:
+            return self.get_individual_required_fields()
+        else:
+            raise TypeError('Type no identified!')
+
+    def get_all_fields(self):
+        fields = set()
+        if self.get_type() == self.BUSINESS_TYPE:
+            return fields.union(
+                self.get_business_non_required_fields(),
+                self.get_business_required_fields()
+            )
+        elif self.get_type() == self.INDIVIDUAL_TYPE:
+            return fields.union(
+                self.get_individual_non_required_fields(),
+                self.get_individual_required_fields()
+            )
+        else:
+            raise TypeError('Type no identified!')
+
+    @classmethod
+    def get_business_non_required_fields(cls):
+        """
+        get set of non required fields for Business
+
+        Returns: set of fields
+        """
+        return cls.get_non_required_fields()
+
+    @classmethod
+    def get_business_required_fields(cls):
+        """
+        get set of required fields for Business
+
+        Returns: set of fields
+        """
+        fields = cls.get_required_fields()
+        return fields.union(
+            {'ein'}
+        )
+
+    @classmethod
+    def get_individual_non_required_fields(cls):
+        """
+        get set of non required fields for Individual
+
+        Returns: set of fields
+        """
+        return cls.get_non_required_fields()
+
+    @classmethod
+    def get_individual_required_fields(cls):
+        """
+        get set of required fields for Individual
+
+        Returns: set of fields
+        """
+        fields = cls.get_required_fields()
+        return fields.union(
+            {'taxpayer_id'}
+        )

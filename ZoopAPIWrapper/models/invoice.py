@@ -109,7 +109,7 @@ class BillingConfiguration(ZoopObject):
         mode = getattr(self, 'mode', None)
         is_discount = getattr(self, 'is_discount', None)
         if is_discount is None or mode is None or mode not in self.MODES:
-            raise ValueError('Must call config_mode before!')
+            raise ValueError('Must call set_type before!')
 
         if is_discount:
             fields = self.get_discount_required_fields()

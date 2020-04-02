@@ -70,8 +70,7 @@ class Card(PaymentMethod):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {"card_brand", "first4_digits", "last4_digits",
-             "expiration_month", "expiration_year", "holder_name"}
+            {"expiration_month", "expiration_year", "holder_name"}
         )
 
     @classmethod
@@ -83,6 +82,7 @@ class Card(PaymentMethod):
         """
         fields = super().get_non_required_fields()
         return fields.union(
-            {"is_active", "is_valid", "is_verified", "fingerprint",
+            {"card_brand", "first4_digits", "last4_digits",
+             "is_active", "is_valid", "is_verified", "fingerprint",
              "verification_checklist"}
         )

@@ -42,7 +42,7 @@ class Card(PaymentMethod):
         is_active: boolean of verification
         is_valid: boolean of verification
         is_verified: boolean of verification
-        fingerprint: ?
+        fingerprint: unique card identifier from company of card ?
         verification_checklist: CardVerificationChecklist model
     """
     RESOURCE = 'card'

@@ -4,9 +4,9 @@ from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ResourceModel
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
-# from ZoopAPIWrapper.models.card import Card
+from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.seller import Seller
-# from ZoopAPIWrapper.models.token import Token, CardToken
+from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -357,17 +357,20 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    # def __add_bank_account_token(self, bank_account: BankAccount):
-    #     """
-    #     add bank account token
-    #
-    #     Args:
-    #         bank_account: BankAccount model
-    #
-    #     Returns: response with instance of Token
-    #     """
-    #     url = self._construct_url(action='bank_accounts', subaction='tokens')
-    #     return self._post_instance(url, instance=bank_account)
+    def __add_bank_account_token(self, token: Token):
+        """
+        add bank account token
+
+        Args:
+            token: Token instance for BankAccount
+
+        Returns: response with instance of Token
+        """
+        if not isinstance(token, Token):
+            raise TypeError('Instance is not a Token!')
+
+        url = self._construct_url(action='bank_accounts', subaction='tokens')
+        return self._post_instance(url, instance=token)
 
     # def add_bank_account(self, data: dict):
     #     """

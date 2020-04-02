@@ -1,8 +1,14 @@
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.bank_account import BankAccount
+from ZoopAPIWrapper.models.token import Token
 from tests.factories.bank_account import (
-    IndividualBankAccountFactory)
+    IndividualBankAccountFactory
+)
+from tests.factories.token import (
+    CreateIndividualBankAccountTokenFactory,
+    BankAccountTokenFactory
+)
 
 
 class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
@@ -43,23 +49,23 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
         self.assertIsInstance(response.instance, BankAccount)
         self.assertEqual(response.instance.id, 'foo')
 
-    # def test_add_bank_account_token(self):
-    #     """
-    #     Test __add_bank_account_token method.
-    #     """
-    #     self.set_post_mock(
-    #         201,
-    #         TokenFactory(
-    #             type='bank_account'
-    #         ).to_dict()
-    #     )
-    #
-    #     bank_account = IndividualBankAccountFactory()
-    #
-    #     response = self.client.\
-    #         _ZoopWrapper__add_bank_account_token(bank_account)
-    #     self.assertEqual(response.status_code, 201, msg=response.data)
-    #
+    def test_add_bank_account_token(self):
+        """
+        Test __add_bank_account_token method.
+        """
+        self.set_post_mock(
+            201,
+            BankAccountTokenFactory().to_dict()
+        )
+
+        token = CreateIndividualBankAccountTokenFactory()
+
+        response = self.client.\
+            _ZoopWrapper__add_bank_account_token(token)
+        self.assertEqual(response.status_code, 201, msg=response.data)
+        self.assertIsInstance(response.instance, Token)
+        self.assertIsInstance(response.instance.bank_account, BankAccount)
+
     # @patch('ZoopAPIWrapper.wrapper.ZoopWrapper._ZoopWrapper__add_bank_account_token')
     # def test_add_bank_account(self, mocked_add_token):
     #     """

@@ -1,5 +1,5 @@
 from ZoopAPIWrapper.models.buyer import Buyer
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     MarketPlaceModelFactory, PersonFactory,
     SocialModelFactory, FinancialModelFactory)
 

@@ -4,7 +4,7 @@ from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.invoice import (
     Invoice, BillingInstructions
 )
-from ZoopAPIWrapper.models.factories.invoice import (
+from tests.factories import (
     BillingInstructionsFactory, InvoiceFactory
 )
 

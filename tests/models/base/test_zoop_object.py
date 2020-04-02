@@ -2,7 +2,7 @@ from unittest.mock import patch, MagicMock
 
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.exceptions import ValidationError
-from ZoopAPIWrapper.models.factories.base import ZoopObjectFactory
+from tests.factories.base import ZoopObjectFactory
 from ZoopAPIWrapper.models.base import ZoopObject
 
 

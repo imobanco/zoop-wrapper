@@ -1,6 +1,6 @@
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import SocialModel
-from ZoopAPIWrapper.models.factories.base import SocialModelFactory
+from tests.factories.base import SocialModelFactory
 
 
 class SocialTestCase(SetTestCase):

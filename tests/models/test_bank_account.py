@@ -4,7 +4,7 @@ from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Address
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel)
-from ZoopAPIWrapper.models.factories.bank_account import (
+from tests.factories.bank_account import (
     BankAccountFactory, IndividualBankAccountFactory,
     BusinessBankAccountFactory
 )

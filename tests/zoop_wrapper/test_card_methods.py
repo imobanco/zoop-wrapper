@@ -1,12 +1,8 @@
-from unittest.mock import patch, MagicMock
-
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.card import Card
-from ZoopAPIWrapper.models.factories.card import (
+from tests.factories.card import (
     CardFactory)
-from ZoopAPIWrapper.models.factories.token import TokenFactory
-from ZoopAPIWrapper.models.factories.seller import IndividualSellerFactory
 
 
 class ZoopWrapperCardMethodsTestCase(RequestsMockedTestCase):

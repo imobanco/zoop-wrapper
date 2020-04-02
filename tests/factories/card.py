@@ -4,7 +4,7 @@ from factory.faker import Faker
 from ZoopAPIWrapper.models.card import (
     CardVerificationChecklist, Card
 )
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     VerificationModelFactory, PaymentMethodFactory
 )
 

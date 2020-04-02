@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.factories.base import ResourceModelFactory
+from tests.factories.base import ResourceModelFactory
 from ZoopAPIWrapper.models.base import ResourceModel
 
 

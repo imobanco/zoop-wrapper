@@ -32,7 +32,7 @@ class BillingConfiguration(ZoopObject):
     @classmethod
     def get_percent_required_fields(cls) -> set: ...
     @classmethod
-    def from_dict_or_instance(cls, data: Any, is_discount: bool = ..., **kwargs: Any) -> BillingConfiguration: ...
+    def from_dict_or_instance(cls, data: Any, is_discount: bool = ..., **kwargs: Any) -> BillingConfiguration: ...  # type: ignore
 
 class BillingInstructions(ZoopObject):
     late_fee: BillingConfiguration
@@ -64,7 +64,7 @@ class Invoice(PaymentMethod):
     payment_limit_date: Optional[str]
     body_instructions: Optional[List[str]]
     billing_instructions: Optional[BillingInstructions]
-    def init_custom_fields(self, billing_instructions: Optional[Any] = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(self, billing_instructions: Optional[Any] = ..., **kwargs: Any) -> None: ...  # type: ignore
     @classmethod
     def get_required_fields(cls) -> set: ...
     @classmethod

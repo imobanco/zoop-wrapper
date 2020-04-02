@@ -5,7 +5,7 @@ from pycpfcnpj import gen
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel
 )
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     MarketPlaceModelFactory, AddressFactory, VerificationModelFactory
 )
 

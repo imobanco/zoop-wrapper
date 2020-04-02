@@ -3,10 +3,10 @@ from pycpfcnpj import gen
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.factories.seller import (
+from tests.factories.seller import (
     BusinessSellerFactory, IndividualSellerFactory
 )
-from ZoopAPIWrapper.models.factories.bank_account import (
+from tests.factories.bank_account import (
     IndividualBankAccountFactory
 )
 

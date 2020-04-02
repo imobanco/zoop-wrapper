@@ -1,6 +1,6 @@
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.token import Token
-from ZoopAPIWrapper.models.factories.token import TokenFactory
+from tests.factories.token import TokenFactory
 
 
 class TokenTestCase(SetTestCase):

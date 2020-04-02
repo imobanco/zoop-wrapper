@@ -1,6 +1,6 @@
 from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Address
-from ZoopAPIWrapper.models.factories.base import AddressFactory
+from tests.factories.base import AddressFactory
 
 
 class AddressTestCase(TestCase, SetTestCase):

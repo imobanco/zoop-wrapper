@@ -21,7 +21,7 @@ class Card(PaymentMethod):
     is_verified: Optional[bool]
     fingerprint: Optional[str]
     verification_checklist: Optional[CardVerificationChecklist]
-    def init_custom_fields(self, verification_checklist: Optional[Union[Dict[str, bool], VerificationModel]] = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(self, verification_checklist: Optional[Union[Dict[str, bool], VerificationModel]] = ..., **kwargs: Any) -> None: ...  # type: ignore
     @classmethod
     def get_required_fields(cls) -> set: ...
     @classmethod

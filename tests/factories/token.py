@@ -1,7 +1,7 @@
 from factory.faker import Faker
 
 from ZoopAPIWrapper.models.token import Token
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     ResourceModelFactory)
 
 

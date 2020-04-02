@@ -3,7 +3,7 @@ from unittest.mock import patch, MagicMock
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.exceptions import ValidationError
 from ZoopAPIWrapper.models.invoice import BillingConfiguration
-from ZoopAPIWrapper.models.factories.invoice import (
+from tests.factories import (
     BillingConfigurationFactory, FixedDiscountFactory,
     PercentDiscountFactory, FixedFeeFactory, PercentFeeFactory
 )

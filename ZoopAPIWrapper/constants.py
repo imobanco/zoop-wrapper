@@ -1,4 +1,4 @@
-from decouple import config  # type: ignore
+from decouple import config
 
 
 ZOOP_KEY = config('ZOOP_KEY')

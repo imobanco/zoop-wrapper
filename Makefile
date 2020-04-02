@@ -19,4 +19,4 @@ stubgen:
 	stubgen ZoopAPIWrapper
 
 mypy:
-	mypy -m ZoopAPIWrapper -m ZoopAPIWrapper.models --ignore-missing-imports
+	mypy ZoopAPIWrapper --ignore-missing-imports

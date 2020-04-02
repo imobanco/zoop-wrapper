@@ -136,6 +136,12 @@ class TokenTestCase(SetTestCase):
             Token.get_bank_account_non_required_fields()
         )
 
+    def test_get_bank_account_required_fields(self):
+        self.assertIsSubSet(
+            {'account_number'},
+            Token.get_bank_account_required_fields()
+        )
+
     def test_create_card(self):
         instance = CardTokenFactory()
         self.assertIsInstance(instance, Token)
@@ -160,7 +166,7 @@ class TokenTestCase(SetTestCase):
         instance = CardTokenFactory()
         self.assertIsInstance(instance, Token)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             instance.get_validation_fields()
         )
@@ -169,7 +175,7 @@ class TokenTestCase(SetTestCase):
         instance = CreateCardTokenFactory()
         self.assertIsInstance(instance, Token)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'security_code', 'expiration_year', 'card_number',
              'holder_name', 'expiration_month'},
             instance.get_validation_fields()
@@ -179,7 +185,7 @@ class TokenTestCase(SetTestCase):
         instance = BankAccountTokenFactory()
         self.assertIsInstance(instance, Token)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             instance.get_validation_fields()
         )
@@ -188,7 +194,7 @@ class TokenTestCase(SetTestCase):
         instance = CreateIndividualBankAccountTokenFactory()
         self.assertIsInstance(instance, Token)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'holder_name', 'type', 'account_number',
              'taxpayer_id', 'bank_code', 'routing_number'},
             instance.get_validation_fields()
@@ -198,7 +204,7 @@ class TokenTestCase(SetTestCase):
         instance = CreateBusinessBankAccountTokenFactory()
         self.assertIsInstance(instance, Token)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'holder_name', 'type', 'account_number',
              'ein', 'bank_code', 'routing_number'},
             instance.get_validation_fields()

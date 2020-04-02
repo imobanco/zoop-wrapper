@@ -57,8 +57,8 @@ class BankAccount(BusinessOrIndividualModel):
     """
     RESOURCE = 'bank_account'
 
-    SAVING_TYPE = 'savings'
-    CHECKING_TYPE = 'checking'
+    SAVING_TYPE = 'Savings'
+    CHECKING_TYPE = 'Checking'
     TYPES = {SAVING_TYPE, CHECKING_TYPE}
 
     def init_custom_fields(self, type=None, address=None,
@@ -91,16 +91,16 @@ class BankAccount(BusinessOrIndividualModel):
         fields = super().get_required_fields()
         return fields.union(
             {"type", "holder_name", "bank_code",
-             "routing_number", "account_number"}
+             "routing_number"}
         )
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {"description", "bank_name", "last4_digits",
-             "country_code", "phone_number", "is_active",
-             "is_verified", "debitable", "customer",
+            {"account_number", "description", "bank_name",
+             "last4_digits", "country_code", "phone_number",
+             "is_active", "is_verified", "debitable", "customer",
              "fingerprint", "address", "verification_checklist"}
         )
 

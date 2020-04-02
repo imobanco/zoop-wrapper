@@ -90,6 +90,9 @@ class Token(ResourceModel):
             )
         else:
             bank_account_type = BankAccount.get_type(self)
+            fields = fields.union(
+                self.get_bank_account_required_fields()
+            )
             if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
                 return fields.union(
                     BankAccount.get_individual_required_fields()
@@ -145,4 +148,11 @@ class Token(ResourceModel):
         fields = cls.get_non_required_fields()
         return fields.union(
             {'bank_account'}
+        )
+
+    @classmethod
+    def get_bank_account_required_fields(cls):
+        fields = cls.get_required_fields()
+        return fields.union(
+            {'account_number'}
         )

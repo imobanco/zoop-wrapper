@@ -12,15 +12,15 @@ from tests.factories.bank_account import (
 
 class BankAccountTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {"type", "holder_name", "bank_code",
-             "routing_number", "account_number"},
+             "routing_number"},
             BankAccount.get_required_fields()
         )
 
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {"bank_name", "description", "last4_digits",
+            {"bank_name", "account_number", "description", "last4_digits",
              "country_code", "phone_number", "is_active",
              "is_verified", "debitable", "customer",
              "fingerprint", "address", "verification_checklist"},

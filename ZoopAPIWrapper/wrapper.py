@@ -1,13 +1,12 @@
 import requests
 
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
-from ZoopAPIWrapper.models.base import ZoopModel
-from ZoopAPIWrapper.models.bank_account import (
-    BankAccount, IndividualBankAccount, BusinessBankAccount)
+from ZoopAPIWrapper.models.base import ResourceModel
+from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
-from ZoopAPIWrapper.models.card import Card
+# from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.token import Token, CardToken
+# from ZoopAPIWrapper.models.token import Token, CardToken
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -170,7 +169,7 @@ class ZoopWrapper(RequestsWrapper):
         """
         return self.__key, ''
 
-    def _post_instance(self, url, instance: ZoopModel):
+    def _post_instance(self, url, instance: ResourceModel):
         """
         http post request wrapper with instance
 
@@ -180,7 +179,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: processed response
         """
-        if not isinstance(instance, ZoopModel):
+        if not isinstance(instance, ResourceModel):
             raise TypeError('instance must be a ZoopModel')
         return self._post(url, data=instance.to_dict())
 
@@ -358,65 +357,65 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    def __add_bank_account_token(self, bank_account: BankAccount):
-        """
-        add bank account token
+    # def __add_bank_account_token(self, bank_account: BankAccount):
+    #     """
+    #     add bank account token
+    #
+    #     Args:
+    #         bank_account: BankAccount model
+    #
+    #     Returns: response with instance of Token
+    #     """
+    #     url = self._construct_url(action='bank_accounts', subaction='tokens')
+    #     return self._post_instance(url, instance=bank_account)
 
-        Args:
-            bank_account: BankAccount model
-
-        Returns: response with instance of Token
-        """
-        url = self._construct_url(action='bank_accounts', subaction='tokens')
-        return self._post_instance(url, instance=bank_account)
-
-    def add_bank_account(self, data: dict):
-        """
-        add bank account
-
-        Examples:
-            data = {
-                'taxpayer_id' or 'ein': 'foo',
-                'holder_name': 'foo',
-                'bank_code': 'foo',
-                'routing_number': 'foo',
-                'account_number': 'foo',
-                'taxpayer_id': 'foo',
-                'type': 'foo'
-            }
-
-        Args:
-            data: dict of data
-
-        Returns: response with instance of BankAccount
-        """
-        bank_account_instance = BankAccount.from_dict(data)
-        if not isinstance(bank_account_instance, BankAccount):
-            raise TypeError('this is not supposed to happen!')
-
-        if isinstance(bank_account_instance, IndividualBankAccount):
-            seller_response = self.search_individual_seller(
-                bank_account_instance.taxpayer_id)
-        elif isinstance(bank_account_instance, BusinessBankAccount):
-            seller_response = self.search_business_seller(
-                bank_account_instance.ein)
-        else:
-            raise TypeError('this is not supposed to happen!')
-
-        seller_instance = seller_response.instance
-        assert isinstance(seller_instance, Seller)
-
-        token_response = self.__add_bank_account_token(bank_account_instance)
-        token_instance = token_response.instance
-        assert isinstance(token_instance, Token)
-
-        data = {
-            "customer": seller_instance.id,
-            "token": token_instance.id
-        }
-
-        url = self._construct_url(action='bank_accounts')
-        return self._post(url, data=data)
+    # def add_bank_account(self, data: dict):
+    #     """
+    #     add bank account
+    #
+    #     Examples:
+    #         data = {
+    #             'taxpayer_id' or 'ein': 'foo',
+    #             'holder_name': 'foo',
+    #             'bank_code': 'foo',
+    #             'routing_number': 'foo',
+    #             'account_number': 'foo',
+    #             'taxpayer_id': 'foo',
+    #             'type': 'foo'
+    #         }
+    #
+    #     Args:
+    #         data: dict of data
+    #
+    #     Returns: response with instance of BankAccount
+    #     """
+    #     instance = BankAccount.from_dict(data)
+    #     if not isinstance(instance, BankAccount):
+    #         raise TypeError('this is not supposed to happen!')
+    #
+    #     if instance.get_type() == instance.INDIVIDUAL_TYPE:
+    #         seller_response = self.search_individual_seller(
+    #             instance.taxpayer_id)
+    #     elif instance.get_type() == instance.BUSINESS_TYPE:
+    #         seller_response = self.search_business_seller(
+    #             instance.ein)
+    #     else:
+    #         raise TypeError('this is not supposed to happen!')
+    #
+    #     seller_instance = seller_response.instance
+    #     assert isinstance(seller_instance, Seller)
+    #
+    #     token_response = self.__add_bank_account_token(bank_account_instance)
+    #     token_instance = token_response.instance
+    #     assert isinstance(token_instance, Token)
+    #
+    #     data = {
+    #         "customer": seller_instance.id,
+    #         "token": token_instance.id
+    #     }
+    #
+    #     url = self._construct_url(action='bank_accounts')
+    #     return self._post(url, data=data)
 
     def __get_buyers(self, action='buyers', identifier=None, search=None):
         """
@@ -510,6 +509,18 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._delete(url)
 
+    def retrieve_invoice(self, identifier):
+        """
+        retrieve invoice
+
+        Args:
+            identifier: uuid id
+
+        Returns: response with instance of Invoice
+        """
+        url = self._construct_url(action='boletos', identifier=identifier)
+        return self._get(url)
+
     def retrieve_card(self, identifier):
         """
         retrieve card
@@ -523,53 +534,53 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    def __add_card_token(self, card_token: CardToken):
-        """
-        add card token
-
-        Args:
-            card_token: CardToken model
-
-        Returns: response with instance of CardToken
-        """
-        url = self._construct_url(action='cards', subaction='tokens')
-        return self._post_instance(url, instance=card_token)
-
-    def add_card(self, data: dict, buyer_identifier):
-        """
-        add card
-
-        Examples:
-            data = {
-                "holder_name": "foo",
-                "expiration_month": "foo",
-                "expiration_year": "foo",
-                "card_number": "foo",
-                "security_code": "foo"
-            }
-
-        Args:
-            data: dict of data
-            buyer_identifier: uuid of buyer
-
-        Returns: response with instance of BankAccount
-        """
-        card_token = CardToken.from_dict(data)
-        if not isinstance(card_token, CardToken):
-            raise TypeError('this is not supposed to happen!')
-
-        token_response = self.__add_card_token(card_token)
-        token_instance = token_response.instance
-        assert isinstance(token_instance, Token)
-
-        buyer_response = self.retrieve_buyer(buyer_identifier)
-        buyer_instance = buyer_response.instance
-        assert isinstance(buyer_instance, Buyer)
-
-        data = {
-            "customer": buyer_instance.id,
-            "token": token_instance.id
-        }
-
-        url = self._construct_url(action='cards')
-        return self._post(url, data=data)
+    # def __add_card_token(self, card_token: CardToken):
+    #     """
+    #     add card token
+    #
+    #     Args:
+    #         card_token: CardToken model
+    #
+    #     Returns: response with instance of CardToken
+    #     """
+    #     url = self._construct_url(action='cards', subaction='tokens')
+    #     return self._post_instance(url, instance=card_token)
+    #
+    # def add_card(self, data: dict, buyer_identifier):
+    #     """
+    #     add card
+    #
+    #     Examples:
+    #         data = {
+    #             "holder_name": "foo",
+    #             "expiration_month": "foo",
+    #             "expiration_year": "foo",
+    #             "card_number": "foo",
+    #             "security_code": "foo"
+    #         }
+    #
+    #     Args:
+    #         data: dict of data
+    #         buyer_identifier: uuid of buyer
+    #
+    #     Returns: response with instance of BankAccount
+    #     """
+    #     card_token = CardToken.from_dict(data)
+    #     if not isinstance(card_token, CardToken):
+    #         raise TypeError('this is not supposed to happen!')
+    #
+    #     token_response = self.__add_card_token(card_token)
+    #     token_instance = token_response.instance
+    #     assert isinstance(token_instance, Token)
+    #
+    #     buyer_response = self.retrieve_buyer(buyer_identifier)
+    #     buyer_instance = buyer_response.instance
+    #     assert isinstance(buyer_instance, Buyer)
+    #
+    #     data = {
+    #         "customer": buyer_instance.id,
+    #         "token": token_instance.id
+    #     }
+    #
+    #     url = self._construct_url(action='cards')
+    #     return self._post(url, data=data)

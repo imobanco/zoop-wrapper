@@ -1,9 +1,9 @@
 from ZoopAPIWrapper.models.base import (
-    PaymentMethod, VerificationChecklist
+    PaymentMethod, VerificationModel
 )
 
 
-class CardVerificationChecklist(VerificationChecklist):
+class CardVerificationChecklist(VerificationModel):
     """
     This class and it's subclasses have attributes.
 

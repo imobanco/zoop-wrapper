@@ -2,7 +2,7 @@ from pycpfcnpj import gen
 
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
-from ZoopAPIWrapper.models.seller import BusinessSeller, IndividualSeller
+from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.factories.seller import (
     BusinessSellerFactory, IndividualSellerFactory
 )
@@ -46,7 +46,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         response = self.client.retrieve_seller('foo')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), 'foo')
-        self.assertIsInstance(response.instance, IndividualSeller)
+        self.assertIsInstance(response.instance, Seller)
         self.assertEqual(response.instance.id, 'foo')
 
     def test_search_individual_seller(self):
@@ -63,7 +63,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         response = self.client.search_individual_seller('bar')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), 'foo')
-        self.assertIsInstance(response.instance, IndividualSeller)
+        self.assertIsInstance(response.instance, Seller)
         self.assertEqual(response.instance.id, 'foo')
 
     def test_search_business_seller(self):
@@ -80,7 +80,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         response = self.client.search_business_seller('bar')
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get('id'), 'foo')
-        self.assertIsInstance(response.instance, BusinessSeller)
+        self.assertIsInstance(response.instance, Seller)
         self.assertEqual(response.instance.id, 'foo')
 
     def test_add_individual_seller(self):
@@ -94,16 +94,16 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
             'phone_number': '+55 84 99999-9999',
             'birthdate': '1994-12-27',
 
-            # 'address': {
-            #     'line1': 'foo',
-            #     'line2': '123',
-            #     'line3': 'barbar',
-            #     'neighborhood': 'fooofoo',
-            #     'city': 'Natal',
-            #     'state': 'BR-RN',
-            #     'postal_code': '59152250',
-            #     'country_code': "BR"
-            # }
+            'address': {
+                'line1': 'foo',
+                'line2': '123',
+                'line3': 'barbar',
+                'neighborhood': 'fooofoo',
+                'city': 'Natal',
+                'state': 'BR-RN',
+                'postal_code': '59152250',
+                'country_code': "BR"
+            }
         }
 
         response = self.client.add_seller(data)
@@ -124,16 +124,16 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
             'phone_number': '+55 84 99999-9999',
             'birthdate': '1994-12-27',
 
-            # 'address': {
-            #     'line1': 'foo',
-            #     'line2': '123',
-            #     'line3': 'barbar',
-            #     'neighborhood': 'fooofoo',
-            #     'city': 'Natal',
-            #     'state': 'BR-RN',
-            #     'postal_code': '59152250',
-            #     'country_code': "BR"
-            # }
+            'address': {
+                'line1': 'foo',
+                'line2': '123',
+                'line3': 'barbar',
+                'neighborhood': 'fooofoo',
+                'city': 'Natal',
+                'state': 'BR-RN',
+                'postal_code': '59152250',
+                'country_code': "BR"
+            }
         }
 
         response = self.client.add_seller(data)

@@ -2,10 +2,10 @@ from factory.faker import Faker
 
 from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.factories.base import (
-    ZoopModelFactory)
+    ResourceModelFactory)
 
 
-class TokenFactory(ZoopModelFactory):
+class TokenFactory(ResourceModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.

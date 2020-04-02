@@ -4,7 +4,7 @@ from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.factories.bank_account import (
-    BankAccountFactory, IndividualBankAccountFactory)
+    IndividualBankAccountFactory)
 from ZoopAPIWrapper.models.factories.token import TokenFactory
 from ZoopAPIWrapper.models.factories.seller import IndividualSellerFactory
 
@@ -58,7 +58,7 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
             ).to_dict()
         )
 
-        bank_account = BankAccountFactory()
+        bank_account = IndividualBankAccountFactory()
 
         response = self.client.\
             _ZoopWrapper__add_bank_account_token(bank_account)

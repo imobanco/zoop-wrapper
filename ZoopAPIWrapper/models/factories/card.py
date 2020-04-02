@@ -5,11 +5,11 @@ from ZoopAPIWrapper.models.card import (
     CardVerificationChecklist, Card
 )
 from ZoopAPIWrapper.models.factories.base import (
-    VerificationCheckListFactory, PaymentMethodFactory
+    VerificationModelFactory, PaymentMethodFactory
 )
 
 
-class CardVerificationChecklistFactory(VerificationCheckListFactory):
+class CardVerificationChecklistFactory(VerificationModelFactory):
     class Meta:
         model = CardVerificationChecklist
 

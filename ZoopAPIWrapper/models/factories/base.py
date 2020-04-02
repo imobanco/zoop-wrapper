@@ -3,23 +3,23 @@ from factory.faker import Faker
 from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.base import (
-    ZoopBase, ZoopModel, ZoopMarketPlaceModel,
-    OwnerModel, AddressModel,
+    ZoopObject, ResourceModel, MarketPlaceModel,
+    Person, Address,
     SocialModel, FinancialModel,
-    VerificationChecklist, PaymentMethod
+    VerificationModel, PaymentMethod
 )
 
 
-class ZoopBaseFactory(Factory):
+class ZoopObjectFactory(Factory):
     """
     Factory for instances.
     The Meta.model dictates which instance to be created
     """
     class Meta:
-        model = ZoopBase
+        model = ZoopObject
 
 
-class ZoopModelFactory(ZoopBaseFactory):
+class ResourceModelFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -27,7 +27,7 @@ class ZoopModelFactory(ZoopBaseFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = ZoopModel
+        model = ResourceModel
 
     id = Faker('uuid4')
     resource = 'resource'
@@ -37,7 +37,7 @@ class ZoopModelFactory(ZoopBaseFactory):
     metadata = {}
 
 
-class ZoopMarketPlaceModelFactory(ZoopModelFactory):
+class MarketPlaceModelFactory(ResourceModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -45,12 +45,12 @@ class ZoopMarketPlaceModelFactory(ZoopModelFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = ZoopMarketPlaceModel
+        model = MarketPlaceModel
 
     marketplace_id = Faker('uuid4')
 
 
-class AddressModelFactory(ZoopBaseFactory):
+class AddressFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -58,7 +58,7 @@ class AddressModelFactory(ZoopBaseFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = AddressModel
+        model = Address
 
     line1 = Faker('street_name')
     line2 = Faker('building_number')
@@ -70,7 +70,7 @@ class AddressModelFactory(ZoopBaseFactory):
     country_code = Faker('country_code', representation='alpha-2')
 
 
-class OwnerModelFactory(ZoopBaseFactory):
+class PersonFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -78,7 +78,7 @@ class OwnerModelFactory(ZoopBaseFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = OwnerModel
+        model = Person
 
     first_name = Faker('first_name')
     last_name = Faker('last_name')
@@ -86,10 +86,10 @@ class OwnerModelFactory(ZoopBaseFactory):
     taxpayer_id = LazyFunction(gen.cpf)
     phone_number = Faker('phone_number')
     birthdate = Faker('date_of_birth')
-    address = SubFactory(AddressModelFactory)
+    address = SubFactory(AddressFactory)
 
 
-class SocialModelFactory(ZoopBaseFactory):
+class SocialModelFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -103,7 +103,7 @@ class SocialModelFactory(ZoopBaseFactory):
     facebook = Faker('uri')
 
 
-class FinancialModelFactory(ZoopBaseFactory):
+class FinancialModelFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -123,7 +123,7 @@ class FinancialModelFactory(ZoopBaseFactory):
     payment_methods = None
 
 
-class VerificationCheckListFactory(ZoopBaseFactory):
+class VerificationModelFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -131,13 +131,13 @@ class VerificationCheckListFactory(ZoopBaseFactory):
     https://faker.readthedocs.io/en/latest/providers.html
     """
     class Meta:
-        model = VerificationChecklist
+        model = VerificationModel
 
     postal_code_check = Faker('pybool')
     address_line1_check = Faker('pybool')
 
 
-class PaymentMethodFactory(ZoopModelFactory):
+class PaymentMethodFactory(ZoopObjectFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -149,4 +149,4 @@ class PaymentMethodFactory(ZoopModelFactory):
 
     description = Faker('sentence', nb_words=5)
     customer = Faker('uuid4')
-    address = SubFactory(AddressModelFactory)
+    address = SubFactory(AddressFactory)

@@ -7,15 +7,9 @@ from tests.factories.base import (
 
 
 class PaymentMethodTestCase(SetTestCase):
-    def test_required_fields(self):
-        self.assertIsSuperSet(
-            {'customer', 'address'},
-            PaymentMethod.get_required_fields()
-        )
-
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {'description'},
+            {'description', 'address', 'customer'},
             PaymentMethod.get_non_required_fields()
         )
 

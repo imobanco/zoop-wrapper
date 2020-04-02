@@ -424,18 +424,6 @@ class PaymentMethod(ResourceModel):
             Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
-    def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
-        fields = super().get_required_fields()
-        return fields.union(
-            {'customer', 'address'}
-        )
-
-    @classmethod
     def get_non_required_fields(cls):
         """
         get set of non required fields
@@ -444,7 +432,7 @@ class PaymentMethod(ResourceModel):
         """
         fields = super().get_non_required_fields()
         return fields.union(
-            {'description'}
+            {'description', 'customer', 'address'}
         )
 
 

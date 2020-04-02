@@ -55,7 +55,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
         self.assertEqual(BusinessOrIndividualModel.get_type(instance),
-                         instance.BUSINESS_TYPE)
+                         BusinessOrIndividualModel.BUSINESS_TYPE)
 
     def test_get_type_individual(self):
         instance = MagicMock(ein=None, taxpayer_id='foo',
@@ -63,7 +63,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
         self.assertEqual(BusinessOrIndividualModel.get_type(instance),
-                         instance.INDIVIDUAL_TYPE)
+                         BusinessOrIndividualModel.INDIVIDUAL_TYPE)
 
     def test_get_type_uri_business(self):
         instance = MagicMock(ein='foo')

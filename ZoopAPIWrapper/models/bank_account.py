@@ -89,17 +89,17 @@ class BankAccount(BusinessOrIndividualModel):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {"holder_name",
-             "bank_name", "bank_code"}
+            {"type", "holder_name", "bank_code",
+             "routing_number", "account_number"}
         )
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {"type", "description", "last4_digits", "account_number",
-             "country_code", "routing_number", "phone_number",
-             "is_active", "is_verified", "debitable", "customer",
+            {"description", "bank_name", "last4_digits",
+             "country_code", "phone_number", "is_active",
+             "is_verified", "debitable", "customer",
              "fingerprint", "address", "verification_checklist"}
         )
 

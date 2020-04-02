@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import ResourceModel
+from ZoopAPIWrapper.models.base import ResourceModel, BusinessOrIndividualModel
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.utils import get_logger
@@ -32,16 +32,36 @@ class Token(ResourceModel):
     TYPES = {CARD_TYPE, BANK_ACCOUNT_TYPE}
     IDENTIFIERS = {CARD_IDENTIFIER, BANK_ACCOUNT_IDENTIFIER}
 
-    def init_custom_fields(self, **kwargs):
-        if self.CARD_IDENTIFIER in kwargs:
-            token_type = self.CARD_TYPE
-        elif self.BANK_ACCOUNT_IDENTIFIER in kwargs:
-            token_type = self.BANK_ACCOUNT_TYPE
-            BankAccount.init_custom_fields(self, **kwargs)
+    def init_custom_fields(self, type=None, card=None, bank_account=None, **kwargs):
+        if type in self.TYPES:
+            token_type = type
+            self._allow_empty = True
+
+            if card is not None and bank_account is not None:
+                raise ValueError('this should not happen!')
+            elif card is not None:
+                setattr(
+                    self, self.CARD_TYPE,
+                    Card.from_dict_or_instance(card)
+                )
+            elif bank_account is not None:
+                setattr(
+                    self, self.BANK_ACCOUNT_TYPE,
+                    BankAccount.from_dict_or_instance(bank_account)
+                )
+            else:
+                raise ValueError('this should not happen!')
+
         else:
-            raise TypeError(
-                f'Token type not identified! '
-                f'Please set one of these attributes {self.IDENTIFIERS}')
+            if self.CARD_IDENTIFIER in kwargs:
+                token_type = self.CARD_TYPE
+            elif self.BANK_ACCOUNT_IDENTIFIER in kwargs:
+                token_type = self.BANK_ACCOUNT_TYPE
+                BusinessOrIndividualModel.set_identifier(self, **kwargs)
+            else:
+                raise TypeError(
+                    f'Token type not identified! '
+                    f'Please set one of these attributes {self.IDENTIFIERS}')
         setattr(self, self.TYPE_ATTR, token_type)
 
     def get_type(self):
@@ -65,7 +85,10 @@ class Token(ResourceModel):
                 self.get_card_required_fields()
             )
         else:
-            bank_account_type = BankAccount.get_type(self)
+            bank_account = getattr(self, self.BANK_ACCOUNT_TYPE, None)
+            if bank_account is None:
+                bank_account = self
+            bank_account_type = BankAccount.get_type(bank_account)
             if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
                 return fields.union(
                     BankAccount.get_individual_required_fields()

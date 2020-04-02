@@ -78,6 +78,14 @@ class Token(ResourceModel):
                 f'Please set one of these attributes {self.IDENTIFIERS}')
         return token_type
 
+    def get_bank_account_type(self):
+        if self.token_type == self.BANK_ACCOUNT_TYPE:
+            if self._created:
+                return self.bank_account.get_type()
+            else:
+                return BankAccount.get_type(self)
+        raise(f'Token is not of type {self.BANK_ACCOUNT_TYPE}')
+
     def get_validation_fields(self):
         fields = self.get_required_fields()
         token_type = self.get_type()
@@ -89,11 +97,10 @@ class Token(ResourceModel):
                 self.get_card_required_fields()
             )
         else:
-            bank_account_type = BankAccount.get_type(self)
             fields = fields.union(
                 self.get_bank_account_required_fields()
             )
-            if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
+            if self.get_bank_account_type() == BankAccount.INDIVIDUAL_TYPE:
                 return fields.union(
                     BankAccount.get_individual_required_fields()
                 )

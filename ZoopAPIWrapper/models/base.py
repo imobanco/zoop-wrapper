@@ -316,8 +316,19 @@ class Person(ZoopObject):
         fields = super().get_required_fields()
         return fields.union(
             {"first_name", "last_name", "email",
-             "taxpayer_id", "phone_number",
-             "birthdate", "address"}
+             "taxpayer_id", "phone_number", "address"}
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"birthdate"}
         )
 
     @property

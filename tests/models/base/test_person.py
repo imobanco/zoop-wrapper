@@ -7,11 +7,16 @@ from tests.factories.base import PersonFactory
 
 class PersonTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {"first_name", "last_name", "email",
-             "taxpayer_id", "phone_number",
-             "birthdate", "address"},
+             "taxpayer_id", "phone_number", "address"},
             Person.get_required_fields()
+        )
+
+    def test_non_required_fields(self):
+        self.assertEqual(
+            {"birthdate"},
+            Person.get_non_required_fields()
         )
 
     def test_create(self):

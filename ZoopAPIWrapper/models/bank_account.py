@@ -103,8 +103,3 @@ class BankAccount(BusinessOrIndividualModel):
              "is_active", "is_verified", "debitable", "customer",
              "fingerprint", "address", "verification_checklist"}
         )
-
-    @classmethod
-    def from_dict_and_seller(cls, seller, data):
-        data['holder_name'] = seller.full_name
-        return cls.from_dict(data)

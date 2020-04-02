@@ -1,17 +1,20 @@
 from ZoopAPIWrapper import ZoopWrapper
+from ZoopAPIWrapper.models.token import Token
 
 
 client = ZoopWrapper()
 
-data = {
-    "card_brand": "MasterCard",
-    "first4_digits": "5201",
-    "last4_digits": "4014",
-    "expiration_month": "3",
-    "expiration_year": "2020",
-    "holder_name": "Mcihella"
-}
+token = Token(
+    bank_code='001',
+    taxpayer_id='12685293892',
+    holder_name='foo',
+    account_number='1',
+    routing_number='1',
+    type='checking'
+)
 
-response = client.add_card(data, 'e7eec0f640c14e21b35d20d58b49b584')
+data = token.to_dict()
+
+response = client.add_bank_account(data)
 
 print(response)

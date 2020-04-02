@@ -500,9 +500,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{cls.BUSINESS_IDENTIFIER}"')
+            raise TypeError(
+                f'Identifier error! Must be either '
+                f'"{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER}" or '
+                f'"{BusinessOrIndividualModel.BUSINESS_IDENTIFIER}"')
 
     def get_type(self):
         """
@@ -511,16 +512,19 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
         """
         individual_identifier = getattr(
-            self, self.INDIVIDUAL_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
         business_identifier = getattr(
-            self, self.BUSINESS_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, None)
 
-        self.validate_identifiers(individual_identifier, business_identifier)
+        BusinessOrIndividualModel.validate_identifiers(
+            individual_identifier,
+            business_identifier
+        )
 
         if individual_identifier:
-            return self.INDIVIDUAL_TYPE
+            return BusinessOrIndividualModel.INDIVIDUAL_TYPE
         else:
-            return self.BUSINESS_TYPE
+            return BusinessOrIndividualModel.BUSINESS_TYPE
 
     def get_type_uri(self):
         """
@@ -543,12 +547,12 @@ class BusinessOrIndividualModel(MarketPlaceModel):
             ein: cnpj
             **kwargs: dict of kwargs
         """
-        self.validate_identifiers(taxpayer_id, ein)
+        BusinessOrIndividualModel.validate_identifiers(taxpayer_id, ein)
 
         if taxpayer_id:
-            setattr(self, self.INDIVIDUAL_IDENTIFIER, taxpayer_id)
+            setattr(self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
-            setattr(self, self.BUSINESS_IDENTIFIER, ein)
+            setattr(self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, ein)
 
     def get_validation_fields(self):
         """

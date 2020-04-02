@@ -131,6 +131,8 @@ class ZoopObject(object):
         Validate fields returned from method
         get_validation_fields.
 
+        if _allow_empty is True don't validate!
+
         Args:
             raise_exception: boolean to raise or not exception
 
@@ -139,6 +141,9 @@ class ZoopObject(object):
             and __allow_empty is false and raise_exception is true
 
         """
+        if self._allow_empty:
+            return
+
         errors = []
         for validation_field in self.get_validation_fields():
             value = getattr(self, validation_field, None)
@@ -155,14 +160,10 @@ class ZoopObject(object):
         different fields based on type.
         Such as Seller, BankAccount and BillingConfiguration.
 
-        if allow_empty is true return empty set!
-
         Defaults to get_required_fields.
 
         Returns: set of fields to validate
         """
-        if self._allow_empty:
-            return set()
         return self.get_required_fields()
 
     def get_all_fields(self):
@@ -538,7 +539,9 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         BusinessOrIndividualModel.validate_identifiers(taxpayer_id, ein)
 
         if taxpayer_id:
-            setattr(self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
+            setattr(
+                self,
+                BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
             setattr(self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, ein)
 
@@ -560,9 +563,6 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         Returns: set of fields to validate
         """
-        if self._allow_empty:
-            return set()
-
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:

@@ -155,3 +155,101 @@ class TokenTestCase(SetTestCase):
     def test_create_bank_account_create_business(self):
         instance = CreateBusinessBankAccountTokenFactory()
         self.assertIsInstance(instance, Token)
+
+    def test_get_validation_fields_card(self):
+        instance = CardTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSuperSet(
+            set(),
+            instance.get_validation_fields()
+        )
+
+    def test_get_validation_fields_card_create(self):
+        instance = CreateCardTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSuperSet(
+            {'security_code', 'expiration_year', 'card_number',
+             'holder_name', 'expiration_month'},
+            instance.get_validation_fields()
+        )
+
+    def test_get_validation_fields_bank_account(self):
+        instance = BankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSuperSet(
+            set(),
+            instance.get_validation_fields()
+        )
+
+    def test_get_validation_fields_bank_account_create_individual(self):
+        instance = CreateIndividualBankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSuperSet(
+            {'holder_name', 'type', 'account_number',
+             'taxpayer_id', 'bank_code', 'routing_number'},
+            instance.get_validation_fields()
+        )
+
+    def test_get_validation_fields_bank_account_create_business(self):
+        instance = CreateBusinessBankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSuperSet(
+            {'holder_name', 'type', 'account_number',
+             'ein', 'bank_code', 'routing_number'},
+            instance.get_validation_fields()
+        )
+
+    def test_get_all_fields_card(self):
+        instance = CardTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet(
+            {'used', 'type', 'card'},
+            instance.get_all_fields()
+        )
+
+    def test_get_all_fields_card_create(self):
+        instance = CreateCardTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet(
+            {'type', 'used', 'security_code', 'expiration_year',
+             'card_number', 'holder_name', 'expiration_month', 'card'},
+            instance.get_all_fields()
+        )
+
+    def test_get_all_fields_bank_account(self):
+        instance = BankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet(
+            {'used', 'type', 'bank_account'},
+            instance.get_all_fields()
+        )
+
+    def test_get_all_fields_bank_account_create_individual(self):
+        instance = CreateIndividualBankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet(
+            {'used', 'type', 'bank_account', 'holder_name',
+             'type', 'account_number',
+             'taxpayer_id', 'bank_code', 'routing_number'},
+            instance.get_all_fields()
+        )
+
+    def test_get_all_fields_bank_account_create_business(self):
+        instance = CreateBusinessBankAccountTokenFactory()
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet(
+            {'used', 'type', 'bank_account', 'holder_name',
+             'type', 'account_number',
+             'ein', 'bank_code', 'routing_number'},
+            instance.get_all_fields()
+        )

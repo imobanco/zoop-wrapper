@@ -61,7 +61,8 @@ class BankAccount(BusinessOrIndividualModel):
     CHECKING_TYPE = 'checking'
     TYPES = {SAVING_TYPE, CHECKING_TYPE}
 
-    def init_custom_fields(self, type=None, address=None, verification_checklist=None,
+    def init_custom_fields(self, type=None, address=None,
+                           verification_checklist=None,
                            **kwargs):
         self.set_identifier(**kwargs)
         self.validate_type(type)

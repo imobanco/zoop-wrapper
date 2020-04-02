@@ -103,9 +103,6 @@ class BillingConfiguration(ZoopObject):
 
         Returns: set of fields to validate
         """
-        if self._allow_empty:
-            return set()
-
         mode = getattr(self, 'mode', None)
         is_discount = getattr(self, 'is_discount', None)
         if is_discount is None or mode is None or mode not in self.MODES:
@@ -132,7 +129,12 @@ class BillingConfiguration(ZoopObject):
 
         Returns: set of all fields
         """
-        return self.get_validation_fields()
+        try:
+            return self.get_validation_fields()
+        except ValueError as e:
+            if self._allow_empty:
+                return self.get_required_fields()
+            raise e
 
     @classmethod
     def get_required_fields(cls):

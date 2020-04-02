@@ -32,10 +32,12 @@ class Token(ResourceModel):
     TYPES = {CARD_TYPE, BANK_ACCOUNT_TYPE}
     IDENTIFIERS = {CARD_IDENTIFIER, BANK_ACCOUNT_IDENTIFIER}
 
-    def init_custom_fields(self, type=None, card=None, bank_account=None, **kwargs):
+    def init_custom_fields(self, type=None, card=None,
+                           bank_account=None, **kwargs):
         if type in self.TYPES:
             token_type = type
             self._allow_empty = True
+            setattr(self, '_created', True)
 
             if card is not None and bank_account is not None:
                 raise ValueError('this should not happen!')
@@ -53,6 +55,8 @@ class Token(ResourceModel):
                 raise ValueError('this should not happen!')
 
         else:
+            setattr(self, '_created', False)
+
             if self.CARD_IDENTIFIER in kwargs:
                 token_type = self.CARD_TYPE
             elif self.BANK_ACCOUNT_IDENTIFIER in kwargs:
@@ -74,21 +78,18 @@ class Token(ResourceModel):
                 f'Please set one of these attributes {self.IDENTIFIERS}')
         return token_type
 
-    def get_validation_fields(self, bypass_allow_empty=False):
-        if self._allow_empty and not bypass_allow_empty:
-            return set()
-
+    def get_validation_fields(self):
+        fields = self.get_required_fields()
         token_type = self.get_type()
-        fields = set()
-        if token_type == self.CARD_TYPE:
+
+        if self._created:
+            return fields
+        elif token_type == self.CARD_TYPE:
             return fields.union(
                 self.get_card_required_fields()
             )
         else:
-            bank_account = getattr(self, self.BANK_ACCOUNT_TYPE, None)
-            if bank_account is None:
-                bank_account = self
-            bank_account_type = BankAccount.get_type(bank_account)
+            bank_account_type = BankAccount.get_type(self)
             if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
                 return fields.union(
                     BankAccount.get_individual_required_fields()
@@ -99,15 +100,16 @@ class Token(ResourceModel):
                 )
 
     def get_all_fields(self):
-        validation_fields = self.get_validation_fields(bypass_allow_empty=True)
+
+        fields = self.get_validation_fields()
 
         token_type = self.get_type()
         if token_type == self.CARD_TYPE:
-            return validation_fields.union(
+            return fields.union(
                 self.get_card_non_required_fields()
             )
         else:
-            return validation_fields.union(
+            return fields.union(
                 self.get_bank_account_non_required_fields()
             )
 

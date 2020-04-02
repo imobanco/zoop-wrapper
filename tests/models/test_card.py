@@ -26,7 +26,8 @@ class CardTestCase(SetTestCase):
         instance = MagicMock()
 
         Card.init_custom_fields(instance)
-        self.assertIsInstance(instance.verification_checklist, CardVerificationChecklist)
+        self.assertIsInstance(instance.verification_checklist,
+                              CardVerificationChecklist)
 
     def test_create(self):
         instance = CardFactory()

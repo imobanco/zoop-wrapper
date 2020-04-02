@@ -52,7 +52,8 @@ class Card(PaymentMethod):
         Initialize verification_checklist
 
         Args:
-            verification_checklist: dict of data or CardVerificationChecklist instance
+            verification_checklist: dict of data or
+                CardVerificationChecklist instance
             **kwargs: kwargs
         """
         setattr(

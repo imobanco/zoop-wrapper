@@ -37,7 +37,7 @@ class ZoopObject(object):
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
-        self.validate_fields()
+        self.validate_fields(**kwargs)
 
     def init_custom_fields(self, **kwargs):
         """
@@ -126,7 +126,7 @@ class ZoopObject(object):
 
         return data
 
-    def validate_fields(self, raise_exception=True):
+    def validate_fields(self, raise_exception=True, **kwargs):
         """
         Validate fields returned from method
         get_validation_fields.

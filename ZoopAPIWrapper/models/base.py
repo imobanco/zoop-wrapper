@@ -1,3 +1,5 @@
+import copy
+
 from ZoopAPIWrapper.utils import get_logger
 from ZoopAPIWrapper.exceptions import ValidationError
 
@@ -15,7 +17,7 @@ class ZoopObject(object):
 
     def __init__(self, allow_empty=False, **kwargs):
         """
-        initialize all fields from get_fields method as
+        initialize all fields from get_all_fields method as
         attributes from kwargs on instance.
 
         Then validates fields.
@@ -24,7 +26,7 @@ class ZoopObject(object):
             allow_empty: boolean which disable validation of required fields
             **kwargs: dictionary of args
         """
-
+        self._allow_empty = allow_empty
         self.init_custom_fields(**kwargs)
 
         for field_name in self.get_all_fields():
@@ -35,48 +37,80 @@ class ZoopObject(object):
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
-        self.__allow_empty = allow_empty
-
         self.validate_fields()
 
     def init_custom_fields(self, **kwargs):
-        pass
-
-    @classmethod
-    def from_dict(cls, data, allow_empty=False):
         """
-        construct a instance of this class from dict
+        this method exists to set custom attributes such
+        as ZoopObject instances. Since all attributes set on
+        __init__ are dict's or variables.
 
         Args:
-            data: dict of data
-            allow_empty: boolean
+            **kwargs: dictionary of args
+        """
+        pass
 
-        Returns: instance initialized of cls
+    @staticmethod
+    def make_data_copy_with_kwargs(data, **kwargs):
+        """
+        make a new data dict from previous data dict
+        with added kwargs.
+
+        if data is None create a new empty dict.
+        data may be None for the cases we are explicitly calling
+        with `allow_empty=True` on `init_custom_fields` for some
+        custom ZoopObject instance set.
+        Such as:
+        >>> instance = ZoopObject()
+        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))  # noqa
+
+        Args:
+            data: dict of data may be None
+            **kwargs: dict of kwargs
+
+        Returns: new dict of data
         """
         if data is None:
             _data = {}
         else:
-            _data = {key: value for key, value in data.items()}
+            _data = copy.deepcopy(data)
 
-        _data['allow_empty'] = allow_empty
+        _data.update(kwargs)
+
+        return _data
+
+    @classmethod
+    def from_dict(cls, data, allow_empty=False, **kwargs):
+        """
+        construct a instance of this class from dict
+
+        Args:
+            data: dict of data may be None
+            allow_empty: boolean
+            **kwargs: kwargs
+
+        Returns: instance initialized of cls
+        """
+        _data = cls.make_data_copy_with_kwargs(
+            data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 
     @classmethod
-    def from_dict_or_instance(cls, data, allow_empty=False):
+    def from_dict_or_instance(cls, data, **kwargs):
         """
         check if data is already a ZoopModel or subclass.
         If not call from_dict
 
         Args:
             data: dict of data or instance
-            allow_empty: boolean
+            **kwargs: kwargs
 
         Returns: instance initialized of cls
         """
         if isinstance(data, cls):
             return data
         else:
-            return cls.from_dict(data, allow_empty)
+            return cls.from_dict(data, **kwargs)
 
     def to_dict(self):
         """
@@ -94,12 +128,19 @@ class ZoopObject(object):
                 Oh snap! It's not a ZoopBase instance!"""
                 attr = getattr(self, field)
 
-            if attr is not None or self.__allow_empty:
+            if attr is not None and attr != {}:
+                """
+                attr may be None if value was not passed.
+                As we set on __init__ line 36
+                `value = kwargs.get(field_name, None)`.
+
+                attr may be {} if it was a ZoopObject with allow_empty!
+                """
                 data[field] = attr
 
         return data
 
-    def validate_fields(self, raise_exception=None):
+    def validate_fields(self, raise_exception=True):
         """
         Validate fields returned from method
         get_validation_fields.
@@ -118,16 +159,7 @@ class ZoopObject(object):
             if value is None:
                 errors.append(validation_field)
 
-        if (
-                errors and
-                (
-                        raise_exception or
-                        (
-                                raise_exception is None and
-                                not self.__allow_empty
-                        )
-                )
-        ):
+        if errors and raise_exception:
             raise ValidationError(errors)
 
     def get_validation_fields(self):
@@ -135,12 +167,16 @@ class ZoopObject(object):
         Get validation fields for instance.
         This is necessary for classes/instances with
         different fields based on type.
-        Such as Seller and BankAccount.
+        Such as Seller, BankAccount and BillingConfiguration.
+
+        if allow_empty is true return empty set!
 
         Defaults to get_required_fields.
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
+        if self._allow_empty:
+            return set()
         return self.get_required_fields()
 
     def get_all_fields(self):
@@ -148,7 +184,7 @@ class ZoopObject(object):
         get all fields for instance.
         This is necessary for classes/instances with
         different fields based on type.
-        Such as Seller and BankAccount.
+        Such as Seller, BankAccount and BillingConfiguration.
 
         Defaults to get_fields.
 
@@ -279,7 +315,7 @@ class Person(ZoopObject):
         taxpayer_id: cpf
     """
 
-    def init_custom_fields(self, address, **kwargs):
+    def init_custom_fields(self, address=None, **kwargs):
         setattr(self, 'address',
                 Address.from_dict_or_instance(address, allow_empty=True))
 
@@ -391,9 +427,17 @@ class PaymentMethod(ResourceModel):
         address: Address Model
     """
 
-    def init_custom_fields(self, address, **kwargs):
-        setattr(self, 'address',
-                Address.from_dict_or_instance(address, allow_empty=True))
+    def init_custom_fields(self, address=None, **kwargs):
+        """
+        initialize address attribute with Address model
+
+        Args:
+            address: dict of data or instance
+            **kwargs: dic of kwargs
+        """
+        setattr(
+            self, 'address',
+            Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):
@@ -404,13 +448,29 @@ class PaymentMethod(ResourceModel):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {'description', 'customer', 'address'}
+            {'customer', 'address'}
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {'description'}
         )
 
 
 class BusinessOrIndividualModel(MarketPlaceModel):
     """
-    BusinessOrIndividualModel
+    Represents a Business Or Individual Model
+
+    It has dynamics types!
+
+    Can be Business or Individual.
 
     Attributes:
         BUSINESS_IDENTIFIER: 'ein'
@@ -433,55 +493,125 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     }
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
+        """
+        call set_identifier.
+        If allow_empty is True don't call!
+
+        Args:
+            taxpayer_id: cpf value
+            ein: cnpj value
+            **kwargs: dict of kwargs
+        """
+        if self._allow_empty:
+            return
         self.set_identifier(taxpayer_id, ein)
+
+    @classmethod
+    def validate_identifiers(cls, taxpayer_id, ein):
+        """
+        validate tuple of identifiers values
+
+        Raises:
+            TypeError: when it's passed both identifiers or none
+        """
+        if ((taxpayer_id is not None and ein is not None) or
+                (taxpayer_id is None and ein is None)):
+            raise TypeError(f'Identifier error! '
+                            f'Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
+                            f'"{cls.BUSINESS_IDENTIFIER}"')
 
     def get_type(self):
         """
         get the type from instance
 
-        Raises:
-            TypeError: when it's passed both identifiers or none
-
         Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
         """
-        has_individual_identifier = getattr(
-            self, self.INDIVIDUAL_IDENTIFIER, False)
-        has_business_identifier = getattr(
-            self, self.BUSINESS_IDENTIFIER, False)
+        individual_identifier = getattr(
+            self, self.INDIVIDUAL_IDENTIFIER, None)
+        business_identifier = getattr(
+            self, self.BUSINESS_IDENTIFIER, None)
 
-        if ((not has_business_identifier and not has_individual_identifier) or
-                (has_business_identifier and has_individual_identifier)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{self.BUSINESS_IDENTIFIER}"')
-        elif has_individual_identifier:
+        self.validate_identifiers(individual_identifier, business_identifier)
+
+        if individual_identifier:
             return self.INDIVIDUAL_TYPE
         else:
             return self.BUSINESS_TYPE
 
     def get_type_uri(self):
+        """
+        get the type uri for instance based on get_type
+
+        Returns: uri string for type
+        """
         return self.URI.get(self.get_type())
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
-        if ((taxpayer_id is not None and ein is not None) or
-                (taxpayer_id is None and ein is None)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{self.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{self.BUSINESS_IDENTIFIER}"')
-        elif taxpayer_id:
+        """
+        set taxpayer_id or ein identifier. Exactly one of then have
+        to be not None.
+
+        **kwargs are there to be called from Seller and BankAccount without
+        getting taxpayer_id or ein variables.
+
+        Args:
+            taxpayer_id: cpf
+            ein: cnpj
+            **kwargs: dict of kwargs
+        """
+        self.validate_identifiers(taxpayer_id, ein)
+
+        if taxpayer_id:
             setattr(self, self.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
             setattr(self, self.BUSINESS_IDENTIFIER, ein)
 
     def get_validation_fields(self):
+        """
+        Get validation fields for instance.
+
+        if _allow_empty is true return empty set!
+
+        if instance is individual type then call
+        get_individual_required_fields()
+
+        if instance is business type then call
+        get_business_required_fields()
+
+        Raises:
+            TypeError: when the type couldn't be identified.
+                This shouldn't be raised as get_type validate the identifiers!
+
+        Returns: set of fields to be used on validation
+        """
+        if self._allow_empty:
+            return set()
+
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             return self.get_individual_required_fields()
         else:
-            raise TypeError('Type no identified!')
+            raise TypeError('Type not identified! '
+                            'This is not supposed to happen!!!')
 
     def get_all_fields(self):
+        """
+        get all fields for instance.
+
+        if instance is individual type then call
+        get_individual_required_fields() and
+        get_individual_non_required_fields()
+
+        if instance is business type then call
+        get_business_required_fields() and get_business_non_required_fields()
+
+        Raises:
+            TypeError: when the type couldn't be identified.
+                This shouldn't be raised as get_type validate the identifiers!
+
+        Returns: set of all fields
+        """
         fields = set()
         if self.get_type() == self.BUSINESS_TYPE:
             return fields.union(
@@ -494,7 +624,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_individual_required_fields()
             )
         else:
-            raise TypeError('Type no identified!')
+            raise TypeError('Type not identified! '
+                            'This is not supposed to happen!!!')
 
     @classmethod
     def get_business_non_required_fields(cls):

@@ -57,12 +57,12 @@ class BankAccount(BusinessOrIndividualModel):
                            **kwargs):
         self.set_identifier(**kwargs)
 
-        setattr(self, 'address',
-                Address.from_dict_or_instance(address, allow_empty=True))
+        setattr(
+            self, 'address',
+            Address.from_dict_or_instance(address, allow_empty=True))
 
         setattr(
-            self,
-            'verification_checklist',
+            self, 'verification_checklist',
             BankAccountVerificationModel.from_dict_or_instance(
                 verification_checklist, allow_empty=True))
 

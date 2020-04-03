@@ -320,7 +320,7 @@ class ZoopWrapper(RequestsWrapper):
         """
         instance = Seller.from_dict(data)
         url = self._construct_url(action='sellers',
-                                  subaction=instance.get_type())
+                                  subaction=instance.get_type_uri())
         return self._post_instance(url, instance=instance)
 
     def remove_seller(self, identifier):
@@ -507,3 +507,15 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='buyers',
                                   identifier=identifier)
         return self._delete(url)
+
+    def retrieve_invoice(self, identifier):
+        """
+        retrieve invoice
+
+        Args:
+            identifier: uuid id
+
+        Returns: response with instance of Invoice
+        """
+        url = self._construct_url(action='boletos', identifier=identifier)
+        return self._get(url)

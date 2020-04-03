@@ -56,6 +56,11 @@ class ZoopObjectTestCase(SetTestCase):
         ZoopObjectFactory(id=1)
         mocked_validate.assert_called_once()
 
+    @patch('ZoopAPIWrapper.models.base.ZoopObject.init_custom_fields')
+    def test_init_call_init_custom_values(self, mocked_init_custom_fields):
+        ZoopObjectFactory(id=1)
+        mocked_init_custom_fields.assert_called_once()
+
     def test_create(self):
         instance = ZoopObjectFactory(id=1)
         self.assertIsInstance(instance, ZoopObject)
@@ -66,6 +71,37 @@ class ZoopObjectTestCase(SetTestCase):
 
     def test_create_dont_allow_empty(self):
         self.assertRaises(ValidationError, ZoopObjectFactory)
+
+    def test_make_data_copy_with_args(self):
+        data = {}
+        new_data = ZoopObject.make_data_copy_with_kwargs(data, foo='bar')
+
+        self.assertEqual(data, {})
+        self.assertEqual(new_data.get('foo'), 'bar')
+
+    def test_make_data_none_copy_with_args(self):
+        data = None
+        new_data = ZoopObject.make_data_copy_with_kwargs(data, foo='bar')
+
+        self.assertEqual(data, None)
+        self.assertEqual(new_data.get('foo'), 'bar')
+
+    def test_from_dict_empty(self):
+        data = {}
+        self.assertRaises(ValidationError, ZoopObject.from_dict, data)
+
+    def test_from_dict_allow_empty(self):
+        data = {}
+        instance = ZoopObject.from_dict(data, allow_empty=True)
+
+        self.assertIsInstance(instance, ZoopObject)
+
+    def test_from_dict(self):
+        instance = ZoopObject.from_dict(self.data)
+
+        self.assertIsInstance(instance, ZoopObject)
+        self.assertEqual(instance.id, 1)
+        self.assertIsNone(instance.name)
 
     def test_validate_allow_empty(self):
         instance = ZoopObjectFactory(allow_empty=True)
@@ -89,21 +125,6 @@ class ZoopObjectTestCase(SetTestCase):
 
         instance.validate_fields(raise_exception=False)
 
-    def test_from_dict_empty(self):
-        data = {}
-        self.assertRaises(ValidationError, ZoopObject.from_dict, data)
-
-    def test_from_dict_allow_empty(self):
-        data = {}
-        instance = ZoopObject.from_dict(data, allow_empty=True)
-
-        self.assertIsInstance(instance, ZoopObject)
-
-    def test_from_dict(self):
-        instance = ZoopObject.from_dict(self.data)
-
-        self.assertIsInstance(instance, ZoopObject)
-
     def test_to_dict(self):
         data = self.data
 
@@ -116,27 +137,27 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), data)
 
-    def test_to_dict_allow_empty(self):
-        instance = ZoopObject.from_dict(self.data, allow_empty=True)
-
-        self.assertIsInstance(instance, ZoopObject)
-        self.assertEqual(instance.to_dict(), self.data)
-
-    def test_get_all_fields(self):
-        instance = ZoopObject(allow_empty=True)
-
-        self.assertIsSuperSet(
-            instance.get_all_fields(),
-            ZoopObject.get_fields()
+    @staticmethod
+    def test_get_all_fields():
+        mocked_get_fields = MagicMock()
+        instance = MagicMock(
+            _allow_empty=False,
+            get_fields=mocked_get_fields
         )
 
-    def test_get_validation_fields(self):
-        instance = ZoopObject(allow_empty=True)
+        ZoopObject.get_all_fields(instance)
+        mocked_get_fields.assert_called_once()
 
-        self.assertIsSuperSet(
-            instance.get_validation_fields(),
-            ZoopObject.get_required_fields()
+    @staticmethod
+    def test_get_validation_fields():
+        mocked_required_fields = MagicMock()
+        instance = MagicMock(
+            _allow_empty=False,
+            get_required_fields=mocked_required_fields
         )
+
+        ZoopObject.get_validation_fields(instance)
+        mocked_required_fields.assert_called_once()
 
     def test_fields(self):
         self.assertIsSuperSet(

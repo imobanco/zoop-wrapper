@@ -1,7 +1,6 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import RequestsMockedTestCase
-from ZoopAPIWrapper.wrapper import ZoopWrapper
+from tests.utils import APITestCase
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.token import Token
 from tests.factories.bank_account import (
@@ -14,14 +13,7 @@ from tests.factories.token import (
 from tests.factories.seller import IndividualSellerFactory
 
 
-class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = ZoopWrapper()
-
-    def tearDown(self):
-        del self.client
-
+class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
     def test_list_bank_accounts(self):
         """
         Test list_bank_accounts method.

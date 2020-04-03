@@ -1,7 +1,6 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import RequestsMockedTestCase
-from ZoopAPIWrapper.wrapper import ZoopWrapper
+from tests.utils import APITestCase
 from ZoopAPIWrapper.models.card import Card
 from tests.factories.buyer import BuyerFactory
 from tests.factories.card import CardFactory
@@ -10,14 +9,7 @@ from tests.factories.token import (
 )
 
 
-class ZoopWrapperCardMethodsTestCase(RequestsMockedTestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = ZoopWrapper()
-
-    def tearDown(self):
-        del self.client
-
+class ZoopWrapperCardMethodsTestCase(APITestCase):
     def test_retrieve_card(self):
         """
         Test retrieve_card method.

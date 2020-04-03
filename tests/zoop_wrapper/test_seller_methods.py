@@ -1,8 +1,8 @@
 from pycpfcnpj import gen
 from requests import HTTPError
 
-from tests.utils import RequestsMockedTestCase
-from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
+from tests.utils import APITestCase
+from ZoopAPIWrapper.wrapper import MARKETPLACE_ID, ZOOP_KEY
 from ZoopAPIWrapper.models.seller import Seller
 from tests.factories.seller import (
     BusinessSellerFactory, IndividualSellerFactory
@@ -12,14 +12,7 @@ from tests.factories.bank_account import (
 )
 
 
-class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = ZoopWrapper()
-
-    def tearDown(self):
-        del self.client
-
+class ZoopWrapperSellerMethodsTestCase(APITestCase):
     def test_list_sellers(self):
         """
         Test list_sellers method.

@@ -1,19 +1,11 @@
 from pycpfcnpj import gen
 
-from tests.utils import RequestsMockedTestCase
-from ZoopAPIWrapper.wrapper import ZoopWrapper
+from tests.utils import APITestCase
 from ZoopAPIWrapper.models.buyer import Buyer
 from tests.factories.buyer import BuyerFactory
 
 
-class ZoopWrapperBuyerMethodsTestCase(RequestsMockedTestCase):
-    def setUp(self):
-        super().setUp()
-        self.client = ZoopWrapper()
-
-    def tearDown(self):
-        del self.client
-
+class ZoopWrapperBuyerMethodsTestCase(APITestCase):
     def test_list_buyers(self):
         """
         Test list_buyers method

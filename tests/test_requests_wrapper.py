@@ -1,16 +1,13 @@
-from unittest import TestCase
 from unittest.mock import patch
 
-from tests.utils import BuildResponseMockMixin
+from tests.utils import APITestCase
 from ZoopAPIWrapper.wrapper import RequestsWrapper
 
 
-class RequestWrapperTestCase(TestCase, BuildResponseMockMixin):
+class RequestWrapperTestCase(APITestCase):
     def setUp(self):
+        super().setUp()
         self.client = RequestsWrapper('foo')
-
-    def tearDown(self):
-        del self.client
 
     def test_construct_url(self):
         action = 'teste'

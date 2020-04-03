@@ -59,7 +59,6 @@ class RequestsWrapper:
 
         if response.data.get('error'):
             response.reason = response.data.get('error').get('message')
-            logger.warning(f'respose has error: {response.reason}')
 
         response.raise_for_status()
         return response

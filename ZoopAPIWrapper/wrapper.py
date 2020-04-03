@@ -325,7 +325,7 @@ class ZoopWrapper(RequestsWrapper):
         """
         instance = Seller.from_dict(data)
         url = self._construct_url(action='sellers',
-                                  subaction=instance.get_type())
+                                  subaction=instance.get_type_uri())
         return self._post_instance(url, instance=instance)
 
     def remove_seller(self, identifier):

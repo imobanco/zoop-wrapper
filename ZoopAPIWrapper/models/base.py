@@ -56,8 +56,16 @@ class ZoopObject(object):
         make a new data dict from previous data dict
         with added kwargs
 
+        if data is None create a new empty dict.
+        data may be None for the cases we are explicitly calling
+        with `allow_empty=True` on `init_custom_fields` for some
+        custom ZoopObject instance set.
+        Such as:
+        >>> instance = ZoopObject()
+        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))  # noqa
+
         Args:
-            data: dict of data
+            data: dict of data may be None
             **kwargs: dict of kwargs
 
         Returns: new dict of data
@@ -67,8 +75,7 @@ class ZoopObject(object):
         else:
             _data = copy.deepcopy(data)
 
-        for key, value in kwargs.items():
-            _data[key] = value
+        _data.update(kwargs)
 
         return _data
 
@@ -79,6 +86,9 @@ class ZoopObject(object):
 
         Args:
             data: dict of data
+            allow_empty: boolean
+            **kwargs: kwargs
+            data: dict of data may be None
             allow_empty: boolean
             **kwargs: kwargs
 
@@ -122,6 +132,13 @@ class ZoopObject(object):
                 attr = getattr(self, field)
 
             if attr is not None and attr != {}:
+                """
+                attr may be None if value was not passed.
+                As we set on __init__ line 36
+                `value = kwargs.get(field_name, None)`.
+
+                attr may be {} if it was a ZoopObject with allow_empty!
+                """
                 data[field] = attr
 
         return data

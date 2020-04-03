@@ -18,7 +18,10 @@ class BillingConfiguration(ZoopObject):
     Percentage can be just 'PERCENTAGE' or 'DAILY_PERCENTAGE' or
     'MONTHLY_PERCENTAGE'.
 
-    The type identifier is the 'mode' value as in the Zoop API
+    Fixed is 'FIXED'
+
+    The type identifier is the 'mode' attribute value as in the Zoop API
+    the attr 'is_discount' identify if it's a discount or not.
 
     Attributes:
         PERCENTAGE_MODE: str representing this type
@@ -26,11 +29,11 @@ class BillingConfiguration(ZoopObject):
         MONTHLY_PERCENTAGE_MODE: str representing this type
         FIXED_MODE: str representing this type
 
-        PERCENT_MODES: set with all percent types
-        MODES: set with all types
+        PERCENT_MODES: a set with all percent types
+        MODES: a set with all types
 
         is_discount: boolean representing if it's a Fee or Discount type
-        mode: str identifyingg if it's Fixed or Percentage type
+        mode: str identifying if it's Fixed or Percentage type
         start_date: start date of Fee type
         limit_date: limit date of Discount type
         amount: amount for Fixed type
@@ -63,7 +66,8 @@ class BillingConfiguration(ZoopObject):
     @classmethod
     def validate_mode(cls, mode):
         """
-        Validate the mode
+        Validate the mode. Must be in cls.MODES.
+
         Args:
             mode: mode to be validated
 
@@ -101,12 +105,15 @@ class BillingConfiguration(ZoopObject):
         Raises:
             ValueError: when mode and is_discount is not set
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
+        if self._allow_empty:
+            return set()
+
         mode = getattr(self, 'mode', None)
         is_discount = getattr(self, 'is_discount', None)
         if is_discount is None or mode is None or mode not in self.MODES:
-            raise ValueError('Must call set_type before!')
+            raise ValueError('Must call config_mode before!')
 
         if is_discount:
             fields = self.get_discount_required_fields()
@@ -129,12 +136,7 @@ class BillingConfiguration(ZoopObject):
 
         Returns: set of all fields
         """
-        try:
-            return self.get_validation_fields()
-        except ValueError as e:
-            if self._allow_empty:
-                return self.get_required_fields()
-            raise e
+        return self.get_validation_fields()
 
     @classmethod
     def get_required_fields(cls):
@@ -200,7 +202,7 @@ class BillingConfiguration(ZoopObject):
     def from_dict_or_instance(cls, data, is_discount=False, **kwargs):
         """
         call super().from_dict_or_instance with
-        default is_discount on kwargs passed.
+        the default of is_discount is False and passes kwargs.
 
         Args:
             data: dict of data or instance
@@ -221,9 +223,9 @@ class BillingInstructions(ZoopObject):
     Represents billing instructions (fine, interest and discount)
 
     Attributes:
-        late_fee: fine rules. BillingConfiguration model
-        interest: interest rules. BillingConfiguration model
-        discount: discount rules. BillingConfiguration model
+        late_fee: optional fine rules. BillingConfiguration model
+        interest: optional interest rules. BillingConfiguration model
+        discount: optional discount rules. BillingConfiguration model
     """
 
     def init_custom_fields(self, late_fee=None, interest=None,
@@ -248,7 +250,7 @@ class BillingInstructions(ZoopObject):
         setattr(
             self, 'discount',
             BillingConfiguration.from_dict_or_instance(
-                discount, is_discount=True, allow_empty=True))
+                discount, allow_empty=True, is_discount=True))
 
     @classmethod
     def get_required_fields(cls):
@@ -265,11 +267,12 @@ class BillingInstructions(ZoopObject):
 
 class Invoice(PaymentMethod):
     """
-    Represents
-    This class and it's subclasses have attributes.
+    Represents a invoice ('boleto' in BR).
+    https://docs.zoop.co/reference#boleto
 
     Attributes:
         security_code_check: boolean of verification
+        billing_instructions: optional BillingInstructions instance
     """
     RESOURCE = 'boleto'
 

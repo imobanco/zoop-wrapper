@@ -79,6 +79,13 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertEqual(data, {})
         self.assertEqual(new_data.get('foo'), 'bar')
 
+    def test_make_data_none_copy_with_args(self):
+        data = None
+        new_data = ZoopObject.make_data_copy_with_kwargs(data, foo='bar')
+
+        self.assertEqual(data, None)
+        self.assertEqual(new_data.get('foo'), 'bar')
+
     def test_from_dict_empty(self):
         data = {}
         self.assertRaises(ValidationError, ZoopObject.from_dict, data)

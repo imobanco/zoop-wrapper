@@ -223,9 +223,9 @@ class BillingInstructions(ZoopObject):
     Represents billing instructions (fine, interest and discount)
 
     Attributes:
-        late_fee: fine rules. BillingConfiguration model
-        interest: interest rules. BillingConfiguration model
-        discount: discount rules. BillingConfiguration model
+        late_fee: optional fine rules. BillingConfiguration model
+        interest: optional interest rules. BillingConfiguration model
+        discount: optional discount rules. BillingConfiguration model
     """
 
     def init_custom_fields(self, late_fee=None, interest=None,
@@ -272,6 +272,7 @@ class Invoice(PaymentMethod):
 
     Attributes:
         security_code_check: boolean of verification
+        billing_instructions: optional BillingInstructions instance
     """
     RESOURCE = 'boleto'
 

@@ -42,6 +42,9 @@ class RequestsWrapper:
         Args:
             response: http response
 
+        Raises:
+            HttpError: when response is not ok!
+
         Returns: processed http response
         """
         response.data = response.json()
@@ -56,8 +59,10 @@ class RequestsWrapper:
                 response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
-            response.error = response.data.get('error').get('message')
-            logger.warning(f'respose has error: {response.error}')
+            response.reason = response.data.get('error').get('message')
+            logger.warning(f'respose has error: {response.reason}')
+
+        response.raise_for_status()
         return response
 
     def _construct_url(self, action=None, identifier=None,

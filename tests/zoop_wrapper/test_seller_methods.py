@@ -1,4 +1,5 @@
 from pycpfcnpj import gen
+from requests import HTTPError
 
 from tests.utils import RequestsMockedTestCase
 from ZoopAPIWrapper.wrapper import ZoopWrapper, MARKETPLACE_ID, ZOOP_KEY
@@ -114,7 +115,12 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
         the zoop api returns 409 if theres a unique attribute
         duplicated on the DB. Such as taxpayer_id.
         """
-        self.set_post_mock(409, {})
+        self.set_post_mock(
+            409,
+            {
+                'error': {'message': 'Esse seller é duplicado!!!!'}
+            }
+        )
 
         data = {
             "taxpayer_id": 12685293892,
@@ -136,8 +142,7 @@ class ZoopWrapperSellerMethodsTestCase(RequestsMockedTestCase):
             }
         }
 
-        response = self.client.add_seller(data)
-        self.assertEqual(response.status_code, 409, msg=response.data)
+        self.assertRaises(HTTPError, self.client.add_seller, data)
 
     def test_remove_seller(self):
         self.set_delete_mock(

@@ -30,7 +30,7 @@ class RequestWrapperTestCase(TestCase, BuildResponseMockMixin):
         processed_response = self.client.\
             _RequestsWrapper__process_response(response)
         self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
-        self.assertEqual(processed_response.error, "foo")
+        self.assertEqual(processed_response.reason, "foo")
 
     def test_process_response_resource(self):
         response = self.build_response_mock(content={"resource": "test"})

@@ -1,6 +1,8 @@
 from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
+from requests import Response
+
 
 class SetTestCase(TestCase):
     @staticmethod
@@ -28,7 +30,7 @@ class SetTestCase(TestCase):
 class BuildResponseMockMixin:
     @staticmethod
     def build_response_mock(status_code=200, content=None):
-        return MagicMock(
+        response = MagicMock(
             status_code=status_code,
             json=MagicMock(
                 return_value=content if content else {}
@@ -36,20 +38,29 @@ class BuildResponseMockMixin:
             instance=None
         )
 
+        def raise_for_status():
+            Response.raise_for_status(response)
+        response.raise_for_status = raise_for_status
+        return response
 
-class MockedAddressLoggerTestCase(TestCase):
+
+class MockedLoggerTestCase(TestCase):
     def setUp(self):
         super().setUp()
 
         self.patcher_address_loggger = patch(
             "ZoopAPIWrapper.models.base.logger")
+        self.patcher_wrapper_loggger = patch(
+            "ZoopAPIWrapper.wrapper.logger")
 
         self.mocked_address_logger = self.patcher_address_loggger.start()
+        self.mocked_wrapper_logger = self.patcher_wrapper_loggger.start()
 
         self.addCleanup(self.patcher_address_loggger.stop)
+        self.addCleanup(self.patcher_wrapper_loggger.stop)
 
 
-class RequestsMockedTestCase(MockedAddressLoggerTestCase,
+class RequestsMockedTestCase(MockedLoggerTestCase,
                              BuildResponseMockMixin):
     def setUp(self):
         super().setUp()

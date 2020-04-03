@@ -62,7 +62,7 @@ class ZoopObject(object):
         custom ZoopObject instance set.
         Such as:
         >>> instance = ZoopObject()
-        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))
+        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))  # noqa
 
         Args:
             data: dict of data may be None
@@ -131,9 +131,9 @@ class ZoopObject(object):
             if attr is not None and attr != {}:
                 """
                 attr may be None if value was not passed.
-                As we set on __init__ line 36 
+                As we set on __init__ line 36
                 `value = kwargs.get(field_name, None)`.
-                
+
                 attr may be {} if it was a ZoopObject with allow_empty!
                 """
                 data[field] = attr

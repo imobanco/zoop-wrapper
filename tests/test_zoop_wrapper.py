@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.wrapper import ZoopWrapper, ZOOP_KEY
+from ZoopAPIWrapper.wrapper import ZOOP_KEY
 
 
 class ZoopWrapperTestCase(APITestCase):

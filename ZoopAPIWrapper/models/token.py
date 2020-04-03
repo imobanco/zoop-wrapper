@@ -26,16 +26,19 @@ class Token(ResourceModel):
 
     Attributes:
         RESOURCE = 'token'
-        TYPE_ATTR: str with attribute name for token type default is 'token_type'
+        TYPE_ATTR: str with attribute name for token type
+            default is 'token_type'
 
         CARD_TYPE: str 'card' for card type
         CARD_IDENTIFIER: card attribute ('card_number') used to identify type
 
         BANK_ACCOUNT_TYPE: str 'bank_account' for bank account type
-        BANK_ACCOUNT_IDENTIFIER: bank account attribute ('bank_code') used to identify type
+        BANK_ACCOUNT_IDENTIFIER: bank account attribute ('bank_code')
+            used to identify type
 
         TYPES: set of types {CARD_TYPE, BANK_ACCOUNT_TYPE}
-        IDENTIFIERS: set of identifiers {CARD_IDENTIFIER, BANK_ACCOUNT_IDENTIFIER}
+        IDENTIFIERS: set of identifiers {CARD_IDENTIFIER,
+                                        BANK_ACCOUNT_IDENTIFIER}
 
 
         _created: boolean to verify if token is already created or not
@@ -45,7 +48,8 @@ class Token(ResourceModel):
             BankAccount.type. So we need the above token_type
         used: optional boolean of verification
 
-        bank_account: optional BankAccount instance model (for created token of 'bank_account' type)
+        bank_account: optional BankAccount instance model
+            (for created token of 'bank_account' type)
         card: optional Card instance model (for created token of 'card' type)
 
         holder_name: owner name ('bank_account' and 'card')
@@ -199,7 +203,9 @@ class Token(ResourceModel):
         construct set 'fields' from get_validation_fields.
 
         if token type is card return fields union get_card_non_required_fields.
-        else token type is bank account return fields union get_bank_account_non_required_fields.
+
+        else token type is bank account return fields union
+        get_bank_account_non_required_fields.
 
         Returns: set of all fields
         """

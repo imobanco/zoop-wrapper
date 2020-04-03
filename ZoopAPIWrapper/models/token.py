@@ -84,7 +84,7 @@ class Token(ResourceModel):
                 return self.bank_account.get_type()
             else:
                 return BankAccount.get_type(self)
-        raise(f'Token is not of type {self.BANK_ACCOUNT_TYPE}')
+        raise ValueError(f'Token is not of type {self.BANK_ACCOUNT_TYPE}')
 
     def get_validation_fields(self):
         fields = self.get_required_fields()

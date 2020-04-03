@@ -4,7 +4,6 @@ from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ResourceModel
 from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
-from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
 from ZoopAPIWrapper.models.utils import get_instance_from_data
@@ -394,8 +393,6 @@ class ZoopWrapper(RequestsWrapper):
         Returns: response with instance of BankAccount
         """
         instance = Token.from_dict(data)
-        if not isinstance(instance, Token):
-            raise TypeError('this is not supposed to happen!')
 
         bank_account_type = instance.get_bank_account_type()
         if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
@@ -408,35 +405,17 @@ class ZoopWrapper(RequestsWrapper):
             raise TypeError('this is not supposed to happen!')
 
         seller_instance = seller_response.instance
-        assert isinstance(seller_instance, Seller)
 
         token_response = self.__add_bank_account_token(instance)
-        token_instance = token_response.instance
-        assert isinstance(token_instance, Token)
+        created_token = token_response.instance
 
         data = {
             "customer": seller_instance.id,
-            "token": token_instance.id
+            "token": created_token.id
         }
 
         url = self._construct_url(action='bank_accounts')
         return self._post(url, data=data)
-
-    def __get_buyers(self, action='buyers', identifier=None, search=None):
-        """
-        get method for buyers actions
-
-        Args:
-            action: 'buyers' by default
-            identifier: identifier value
-            search: search value
-
-        Returns: response with instance or instances of Buyer
-        """
-        url = self._construct_url(action=action,
-                                  identifier=identifier,
-                                  search=search)
-        return self._get(url)
 
     def list_buyers(self):
         """
@@ -444,7 +423,8 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instances of Buyer
         """
-        return self.__get_buyers()
+        url = self._construct_url(action='buyers')
+        return self._get(url)
 
     def retrieve_buyer(self, identifier):
         """
@@ -455,18 +435,23 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Buyer
         """
-        return self.__get_buyers(identifier=identifier)
+        url = self._construct_url(action='buyers', identifier=identifier)
+        return self._get(url)
 
     def search_buyer(self, identifier):
         """
-        search buyer
+        search buyer by CPF or CNPJ.
+        Yes, the name of the attribute is taxpayer_id for
+        both.
 
         Args:
             identifier: CPF or CNPJ
 
         Returns: response with instance of Buyer
         """
-        return self.__get_buyers(search=f'taxpayer_id={identifier}')
+        url = self._construct_url(action='buyers',
+                                  search=f'taxpayer_id={identifier}')
+        return self._get(url)
 
     def add_buyer(self, data: dict):
         """

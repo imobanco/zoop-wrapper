@@ -1,6 +1,6 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
+from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.seller import Seller
 from tests.factories.seller import (
     SellerFactory, IndividualSellerFactory, BusinessSellerFactory

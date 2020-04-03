@@ -78,13 +78,11 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
             instance=BankAccountTokenFactory()
         )
 
-        data = IndividualBankAccountFactory(
-            id='foo'
-        ).to_dict()
-
         self.set_post_mock(
             200,
-            data
+            IndividualBankAccountFactory(
+                id='foo'
+            ).to_dict()
         )
 
         self.set_get_mock(
@@ -95,8 +93,9 @@ class ZoopWrapperBankAccountsMethodsTestCase(RequestsMockedTestCase):
             ).to_dict()
         )
 
+        data = CreateIndividualBankAccountTokenFactory().to_dict()
+
         response = self.client.add_bank_account(data)
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertEqual(data.get('id'), 'foo', msg=data)
         self.assertIsInstance(response.instance, BankAccount)
         self.assertEqual(response.instance.id, 'foo')

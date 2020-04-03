@@ -179,7 +179,7 @@ class ZoopObject(object):
 
         Defaults to get_required_fields.
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
         return self.get_required_fields()
 
@@ -579,35 +579,35 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         if _allow_empty is true return empty set!
 
-        if instance is individual type call
+        if instance is individual type then call
         get_individual_required_fields()
 
-        if instance is business type call
+        if instance is business type then call
         get_business_required_fields()
 
         Raises:
             TypeError: when the type couldn't be identified.
                 This shouldn't be raised as get_type validate the identifiers!
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             return self.get_individual_required_fields()
         else:
-            raise TypeError('Type no identified! '
+            raise TypeError('Type not identified! '
                             'This is not supposed to happen!!!')
 
     def get_all_fields(self):
         """
         get all fields for instance.
 
-        if instance is individual type call
+        if instance is individual type then call
         get_individual_required_fields() and
         get_individual_non_required_fields()
 
-        if instance is business type call
+        if instance is business type then call
         get_business_required_fields() and get_business_non_required_fields()
 
         Raises:
@@ -628,7 +628,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_individual_required_fields()
             )
         else:
-            raise TypeError('Type no identified! '
+            raise TypeError('Type not identified! '
                             'This is not supposed to happen!!!')
 
     @classmethod

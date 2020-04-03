@@ -9,13 +9,13 @@ class CardVerificationChecklist(VerificationModel):
 class Card(PaymentMethod):
     RESOURCE: str = ...
 
-    card_brand: str
-    first4_digits: str
-    last4_digits: str
     expiration_month: str
     expiration_year: str
     holder_name: str
 
+    card_brand: Optional[str]
+    first4_digits: Optional[str]
+    last4_digits:Optional[ str]
     is_active: Optional[bool]
     is_valid: Optional[bool]
     is_verified: Optional[bool]

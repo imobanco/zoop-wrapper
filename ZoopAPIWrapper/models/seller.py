@@ -55,7 +55,7 @@ class Seller(BusinessOrIndividualModel, Person,
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             Person.init_custom_fields(self, **kwargs)
         else:
-            raise TypeError('Type no identified!')
+            raise TypeError('Type not identified!')
 
     @classmethod
     def get_non_required_fields(cls):

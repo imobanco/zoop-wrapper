@@ -14,7 +14,32 @@ from tests.factories.bank_account import IndividualBankAccountFactory
 
 
 class TokenTestCase(SetTestCase):
+    def test_init_custom_fields_raise(self):
+        instance = MagicMock()
+
+        self.assertRaises(TypeError, Token.init_custom_fields, instance)
+
     def test_init_custom_fields_with_type_raise(self):
+        """
+        If there's type and is not in TYPES raise TypeError!
+        are not passed raise
+        """
+        instance = MagicMock(
+            TYPES={'foo'},
+            TYPE_ATTR='token_type'
+        )
+
+        self.assertRaises(
+            TypeError, Token.init_custom_fields,
+            instance, type='bar')
+        self.assertEqual(instance._created, False)
+
+    def test_init_custom_fields_with_type_in_types_raise(self):
+        """
+        If there's type and is in TYPES, Token will try
+        to set attribute 'card' or 'bank_account'. If those
+        are not passed raise ValueError!
+        """
         instance = MagicMock(
             TYPES={'foo'},
             TYPE_ATTR='token_type'
@@ -23,6 +48,7 @@ class TokenTestCase(SetTestCase):
         self.assertRaises(
             ValueError, Token.init_custom_fields,
             instance, type='foo')
+        self.assertEqual(instance._created, True)
 
     def test_init_custom_fields_with_card(self):
         instance = MagicMock(
@@ -35,6 +61,7 @@ class TokenTestCase(SetTestCase):
             instance, type='foo',
             card=CardFactory())
         self.assertEqual(instance.token_type, 'foo')
+        self.assertEqual(instance._created, True)
         self.assertEqual(instance._allow_empty, True)
         self.assertIsInstance(instance.card, Card)
 
@@ -49,13 +76,9 @@ class TokenTestCase(SetTestCase):
             instance, type='foo',
             bank_account=IndividualBankAccountFactory())
         self.assertEqual(instance.token_type, 'foo')
+        self.assertEqual(instance._created, True)
         self.assertEqual(instance._allow_empty, True)
         self.assertIsInstance(instance.bank_account, BankAccount)
-
-    def test_init_custom_fields_raise(self):
-        instance = MagicMock()
-
-        self.assertRaises(TypeError, Token.init_custom_fields, instance)
 
     def test_init_custom_fields_card(self):
         instance = MagicMock(
@@ -65,6 +88,7 @@ class TokenTestCase(SetTestCase):
 
         Token.init_custom_fields(instance, foo='bar')
         self.assertEqual(instance.token_type, instance.CARD_TYPE)
+        self.assertEqual(instance._created, False)
 
     def test_init_custom_fields_bank_account_business(self):
         instance = MagicMock(
@@ -75,6 +99,7 @@ class TokenTestCase(SetTestCase):
         Token.init_custom_fields(instance, foo='bar', ein='foo')
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
         self.assertEqual(instance.ein, 'foo')
+        self.assertEqual(instance._created, False)
 
     def test_init_custom_fields_bank_account_individual(self):
         instance = MagicMock(
@@ -85,6 +110,7 @@ class TokenTestCase(SetTestCase):
         Token.init_custom_fields(instance, foo='bar', taxpayer_id='foo')
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
         self.assertEqual(instance.taxpayer_id, 'foo')
+        self.assertEqual(instance._created, False)
 
     def test_get_type_raise(self):
         instance = MagicMock(

@@ -6,41 +6,13 @@ from requests import Response
 
 class SetTestCase(TestCase):
     @staticmethod
-    def __get_msg(container, contained, is_super=True):
-        if is_super:
-            word = 'Missing'
-        else:
-            word = 'Excess'
-        return f'\n\nset {container} does not contains {contained}.\n\n' \
-               f'{word}: {contained - container}'
-
-    def assertIsSubSet(self, contained: set, container: set):
-        self.assertTrue(
-            contained.issubset(container),
-            msg=self.__get_msg(container, contained, is_super=False)
-        )
-
-    def assertIsSuperSet(self, container: set, contained: set):
-        self.assertTrue(
-            container.issuperset(contained),
-            msg=self.__get_msg(container, contained)
-        )
-
-
-class SetTestCase(TestCase):
-    @staticmethod
     def __get_msg(container, contained):
-        return f'set {container} does not contains {contained}'
+        return f'\n\nset {container} does not contains {contained}.\n\n' \
+               f'Excess: {contained - container}'
 
     def assertIsSubSet(self, contained: set, container: set):
         self.assertTrue(
             contained.issubset(container),
-            msg=self.__get_msg(container, contained)
-        )
-
-    def assertIsSuperSet(self, container: set, contained: set):
-        self.assertTrue(
-            container.issuperset(contained),
             msg=self.__get_msg(container, contained)
         )
 

@@ -80,7 +80,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_validation_fields_individual(self):
         instance = BusinessOrIndividualModel(taxpayer_id='foo')
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'taxpayer_id'},
             instance.get_validation_fields()
         )
@@ -88,7 +88,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_validation_fields_business(self):
         instance = BusinessOrIndividualModel(ein='foo')
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'ein'},
             instance.get_validation_fields()
         )
@@ -116,7 +116,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             BusinessOrIndividualModel.get_required_fields()
         )
@@ -128,7 +128,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_business_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'ein'},
             BusinessOrIndividualModel.get_business_required_fields()
         )
@@ -140,7 +140,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_individual_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'taxpayer_id'},
             BusinessOrIndividualModel.get_individual_required_fields()
         )

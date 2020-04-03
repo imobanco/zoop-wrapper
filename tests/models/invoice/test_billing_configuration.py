@@ -66,7 +66,7 @@ class BillingConfigurationTestCase(SetTestCase):
         self.assertEqual(instance.is_discount, True)
 
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'mode'},
             BillingConfiguration.get_required_fields()
         )
@@ -102,7 +102,7 @@ class BillingConfigurationTestCase(SetTestCase):
             )
         )
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             BillingConfiguration.get_all_fields(instance)
         )
@@ -111,7 +111,7 @@ class BillingConfigurationTestCase(SetTestCase):
         instance = FixedDiscountFactory()
         self.assertIsInstance(instance, BillingConfiguration)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'mode', 'limit_date', 'amount'},
             instance.get_validation_fields()
         )
@@ -120,7 +120,7 @@ class BillingConfigurationTestCase(SetTestCase):
         instance = PercentDiscountFactory()
         self.assertIsInstance(instance, BillingConfiguration)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'mode', 'limit_date', 'percentage'},
             instance.get_validation_fields()
         )
@@ -129,7 +129,7 @@ class BillingConfigurationTestCase(SetTestCase):
         instance = FixedFeeFactory()
         self.assertIsInstance(instance, BillingConfiguration)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'mode', 'start_date', 'amount'},
             instance.get_validation_fields()
         )
@@ -138,7 +138,7 @@ class BillingConfigurationTestCase(SetTestCase):
         instance = PercentFeeFactory()
         self.assertIsInstance(instance, BillingConfiguration)
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'mode', 'start_date', 'percentage'},
             instance.get_validation_fields()
         )

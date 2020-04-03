@@ -5,7 +5,7 @@ from tests.factories.base import MarketPlaceModelFactory
 
 class MarketPlaceModelTestCase(SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             MarketPlaceModel.get_required_fields()
         )

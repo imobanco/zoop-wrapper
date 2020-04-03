@@ -5,16 +5,15 @@ from ZoopAPIWrapper.models.token import Token
 client = ZoopWrapper()
 
 token = Token(
-    bank_code='001',
-    taxpayer_id='12685293892',
+    card_number='123123123123123',
     holder_name='foo',
-    account_number='1',
-    routing_number='1',
-    type='checking'
+    expiration_month='01',
+    expiration_year='01',
+    security_code='111'
 )
 
 data = token.to_dict()
 
-response = client.add_bank_account(data)
+response = client.add_card(data, 'e7eec0f640c14e21b35d20d58b49b584')
 
 print(response)

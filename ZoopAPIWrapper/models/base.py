@@ -54,10 +54,18 @@ class ZoopObject(object):
     def make_data_copy_with_kwargs(data, **kwargs):
         """
         make a new data dict from previous data dict
-        with added kwargs
+        with added kwargs.
+
+        if data is None create a new empty dict.
+        data may be None for the cases we are explicitly calling
+        with `allow_empty=True` on `init_custom_fields` for some
+        custom ZoopObject instance set.
+        Such as:
+        >>> instance = ZoopObject()
+        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))
 
         Args:
-            data: dict of data
+            data: dict of data may be None
             **kwargs: dict of kwargs
 
         Returns: new dict of data
@@ -67,8 +75,7 @@ class ZoopObject(object):
         else:
             _data = copy.deepcopy(data)
 
-        for key, value in kwargs.items():
-            _data[key] = value
+        _data.update(kwargs)
 
         return _data
 
@@ -78,7 +85,7 @@ class ZoopObject(object):
         construct a instance of this class from dict
 
         Args:
-            data: dict of data
+            data: dict of data may be None
             allow_empty: boolean
             **kwargs: kwargs
 
@@ -122,6 +129,13 @@ class ZoopObject(object):
                 attr = getattr(self, field)
 
             if attr is not None and attr != {}:
+                """
+                attr may be None if value was not passed.
+                As we set on __init__ line 36 
+                `value = kwargs.get(field_name, None)`.
+                
+                attr may be {} if it was a ZoopObject with allow_empty!
+                """
                 data[field] = attr
 
         return data
@@ -159,7 +173,7 @@ class ZoopObject(object):
 
         Defaults to get_required_fields.
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
         if self._allow_empty:
             return set()
@@ -558,17 +572,17 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         if _allow_empty is true return empty set!
 
-        if instance is individual type call
+        if instance is individual type then call
         get_individual_required_fields()
 
-        if instance is business type call
+        if instance is business type then call
         get_business_required_fields()
 
         Raises:
             TypeError: when the type couldn't be identified.
                 This shouldn't be raised as get_type validate the identifiers!
 
-        Returns: set of fields to validate
+        Returns: set of fields to be used on validation
         """
         if self._allow_empty:
             return set()
@@ -578,18 +592,18 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         elif self.get_type() == self.INDIVIDUAL_TYPE:
             return self.get_individual_required_fields()
         else:
-            raise TypeError('Type no identified! '
+            raise TypeError('Type not identified! '
                             'This is not supposed to happen!!!')
 
     def get_all_fields(self):
         """
         get all fields for instance.
 
-        if instance is individual type call
+        if instance is individual type then call
         get_individual_required_fields() and
         get_individual_non_required_fields()
 
-        if instance is business type call
+        if instance is business type then call
         get_business_required_fields() and get_business_non_required_fields()
 
         Raises:
@@ -610,7 +624,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_individual_required_fields()
             )
         else:
-            raise TypeError('Type no identified! '
+            raise TypeError('Type not identified! '
                             'This is not supposed to happen!!!')
 
     @classmethod

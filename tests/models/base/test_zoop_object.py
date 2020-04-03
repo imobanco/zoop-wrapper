@@ -130,25 +130,27 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), data)
 
-    def test_get_all_fields(self):
+    @staticmethod
+    def test_get_all_fields():
+        mocked_get_fields = MagicMock()
         instance = MagicMock(
-            _allow_empty=False
+            _allow_empty=False,
+            get_fields=mocked_get_fields
         )
 
-        self.assertIsSuperSet(
-            instance.get_all_fields(instance),
-            ZoopObject.get_fields()
-        )
+        ZoopObject.get_all_fields(instance)
+        mocked_get_fields.assert_called_once()
 
-    def test_get_validation_fields(self):
+    @staticmethod
+    def test_get_validation_fields():
+        mocked_required_fields = MagicMock()
         instance = MagicMock(
-            _allow_empty=False
+            _allow_empty=False,
+            get_required_fields=mocked_required_fields
         )
 
-        self.assertIsSuperSet(
-            instance.get_validation_fields(instance),
-            ZoopObject.get_required_fields()
-        )
+        ZoopObject.get_validation_fields(instance)
+        mocked_required_fields.assert_called_once()
 
     def test_fields(self):
         self.assertIsSuperSet(

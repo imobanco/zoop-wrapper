@@ -510,7 +510,16 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._delete(url)
 
-    def list_transactions(self, identifier):
+    def list_transactions(self):
+        """
+        list all transactions
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions')
+        return self._get(url)
+
+    def list_transactions_for_seller(self, identifier):
         """
         list all transactions from seller
 
@@ -519,8 +528,56 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response
         """
-        url = self._construct_url(action='transactions')
+        url = self._construct_url(action='sellers',
+                                  identifier=identifier,
+                                  subaction='transactions')
         return self._get(url)
+
+    def retrieve_transaction(self, identifier):
+        """
+        retrieve a transaction
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions', identifier=identifier)
+        return self._get(url)
+
+    def add_transaction(self, data: dict):
+        """
+        add transaction
+
+        Examples:
+            data = {
+                'amount' : 'foo',
+                'currency' : 'BRL',
+                'description' : 'foo',
+                'reference_id' : 'foo',
+                'on_behalf_of' : 'foo',
+                'customer': 'foo',
+                'payment_type' : 'foo',
+                'payment_method' : {
+                    'expiration_date' : expiration_date,
+                    'payment_limit_date' : payment_limit_date,
+                    'body_instructions' : instructions,
+                    'billing_instructions' : {
+                        'late_fee' : late_fee,
+                        'interest' : interest,
+                        'discount' : discount
+                    }
+                }
+            }
+
+        Args:
+            data: dict of data
+
+        Returns: response with instance of Buyer
+        """
+        # instance = Buyer.from_dict(data)
+        url = self._construct_url(action='transactions')
+        # return self._post_instance(url, instance=instance)
 
     def transfer(self, from_identifier, to_identifier, amount):
         if amount <= 0:

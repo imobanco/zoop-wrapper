@@ -1,5 +1,7 @@
 import requests
 
+import pendulum
+
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ResourceModel
 from ZoopAPIWrapper.models.bank_account import BankAccount
@@ -507,6 +509,44 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='buyers',
                                   identifier=identifier)
         return self._delete(url)
+
+    def list_transactions(self, identifier):
+        """
+        list all transactions from seller
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions')
+        return self._get(url)
+
+    def transfer(self, from_identifier, to_identifier, amount):
+        if amount <= 0:
+            raise ValueError('amount must be greater than 0!')
+
+        from_seller_response = self.retrieve_seller(from_identifier)
+        from_seller = from_seller_response.instance
+        if not isinstance(from_seller, Seller):
+            raise TypeError('this is not supposed to happen!')
+
+        to_seller_response = self.retrieve_seller(to_identifier)
+        to_seller = to_seller_response.instance
+        if not isinstance(to_seller, Seller):
+            raise TypeError('this is not supposed to happen!')
+
+        url = self._construct_url(
+            action='transfers',
+            subaction=f'{from_seller.id}/to/{to_seller.id}'
+        )
+
+        data = {
+            'amount': amount,
+            'transfer_date': str(pendulum.now('America/SaoPaulo'))
+        }
+
+        self._post(url, data=data)
 
     def retrieve_invoice(self, identifier):
         """

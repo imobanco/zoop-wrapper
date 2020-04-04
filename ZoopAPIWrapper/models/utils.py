@@ -59,7 +59,7 @@ def get_instance_from_data(data):
 
     try:
         klass = _get_model_class_from_resource(resource)
-        return klass.from_dict(data)
+        return klass.from_dict(data, allow_empty=True)
     except ValueError as e:
         logger.info(e)
         return None

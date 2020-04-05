@@ -112,6 +112,27 @@ class ZoopObject(object):
         else:
             return cls.from_dict(data, **kwargs)
 
+    @staticmethod
+    def is_value_empty(value):
+        """
+        Verify is value passed is considered empty!
+
+        value may be None if value was not passed.
+        As we set on __init__
+        `value = kwargs.get(field_name, None)`.
+
+        value may be {} if it was a ZoopObject with allow_empty!
+        value may be [{}] if it was a list of ZoopObject's with allow_empty!!
+
+        Args:
+            value: Value to be verified
+
+        Returns: boolean
+        """
+        if value is None or value == {} or value == [{}]:
+            return True
+        return False
+
     def to_dict(self):
         """
         serialize the instance to dict
@@ -119,24 +140,27 @@ class ZoopObject(object):
         """
         data = {}
         for field in self.get_all_fields():
-            try:
-                """our attr may be a ZoopBase instance.
+            value = getattr(self, field)
+
+            if isinstance(value, list):
+                """our value may be a list of ZoopObject's.
                 Let's try to get its serialized value!"""
-                attr = getattr(self, field).to_dict()
-            except AttributeError:
-                """our attr doesn't have to_dict() method.
-                Oh snap! It's not a ZoopBase instance!"""
-                attr = getattr(self, field)
+                try:
+                    value = [item.to_dict() for item in value]
+                except AttributeError:
+                    pass
+            else:
+                try:
+                    """our value may be a ZoopObject instance.
+                    Let's try to get its serialized value!"""
+                    value = value.to_dict()
+                except AttributeError:
+                    pass
 
-            if attr is not None and attr != {}:
-                """
-                attr may be None if value was not passed.
-                As we set on __init__ line 36
-                `value = kwargs.get(field_name, None)`.
+            if self.is_value_empty(value):
+                continue
 
-                attr may be {} if it was a ZoopObject with allow_empty!
-                """
-                data[field] = attr
+            data[field] = value
 
         return data
 

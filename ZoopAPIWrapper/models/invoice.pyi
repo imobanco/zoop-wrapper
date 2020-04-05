@@ -37,7 +37,7 @@ class BillingConfiguration(ZoopObject):
 class BillingInstructions(ZoopObject):
     late_fee: BillingConfiguration
     interest: BillingConfiguration
-    discount: BillingConfiguration
+    discount: List[BillingConfiguration]
     def init_custom_fields(self, late_fee: Optional[Any] = ..., interest: Optional[Any] = ..., discount: Optional[Any] = ..., **kwargs: Any) -> None: ...
     @classmethod
     def get_required_fields(cls) -> set: ...

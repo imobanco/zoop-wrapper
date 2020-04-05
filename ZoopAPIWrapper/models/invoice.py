@@ -247,10 +247,20 @@ class BillingInstructions(ZoopObject):
             self, 'interest',
             BillingConfiguration.from_dict_or_instance(
                 interest, allow_empty=True))
-        setattr(
-            self, 'discount',
-            BillingConfiguration.from_dict_or_instance(
-                discount, allow_empty=True, is_discount=True))
+        if isinstance(discount, list):
+            setattr(
+                self, 'discount',
+                [
+                    BillingConfiguration.from_dict_or_instance(
+                        item, allow_empty=True, is_discount=True)
+                    for item in discount
+                ]
+            )
+        else:
+            setattr(
+                self, 'discount',
+                [BillingConfiguration.from_dict_or_instance(
+                    discount, allow_empty=True, is_discount=True)])
 
     @classmethod
     def get_required_fields(cls):

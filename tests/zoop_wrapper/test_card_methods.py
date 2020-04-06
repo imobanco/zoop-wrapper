@@ -33,7 +33,7 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
         """
         self.set_post_mock(
             201,
-            CardTokenFactory().to_dict()
+            CardTokenFactory(allow_empty=True).to_dict()
         )
 
         instance = CreateCardTokenFactory()
@@ -48,7 +48,7 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
         Test add_card method.
         """
         mocked_add_token.return_value = MagicMock(
-            instance=CardTokenFactory()
+            instance=CardTokenFactory(allow_empty=True)
         )
 
         self.set_post_mock(

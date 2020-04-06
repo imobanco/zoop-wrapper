@@ -1,10 +1,10 @@
 from factory import SubFactory
 from factory.faker import Faker
 
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     ZoopObjectFactory, ResourceModelFactory, PaymentMethodFactory
 )
-from ZoopAPIWrapper.models.factories.invoice import InvoiceFactory
+from tests.factories.invoice import InvoiceFactory
 from ZoopAPIWrapper.models.transaction import (
     PointOfSale, History, Transaction
 )

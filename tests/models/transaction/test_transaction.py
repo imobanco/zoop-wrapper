@@ -4,19 +4,19 @@ from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.transaction import (
     Transaction, PointOfSale, History
 )
-from ZoopAPIWrapper.models.factories.transaction import TransactionFactory
+from tests.factories.transaction import TransactionFactory
 from ZoopAPIWrapper.models.invoice import Invoice
 
 
 class TransactionTestCase(SetTestCase):
-    def test_init_custom_fields(self):
-        instance = MagicMock()
-
-        Transaction.init_custom_fields(instance)
-        self.assertIsInstance(instance.point_of_sale, PointOfSale)
-        self.assertIsInstance(instance.history, list)
-        self.assertEqual(len(instance.history), 1)
-        self.assertIsInstance(instance.history[0], History)
+    # def test_init_custom_fields(self):
+    #     instance = MagicMock()
+    #
+    #     Transaction.init_custom_fields(instance)
+    #     self.assertIsInstance(instance.point_of_sale, PointOfSale)
+    #     self.assertIsInstance(instance.history, list)
+    #     self.assertEqual(len(instance.history), 1)
+    #     self.assertIsInstance(instance.history[0], History)
 
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()
@@ -25,12 +25,12 @@ class TransactionTestCase(SetTestCase):
             instance, payment_type=Transaction.BOLETO_TYPE)
         self.assertIsInstance(instance.payment_method, Invoice)
 
-    def test_init_custom_fields_card(self):
-        instance = MagicMock()
-
-        Transaction.init_custom_fields(
-            instance, payment_type=Transaction.CREDIT_TYPE)
-        self.assertIsInstance(instance.payment_method, dict)
+    # def test_init_custom_fields_card(self):
+    #     instance = MagicMock()
+    #
+    #     Transaction.init_custom_fields(
+    #         instance, payment_type=Transaction.CREDIT_TYPE)
+    #     self.assertIsInstance(instance.payment_method, dict)
 
     def test_non_required_fields(self):
         self.assertIsSubSet(

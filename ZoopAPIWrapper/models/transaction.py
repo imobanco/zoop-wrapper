@@ -131,15 +131,19 @@ class Transaction(ResourceModel):
             **kwargs: kwargs
         """
         if payment_type not in Transaction.PAYMENT_TYPES:
-            raise ValueError(f'payment_type must be one of {Transaction.PAYMENT_TYPES}')
+            raise ValueError(
+                f'payment_type must be one '
+                f'of {Transaction.PAYMENT_TYPES}')
         elif payment_type == Transaction.CREDIT_TYPE:
             setattr(
                 self, 'payment_method',
-                Card.from_dict_or_instance(payment_method, allow_empty=self._allow_empty))
+                Card.from_dict_or_instance(
+                    payment_method, allow_empty=self._allow_empty))
         else:
             setattr(
                 self, 'payment_method',
-                Invoice.from_dict_or_instance(payment_method, allow_empty=self._allow_empty))
+                Invoice.from_dict_or_instance(
+                    payment_method, allow_empty=self._allow_empty))
 
         setattr(
             self, 'point_of_sale',

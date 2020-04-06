@@ -1,4 +1,4 @@
-from unittest.mock import Mock, MagicMock, PropertyMock
+from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.bank_account import BankAccount
@@ -89,7 +89,7 @@ class TokenTestCase(SetTestCase):
         self.assertEqual(instance.taxpayer_id, 'foo')
 
     def test_get_type_raise(self):
-        instance = Mock(spec=['IDENTIFIERS'])
+        instance = MagicMock(spec=['IDENTIFIERS'])
 
         self.assertRaises(TypeError, Token.get_type, instance)
 

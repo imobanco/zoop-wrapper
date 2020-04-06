@@ -565,8 +565,10 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Buyer
         """
+        pass
+        # @TODO add_transaction
         # instance = Buyer.from_dict(data)
-        url = self._construct_url(action='transactions')
+        # url = self._construct_url(action='transactions')
         # return self._post_instance(url, instance=instance)
 
     def transfer(self, from_identifier, to_identifier, amount):

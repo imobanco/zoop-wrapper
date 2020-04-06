@@ -2,7 +2,7 @@ from factory import SubFactory
 from factory.faker import Faker
 
 from tests.factories.base import (
-    ZoopObjectFactory, ResourceModelFactory, PaymentMethodFactory
+    ZoopObjectFactory, ResourceModelFactory
 )
 from tests.factories.invoice import InvoiceFactory
 from ZoopAPIWrapper.models.transaction import (

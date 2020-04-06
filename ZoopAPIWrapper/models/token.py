@@ -42,7 +42,8 @@ class Token(ResourceModel):
 
         token_type: str for identified token type set by TYPE_ATTR
         _created: boolean to verify if token is already created or not.
-            seted dynamically on init_custom_values after identifying token type.
+            seted dynamically on init_custom_values after
+            identifying token type.
 
         type: optional bank_account or card. It has collision with
             BankAccount.type. So we need the above token_type
@@ -50,12 +51,16 @@ class Token(ResourceModel):
 
         bank_account: optional BankAccount instance model
             (for created token of 'bank_account' type)
-        card: optional Card instance model (for created token of 'card' type)
+        card: optional Card instance model (for created token of
+            'card' type)
 
-        holder_name: owner name (for both token of 'bank_account' and 'card' type)
+        holder_name: owner name (for both token of 'bank_account'
+            and 'card' type)
 
-        account_number: account number of bank account (for token of 'bank_account' type)
-        taxpayer_id: if is for individual bank account (for token of 'bank_account' type)
+        account_number: account number of bank account (for token of
+            'bank_account' type)
+        taxpayer_id: if is for individual bank account (for token of
+            'bank_account' type)
         ein: if is for business bank account (for token of 'bank_account' type)
         bank_code: bank code (for token of 'bank_account' type)
         routing_number: agency code in BR (for token of 'bank_account' type)

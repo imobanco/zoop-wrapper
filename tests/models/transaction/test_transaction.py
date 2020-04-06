@@ -4,19 +4,17 @@ from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.transaction import (
     Transaction, PointOfSale, History
 )
-from tests.factories.transaction import TransactionFactory
+from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.invoice import Invoice
+from tests.factories.transaction import TransactionFactory
 
 
 class TransactionTestCase(SetTestCase):
-    # def test_init_custom_fields(self):
-    #     instance = MagicMock()
-    #
-    #     Transaction.init_custom_fields(instance)
-    #     self.assertIsInstance(instance.point_of_sale, PointOfSale)
-    #     self.assertIsInstance(instance.history, list)
-    #     self.assertEqual(len(instance.history), 1)
-    #     self.assertIsInstance(instance.history[0], History)
+    def test_init_custom_fields_raise_type(self):
+        instance = MagicMock()
+
+        self.assertRaises(
+            ValueError, Transaction.init_custom_fields, instance)
 
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()
@@ -24,13 +22,21 @@ class TransactionTestCase(SetTestCase):
         Transaction.init_custom_fields(
             instance, payment_type=Transaction.BOLETO_TYPE)
         self.assertIsInstance(instance.payment_method, Invoice)
+        self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        self.assertIsInstance(instance.history, list)
+        self.assertEqual(len(instance.history), 1)
+        self.assertIsInstance(instance.history[0], History)
 
-    # def test_init_custom_fields_card(self):
-    #     instance = MagicMock()
-    #
-    #     Transaction.init_custom_fields(
-    #         instance, payment_type=Transaction.CREDIT_TYPE)
-    #     self.assertIsInstance(instance.payment_method, dict)
+    def test_init_custom_fields_card(self):
+        instance = MagicMock()
+
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.CREDIT_TYPE)
+        self.assertIsInstance(instance.payment_method, Card)
+        self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        self.assertIsInstance(instance.history, list)
+        self.assertEqual(len(instance.history), 1)
+        self.assertIsInstance(instance.history[0], History)
 
     def test_non_required_fields(self):
         self.assertIsSubSet(

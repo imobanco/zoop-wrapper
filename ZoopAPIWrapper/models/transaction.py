@@ -118,6 +118,17 @@ class Transaction(ResourceModel):
     def init_custom_fields(self, payment_type=None, payment_method=None,
                            point_of_sale=None, history=None,
                            **kwargs):
+        """
+        Initialize payment_method based on payment_type from data.
+        Initialize point_of_sale and history from data.
+
+        Args:
+            payment_type: string for payment type
+            payment_method: dict of data or instance
+            point_of_sale:  dict of data or instance of PointOfSale
+            history:  dict of data or instance or list of History
+            **kwargs: kwargs
+        """
         if payment_type not in Transaction.PAYMENT_TYPES:
             raise ValueError(f'payment_type must be one of {Transaction.PAYMENT_TYPES}')
         elif payment_type == Transaction.CREDIT_TYPE:
@@ -147,6 +158,11 @@ class Transaction(ResourceModel):
 
     @classmethod
     def get_required_fields(cls):
+        """
+        get set of required fields
+
+        Returns: set of fields
+        """
         fields = super().get_required_fields()
         return fields.union(
             {'amount', 'currency', 'description', 'reference_id',
@@ -155,6 +171,11 @@ class Transaction(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"status", "confirmed", "original_amount", "transaction_number",

@@ -1,15 +1,15 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
+from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.factories.seller import (
+from tests.factories.seller import (
     SellerFactory, IndividualSellerFactory, BusinessSellerFactory
 )
 
 
 class SellerTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             Seller.get_required_fields()
         )
@@ -37,7 +37,7 @@ class SellerTestCase(TestCase, SetTestCase):
         )
 
     def test_business_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'ein', 'business_name', 'business_phone',
              'business_email', 'business_website',
              'business_opening_date', 'owner', 'business_address'},

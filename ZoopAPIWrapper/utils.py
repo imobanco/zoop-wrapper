@@ -1,30 +1,6 @@
 import logging
 
 
-# noinspection PyPep8Naming
-class classproperty(object):
-    """
-    Classproperty utils
-    """
-    def __init__(self, getter):
-        """
-        Initialize classproperty
-        Args:
-            getter: the method decorated
-        """
-        self.getter = getter
-
-    def __get__(self, instance, owner):
-        """
-        get method of classproperty
-        Args:
-            instance: the instance owner
-            owner: the class owner
-        Returns:
-        """
-        return self.getter(owner)
-
-
 def config_logging(log_level):
     """
     configure logging

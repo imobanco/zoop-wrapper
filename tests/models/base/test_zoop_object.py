@@ -2,7 +2,7 @@ from unittest.mock import patch, MagicMock
 
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.exceptions import ValidationError
-from ZoopAPIWrapper.models.factories.base import ZoopObjectFactory
+from tests.factories.base import ZoopObjectFactory
 from ZoopAPIWrapper.models.base import ZoopObject
 
 
@@ -190,19 +190,19 @@ class ZoopObjectTestCase(SetTestCase):
         mocked_required_fields.assert_called_once()
 
     def test_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {"id", 'name'},
             ZoopObject.get_fields()
         )
 
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'id'},
             ZoopObject.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'name'},
             ZoopObject.get_non_required_fields()
         )

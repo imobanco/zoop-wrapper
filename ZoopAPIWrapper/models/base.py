@@ -37,7 +37,7 @@ class ZoopObject(object):
             value = kwargs.get(field_name, None)
             setattr(self, field_name, value)
 
-        self.validate_fields()
+        self.validate_fields(**kwargs)
 
     def init_custom_fields(self, **kwargs):
         """
@@ -54,7 +54,7 @@ class ZoopObject(object):
     def make_data_copy_with_kwargs(data, **kwargs):
         """
         make a new data dict from previous data dict
-        with added kwargs.
+        with added kwargs
 
         if data is None create a new empty dict.
         data may be None for the cases we are explicitly calling
@@ -82,9 +82,12 @@ class ZoopObject(object):
     @classmethod
     def from_dict(cls, data, allow_empty=False, **kwargs):
         """
-        construct a instance of this class from dict
+        to construct a instance of this class from dict
 
         Args:
+            data: dict of data
+            allow_empty: boolean
+            **kwargs: kwargs
             data: dict of data may be None
             allow_empty: boolean
             **kwargs: kwargs
@@ -164,10 +167,12 @@ class ZoopObject(object):
 
         return data
 
-    def validate_fields(self, raise_exception=True):
+    def validate_fields(self, raise_exception=True, **kwargs):
         """
         Validate fields returned from method
         get_validation_fields.
+
+        if _allow_empty is True don't validate!
 
         Args:
             raise_exception: boolean to raise or not exception
@@ -177,6 +182,9 @@ class ZoopObject(object):
             and __allow_empty is false and raise_exception is true
 
         """
+        if self._allow_empty:
+            return
+
         errors = []
         for validation_field in self.get_validation_fields():
             value = getattr(self, validation_field, None)
@@ -193,14 +201,10 @@ class ZoopObject(object):
         different fields based on type.
         Such as Seller, BankAccount and BillingConfiguration.
 
-        if allow_empty is true return empty set!
-
         Defaults to get_required_fields.
 
         Returns: set of fields to be used on validation
         """
-        if self._allow_empty:
-            return set()
         return self.get_required_fields()
 
     def get_all_fields(self):
@@ -353,8 +357,19 @@ class Person(ZoopObject):
         fields = super().get_required_fields()
         return fields.union(
             {"first_name", "last_name", "email",
-             "taxpayer_id", "phone_number",
-             "birthdate", "address"}
+             "taxpayer_id", "phone_number", "address"}
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {"birthdate"}
         )
 
     @property
@@ -454,6 +469,9 @@ class PaymentMethod(ResourceModel):
     def init_custom_fields(self, address=None, **kwargs):
         """
         initialize address attribute with Address model
+    def __init__(self, customer=None, description=None,
+                 address=None, **kwargs):
+        super().__init__(**kwargs)
 
         Args:
             address: dict of data or instance
@@ -464,18 +482,6 @@ class PaymentMethod(ResourceModel):
             Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
-    def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
-        fields = super().get_required_fields()
-        return fields.union(
-            {'customer', 'address'}
-        )
-
-    @classmethod
     def get_non_required_fields(cls):
         """
         get set of non required fields
@@ -484,7 +490,7 @@ class PaymentMethod(ResourceModel):
         """
         fields = super().get_non_required_fields()
         return fields.union(
-            {'description'}
+            {'description', 'customer', 'address'}
         )
 
 
@@ -540,9 +546,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
-            raise TypeError(f'Identifier error! '
-                            f'Must be either "{cls.INDIVIDUAL_IDENTIFIER}" or '
-                            f'"{cls.BUSINESS_IDENTIFIER}"')
+            raise TypeError(
+                f'Identifier error! Must be either '
+                f'"{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER}" or '
+                f'"{BusinessOrIndividualModel.BUSINESS_IDENTIFIER}"')
 
     def get_type(self):
         """
@@ -551,16 +558,19 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
         """
         individual_identifier = getattr(
-            self, self.INDIVIDUAL_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
         business_identifier = getattr(
-            self, self.BUSINESS_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, None)
 
-        self.validate_identifiers(individual_identifier, business_identifier)
+        BusinessOrIndividualModel.validate_identifiers(
+            individual_identifier,
+            business_identifier
+        )
 
         if individual_identifier:
-            return self.INDIVIDUAL_TYPE
+            return BusinessOrIndividualModel.INDIVIDUAL_TYPE
         else:
-            return self.BUSINESS_TYPE
+            return BusinessOrIndividualModel.BUSINESS_TYPE
 
     def get_type_uri(self):
         """
@@ -581,14 +591,16 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Args:
             taxpayer_id: cpf
             ein: cnpj
-            **kwargs: dict of kwargs
+            **kwargs: kwarg
         """
-        self.validate_identifiers(taxpayer_id, ein)
+        BusinessOrIndividualModel.validate_identifiers(taxpayer_id, ein)
 
         if taxpayer_id:
-            setattr(self, self.INDIVIDUAL_IDENTIFIER, taxpayer_id)
+            setattr(
+                self,
+                BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
-            setattr(self, self.BUSINESS_IDENTIFIER, ein)
+            setattr(self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, ein)
 
     def get_validation_fields(self):
         """
@@ -608,9 +620,6 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
         Returns: set of fields to be used on validation
         """
-        if self._allow_empty:
-            return set()
-
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
         elif self.get_type() == self.INDIVIDUAL_TYPE:

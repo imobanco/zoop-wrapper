@@ -1,11 +1,11 @@
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.base import MarketPlaceModel
-from ZoopAPIWrapper.models.factories.base import MarketPlaceModelFactory
+from tests.factories.base import MarketPlaceModelFactory
 
 
 class MarketPlaceModelTestCase(SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             MarketPlaceModel.get_required_fields()
         )

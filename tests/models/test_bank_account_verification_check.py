@@ -1,6 +1,6 @@
 from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.bank_account import BankAccountVerificationModel
-from ZoopAPIWrapper.models.factories.bank_account import (
+from tests.factories.bank_account import (
     BankAccountVerificationModelFactory
 )
 

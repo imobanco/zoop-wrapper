@@ -118,7 +118,7 @@ class ZoopObject(object):
     @staticmethod
     def is_value_empty(value):
         """
-        Verify is value passed is considered empty!
+        Verify if value passed is considered empty!
 
         value may be None if value was not passed.
         As we set on __init__

@@ -1,17 +1,17 @@
-from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
+from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Address
-from ZoopAPIWrapper.models.factories.base import AddressFactory
+from tests.factories.base import AddressFactory
 
 
 class AddressTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             Address.get_required_fields()
         )
 
     def test_non_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {"line1", "line2", "line3",
              "neighborhood", "city", "state",
              "postal_code", "country_code"},

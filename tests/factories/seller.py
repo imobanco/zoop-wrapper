@@ -3,7 +3,7 @@ from factory.faker import Faker
 from pycpfcnpj import gen
 
 from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     MarketPlaceModelFactory, PersonFactory,
     SocialModelFactory, FinancialModelFactory,
     AddressFactory

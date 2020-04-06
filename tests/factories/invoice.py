@@ -4,7 +4,7 @@ from factory.faker import Faker
 from ZoopAPIWrapper.models.invoice import (
     BillingConfiguration, BillingInstructions, Invoice
 )
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     ZoopObjectFactory, PaymentMethodFactory
 )
 

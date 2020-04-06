@@ -41,6 +41,9 @@ class RequestsWrapper:
         Args:
             response: http response
 
+        Raises:
+            HttpError: when response is not ok!
+
         Returns: processed http response
         """
         response.data = response.json()
@@ -55,8 +58,9 @@ class RequestsWrapper:
                 response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
-            response.error = response.data.get('error').get('message')
-            logger.warning(f'respose has error: {response.error}')
+            response.reason = response.data.get('error').get('message')
+
+        response.raise_for_status()
         return response
 
     def _construct_url(self, action=None, identifier=None,
@@ -356,17 +360,17 @@ class ZoopWrapper(RequestsWrapper):
                                   identifier=identifier)
         return self._get(url)
 
-    def __add_token(self, bank_account: BankAccount):
+    def __add_bank_account_token(self, token: Token):
         """
         add bank account token
 
         Args:
-            bank_account: BankAccount model
+            token: Token instance for BankAccount
 
-        Returns: response with instance of BankAccount
+        Returns: response with instance of Token
         """
         url = self._construct_url(action='bank_accounts', subaction='tokens')
-        return self._post_instance(url, instance=bank_account)
+        return self._post_instance(url, instance=token)
 
     def add_bank_account(self, data: dict):
         """
@@ -379,7 +383,6 @@ class ZoopWrapper(RequestsWrapper):
                 'bank_code': 'foo',
                 'routing_number': 'foo',
                 'account_number': 'foo',
-                'taxpayer_id': 'foo',
                 'type': 'foo'
             }
 
@@ -388,56 +391,39 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        instance = BankAccount.from_dict(data)
-        if not isinstance(instance, BankAccount):
-            raise TypeError('this is not supposed to happen!')
+        instance = Token.from_dict(data)
 
-        if instance.get_type() == instance.INDIVIDUAL_TYPE:
+        bank_account_type = instance.get_bank_account_type()
+        if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
             seller_response = self.search_individual_seller(
                 instance.taxpayer_id)
-        elif instance.get_type() == instance.BUSINESS_TYPE:
+        elif bank_account_type == BankAccount.BUSINESS_TYPE:
             seller_response = self.search_business_seller(
                 instance.ein)
         else:
             raise TypeError('this is not supposed to happen!')
 
         seller_instance = seller_response.instance
-        assert isinstance(seller_instance, Seller)
 
-        token_response = self.__add_token(instance)
-        token_instance = token_response.instance
-        assert isinstance(token_instance, Token)
+        token_response = self.__add_bank_account_token(instance)
+        created_token = token_response.instance
 
         data = {
             "customer": seller_instance.id,
-            "token": token_instance.id
+            "token": created_token.id
         }
 
         url = self._construct_url(action='bank_accounts')
         return self._post(url, data=data)
 
-    def __get_buyers(self, action='buyers', identifier=None, search=None):
-        """
-        get method for buyers actions
-
-        Args:
-            action: 'buyers' by default
-            identifier: identifier value
-            search: search value
-
-        Returns: response with instance or instances of Buyer
-        """
-        url = self._construct_url(action=action,
-                                  identifier=identifier,
-                                  search=search)
-        return self._get(url)
-
     def list_buyers(self):
         """
         list all buyers
+
         Returns: response with instances of Buyer
         """
-        return self.__get_buyers()
+        url = self._construct_url(action='buyers')
+        return self._get(url)
 
     def retrieve_buyer(self, identifier):
         """
@@ -446,21 +432,25 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-
         Returns: response with instance of Buyer
         """
-        return self.__get_buyers(identifier=identifier)
+        url = self._construct_url(action='buyers', identifier=identifier)
+        return self._get(url)
 
     def search_buyer(self, identifier):
         """
-        search buyer
+        search buyer by CPF or CNPJ.
+        Yes, the name of the attribute is taxpayer_id for
+        both.
 
         Args:
             identifier: CPF or CNPJ
 
         Returns: response with instance of Buyer
         """
-        return self.__get_buyers(search=f'taxpayer_id={identifier}')
+        url = self._construct_url(action='buyers',
+                                  search=f'taxpayer_id={identifier}')
+        return self._get(url)
 
     def add_buyer(self, data: dict):
         """
@@ -519,3 +509,63 @@ class ZoopWrapper(RequestsWrapper):
         """
         url = self._construct_url(action='boletos', identifier=identifier)
         return self._get(url)
+
+    def retrieve_card(self, identifier):
+        """
+        retrieve card
+
+        Args:
+            identifier: uuid id
+
+        Returns: response without instance
+        """
+        url = self._construct_url(action='cards',
+                                  identifier=identifier)
+        return self._get(url)
+
+    def __add_card_token(self, card_token: Token):
+        """
+        add card token
+
+        Args:
+            card_token: Token instance for Card
+
+        Returns: response with instance of Token
+        """
+        url = self._construct_url(action='cards', subaction='tokens')
+        return self._post_instance(url, instance=card_token)
+
+    def add_card(self, data: dict, buyer_identifier):
+        """
+        add card
+
+        Examples:
+            data = {
+                "holder_name": "foo",
+                "expiration_month": "foo",
+                "expiration_year": "foo",
+                "card_number": "foo",
+                "security_code": "foo"
+            }
+
+        Args:
+            data: dict of data
+            buyer_identifier: uuid of buyer
+
+        Returns: response with instance of BankAccount
+        """
+        token = Token.from_dict(data)
+
+        buyer_response = self.retrieve_buyer(buyer_identifier)
+        buyer_instance = buyer_response.instance
+
+        token_response = self.__add_card_token(token)
+        created_token = token_response.instance
+
+        data = {
+            "customer": buyer_instance.id,
+            "token": created_token.id
+        }
+
+        url = self._construct_url(action='cards')
+        return self._post(url, data=data)

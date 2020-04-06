@@ -1,10 +1,10 @@
 from unittest.mock import MagicMock
 
-from tests.utils import MockedAddressLoggerTestCase as TestCase, SetTestCase
+from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from ZoopAPIWrapper.models.base import Address
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel)
-from ZoopAPIWrapper.models.factories.bank_account import (
+from tests.factories.bank_account import (
     BankAccountFactory, IndividualBankAccountFactory,
     BusinessBankAccountFactory
 )
@@ -12,17 +12,17 @@ from ZoopAPIWrapper.models.factories.bank_account import (
 
 class BankAccountTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
-        self.assertIsSuperSet(
-            {"holder_name", "description",
-             "bank_name", "bank_code"},
+        self.assertEqual(
+            {"type", "holder_name", "bank_code",
+             "routing_number"},
             BankAccount.get_required_fields()
         )
 
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {"type", "last4_digits", "account_number",
-             "country_code", "routing_number", "phone_number",
-             "is_active", "is_verified", "debitable", "customer",
+            {"bank_name", "account_number", "description", "last4_digits",
+             "country_code", "phone_number", "is_active",
+             "is_verified", "debitable", "customer",
              "fingerprint", "address", "verification_checklist"},
             BankAccount.get_non_required_fields()
         )

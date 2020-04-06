@@ -5,7 +5,7 @@ from pycpfcnpj import gen
 from ZoopAPIWrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel
 )
-from ZoopAPIWrapper.models.factories.base import (
+from tests.factories.base import (
     MarketPlaceModelFactory, AddressFactory, VerificationModelFactory
 )
 
@@ -35,6 +35,7 @@ class BankAccountFactory(MarketPlaceModelFactory):
 
     resource = 'bank_account'
 
+    type = Faker('random_element', elements=BankAccount.TYPES)
     holder_name = Faker('name')
     bank_code = Faker('pyint', min_value=0, max_value=999, step=1)
     routing_number = Faker('pyint', min_value=0, max_value=999999, step=1)
@@ -42,8 +43,7 @@ class BankAccountFactory(MarketPlaceModelFactory):
 
     description = Faker('sentence', nb_words=5)
     bank_name = Faker('company')
-    type = Faker('random_element', elements=['savings', 'checkings'])
-    last4_digits = Faker('pyint', min_value=0, max_value=9999, step=1)
+    last4_digits = Faker('pyint', min_value=1000, max_value=9999, step=1)
     country_code = Faker('country_code', representation='alpha-2')
     phone_number = Faker('phone_number')
     is_active = Faker('pybool')

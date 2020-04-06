@@ -4,14 +4,14 @@ from tests.utils import SetTestCase
 from ZoopAPIWrapper.models.invoice import (
     BillingInstructions, BillingConfiguration
 )
-from ZoopAPIWrapper.models.factories.invoice import (
+from tests.factories.invoice import (
     BillingInstructionsFactory
 )
 
 
 class BillingInstructionsTestCase(SetTestCase):
     def test_get_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'late_fee', 'interest', 'discount'},
             BillingInstructions.get_required_fields()
         )

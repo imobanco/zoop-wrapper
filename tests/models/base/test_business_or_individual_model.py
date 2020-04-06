@@ -55,7 +55,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
         self.assertEqual(BusinessOrIndividualModel.get_type(instance),
-                         instance.BUSINESS_TYPE)
+                         BusinessOrIndividualModel.BUSINESS_TYPE)
 
     def test_get_type_individual(self):
         instance = MagicMock(ein=None, taxpayer_id='foo',
@@ -63,7 +63,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
                              INDIVIDUAL_IDENTIFIER='taxpayer_id')
 
         self.assertEqual(BusinessOrIndividualModel.get_type(instance),
-                         instance.INDIVIDUAL_TYPE)
+                         BusinessOrIndividualModel.INDIVIDUAL_TYPE)
 
     def test_get_type_uri_business(self):
         instance = MagicMock(ein='foo')
@@ -80,7 +80,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_validation_fields_individual(self):
         instance = BusinessOrIndividualModel(taxpayer_id='foo')
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'taxpayer_id'},
             instance.get_validation_fields()
         )
@@ -88,7 +88,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_validation_fields_business(self):
         instance = BusinessOrIndividualModel(ein='foo')
 
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'ein'},
             instance.get_validation_fields()
         )
@@ -116,7 +116,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             set(),
             BusinessOrIndividualModel.get_required_fields()
         )
@@ -128,7 +128,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_business_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'ein'},
             BusinessOrIndividualModel.get_business_required_fields()
         )
@@ -140,7 +140,7 @@ class BusinessOrIndividualTestCase(SetTestCase):
         )
 
     def test_get_individual_required_fields(self):
-        self.assertIsSuperSet(
+        self.assertEqual(
             {'taxpayer_id'},
             BusinessOrIndividualModel.get_individual_required_fields()
         )

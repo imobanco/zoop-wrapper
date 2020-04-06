@@ -28,7 +28,3 @@ class BillingInstructionsTestCase(SetTestCase):
         self.assertIsInstance(instance.interest, BillingConfiguration)
         self.assertIsInstance(instance.discount, list)
         self.assertIsInstance(instance.discount[0], BillingConfiguration)
-
-    def test_to_dict_empty(self):
-        instance = BillingInstructions(allow_empty=True)
-        self.assertEqual(instance.to_dict(), {})

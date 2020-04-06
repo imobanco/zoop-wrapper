@@ -21,7 +21,3 @@ class TransactionTestCase(SetTestCase):
              'on_behalf_of', 'customer', 'payment_type', 'payment_method'},
             Transaction.get_required_fields()
         )
-
-    def test_to_dict_empty(self):
-        instance = Transaction(allow_empty=True)
-        self.assertEqual(instance.to_dict(), {})

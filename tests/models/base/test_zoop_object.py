@@ -125,14 +125,44 @@ class ZoopObjectTestCase(SetTestCase):
 
         instance.validate_fields(raise_exception=False)
 
+    def test_is_value_empty(self):
+        self.assertTrue(ZoopObject.is_value_empty(None))
+        self.assertTrue(ZoopObject.is_value_empty({}))
+        self.assertTrue(ZoopObject.is_value_empty([{}]))
+
+        self.assertFalse(ZoopObject.is_value_empty([]))
+        self.assertFalse(ZoopObject.is_value_empty(False))
+        self.assertFalse(ZoopObject.is_value_empty(0))
+        self.assertFalse(ZoopObject.is_value_empty(''))
+
     def test_to_dict(self):
         data = self.data
+        data['foo'] = {}
+        data['bar'] = [{}]
+        data['foo2'] = MagicMock(
+            to_dict=MagicMock(
+                return_value={'foo2': 'foo2'}
+            )
+        )
+        data['bar2'] = [MagicMock(
+            to_dict=MagicMock(
+                return_value={'bar2': 'bar2'}
+            )
+        )]
+
+        self.mocked_fields.return_value = {
+            'id', 'name', 'foo', 'bar', 'foo2', 'bar2'}
 
         instance = ZoopObject.from_dict(data)
-
-        """We remove the name because it's value is none.
+        """We remove the name, foo and bar because it's values are 'empty'.
         So it won't return on to_dict method"""
         data.pop('name')
+        data.pop('foo')
+        data.pop('bar')
+
+        """We need to transform the data to have equality"""
+        data['foo2'] = data['foo2'].to_dict()
+        data['bar2'][0] = data['bar2'][0].to_dict()
 
         self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.to_dict(), data)

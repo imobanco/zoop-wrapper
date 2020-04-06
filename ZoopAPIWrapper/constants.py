@@ -6,5 +6,5 @@ ZOOP_KEY = config('ZOOP_KEY')
 """Zoop market place ID"""
 MARKETPLACE_ID = config('MARKETPLACE_ID')
 
-"""Log level for lib"""
+"""Log level for lib logging"""
 LOG_LEVEL = config('LOG_LEVEL', cast=int)

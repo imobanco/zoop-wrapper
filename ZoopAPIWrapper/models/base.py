@@ -82,7 +82,7 @@ class ZoopObject(object):
     @classmethod
     def from_dict(cls, data, allow_empty=False, **kwargs):
         """
-        construct a instance of this class from dict
+        to construct a instance of this class from dict
 
         Args:
             data: dict of data
@@ -567,7 +567,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Args:
             taxpayer_id: cpf
             ein: cnpj
-            **kwargs: dict of kwargs
+            **kwargs: kwarg
         """
         BusinessOrIndividualModel.validate_identifiers(taxpayer_id, ein)
 

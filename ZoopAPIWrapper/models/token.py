@@ -40,9 +40,9 @@ class Token(ResourceModel):
         IDENTIFIERS: set of identifiers {CARD_IDENTIFIER,
                                         BANK_ACCOUNT_IDENTIFIER}
 
-
-        _created: boolean to verify if token is already created or not
         token_type: str for identified token type set by TYPE_ATTR
+        _created: boolean to verify if token is already created or not.
+            seted dynamically on init_custom_values after identifying token type.
 
         type: optional bank_account or card. It has collision with
             BankAccount.type. So we need the above token_type
@@ -52,18 +52,18 @@ class Token(ResourceModel):
             (for created token of 'bank_account' type)
         card: optional Card instance model (for created token of 'card' type)
 
-        holder_name: owner name ('bank_account' and 'card')
+        holder_name: owner name (for both token of 'bank_account' and 'card' type)
 
-        account_number: account number of bank account ('bank_account')
-        taxpayer_id: if is for individual bank account ('bank_account')
-        ein: if is for business bank account ('bank_account')
-        bank_code: bank code ('bank_account')
-        routing_number: agency code in BR ('bank_account')
+        account_number: account number of bank account (for token of 'bank_account' type)
+        taxpayer_id: if is for individual bank account (for token of 'bank_account' type)
+        ein: if is for business bank account (for token of 'bank_account' type)
+        bank_code: bank code (for token of 'bank_account' type)
+        routing_number: agency code in BR (for token of 'bank_account' type)
 
-        expiration_month: month of expiration ('card)
-        expiration_year: year of expiration ('card)
-        card_number: card number ('card)
-        security_code: security code ('card)
+        expiration_month: month of expiration (for token of 'card' type)
+        expiration_year: year of expiration (for token of 'card' type)
+        card_number: card number (for token of 'card' type)
+        security_code: security code (for token of 'card' type)
     """
     RESOURCE = 'token'
 
@@ -85,7 +85,11 @@ class Token(ResourceModel):
         set card or bank_account attributes accordingly.
 
         else token is not created!
-        set token type accordingly by custom attributes!
+        we must identify token type from attr's passed
+        searching for CARD_IDENTIFIER or BANK_ACCOUNT_IDENTIFIER.
+        After identifying type if it was 'bank_account' set business
+        or individual identifier from BankAccount method (which is
+        from BusinessOrIndividualModel).
 
         Args:
             type: type for token or bank account
@@ -99,7 +103,14 @@ class Token(ResourceModel):
             setattr(self, '_created', True)
 
             if card is not None and bank_account is not None:
-                raise ValueError('this should not happen!')
+                raise ValueError(
+                    'this should not happen!\n\n'
+                    f'type {type} is in {self.TYPES} but both'
+                    f'card and bank_account has been passed!\n'
+                    f'card: {card}\n\n'
+                    f'bank_account: {bank_account}\n\n'
+                    f'Kwargs were: {kwargs}'
+                )
             elif card is not None:
                 setattr(
                     self, self.CARD_TYPE,
@@ -111,7 +122,14 @@ class Token(ResourceModel):
                     BankAccount.from_dict_or_instance(bank_account)
                 )
             else:
-                raise ValueError('this should not happen!')
+                raise ValueError(
+                    'this should not happen!\n\n'
+                    f'type {type} is in {self.TYPES} but neither'
+                    f'card or bank_account has been passed!\n'
+                    f'card: {card}\n\n'
+                    f'bank_account: {bank_account}\n\n'
+                    f'Kwargs were: {kwargs}'
+                )
 
         else:
             setattr(self, '_created', False)

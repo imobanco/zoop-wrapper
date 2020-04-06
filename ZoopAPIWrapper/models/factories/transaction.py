@@ -73,5 +73,5 @@ class TransactionFactory(ResourceModelFactory):
 
     payment_type = 'boleto'
     payment_method = SubFactory(InvoiceFactory)
-    point_of_sale = SubFactory(PointOfSale)
-    history = SubFactory(History)
+    point_of_sale = SubFactory(PointOfSaleFactory)
+    history = SubFactory(HistoryFactory)

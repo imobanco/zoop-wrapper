@@ -225,7 +225,7 @@ class BillingInstructions(ZoopObject):
     Attributes:
         late_fee: optional fine rules. BillingConfiguration model
         interest: optional interest rules. BillingConfiguration model
-        discount: optional discount rules. BillingConfiguration model
+        discount: list of optional discount rules. BillingConfiguration model
     """
 
     def init_custom_fields(self, late_fee=None, interest=None,

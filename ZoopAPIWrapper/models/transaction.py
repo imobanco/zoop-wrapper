@@ -4,8 +4,20 @@ from ZoopAPIWrapper.models.invoice import Invoice
 
 
 class PointOfSale(ZoopObject):
+    """
+    Represents something (?)
+
+    Attributes:
+        entry_mode: ??
+        identification_number: ??
+    """
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'entry_mode', 'identification_number'}
@@ -13,8 +25,31 @@ class PointOfSale(ZoopObject):
 
 
 class History(ZoopObject):
+    """
+    Represents a update for Transaction
+
+    Attributes:
+        id: uuid identifier
+        transaction: transaction uuid identifier
+        amount: amount value for the update
+        operation_type: type for the update
+        status: status for the update
+        response_code: ??
+        response_message: ??
+        authorization_code: ??
+        authorizer_id: ??
+        authorization_nsu: ??
+        gatewayResponseTime: ??
+        authorizer: ??
+        created_at: datetime for the update
+    """
     @classmethod
     def get_non_required_fields(cls):
+        """
+        get set of non required fields
+
+        Returns: set of fields
+        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"id", "transaction", "amount", "operation_type",
@@ -26,6 +61,51 @@ class History(ZoopObject):
 
 class Transaction(ResourceModel):
     """
+    Represents a transaction
+    https://docs.zoop.co/reference#transa%C3%A7%C3%A3o
+
+    Attributes:
+        RESOURCE: resource model string
+
+        CREDIT_TYPE: string for credit card type
+        BOLETO_TYPE: string for boleto type (Invoice)
+
+        PAYMENT_TYPES: a set with credit and boleto types
+
+        amount: amount value
+        currency: coin currency string
+        description: string description
+        reference_id: ??
+        on_behalf_of: seller uuid identifier
+        customer: customer uuid identifier
+        status: string for status
+        confirmed: string of cofirmation
+        original_amount: original amount value
+        transaction_number: ??
+        gateway_authorizer: ??
+        app_transaction_uid: ??
+        refunds: ??
+        rewards: ??
+        discounts: ??
+        pre_authorization: ??
+        sales_receipt:
+        statement_descriptor: string description
+        installment_plan: ??
+        refunded: boolean of verification
+        voided: boolean of verification
+        captured: boolean of verification
+        fees: ??
+        fee_details: ??
+        location_latitude: ??
+        location_longitude: ??
+        individual: ??
+        business: ??
+        expected_on:datetime string
+
+        payment_type: payment type string ('credit' or 'boleto')
+        payment_method: Card instance or Invoice instance
+        point_of_sale: PointOfSale instance
+        history: List of History instance
 
     """
     RESOURCE = 'transaction'

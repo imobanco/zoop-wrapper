@@ -1,5 +1,6 @@
 from ZoopAPIWrapper.models.base import (
     ZoopObject, ResourceModel)
+from ZoopAPIWrapper.models.invoice import Invoice
 
 
 class PointOfSale(ZoopObject):
@@ -23,20 +24,28 @@ class History(ZoopObject):
         )
 
 
-# class HistoryList(ZoopObject):
-#     pass
-
-
 class Transaction(ResourceModel):
     """
 
     """
     RESOURCE = 'transaction'
 
-    def init_custom_fields(self, payment_method=None,
+    CREDIT_TYPE = 'credit'
+    BOLETO_TYPE = 'boleto'
+
+    PAYMENT_TYPES = {CREDIT_TYPE, BOLETO_TYPE}
+
+    def init_custom_fields(self, payment_type=None, payment_method=None,
                            point_of_sale=None, history=None,
                            **kwargs):
-        setattr(self, 'payment_method', payment_method)
+        if payment_type not in Transaction.PAYMENT_TYPES:
+            raise ValueError(f'payment_type must be one of {Transaction.PAYMENT_TYPES}')
+        elif payment_type == Transaction.CREDIT_TYPE:
+            setattr(self, 'payment_method', payment_method)
+        else:
+            setattr(
+                self, 'payment_method',
+                Invoice.from_dict_or_instance(payment_method, allow_empty=self._allow_empty))
 
         setattr(
             self, 'point_of_sale',

@@ -26,5 +26,5 @@ coverage:
 	coverage report
 	coverage xml
 
-coverage.codacy:coverage
+coverage.codacy: coverage
 	python-codacy-coverage -r coverage.xml -t $$CODACY_PROJECT_TOKEN

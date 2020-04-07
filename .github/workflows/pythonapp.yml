@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   flake8:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v1
     - name: Set up Python 3.8.2
@@ -17,7 +17,7 @@ jobs:
       run: flake8 .
 
   mypy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python 3.8.2
@@ -30,7 +30,7 @@ jobs:
         run: make mypy
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v1
       - name: Set up Python 3.8.2

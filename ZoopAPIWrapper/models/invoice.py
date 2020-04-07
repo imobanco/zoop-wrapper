@@ -73,10 +73,12 @@ class BillingConfiguration(ZoopObject):
         Raises:
             TypeError: when mode is not valid
         """
-        if mode not in self.MODES:
+        if mode not in BillingConfiguration.MODES:
             if self._allow_empty:
                 return False
-            raise ValidationError(self, FieldError('mode', f'Must be one of {self.MODES}'))
+            raise ValidationError(
+                self,
+                FieldError('mode', f'Must be one of {BillingConfiguration.MODES}'))
         return True
 
     def set_type(self, mode, is_discount):

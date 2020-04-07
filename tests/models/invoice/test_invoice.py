@@ -12,7 +12,7 @@ from tests.factories.invoice import (
 class InvoiceTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertIsSubSet(
-            {'expiration_date'},
+            {'expiration_date', 'payment_limit_date'},
             Invoice.get_required_fields()
         )
 
@@ -21,7 +21,7 @@ class InvoiceTestCase(SetTestCase):
             {'zoop_boleto_id', 'status', 'reference_number',
              'document_number', 'recipient', 'bank_code', 'sequence',
              'url', 'accepted', 'printed', 'downloaded', 'fingerprint',
-             'paid_at', 'barcode', 'payment_limit_date', 'body_instructions',
+             'paid_at', 'barcode', 'body_instructions',
              'billing_instructions'},
             Invoice.get_non_required_fields()
         )

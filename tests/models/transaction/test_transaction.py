@@ -46,13 +46,13 @@ class TransactionTestCase(SetTestCase):
              "statement_descriptor", "point_of_sale", "installment_plan",
              "refunded", "voided", "captured", "fees", "fee_details",
              "location_latitude", "location_longitude", "individual",
-             "business", "expected_on", "history"},
+             "business", "expected_on", "history", 'reference_id'},
             Transaction.get_non_required_fields()
         )
 
     def test_required_fields(self):
         self.assertEqual(
-            {'amount', 'currency', 'description', 'reference_id',
+            {'amount', 'currency', 'description',
              'on_behalf_of', 'customer', 'payment_type', 'payment_method'},
             Transaction.get_required_fields()
         )

@@ -61,13 +61,9 @@ class BillingConfiguration(ZoopObject):
             is_discount: boolen of verification
             **kwarg: dict of kwargs
         """
-        if self._allow_empty:
-            return
-
         self.set_type(mode, is_discount)
 
-    @classmethod
-    def validate_mode(cls, mode):
+    def validate_mode(self, mode):
         """
         Validate the mode. Must be in cls.MODES.
 
@@ -77,8 +73,11 @@ class BillingConfiguration(ZoopObject):
         Raises:
             TypeError: when mode is not valid
         """
-        if mode not in cls.MODES:
-            raise ValidationError(cls, FieldError('mode', f'Must be one of {cls.MODES}'))
+        if mode not in self.MODES:
+            if self._allow_empty:
+                return False
+            raise ValidationError(self, FieldError('mode', f'Must be one of {self.MODES}'))
+        return True
 
     def set_type(self, mode, is_discount):
         """
@@ -110,20 +109,15 @@ class BillingConfiguration(ZoopObject):
 
         Returns: set of fields to be used on validation
         """
-        if self._allow_empty:
-            return set()
+        if not self.validate_mode(self.mode):
+            return self.get_required_fields()
 
-        mode = getattr(self, 'mode', None)
-        is_discount = getattr(self, 'is_discount', None)
-        if is_discount is None or mode is None or mode not in self.MODES:
-            raise ValueError('Must call config_mode before!')
-
-        if is_discount:
+        if self.is_discount:
             fields = self.get_discount_required_fields()
         else:
             fields = self.get_fee_required_fields()
 
-        if mode in self.PERCENT_MODES:
+        if self.mode in self.PERCENT_MODES:
             return fields.union(
                 self.get_percent_required_fields()
             )

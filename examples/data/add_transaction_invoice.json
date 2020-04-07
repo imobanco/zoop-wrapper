@@ -1,5 +1,5 @@
 {
-    "id": "b6bac6b6748b4b639f25bfafefa83b63",
+    "id": "d109fd74c27c45b3ba8a83562bd0fa98",
     "resource": "transaction",
     "status": "pending",
     "amount": "10.00",
@@ -19,34 +19,34 @@
     "customer": "e7eec0f640c14e21b35d20d58b49b584",
     "statement_descriptor": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
     "payment_method": {
-        "id": "3d78fa1fd2d542a68ae05cfaf44b864e",
+        "id": "1f5edd18f34f40c9a2f9fa67d511d53a",
         "zoop_boleto_id": null,
         "resource": "boleto",
         "description": "meu boleto gerado para teste",
-        "reference_number": "3354083",
-        "document_number": "3354083",
+        "reference_number": "3354368",
+        "document_number": "3354368",
         "expiration_date": "2020-06-20T00:00:00+00:00",
         "payment_limit_date": "2020-06-30T00:00:00+00:00",
         "recipient": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
         "bank_code": "109",
         "customer": "e7eec0f640c14e21b35d20d58b49b584",
         "address": null,
-        "sequence": "63816",
-        "url": "https://api-boleto-production.s3.amazonaws.com/d77c2258b51d49269191502695f939f4/27e17b778b404a83bf8e25ec995e2ffe/5e8c97cf3d502008309b3a5b.html",
+        "sequence": "63821",
+        "url": "https://api-boleto-production.s3.amazonaws.com/d77c2258b51d49269191502695f939f4/27e17b778b404a83bf8e25ec995e2ffe/5e8c9d68859a27084f72d6ad.html",
         "accepted": false,
         "printed": false,
         "downloaded": false,
         "fingerprint": null,
         "paid_at": null,
-        "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/boletos/3d78fa1fd2d542a68ae05cfaf44b864e",
-        "barcode": "34191090323540834893231339210002582920000001000",
+        "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/boletos/1f5edd18f34f40c9a2f9fa67d511d53a",
+        "barcode": "34191090323543689893231339210002882920000001000",
         "metadata": {},
-        "created_at": "2020-04-07T12:10:08+00:00",
-        "updated_at": "2020-04-07T15:10:07+00:00",
+        "created_at": "2020-04-07T12:34:01+00:00",
+        "updated_at": "2020-04-07T15:34:00+00:00",
         "status": "not_paid",
         "billing_instructions": {
-            "late_fee": {
-                "mode": "PERCENTAGE",
+            "interest": {
+                "mode": "MONTHLY_PERCENTAGE",
                 "start_date": "2020-06-20",
                 "percentage": "50"
             },
@@ -57,8 +57,8 @@
                     "amount": "100"
                 }
             ],
-            "interest": {
-                "mode": "MONTHLY_PERCENTAGE",
+            "late_fee": {
+                "mode": "PERCENTAGE",
                 "start_date": "2020-06-20",
                 "percentage": "50"
             }
@@ -77,16 +77,16 @@
     "fee_details": null,
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/b6bac6b6748b4b639f25bfafefa83b63",
+    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/d109fd74c27c45b3ba8a83562bd0fa98",
     "metadata": {},
     "expected_on": "1970-01-01T00:00:00+00:00",
-    "created_at": "2020-04-07T15:10:07+00:00",
-    "updated_at": "2020-04-07T15:10:07+00:00",
+    "created_at": "2020-04-07T15:34:00+00:00",
+    "updated_at": "2020-04-07T15:34:00+00:00",
     "payment_authorization": null,
     "history": [
         {
-            "id": "8ce4c607bfa949aabee79b45f23ebb15",
-            "transaction": "b6bac6b6748b4b639f25bfafefa83b63",
+            "id": "ca1567ee88294510aa1ae8f31f663cfc",
+            "transaction": "d109fd74c27c45b3ba8a83562bd0fa98",
             "amount": "10.00",
             "operation_type": "created",
             "status": "succeeded",
@@ -97,7 +97,7 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-04-07 15:10:07"
+            "created_at": "2020-04-07 15:34:00"
         }
     ]
 }

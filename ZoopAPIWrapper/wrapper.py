@@ -8,6 +8,7 @@ from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.models.transaction import Transaction
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -564,13 +565,11 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             data: dict of data
 
-        Returns: response with instance of Buyer
+        Returns: response with instance of Transaction
         """
-        pass
-        # @TODO add_transaction
-        # instance = Buyer.from_dict(data)
-        # url = self._construct_url(action='transactions')
-        # return self._post_instance(url, instance=instance)
+        instance = Transaction.from_dict_or_instance(data)
+        url = self._construct_url(action='transactions')
+        return self._post_instance(url, instance=instance)
 
     def transfer(self, from_identifier, to_identifier, amount):
         if amount <= 0:
@@ -597,6 +596,19 @@ class ZoopWrapper(RequestsWrapper):
         }
 
         self._post(url, data=data)
+
+    def cancel_transaction(self, identifier):
+        """
+        cancel a transaction
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions', identifier=identifier,
+                                  subaction='void')
+        return self._get(url)
 
     def retrieve_invoice(self, identifier):
         """

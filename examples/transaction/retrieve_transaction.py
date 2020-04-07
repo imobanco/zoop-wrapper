@@ -1,12 +1,11 @@
 import json
-from os import path
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 
 
 client = ZoopWrapper()
 
-response = client.list_transactions()
+response = client.retrieve_transaction('9ee5d17396bb4fdfa24bdddcb9563ca3')
 
-with open('./data/transactions.json', 'w') as file:
+with open('./data/transaction.json', 'w') as file:
     json.dump(response.data, file, indent=4)

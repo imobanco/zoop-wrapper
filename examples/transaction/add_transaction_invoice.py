@@ -1,5 +1,4 @@
 import json
-from os import path
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.transaction import Transaction
@@ -83,6 +82,5 @@ data = t.to_dict()
 response = client.add_transaction(data)
 
 
-data_dir = path.dirname(__file__) + '/../data'
-with open(f'{data_dir}/add_transaction_invoice.json', 'w') as file:
+with open('./data/add_transaction_invoice.json', 'w') as file:
     json.dump(response.data, file, indent=4)

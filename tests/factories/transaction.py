@@ -41,6 +41,8 @@ class TransactionFactory(ResourceModelFactory):
     class Meta:
         model = Transaction
 
+    resource = 'transaction'
+
     amount = Faker('pyfloat', positive=True, max_value=99)
     currency = 'BRL'
     description = Faker('sentence', nb_words=5)

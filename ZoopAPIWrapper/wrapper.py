@@ -60,7 +60,8 @@ class RequestsWrapper:
                 response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
-            response.reason = response.data.get('error').get('message')
+            response.reason = f"{response.data.get('error').get('message')}" \
+                              f"{response.data.get('error').get('reasons')}"
 
         response.raise_for_status()
         return response
@@ -129,7 +130,7 @@ class RequestsWrapper:
 
         Returns: processed response
         """
-        response = requests.post(url, data=data, auth=self._auth)
+        response = requests.post(url, json=data, auth=self._auth)
         response = self.__process_response(response)
         return response
 

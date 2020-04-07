@@ -35,7 +35,7 @@ t = Transaction(
             ),
             interest=BillingConfiguration(
                 mode=BillingConfiguration.MONTHLY_PERCENTAGE_MODE,
-                percentage=50,
+                percentage=50.5555555555,
                 start_date=vencimento
             ),
             discount=BillingConfiguration(

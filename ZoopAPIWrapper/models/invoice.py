@@ -40,7 +40,9 @@ class BillingConfiguration(ZoopObject):
         start_date: start date of Fee type
         limit_date: limit date of Discount type
         amount: integer amount for Fixed type in 'centavos'
-        percentage: percentage for Percentage type
+        percentage: float percentage for Percentage type.
+            It has a max of 4 decimal points and
+            is rounded up on the 5º decimal point
     """
 
     PERCENTAGE_MODE = 'PERCENTAGE'

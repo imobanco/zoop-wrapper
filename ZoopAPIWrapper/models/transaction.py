@@ -128,7 +128,8 @@ class Transaction(ResourceModel):
             payment_method: dict of data or instance
             point_of_sale:  dict of data or instance of PointOfSale
             history: dict of data or instance or list of History
-            currency: default currency set. So users may not need to pass currency!
+            currency: default currency set.
+                So users may not need to pass currency!
             **kwargs: kwargs
         """
         setattr(self, 'currency', currency)

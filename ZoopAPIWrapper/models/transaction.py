@@ -117,7 +117,7 @@ class Transaction(ResourceModel):
     PAYMENT_TYPES = {CREDIT_TYPE, BOLETO_TYPE}
 
     def init_custom_fields(self, payment_type=None, payment_method=None,
-                           point_of_sale=None, history=None,
+                           point_of_sale=None, history=None, currency='BRL',
                            **kwargs):
         """
         Initialize payment_method based on payment_type from data.
@@ -127,9 +127,12 @@ class Transaction(ResourceModel):
             payment_type: string for payment type
             payment_method: dict of data or instance
             point_of_sale:  dict of data or instance of PointOfSale
-            history:  dict of data or instance or list of History
+            history: dict of data or instance or list of History
+            currency: string with currency
             **kwargs: kwargs
         """
+        setattr(self, 'currency', currency)
+
         if payment_type not in Transaction.PAYMENT_TYPES:
             raise ValueError(
                 f'payment_type must be one '

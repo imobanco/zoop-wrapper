@@ -192,7 +192,7 @@ class ZoopObject(object):
                 errors.append(validation_field)
 
         if errors and raise_exception:
-            raise ValidationError(errors)
+            raise ValidationError(self, errors)
 
     def get_validation_fields(self):
         """

@@ -569,3 +569,29 @@ class ZoopWrapper(RequestsWrapper):
 
         url = self._construct_url(action='cards')
         return self._post(url, data=data)
+
+    def transfer(self, from_identifier, to_identifier, amount):
+        if amount <= 0:
+            raise ValueError('amount must be greater than 0!')
+
+        from_seller_response = self.retrieve_seller(from_identifier)
+        from_seller = from_seller_response.instance
+        if not isinstance(from_seller, Seller):
+            raise TypeError('this is not supposed to happen!')
+
+        to_seller_response = self.retrieve_seller(to_identifier)
+        to_seller = to_seller_response.instance
+        if not isinstance(to_seller, Seller):
+            raise TypeError('this is not supposed to happen!')
+
+        url = self._construct_url(
+            action='transfers',
+            subaction=f'{from_seller.id}/to/{to_seller.id}'
+        )
+
+        data = {
+            'amount': amount,
+            'transfer_date': str(pendulum.now('America/SaoPaulo'))
+        }
+
+        self._post(url, data=data)

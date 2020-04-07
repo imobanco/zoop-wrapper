@@ -564,6 +564,36 @@ class ZoopWrapper(RequestsWrapper):
                 }
             }
 
+            data = {
+                'amount': '1000',
+                'currency': 'BRL',
+                'description': 'meu boleto gerado para teste',
+                'on_behalf_of': 'seller_id',
+                'customer': 'buyer_id',
+                'payment_type': 'boleto',
+                'payment_method': {
+                    'expiration_date': '2020-06-20',
+                    'payment_limit_date': '2020-06-30',
+                    'billing_instructions': {
+                        'late_fee': {
+                            'mode': 'FIXED',
+                            'percentage': 30,
+                            'start_date': '2020-06-20'
+                        },
+                        'interest': {
+                            'mode': 'MONTHLY_PERCENTAGE',
+                            'percentage': 30,
+                            'start_date': '2020-06-20'
+                        },
+                        'discount': [{
+                            'mode': 'FIXED',
+                            'amount': 300,
+                            'limit_date': '2020-06-20'
+                        }]
+                    }
+                }
+            }
+
         Args:
             data: dict of data
 
@@ -572,32 +602,6 @@ class ZoopWrapper(RequestsWrapper):
         instance = Transaction.from_dict_or_instance(data)
         url = self._construct_url(action='transactions')
         return self._post_instance(url, instance=instance)
-
-    def transfer(self, from_identifier, to_identifier, amount):
-        if amount <= 0:
-            raise ValueError('amount must be greater than 0!')
-
-        from_seller_response = self.retrieve_seller(from_identifier)
-        from_seller = from_seller_response.instance
-        if not isinstance(from_seller, Seller):
-            raise TypeError('this is not supposed to happen!')
-
-        to_seller_response = self.retrieve_seller(to_identifier)
-        to_seller = to_seller_response.instance
-        if not isinstance(to_seller, Seller):
-            raise TypeError('this is not supposed to happen!')
-
-        url = self._construct_url(
-            action='transfers',
-            subaction=f'{from_seller.id}/to/{to_seller.id}'
-        )
-
-        data = {
-            'amount': amount,
-            'transfer_date': str(pendulum.now('America/SaoPaulo'))
-        }
-
-        self._post(url, data=data)
 
     def cancel_transaction(self, identifier):
         """
@@ -608,6 +612,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response
         """
+        # @TODO: terminar de testar cancel transaction (card transaction)
         url = self._construct_url(action='transactions', identifier=identifier,
                                   subaction='void')
         return self._get(url)

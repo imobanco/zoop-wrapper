@@ -43,4 +43,4 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     @property
     def full_name(self): ...
     @classmethod
-    def from_dict(cls, data: Dict[str, Any], allow_empty: bool=...) -> Seller: ... # type: ignore
+    def from_dict_or_instance(cls, data: Union[Dict[str, Any], Seller], allow_empty: bool=..., **kwargs: Any) -> Seller: ... # type: ignore

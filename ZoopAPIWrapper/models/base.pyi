@@ -36,6 +36,8 @@ class ResourceModel(ZoopObject):
     RESOURCE: str
     @classmethod
     def get_non_required_fields(cls) -> set: ...
+    @classmethod
+    def from_dict_or_instance(cls, data: Union[Dict[str, Any], ResourceModel], allow_empty: bool=..., **kwargs: Any) -> ResourceModel: ... # type: ignore
 
 class MarketPlaceModel(ResourceModel):
     marketplace_id: str

@@ -31,8 +31,6 @@ class BillingConfiguration(ZoopObject):
     def get_fixed_required_fields(cls) -> set: ...
     @classmethod
     def get_percent_required_fields(cls) -> set: ...
-    @classmethod
-    def from_dict_or_instance(cls, data: Any, is_discount: bool = ..., **kwargs: Any) -> BillingConfiguration: ...  # type: ignore
 
 class BillingInstructions(ZoopObject):
     late_fee: BillingConfiguration

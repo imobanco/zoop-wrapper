@@ -328,7 +328,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Seller
         """
-        instance = Seller.from_dict(data)
+        instance = Seller.from_dict_or_instance(data)
         url = self._construct_url(action='sellers',
                                   subaction=instance.get_type_uri())
         return self._post_instance(url, instance=instance)
@@ -397,7 +397,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        instance = Token.from_dict(data)
+        instance = Token.from_dict_or_instance(data)
 
         bank_account_type = instance.get_bank_account_type()
         if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
@@ -487,7 +487,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Buyer
         """
-        instance = Buyer.from_dict(data)
+        instance = Buyer.from_dict_or_instance(data)
         url = self._construct_url(action='buyers')
         return self._post_instance(url, instance=instance)
 
@@ -673,7 +673,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        token = Token.from_dict(data)
+        token = Token.from_dict_or_instance(data)
 
         buyer_response = self.retrieve_buyer(buyer_identifier)
         buyer_instance = buyer_response.instance

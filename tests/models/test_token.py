@@ -57,8 +57,10 @@ class TokenTestCase(SetTestCase):
         self.assertIsInstance(instance.bank_account, BankAccount)
 
     def test_init_custom_fields_card(self):
-        """We set the CARD_IDENTIFIER to 'foo'
-        and pass foo='bar' on args!"""
+        """
+        We set the CARD_IDENTIFIER to 'foo'
+        and pass foo='bar' on args!
+        """
         instance = MagicMock(
             CARD_IDENTIFIER='foo',
         )
@@ -67,9 +69,11 @@ class TokenTestCase(SetTestCase):
         self.assertEqual(instance.token_type, instance.CARD_TYPE)
 
     def test_init_custom_fields_bank_account_business(self):
-        """We set the BANK_ACCOUNT_IDENTIFIER to 'foo'
+        """
+        We set the BANK_ACCOUNT_IDENTIFIER to 'foo'
         and pass foo='bar' on args!
-        We must pass 'ein' or 'taxpayer_id' too"""
+        We must pass 'ein' or 'taxpayer_id' too
+        """
         instance = MagicMock(
             BANK_ACCOUNT_IDENTIFIER='foo'
         )

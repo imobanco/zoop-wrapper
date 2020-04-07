@@ -181,8 +181,7 @@ class Transaction(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
+        """Get set of non required fields
 
         Returns: set of fields
         """

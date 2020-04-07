@@ -29,6 +29,16 @@ class RequestWrapperTestCase(APITestCase):
         self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
         self.assertEqual(processed_response.reason, "foo")
 
+    @patch('ZoopAPIWrapper.wrapper.logger')
+    def test_process_response_error_reasons(self, mocked_logger):
+        response = self.build_response_mock(
+            content={"error": {"message": "foo", "reasons": ['bla bla bla']}})
+
+        processed_response = self.client.\
+            _RequestsWrapper__process_response(response)
+        self.assertEqual(processed_response.data, {"error": {"message": "foo", "reasons": ['bla bla bla']}})
+        self.assertEqual(processed_response.reason, "foo ['bla bla bla']")
+
     def test_process_response_resource(self):
         response = self.build_response_mock(content={"resource": "test"})
 

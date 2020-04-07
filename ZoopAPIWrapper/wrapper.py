@@ -64,7 +64,7 @@ class RequestsWrapper:
             response.reason = f"{response.data.get('error').get('message')}"
             reasons = response.data.get('error').get('reasons')
             if reasons:
-                response.reason += reasons
+                response.reason += f' {reasons}'
 
         response.raise_for_status()
         return response

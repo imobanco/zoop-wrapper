@@ -1,19 +1,38 @@
 class FieldError(Exception):
+    """
+    Exception to be used when the validation
+    of some field fail.
+    """
     def __init__(self, name, reason):
+        """
+        Args:
+            name: name of the field
+            reason: string containing the reason of the fail
+        """
         self.name = name
         self.reason = reason
         super().__init__(self.to_dict())
 
     def to_dict(self):
+        """
+        transform exception to dict
+
+        Returns: dict
+        """
         return {self.name: self.reason}
 
 
 class ValidationError(Exception):
     """
-    Exception for when a validation occur for
-    some ZoopObject.
+    Exception to be used when the validation
+    of some ZoopObject occur.
     """
     def __init__(self, entity, errors):
+        """
+        Args:
+            entity: entity where the error occurred
+            errors: list or anything
+        """
         if type(entity) == type:
             self.class_name = entity.__name__
         else:
@@ -30,6 +49,10 @@ class ValidationError(Exception):
         )
 
     def parse_errors(self):
+        """
+        Parse the list of errors to plain list of something
+        Returns: list of something
+        """
         errors_list = []
         for error in self.errors:
             if isinstance(error, FieldError):

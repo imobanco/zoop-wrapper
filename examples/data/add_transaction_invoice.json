@@ -1,5 +1,5 @@
 {
-    "id": "d109fd74c27c45b3ba8a83562bd0fa98",
+    "id": "99c9655ccad14fea8e181d169f4551db",
     "resource": "transaction",
     "status": "pending",
     "amount": "10.00",
@@ -19,30 +19,30 @@
     "customer": "e7eec0f640c14e21b35d20d58b49b584",
     "statement_descriptor": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
     "payment_method": {
-        "id": "1f5edd18f34f40c9a2f9fa67d511d53a",
+        "id": "813b5ea81e884ed08e78e10cdab3c41c",
         "zoop_boleto_id": null,
         "resource": "boleto",
         "description": "meu boleto gerado para teste",
-        "reference_number": "3354368",
-        "document_number": "3354368",
+        "reference_number": "3360740",
+        "document_number": "3360740",
         "expiration_date": "2020-06-20T00:00:00+00:00",
         "payment_limit_date": "2020-06-30T00:00:00+00:00",
         "recipient": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
         "bank_code": "109",
         "customer": "e7eec0f640c14e21b35d20d58b49b584",
         "address": null,
-        "sequence": "63821",
-        "url": "https://api-boleto-production.s3.amazonaws.com/foo/27e17b778b404a83bf8e25ec995e2ffe/5e8c9d68859a27084f72d6ad.html",
+        "sequence": "63863",
+        "url": "https://api-boleto-production.s3.amazonaws.com/d77c2258b51d49269191502695f939f4/27e17b778b404a83bf8e25ec995e2ffe/5e8cfa19859a27084f72e2f0.html",
         "accepted": false,
         "printed": false,
         "downloaded": false,
         "fingerprint": null,
         "paid_at": null,
-        "uri": "/v1/marketplaces/foo/boletos/1f5edd18f34f40c9a2f9fa67d511d53a",
-        "barcode": "34191090323543689893231339210002882920000001000",
+        "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/boletos/813b5ea81e884ed08e78e10cdab3c41c",
+        "barcode": "34191090323607401893231339210002382920000001000",
         "metadata": {},
-        "created_at": "2020-04-07T12:34:01+00:00",
-        "updated_at": "2020-04-07T15:34:00+00:00",
+        "created_at": "2020-04-07T19:09:30+00:00",
+        "updated_at": "2020-04-07T22:09:29+00:00",
         "status": "not_paid",
         "billing_instructions": {
             "interest": {
@@ -77,16 +77,16 @@
     "fee_details": null,
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/foo/transactions/d109fd74c27c45b3ba8a83562bd0fa98",
+    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/99c9655ccad14fea8e181d169f4551db",
     "metadata": {},
     "expected_on": "1970-01-01T00:00:00+00:00",
-    "created_at": "2020-04-07T15:34:00+00:00",
-    "updated_at": "2020-04-07T15:34:00+00:00",
+    "created_at": "2020-04-07T22:09:29+00:00",
+    "updated_at": "2020-04-07T22:09:29+00:00",
     "payment_authorization": null,
     "history": [
         {
-            "id": "ca1567ee88294510aa1ae8f31f663cfc",
-            "transaction": "d109fd74c27c45b3ba8a83562bd0fa98",
+            "id": "9a41a403b97c46dfac22b9dbe986f550",
+            "transaction": "99c9655ccad14fea8e181d169f4551db",
             "amount": "10.00",
             "operation_type": "created",
             "status": "succeeded",
@@ -97,7 +97,7 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-04-07 15:34:00"
+            "created_at": "2020-04-07 22:09:29"
         }
     ]
 }

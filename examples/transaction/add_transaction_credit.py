@@ -1,8 +1,9 @@
-import json
+import os
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.transaction import Transaction
 from ZoopAPIWrapper.models.card import Card
+from examples.utils import dump_response
 
 
 client = ZoopWrapper()
@@ -28,6 +29,4 @@ data = t.to_dict()
 
 response = client.add_transaction(data)
 
-
-with open('./data/add_transaction_credit.json', 'w') as file:
-    json.dump(response.data, file, indent=4)
+dump_response(response, os.path.basename(__file__).split('.')[0])

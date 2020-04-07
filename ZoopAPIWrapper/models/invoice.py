@@ -39,7 +39,7 @@ class BillingConfiguration(ZoopObject):
         mode: str identifying if it's Fixed or Percentage type
         start_date: start date of Fee type
         limit_date: limit date of Discount type
-        amount: amount for Fixed type
+        amount: integer amount for Fixed type in 'centavos'
         percentage: percentage for Percentage type
     """
 

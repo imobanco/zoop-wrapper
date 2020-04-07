@@ -155,7 +155,7 @@ class ZoopObjectTestCase(SetTestCase):
 
         instance = ZoopObject.from_dict(data)
         """We remove the name, foo and bar because it's values are 'empty'.
-        So it won't return on to_dict method"""
+        So they won't return on to_dict method"""
         data.pop('name')
         data.pop('foo')
         data.pop('bar')

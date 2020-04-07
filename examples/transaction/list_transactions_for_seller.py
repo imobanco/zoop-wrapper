@@ -1,6 +1,7 @@
-import json
+import os
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
+from examples.utils import dump_response
 
 
 client = ZoopWrapper()
@@ -8,5 +9,4 @@ client = ZoopWrapper()
 response = client.list_transactions_for_seller(
     '27e17b778b404a83bf8e25ec995e2ffe')
 
-with open('./data/transactions_seller.json', 'w') as file:
-    json.dump(response.data, file, indent=4)
+dump_response(response, os.path.basename(__file__).split('.')[0])

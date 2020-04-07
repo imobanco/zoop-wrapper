@@ -73,7 +73,7 @@ class Transaction(ResourceModel):
 
         PAYMENT_TYPES: a set with credit and boleto types
 
-        amount: amount value
+        amount: integer amount value in 'centavos'
         currency: coin currency string
         description: string description
         reference_id: ??

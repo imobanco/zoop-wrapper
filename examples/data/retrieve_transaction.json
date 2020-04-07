@@ -60,7 +60,7 @@
     "location_longitude": null,
     "individual": null,
     "business": null,
-    "uri": "/v1/marketplaces/foo/transactions/9ee5d17396bb4fdfa24bdddcb9563ca3",
+    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/9ee5d17396bb4fdfa24bdddcb9563ca3",
     "metadata": {},
     "expected_on": "1970-01-01T00:00:00+00:00",
     "created_at": "2019-09-03T18:41:31+00:00",

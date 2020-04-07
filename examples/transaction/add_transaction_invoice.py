@@ -1,10 +1,11 @@
-import json
+import os
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 from ZoopAPIWrapper.models.transaction import Transaction
 from ZoopAPIWrapper.models.invoice import (
     Invoice, BillingInstructions, BillingConfiguration
 )
+from examples.utils import dump_response
 
 
 client = ZoopWrapper()
@@ -18,7 +19,7 @@ vencimento = '2020-06-20'
 limite = '2020-06-30'
 
 t = Transaction(
-    amount='1000',
+    amount=quantia_em_centavos,
     description='meu boleto gerado para teste',
     on_behalf_of=seller_id,
     customer=buyer_or_seller_id,
@@ -82,5 +83,4 @@ data = t.to_dict()
 response = client.add_transaction(data)
 
 
-with open('./data/add_transaction_invoice.json', 'w') as file:
-    json.dump(response.data, file, indent=4)
+dump_response(response, os.path.basename(__file__).split('.')[0])

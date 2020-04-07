@@ -1,9 +1,9 @@
 {
-    "id": "0b8361b8fdd1480783800229f87310c2",
+    "id": "b6bac6b6748b4b639f25bfafefa83b63",
     "resource": "transaction",
     "status": "pending",
-    "amount": "3.00",
-    "original_amount": "3.00",
+    "amount": "10.00",
+    "original_amount": "10.00",
     "currency": "BRL",
     "description": "meu boleto gerado para teste",
     "payment_type": "boleto",
@@ -19,31 +19,50 @@
     "customer": "e7eec0f640c14e21b35d20d58b49b584",
     "statement_descriptor": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
     "payment_method": {
-        "id": "75785367024e407e8cba43eb3c5d5346",
+        "id": "3d78fa1fd2d542a68ae05cfaf44b864e",
         "zoop_boleto_id": null,
         "resource": "boleto",
         "description": "meu boleto gerado para teste",
-        "reference_number": "3353086",
-        "document_number": "3353086",
+        "reference_number": "3354083",
+        "document_number": "3354083",
         "expiration_date": "2020-06-20T00:00:00+00:00",
         "payment_limit_date": "2020-06-30T00:00:00+00:00",
         "recipient": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
         "bank_code": "109",
         "customer": "e7eec0f640c14e21b35d20d58b49b584",
         "address": null,
-        "sequence": "63805",
-        "url": "https://api-boleto-production.s3.amazonaws.com/d77c2258b51d49269191502695f939f4/27e17b778b404a83bf8e25ec995e2ffe/5e8c8c5d3d502008309b3870.html",
+        "sequence": "63816",
+        "url": "https://api-boleto-production.s3.amazonaws.com/d77c2258b51d49269191502695f939f4/27e17b778b404a83bf8e25ec995e2ffe/5e8c97cf3d502008309b3a5b.html",
         "accepted": false,
         "printed": false,
         "downloaded": false,
         "fingerprint": null,
         "paid_at": null,
-        "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/boletos/75785367024e407e8cba43eb3c5d5346",
-        "barcode": "34191090323530868893231339210002282920000000300",
+        "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/boletos/3d78fa1fd2d542a68ae05cfaf44b864e",
+        "barcode": "34191090323540834893231339210002582920000001000",
         "metadata": {},
-        "created_at": "2020-04-07T11:21:17+00:00",
-        "updated_at": "2020-04-07T14:21:17+00:00",
-        "status": "not_paid"
+        "created_at": "2020-04-07T12:10:08+00:00",
+        "updated_at": "2020-04-07T15:10:07+00:00",
+        "status": "not_paid",
+        "billing_instructions": {
+            "late_fee": {
+                "mode": "PERCENTAGE",
+                "start_date": "2020-06-20",
+                "percentage": "50"
+            },
+            "discount": [
+                {
+                    "mode": "FIXED",
+                    "limit_date": "2020-06-20",
+                    "amount": "100"
+                }
+            ],
+            "interest": {
+                "mode": "MONTHLY_PERCENTAGE",
+                "start_date": "2020-06-20",
+                "percentage": "50"
+            }
+        }
     },
     "source": null,
     "point_of_sale": {
@@ -58,17 +77,17 @@
     "fee_details": null,
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/0b8361b8fdd1480783800229f87310c2",
+    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/transactions/b6bac6b6748b4b639f25bfafefa83b63",
     "metadata": {},
     "expected_on": "1970-01-01T00:00:00+00:00",
-    "created_at": "2020-04-07T14:21:16+00:00",
-    "updated_at": "2020-04-07T14:21:17+00:00",
+    "created_at": "2020-04-07T15:10:07+00:00",
+    "updated_at": "2020-04-07T15:10:07+00:00",
     "payment_authorization": null,
     "history": [
         {
-            "id": "62226338624f46eb8d4135bc1857c73b",
-            "transaction": "0b8361b8fdd1480783800229f87310c2",
-            "amount": "3.00",
+            "id": "8ce4c607bfa949aabee79b45f23ebb15",
+            "transaction": "b6bac6b6748b4b639f25bfafefa83b63",
+            "amount": "10.00",
             "operation_type": "created",
             "status": "succeeded",
             "response_code": null,
@@ -78,7 +97,7 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-04-07 14:21:16"
+            "created_at": "2020-04-07 15:10:07"
         }
     ]
 }

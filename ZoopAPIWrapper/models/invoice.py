@@ -1,6 +1,9 @@
 from ZoopAPIWrapper.models.base import (
     PaymentMethod, ZoopObject
 )
+from ZoopAPIWrapper.exceptions import (
+    FieldError, ValidationError
+)
 
 
 class BillingConfiguration(ZoopObject):
@@ -75,7 +78,7 @@ class BillingConfiguration(ZoopObject):
             TypeError: when mode is not valid
         """
         if mode not in cls.MODES:
-            raise TypeError(f'Mode not identified! Must be one of {cls.MODES}')
+            raise ValidationError(cls, FieldError('mode', f'Must be one of {cls.MODES}'))
 
     def set_type(self, mode, is_discount):
         """
@@ -311,7 +314,7 @@ class Invoice(PaymentMethod):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {'expiration_date'}
+            {'expiration_date', 'payment_limit_date'}
         )
 
     @classmethod
@@ -323,9 +326,9 @@ class Invoice(PaymentMethod):
         """
         fields = super().get_required_fields()
         return fields.union(
-            {'zoop_boleto_id', 'status', 'reference_number',
+            {'zoop_boleto_id', 'status', 'reference_number', 'url',
              'document_number', 'recipient', 'bank_code', 'sequence',
-             'url', 'accepted', 'printed', 'downloaded', 'fingerprint',
-             'paid_at', 'barcode', 'payment_limit_date', 'body_instructions',
-             'billing_instructions'}
+             'accepted', 'printed', 'downloaded', 'fingerprint',
+             'paid_at', 'barcode', 'billing_instructions',
+             'body_instructions'}
         )

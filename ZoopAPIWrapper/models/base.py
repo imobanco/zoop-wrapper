@@ -144,7 +144,7 @@ class ZoopObject(object):
             value = getattr(self, field)
 
             if isinstance(value, list):
-                """our value is a list! 
+                """our value is a list!
                 It may be a list of ZoopObject's.
                 Let's try to get its serialized value!"""
                 try:
@@ -153,7 +153,7 @@ class ZoopObject(object):
                     pass
             else:
                 try:
-                    """our value is not a list! 
+                    """our value is not a list!
                     It may be a ZoopObject instance.
                     Let's try to get its serialized value!"""
                     value = value.to_dict()

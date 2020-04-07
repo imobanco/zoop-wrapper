@@ -1,5 +1,4 @@
 import json
-from os import path
 
 from ZoopAPIWrapper.wrapper import ZoopWrapper
 

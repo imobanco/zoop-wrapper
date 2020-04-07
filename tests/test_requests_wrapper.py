@@ -36,7 +36,9 @@ class RequestWrapperTestCase(APITestCase):
 
         processed_response = self.client.\
             _RequestsWrapper__process_response(response)
-        self.assertEqual(processed_response.data, {"error": {"message": "foo", "reasons": ['bla bla bla']}})
+        self.assertEqual(
+            processed_response.data,
+            {"error": {"message": "foo", "reasons": ['bla bla bla']}})
         self.assertEqual(processed_response.reason, "foo ['bla bla bla']")
 
     def test_process_response_resource(self):

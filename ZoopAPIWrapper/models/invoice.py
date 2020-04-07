@@ -78,7 +78,9 @@ class BillingConfiguration(ZoopObject):
                 return False
             raise ValidationError(
                 self,
-                FieldError('mode', f'Must be one of {BillingConfiguration.MODES}'))
+                FieldError(
+                    'mode',
+                    f'Must be one of {BillingConfiguration.MODES}'))
         return True
 
     def set_type(self, mode, is_discount):

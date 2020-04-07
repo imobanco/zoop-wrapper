@@ -1,7 +1,5 @@
 import requests
 
-import pendulum
-
 from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from ZoopAPIWrapper.models.base import ResourceModel
 from ZoopAPIWrapper.models.bank_account import BankAccount

@@ -7,7 +7,6 @@ from tests.factories.invoice import (
     BillingConfigurationFactory, FixedDiscountFactory,
     PercentDiscountFactory, FixedFeeFactory, PercentFeeFactory
 )
-from ZoopAPIWrapper.exceptions import ValidationError
 
 
 class BillingConfigurationTestCase(SetTestCase):
@@ -51,7 +50,8 @@ class BillingConfigurationTestCase(SetTestCase):
             _allow_empty=False,
             mode='foo'
         )
-        BillingConfiguration.validate_mode(instance, BillingConfiguration.FIXED_MODE)
+        BillingConfiguration.validate_mode(
+            instance, BillingConfiguration.FIXED_MODE)
 
     def test_validate_mode_raise(self):
         instance = MagicMock(

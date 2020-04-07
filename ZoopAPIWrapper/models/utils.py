@@ -11,7 +11,8 @@ from ZoopAPIWrapper.utils import get_logger
 logger = get_logger('models')
 
 
-RESOURCE_CLASSES = [BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
+RESOURCE_CLASSES = [
+    BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
 RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 

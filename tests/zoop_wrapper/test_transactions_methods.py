@@ -1,5 +1,3 @@
-from pycpfcnpj import gen
-
 from tests.utils import APITestCase
 from ZoopAPIWrapper.models.transaction import Transaction
 from tests.factories.transaction import TransactionFactory

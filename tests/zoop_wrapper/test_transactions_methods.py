@@ -37,7 +37,9 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertTrue(items)
 
     def test_retrieve_transaction(self):
-        """Test retrieve_transaction method"""
+        """
+        Test retrieve_transaction method.
+        """
         self.set_get_mock(
             200,
             TransactionFactory(id='foo').to_dict()

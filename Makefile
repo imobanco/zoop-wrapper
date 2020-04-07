@@ -28,3 +28,11 @@ coverage:
 
 coverage.codacy: coverage
 	python-codacy-coverage -r coverage.xml -t $$CODACY_PROJECT_TOKEN
+docs.start:
+	sphinx-quickstart
+
+docs.autodoc:
+	sphinx-apidoc -f -o docs/source .
+
+docs.build:
+	sphinx-build docs/source/ docs/

@@ -3,7 +3,7 @@ name: Python application tests
 on: [push]
 
 jobs:
-  flake8:
+  black:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -12,9 +12,9 @@ jobs:
       with:
         python-version: 3.8.2
     - name: Install dependencies
-      run: pip install flake8
-    - name: Lint with flake8
-      run: flake8 .
+      run: pip install black
+    - name: Lint with black
+      run: black --check .
 
   mypy:
     runs-on: ubuntu-18.04

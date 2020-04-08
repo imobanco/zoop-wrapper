@@ -64,8 +64,8 @@ class BankAccount(BusinessOrIndividualModel):
 
         Args:
             type (str): value containing type
-            address: dict of data or :class:`.Address`
-            verification_checklist: dict of data or :class:`.BankAccountVerificationModel`
+            address (dict or :class:`.Address`): address
+            verification_checklist (dict or :class:`.BankAccountVerificationModel`): verifications
             **kwargs:
         """
         self.set_identifier(**kwargs)

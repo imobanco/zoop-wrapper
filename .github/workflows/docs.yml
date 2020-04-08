@@ -1,9 +1,6 @@
 name: build and deploy docs
 
-on:
-  push:
-    branches:
-      - dev
+on: [push]
 
 jobs:
   build-and-deploy:

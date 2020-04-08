@@ -12,8 +12,11 @@ config: config.data config.env
 test:
 	python -m unittest
 
-flake8:
-	flake8 .
+black:
+	black --check .
+
+black.refactor:
+	black .
 
 stubgen:
 	stubgen zoop_wrapper

@@ -525,15 +525,12 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
         call set_identifier.
-        If allow_empty is True don't call!
 
         Args:
             taxpayer_id: cpf value
             ein: cnpj value
             **kwargs: dict of kwargs
         """
-        if self._allow_empty:
-            return
         self.set_identifier(taxpayer_id, ein)
 
     @classmethod

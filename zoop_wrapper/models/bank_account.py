@@ -1,5 +1,6 @@
 from zoop_wrapper.models.base import (
     BusinessOrIndividualModel, Address, VerificationModel)
+from zoop_wrapper.exceptions import FieldError, ValidationError
 
 
 class BankAccountVerificationModel(VerificationModel):
@@ -64,6 +65,18 @@ class BankAccount(BusinessOrIndividualModel):
     def init_custom_fields(self, type=None, address=None,
                            verification_checklist=None,
                            **kwargs):
+        """
+        Initialize address as Address model.
+        Initialize verification_checklist
+        as BankAccountVerificationModel model.
+
+        Args:
+            type: str containing type
+            address: dict of data or instance of Address
+            verification_checklist: dict of data or
+                instance of BankAccountVerificationModel
+            **kwargs:
+        """
         self.set_identifier(**kwargs)
         self.validate_type(type)
 
@@ -78,8 +91,17 @@ class BankAccount(BusinessOrIndividualModel):
 
     @classmethod
     def validate_type(cls, type):
+        """
+        Validate bank account type
+
+        Args:
+            type: str of type to be validated
+
+        Raises:
+            ValidationError: when type is not in valid TYPES
+        """
         if type not in cls.TYPES:
-            raise TypeError(f'type must one of {cls.TYPES}')
+            raise ValidationError(cls, FieldError('type', f'type must one of {cls.TYPES}'))
 
     @classmethod
     def get_required_fields(cls):

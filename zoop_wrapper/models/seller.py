@@ -43,6 +43,18 @@ class Seller(BusinessOrIndividualModel, Person,
     RESOURCE = 'seller'
 
     def init_custom_fields(self, business_address=None, owner=None, **kwargs):
+        """
+        If dynamic type is business:
+            - Initialize owner with Person model
+            - Initialize business_address with Address model
+        else:
+            - Initialize self with Person model
+
+        Args:
+            business_address: dict of data or instance of Address
+            owner: dict of data or instance of Person
+            **kwargs: kwargs
+        """
         self.set_identifier(**kwargs)
 
         if self.get_type() == self.BUSINESS_TYPE:

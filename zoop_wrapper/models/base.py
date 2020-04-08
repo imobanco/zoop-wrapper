@@ -72,7 +72,8 @@ class ZoopObject(object):
             data: dict of data may be None
             **kwargs: dict of kwargs
 
-        Returns: new dict of data
+        Returns:
+            new dict of data
         """
         if data is None:
             _data = {}
@@ -96,7 +97,8 @@ class ZoopObject(object):
             allow_empty: boolean
             **kwargs: kwargs
 
-        Returns: instance initialized of cls
+        Returns:
+            instance initialized of cls
         """
         _data = cls.make_data_copy_with_kwargs(
             data, allow_empty=allow_empty, **kwargs)
@@ -114,7 +116,8 @@ class ZoopObject(object):
             data: dict of data or instance
             **kwargs: kwargs
 
-        Returns: instance initialized of ``cls``
+        Returns:
+            instance initialized of ``cls``
         """
         if isinstance(data, cls):
             return data
@@ -139,7 +142,8 @@ class ZoopObject(object):
         Args:
             value: Value to be verified
 
-        Returns: boolean
+        Returns:
+            boolean
         """
         return value is None or value == {} or value == [{}]
 
@@ -147,7 +151,8 @@ class ZoopObject(object):
         """
         serialize ``self`` to dict
 
-        Returns: dict of instance
+        Returns:
+            dict of instance
         """
         data = {}
         for field in self.get_all_fields():
@@ -214,7 +219,8 @@ class ZoopObject(object):
 
         Defaults to :meth:`get_required_fields`.
 
-        Returns: ``set`` of fields to be used on validation
+        Returns:
+            ``set`` of fields to be used on validation
         """
         return self.get_required_fields()
 
@@ -230,7 +236,8 @@ class ZoopObject(object):
 
         Defaults to :meth:`get_fields`.
 
-        Returns: ``set`` of all fields
+        Returns:
+            ``set`` of all fields
         """
         return self.get_fields()
 
@@ -239,7 +246,8 @@ class ZoopObject(object):
         """
         get ``set`` of ``all fields``
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         required_fields = cls.get_required_fields()
         non_required_fields = cls.get_non_required_fields()
@@ -250,7 +258,8 @@ class ZoopObject(object):
         """
         get ``set`` of ``required fields``
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         return set()
 
@@ -259,7 +268,8 @@ class ZoopObject(object):
         """
         get ``set`` of ``non required fields``
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         return set()
 
@@ -373,7 +383,8 @@ class Person(ZoopObject):
         """
         get ``full name`` of the person
 
-        Returns: string with the ``full name``
+        Returns:
+            string with the ``full name``
         """
         return f'{self.first_name} {self.last_name}'
 
@@ -476,13 +487,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     Can be ``Business`` or ``Individual``.
 
     Attributes:
-        BUSINESS_IDENTIFIER: 'ein'
-        BUSINESS_TYPE: 'business'
-
-        INDIVIDUAL_IDENTIFIER: 'taxpayer_id'
-        INDIVIDUAL_TYPE: 'individual'
-
-        URI: dict with uris for individuals and business
+        taxpayer_id: for ``type`` of :attr:`INDIVIDUAL_TYPE`
+        ein: for ``type`` of :attr:`BUSINESS_TYPE`
     """
     BUSINESS_IDENTIFIER = 'ein'
     BUSINESS_TYPE = 'business'
@@ -527,7 +533,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         get the ``dynamic type`` from instance
 
-        Returns: :attr:`BUSINESS_TYPE` or :attr:`INDIVIDUAL_TYPE`
+        Returns:
+            :attr:`BUSINESS_TYPE` or :attr:`INDIVIDUAL_TYPE`
         """
         individual_identifier = getattr(
             self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
@@ -548,7 +555,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         get the ``dynamic type uri`` for instance based on :meth:`get_type`
 
-        Returns: uri string for type from :attr:`URI`
+        Returns:
+            uri string for type from :attr:`URI`
         """
         return self.URI.get(self.get_type())
 
@@ -585,7 +593,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         else ``type`` is :attr:`INDIVIDUAL_TYPE`! then call
         :meth:`get_individual_required_fields`
 
-        Returns: ``set`` of fields to be used on validation
+        Returns:
+            ``set`` of fields to be used on validation
         """
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
@@ -604,7 +613,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         :meth:`get_individual_required_fields` and
         :meth:`get_individual_non_required_fields`
 
-        Returns: set of all fields
+        Returns:
+            ``set`` of all fields
         """
         fields = set()
         if self.get_type() == self.BUSINESS_TYPE:
@@ -624,7 +634,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         get ``set`` of ``non required fields`` for
         :attr:`BUSINESS_TYPE`.
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         return cls.get_non_required_fields()
 
@@ -634,7 +645,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         get ``set`` of ``required fields`` for
         :attr:`BUSINESS_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -647,7 +659,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         get ``set`` of ``non required fields`` for
         :attr:`INDIVIDUAL_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         return cls.get_non_required_fields()
 
@@ -657,7 +670,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         get ``set`` of ``required fields`` for
         :attr:`INDIVIDUAL_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(

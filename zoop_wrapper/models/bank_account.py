@@ -28,10 +28,6 @@ class BankAccount(BusinessOrIndividualModel):
     Used to check against :attr:`.resource`!
 
     Attributes:
-        SAVING_TYPE(str): value for saving type
-        CHECKING_TYPE(str): value for checking type
-        TYPES: set of types
-
         type: type of account
         account_number: account number
         bank_code: code of bank
@@ -67,7 +63,7 @@ class BankAccount(BusinessOrIndividualModel):
         as :class:`.BankAccountVerificationModel`.
 
         Args:
-            type(str): value containing type
+            type (str): value containing type
             address: dict of data or :class:`.Address`
             verification_checklist: dict of data or :class:`.BankAccountVerificationModel`
             **kwargs:
@@ -90,7 +86,7 @@ class BankAccount(BusinessOrIndividualModel):
         Validate bank account ``type``
 
         Args:
-            type(str): value of type to be validated
+            type (str): value of type to be validated
 
         Raises:
             ValidationError: when ``type`` is not in :attr:`TYPES`

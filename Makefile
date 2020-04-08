@@ -28,6 +28,7 @@ coverage:
 
 coverage.codacy: coverage
 	python-codacy-coverage -r coverage.xml -t $$CODACY_PROJECT_TOKEN
+
 docs.start:
 	sphinx-quickstart
 

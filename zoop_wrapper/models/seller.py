@@ -96,7 +96,8 @@ class Seller(BusinessOrIndividualModel, Person,
         """
         Get ``set`` of ``non required fields`` for :attr:`.BUSINESS_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_non_required_fields()
         return fields.union(
@@ -110,7 +111,8 @@ class Seller(BusinessOrIndividualModel, Person,
         """
         Get ``set`` of ``required fields`` for :attr:`.BUSINESS_TYPE`
 
-        Returns: ``set` `of fields
+        Returns:
+            ``set` `of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -125,7 +127,8 @@ class Seller(BusinessOrIndividualModel, Person,
         """
         Get ``set`` of ``non required fields`` for :attr:`.INDIVIDUAL_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_non_required_fields()
         return fields.union(
@@ -140,7 +143,8 @@ class Seller(BusinessOrIndividualModel, Person,
         """
         Get ``set`` of ``required fields`` for :attr:`.INDIVIDUAL_TYPE`
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -160,7 +164,8 @@ class Seller(BusinessOrIndividualModel, Person,
         Else `dynamic type`` is :attr:`.INDIVIDUAL_TYPE`. So we call
         the super() which will find the method on Person class.\n
 
-        Returns: string with the ``full name``
+        Returns:
+            string with the ``full name``
         """
         owner = getattr(self, 'owner', None)
         if owner is not None:

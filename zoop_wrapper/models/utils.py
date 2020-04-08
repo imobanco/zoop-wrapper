@@ -27,12 +27,13 @@ def _get_model_class_from_resource(resource):
         BankAccount
 
     Args:
-        resource(str): value of resource
+        resource (str): value of resource
 
     Raises:
         ValueError: when the ``resource`` is not identified
 
-    Returns: :class:`.ResourceModel` subclass
+    Returns:
+            :class:`.ResourceModel` subclass
     """
     if resource in RESOURCES_DICT:
         return RESOURCES_DICT.get(resource)
@@ -55,7 +56,8 @@ def get_instance_from_data(data):
     Args:
         data (dict): data
 
-    Returns: :class:`.ResourceModel` subclass or ``None``
+    Returns:
+            :class:`.ResourceModel` subclass or ``None``
     """
     resource = data.get('resource')
 

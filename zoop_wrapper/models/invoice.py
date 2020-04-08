@@ -29,20 +29,12 @@ class BillingConfiguration(ZoopObject):
     The attr :attr:`is_discount` identify if it's a ``Discount`` or not.
 
     Attributes:
-        PERCENTAGE_MODE(str): value representing this type
-        DAILY_PERCENTAGE_MODE(str): value representing this type
-        MONTHLY_PERCENTAGE_MODE(str): value representing this type
-        FIXED_MODE (str): value representing this type
-
-        PERCENT_MODES (set): a set with all percent types
-        MODES (set): a set with all types
-
-        is_discount (bool): value representing if it's a Fee or Discount type
-        mode (str): value identifying if it's Fixed or Percentage type
-        start_date (str): start date of Fee type
+        is_discount (bool): value representing if it's a ``Fee`` or ``Discount`` type
+        mode (str): value identifying if it's ``Fixed`` or ``Percentage`` type
+        start_date (str): start date for :attr:`FIXED_MODE`
         limit_date (str): limit date of Discount type
-        amount (int): integer amount for Fixed type in 'centavos'
-        percentage (float): float percentage for Percentage type.
+        amount (int): integer amount for :attr:`FIXED_MODE` in 'centavos'
+        percentage (float): float percentage for for ``Percentage`` types.
             It has a ``max`` of ``4 decimal points`` and
             is ``rounded up`` on the ``5º decimal point``
     """
@@ -61,7 +53,7 @@ class BillingConfiguration(ZoopObject):
         call :meth:`set_type`
 
         Args:
-            mode(str): value of mode
+            mode (str): value of mode
             is_discount: boolen of verification
             **kwarg: dict of kwargs
         """
@@ -112,7 +104,8 @@ class BillingConfiguration(ZoopObject):
         else ``type`` is :attr:`FIXED_MODE` return ``'fields'`` union
         :meth:`get_fixed_required_fields`
 
-        Returns: ``set`` of fields to be used on validation
+        Returns:
+            ``set`` of fields to be used on validation
         """
         if not self.validate_mode(self.mode):
             return self.get_required_fields()
@@ -136,7 +129,8 @@ class BillingConfiguration(ZoopObject):
         Get ``all fields`` for instance.
         Which are all the validation fields
 
-        Returns: ``set`` of all fields
+        Returns:
+            ``set`` of all fields
         """
         return self.get_validation_fields()
 
@@ -152,7 +146,8 @@ class BillingConfiguration(ZoopObject):
         """
         get ``set`` of ``required fields`` for ``Fee`` ``type``
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -164,7 +159,8 @@ class BillingConfiguration(ZoopObject):
         """
         get ``set`` of ``required fields`` for ``Discount`` ``type``.
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -176,7 +172,8 @@ class BillingConfiguration(ZoopObject):
         """
         get ``set`` of ``required fields`` for ``Fixed`` ``type``.
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -188,7 +185,8 @@ class BillingConfiguration(ZoopObject):
         """
         get ``set`` of ``required fields`` for ``Percent`` ``type``.
 
-        Returns: ``set`` of fields
+        Returns:
+            ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -206,7 +204,8 @@ class BillingConfiguration(ZoopObject):
             is_discount: boolean
             **kwargs: kwargs
 
-        Returns: instance initialized of :class:`BillingConfiguration`
+        Returns:
+            instance initialized of :class:`BillingConfiguration`
         """
         return super().from_dict_or_instance(
             data,
@@ -264,7 +263,8 @@ class BillingInstructions(ZoopObject):
         """
         get set of required fields
 
-        Returns: set of fields
+        Returns:
+            ``set`` of fields
         """
         fields = super().get_required_fields()
         return fields.union(

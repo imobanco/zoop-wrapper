@@ -2,7 +2,7 @@ from factory import Factory, SubFactory, LazyFunction
 from factory.faker import Faker
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.models.base import (
+from zoop_wrapper.models.base import (
     ZoopObject, ResourceModel, MarketPlaceModel,
     Person, Address,
     SocialModel, FinancialModel,

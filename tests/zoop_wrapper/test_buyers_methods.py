@@ -1,7 +1,7 @@
 from pycpfcnpj import gen
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.models.buyer import Buyer
+from zoop_wrapper.models.buyer import Buyer
 from tests.factories.buyer import BuyerFactory
 
 

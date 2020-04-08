@@ -1,6 +1,6 @@
-from ZoopAPIWrapper.models.base import ResourceModel as ResourceModel, ZoopObject as ZoopObject, PaymentMethod as PaymentMethod
-from ZoopAPIWrapper.models.card import Card as Card
-from ZoopAPIWrapper.models.invoice import Invoice as Invoice
+from zoop_wrapper.models.base import ResourceModel as ResourceModel, ZoopObject as ZoopObject, PaymentMethod as PaymentMethod
+from zoop_wrapper.models.card import Card as Card
+from zoop_wrapper.models.invoice import Invoice as Invoice
 from typing import Any, Optional, Set, List
 
 class PointOfSale(ZoopObject):

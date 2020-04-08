@@ -2,11 +2,11 @@ from factory import SubFactory, LazyFunction
 from factory.faker import Faker
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.models.token import Token
+from zoop_wrapper.models.token import Token
 from tests.factories.base import (
     ResourceModelFactory)
 from tests.factories.card import CardFactory
-from ZoopAPIWrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.bank_account import BankAccount
 from tests.factories.bank_account import IndividualBankAccountFactory
 
 

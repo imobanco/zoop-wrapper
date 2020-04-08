@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import FinancialModel
+from zoop_wrapper.models.base import FinancialModel
 from tests.factories.base import FinancialModelFactory
 
 

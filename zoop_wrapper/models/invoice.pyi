@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import PaymentMethod as PaymentMethod, ZoopObject as ZoopObject
+from zoop_wrapper.models.base import PaymentMethod as PaymentMethod, ZoopObject as ZoopObject
 from typing import Any, Optional, List
 
 class BillingConfiguration(ZoopObject):

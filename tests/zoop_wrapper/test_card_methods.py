@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.models.card import Card
+from zoop_wrapper.models.card import Card
 from tests.factories.buyer import BuyerFactory
 from tests.factories.card import CardFactory
 from tests.factories.token import (
@@ -42,7 +42,7 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
             _ZoopWrapper__add_card_token(instance)
         self.assertEqual(response.status_code, 201, msg=response.data)
 
-    @patch('ZoopAPIWrapper.wrapper.ZoopWrapper._ZoopWrapper__add_card_token')
+    @patch('zoop_wrapper.wrapper.ZoopWrapper._ZoopWrapper__add_card_token')
     def test_add_card(self, mocked_add_token):
         """
         Test add_card method.

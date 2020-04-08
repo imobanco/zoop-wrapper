@@ -1,7 +1,7 @@
-from ZoopAPIWrapper.models.base import ResourceModel, BusinessOrIndividualModel
-from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.card import Card
-from ZoopAPIWrapper.utils import get_logger
+from zoop_wrapper.models.base import ResourceModel, BusinessOrIndividualModel
+from zoop_wrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.card import Card
+from zoop_wrapper.utils import get_logger
 
 
 logger = get_logger('models')

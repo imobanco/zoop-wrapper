@@ -1,6 +1,6 @@
 import os
 
-from ZoopAPIWrapper.wrapper import ZoopWrapper
+from zoop_wrapper.wrapper import ZoopWrapper
 from examples.utils import dump_response
 
 

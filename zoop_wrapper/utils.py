@@ -19,6 +19,6 @@ def get_logger(name):
     Args:
         name: subname to generate logger
 
-    Returns: a new logger for ZoopAPIWrapper.{name}
+    Returns: a new logger for zoop_wrapper.{name}
     """
-    return logging.getLogger(f'ZoopAPIWrapper.{name}')
+    return logging.getLogger(f'zoop_wrapper.{name}')

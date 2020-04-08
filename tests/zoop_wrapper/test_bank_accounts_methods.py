@@ -1,8 +1,8 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.token import Token
+from zoop_wrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.token import Token
 from tests.factories.bank_account import (
     IndividualBankAccountFactory
 )
@@ -61,7 +61,7 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance, Token)
         self.assertIsInstance(response.instance.bank_account, BankAccount)
 
-    @patch('ZoopAPIWrapper.wrapper.ZoopWrapper'
+    @patch('zoop_wrapper.wrapper.ZoopWrapper'
            '._ZoopWrapper__add_bank_account_token')
     def test_add_bank_account(self, mocked_add_token):
         """

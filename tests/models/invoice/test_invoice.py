@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.invoice import (
+from zoop_wrapper.models.invoice import (
     Invoice, BillingInstructions
 )
 from tests.factories.invoice import (

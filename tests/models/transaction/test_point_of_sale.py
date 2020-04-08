@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.transaction import PointOfSale
+from zoop_wrapper.models.transaction import PointOfSale
 
 
 class PointOfSaleTestCase(SetTestCase):

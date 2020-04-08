@@ -1,19 +1,19 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.exceptions import ValidationError
+from zoop_wrapper.exceptions import ValidationError
 from tests.factories.base import ZoopObjectFactory
-from ZoopAPIWrapper.models.base import ZoopObject
+from zoop_wrapper.models.base import ZoopObject
 
 
 class ZoopObjectTestCase(SetTestCase):
     def setUp(self) -> None:
         self.patcher_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopObject.get_fields')
+            'zoop_wrapper.models.base.ZoopObject.get_fields')
         self.patcher_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopObject.get_required_fields')
+            'zoop_wrapper.models.base.ZoopObject.get_required_fields')
         self.patcher_non_required_fields = patch(
-            'ZoopAPIWrapper.models.base.ZoopObject.get_non_required_fields')
+            'zoop_wrapper.models.base.ZoopObject.get_non_required_fields')
 
         self.mocked_fields = self.patcher_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
@@ -51,12 +51,12 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertIsNone(instance.name, 1)
         validate.assert_called_once()
 
-    @patch('ZoopAPIWrapper.models.base.ZoopObject.validate_fields')
+    @patch('zoop_wrapper.models.base.ZoopObject.validate_fields')
     def test_init_call_validate(self, mocked_validate):
         ZoopObjectFactory(id=1)
         mocked_validate.assert_called_once()
 
-    @patch('ZoopAPIWrapper.models.base.ZoopObject.init_custom_fields')
+    @patch('zoop_wrapper.models.base.ZoopObject.init_custom_fields')
     def test_init_call_init_custom_values(self, mocked_init_custom_fields):
         ZoopObjectFactory(id=1)
         mocked_init_custom_fields.assert_called_once()

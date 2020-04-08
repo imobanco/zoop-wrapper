@@ -1,8 +1,8 @@
 import os
 
-from ZoopAPIWrapper.wrapper import ZoopWrapper
-from ZoopAPIWrapper.models.transaction import Transaction
-from ZoopAPIWrapper.models.card import Card
+from zoop_wrapper.wrapper import ZoopWrapper
+from zoop_wrapper.models.transaction import Transaction
+from zoop_wrapper.models.card import Card
 from examples.utils import dump_response
 
 

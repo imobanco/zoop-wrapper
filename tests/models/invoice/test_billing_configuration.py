@@ -1,8 +1,8 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.exceptions import ValidationError
-from ZoopAPIWrapper.models.invoice import BillingConfiguration
+from zoop_wrapper.exceptions import ValidationError
+from zoop_wrapper.models.invoice import BillingConfiguration
 from tests.factories.invoice import (
     BillingConfigurationFactory, FixedDiscountFactory,
     PercentDiscountFactory, FixedFeeFactory, PercentFeeFactory
@@ -32,7 +32,7 @@ class BillingConfigurationTestCase(SetTestCase):
         )
         self.assertIsInstance(instance, BillingConfiguration)
 
-    @patch('ZoopAPIWrapper.models.invoice.BillingConfiguration.set_type')
+    @patch('zoop_wrapper.models.invoice.BillingConfiguration.set_type')
     def test_init_custom_fields(self, mocked_set_type):
         instance = MagicMock(
             _allow_empty=False,

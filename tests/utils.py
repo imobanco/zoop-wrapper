@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import patch, MagicMock
 
 from requests import Response
-from ZoopAPIWrapper.wrapper import ZoopWrapper
+from zoop_wrapper.wrapper import ZoopWrapper
 
 
 class SetTestCase(TestCase):
@@ -23,9 +23,9 @@ class MockedLoggerTestCase(TestCase):
         super().setUp()
 
         self.patcher_address_loggger = patch(
-            "ZoopAPIWrapper.models.base.logger")
+            "zoop_wrapper.models.base.logger")
         self.patcher_wrapper_loggger = patch(
-            "ZoopAPIWrapper.wrapper.logger")
+            "zoop_wrapper.wrapper.logger")
 
         self.mocked_address_logger = self.patcher_address_loggger.start()
         self.mocked_wrapper_logger = self.patcher_wrapper_loggger.start()
@@ -38,9 +38,9 @@ class APITestCase(MockedLoggerTestCase):
     def setUp(self):
         super().setUp()
 
-        self.patcher_get = patch("ZoopAPIWrapper.wrapper.requests.get")
-        self.patcher_post = patch("ZoopAPIWrapper.wrapper.requests.post")
-        self.patcher_delete = patch("ZoopAPIWrapper.wrapper.requests.delete")
+        self.patcher_get = patch("zoop_wrapper.wrapper.requests.get")
+        self.patcher_post = patch("zoop_wrapper.wrapper.requests.post")
+        self.patcher_delete = patch("zoop_wrapper.wrapper.requests.delete")
 
         self.mocked_get = self.patcher_get.start()
         self.mocked_post = self.patcher_post.start()

@@ -1,7 +1,7 @@
 import copy
 
 from zoop_wrapper.utils import get_logger
-from zoop_wrapper.exceptions import ValidationError
+from zoop_wrapper.exceptions import ValidationError, FieldError
 
 
 logger = get_logger('models')
@@ -12,7 +12,7 @@ class ZoopObject(object):
     This class represent a bare Zoop object.
 
     Attributes:
-        __allow_empty: boolean
+        _allow_empty: boolean
     """
 
     def __init__(self, allow_empty=False, **kwargs):
@@ -42,8 +42,8 @@ class ZoopObject(object):
     def init_custom_fields(self, **kwargs):
         """
         this method exists to set custom attributes such
-        as ZoopObject instances. Since all attributes set on
-        __init__ are dict's or variables.
+        as :py:class:`ZoopObject` instances. Since all attributes set on
+        :py:meth:`__init__` are ``dict's`` or ``variables``.
 
         Args:
             **kwargs: dictionary of args
@@ -54,15 +54,19 @@ class ZoopObject(object):
     def make_data_copy_with_kwargs(data, **kwargs):
         """
         make a new data dict from previous data dict
-        with added kwargs
+        with added ``kwargs``
 
-        if data is None create a new empty dict.
-        data may be None for the cases we are explicitly calling
-        with `allow_empty=True` on `init_custom_fields` for some
-        custom ZoopObject instance set.
-        Such as:
-        >>> instance = ZoopObject()
-        >>> setattr(instance, 'address', Address.from_dict_or_instance(None, allow_empty=True))  # noqa
+        if ``data`` is ``None`` create a ``new empty dict``.\n
+
+        ``data`` may be ``None`` for the cases we are explicitly calling
+        with ``allow_empty=True`` on :py:meth:`init_custom_fields` for some
+        custom :py:class:`ZoopObject` instance set.
+        Such as::
+            instance = ZoopObject()
+            setattr(
+                instance, 'address',
+                Address.from_dict_or_instance(None, allow_empty=True)
+            )
 
         Args:
             data: dict of data may be None
@@ -82,7 +86,7 @@ class ZoopObject(object):
     @classmethod
     def from_dict(cls, data, allow_empty=False, **kwargs):
         """
-        to construct a instance of this class from dict
+        to construct a instance of this ``class`` from ``dict``
 
         Args:
             data: dict of data
@@ -101,14 +105,16 @@ class ZoopObject(object):
     @classmethod
     def from_dict_or_instance(cls, data, **kwargs):
         """
-        check if data is already a ZoopModel or subclass.
-        If not call from_dict
+        check if ``data`` is already a :py:class:`ZoopObject` or
+        ``subclass``.\n
+
+        If not call :py:meth:`from_dict`.
 
         Args:
             data: dict of data or instance
             **kwargs: kwargs
 
-        Returns: instance initialized of cls
+        Returns: instance initialized of ``cls``
         """
         if isinstance(data, cls):
             return data
@@ -118,14 +124,17 @@ class ZoopObject(object):
     @staticmethod
     def is_value_empty(value):
         """
-        Verify if value passed is considered empty!
+        Verify if ``value`` passed is considered ``empty``!
 
-        value may be None if value was not passed.
-        As we set on __init__
-        `value = kwargs.get(field_name, None)`.
+        ``value`` may be ``None``.
+        As we set on :py:meth:`__init__`::
+            value = kwargs.get(field_name, None)
 
-        value may be {} if it was a ZoopObject with allow_empty!
-        value may be [{}] if it was a list of ZoopObject's with allow_empty!!
+        ``value`` may be ``{}`` if it was a :py:class:`ZoopObject`
+        with allow_empty! \n
+
+        ``value`` may be ``[{}]`` if it was a ``list`` of
+        :py:class:`ZoopObject`'s with ``allow_empty``!!
 
         Args:
             value: Value to be verified
@@ -136,7 +145,8 @@ class ZoopObject(object):
 
     def to_dict(self):
         """
-        serialize the instance to dict
+        serialize ``self`` to dict
+
         Returns: dict of instance
         """
         data = {}
@@ -169,17 +179,15 @@ class ZoopObject(object):
 
     def validate_fields(self, raise_exception=True, **kwargs):
         """
-        Validate fields returned from method
-        get_validation_fields.
+        Validate fields returned from :py:meth:`get_validation_fields`.\n
 
-        if _allow_empty is True don't validate!
+        if :py:attr:`_allow_empty` is ``True`` don't validate!
 
         Args:
             raise_exception: boolean to raise or not exception
 
         Raises:
-            ValidationError: if there's some required_field missing
-            and __allow_empty is false and raise_exception is true
+            :py:class:`.ValidationError`: if there's some ``required field`` missing and ``raise_exception==True``
 
         """
         if self._allow_empty:
@@ -189,43 +197,49 @@ class ZoopObject(object):
         for validation_field in self.get_validation_fields():
             value = getattr(self, validation_field, None)
             if value is None:
-                errors.append(validation_field)
+                errors.append(FieldError(validation_field, 'missing required field'))
 
         if errors and raise_exception:
             raise ValidationError(self, errors)
 
     def get_validation_fields(self):
         """
-        Get validation fields for instance.
+        Get ``validation fields`` for instance.\n
+
         This is necessary for classes/instances with
-        different fields based on type.
-        Such as Seller, BankAccount and BillingConfiguration.
+        different fields based on type.\n
 
-        Defaults to get_required_fields.
+        Such as :py:class:`.Seller`, :py:class:`.BankAccount`,
+        :py:class:`.BillingConfiguration` and :py:class:`.Token`.\n
 
-        Returns: set of fields to be used on validation
+        Defaults to :py:meth:`get_required_fields`.
+
+        Returns: ``set`` of fields to be used on validation
         """
         return self.get_required_fields()
 
     def get_all_fields(self):
         """
-        get all fields for instance.
+        get ``all fields`` for instance.\n
+
         This is necessary for classes/instances with
-        different fields based on type.
-        Such as Seller, BankAccount and BillingConfiguration.
+        different fields based on type.\n
 
-        Defaults to get_fields.
+        Such as :py:class:`.Seller`, :py:class:`.BankAccount`,
+        :py:class:`.BillingConfiguration` and :py:class:`.Token`.\n
 
-        Returns: set of all fields
+        Defaults to :py:meth:`get_fields`.
+
+        Returns: ``set`` of all fields
         """
         return self.get_fields()
 
     @classmethod
     def get_fields(cls):
         """
-        get set of all fields
+        get ``set`` of ``all fields``
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         required_fields = cls.get_required_fields()
         non_required_fields = cls.get_non_required_fields()
@@ -234,25 +248,25 @@ class ZoopObject(object):
     @classmethod
     def get_required_fields(cls):
         """
-        get set of required fields
+        get ``set`` of ``required fields``
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         return set()
 
     @classmethod
     def get_non_required_fields(cls):
         """
-        get set of non required fields
+        get ``set`` of ``non required fields``
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         return set()
 
 
 class ResourceModel(ZoopObject):
     """
-    Represents a Model that is a resource.
+    Represents a Model that is a ``resource``.
 
     Attributes:
         id: identifier string
@@ -266,11 +280,6 @@ class ResourceModel(ZoopObject):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"id", "resource", "uri", "created_at", "updated_at", "metadata"}
@@ -279,8 +288,8 @@ class ResourceModel(ZoopObject):
 
 class MarketPlaceModel(ResourceModel):
     """
-    This class represents a Model which belongs
-    to the marketplace from Zoop.
+    This class represents a :py:class:`.ResourceModel` which belongs
+    to some ``marketplace`` from ``Zoop``.
 
     Attributes:
         marketplace_id: identifier string
@@ -288,11 +297,6 @@ class MarketPlaceModel(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'marketplace_id'}
@@ -301,7 +305,7 @@ class MarketPlaceModel(ResourceModel):
 
 class Address(ZoopObject):
     """
-    Represents a physical address.
+    Represents a physical ``address``.
 
     Attributes:
         line1: complete street name
@@ -316,11 +320,6 @@ class Address(ZoopObject):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"line1", "line2", "line3",
@@ -331,7 +330,7 @@ class Address(ZoopObject):
 
 class Person(ZoopObject):
     """
-    Represents a person.
+    Represents a ``person``.
 
     Attributes:
         address: Address model
@@ -344,16 +343,18 @@ class Person(ZoopObject):
     """
 
     def init_custom_fields(self, address=None, **kwargs):
+        """
+        Initialize :py:attr:`address` with :py:class:`.Address`
+
+        Args:
+            address: dict of data or :py:class:`.Address`
+            **kwargs:
+        """
         setattr(self, 'address',
                 Address.from_dict_or_instance(address, allow_empty=True))
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"first_name", "last_name", "email",
@@ -362,11 +363,6 @@ class Person(ZoopObject):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"birthdate"}
@@ -375,9 +371,9 @@ class Person(ZoopObject):
     @property
     def full_name(self):
         """
-        get full name of the person
+        get ``full name`` of the person
 
-        Returns: string with the full name
+        Returns: string with the ``full name``
         """
         return f'{self.first_name} {self.last_name}'
 
@@ -393,11 +389,6 @@ class SocialModel(ZoopObject):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"facebook", "twitter"}
@@ -421,11 +412,6 @@ class FinancialModel(ZoopObject):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'status', 'account_balance', 'current_balance',
@@ -445,11 +431,6 @@ class VerificationModel(ZoopObject):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"postal_code_check", "address_line1_check"}
@@ -468,13 +449,10 @@ class PaymentMethod(ResourceModel):
 
     def init_custom_fields(self, address=None, **kwargs):
         """
-        initialize address attribute with Address model
-    def __init__(self, customer=None, description=None,
-                 address=None, **kwargs):
-        super().__init__(**kwargs)
+        initialize :py:attr:`address` with :py:class:`.Address`
 
         Args:
-            address: dict of data or instance
+            address: dict of data or :py:class:`.Address`
             **kwargs: dic of kwargs
         """
         setattr(
@@ -483,11 +461,6 @@ class PaymentMethod(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'description', 'customer', 'address'}
@@ -496,11 +469,11 @@ class PaymentMethod(ResourceModel):
 
 class BusinessOrIndividualModel(MarketPlaceModel):
     """
-    Represents a Business Or Individual Model
+    Represents a ``Business`` Or ``Individual`` Model\n
 
-    It has dynamics types!
+    It has ``dynamic types``!\n
 
-    Can be Business or Individual.
+    Can be ``Business`` or ``Individual``.
 
     Attributes:
         BUSINESS_IDENTIFIER: 'ein'
@@ -524,7 +497,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        call set_identifier.
+        call :py:meth:`set_identifier`.
 
         Args:
             taxpayer_id: cpf value
@@ -539,20 +512,22 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         validate tuple of identifiers values
 
         Raises:
-            TypeError: when it's passed both identifiers or none
+            :py:class`.ValidationError`: when it's passed both identifiers or none
         """
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
-            raise TypeError(
-                f'Identifier error! Must be either '
-                f'"{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER}" or '
-                f'"{BusinessOrIndividualModel.BUSINESS_IDENTIFIER}"')
+            raise ValidationError(
+                cls,
+                FieldError(f'{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER} '
+                           f'or {BusinessOrIndividualModel.BUSINESS_IDENTIFIER}',
+                           'missing identifier!')
+            )
 
     def get_type(self):
         """
-        get the type from instance
+        get the ``dynamic type`` from instance
 
-        Returns: BUSINESS_TYPE or INDIVIDUAL_TYPE
+        Returns: :py:attr:`BUSINESS_TYPE` or :py:attr:`INDIVIDUAL_TYPE`
         """
         individual_identifier = getattr(
             self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
@@ -571,19 +546,20 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def get_type_uri(self):
         """
-        get the type uri for instance based on get_type
+        get the ``dynamic type uri`` for instance based on :py:meth:`get_type`
 
-        Returns: uri string for type
+        Returns: uri string for type from :py:attr:`URI`
         """
         return self.URI.get(self.get_type())
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        set taxpayer_id or ein identifier. Exactly one of then have
-        to be not None.
+        set :py:attr:`taxpayer_id` or :py:attr:`ein` identifier.
+        Exactly one of then have to be not None.\n
 
-        **kwargs are there to be called from Seller and BankAccount without
-        getting taxpayer_id or ein variables.
+        ``kwargs`` are there to be called from :py:meth:`.Seller.init_custom_fields`
+        and :py:meth:`.BankAccount.init_custom_fields` without getting
+        ``taxpayer_id`` or ``ein`` variables.
 
         Args:
             taxpayer_id: cpf
@@ -601,44 +577,32 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def get_validation_fields(self):
         """
-        Get validation fields for instance.
+        Get ``validation fields`` for instance.
 
-        if _allow_empty is true return empty set!
+        if ``type`` is :py:attr:`BUSINESS_TYPE` then call
+        :py:meth:`get_business_required_fields`
 
-        if instance is individual type then call
-        get_individual_required_fields()
+        else ``type`` is :py:attr:`INDIVIDUAL_TYPE`! then call
+        :py:meth:`get_individual_required_fields`
 
-        if instance is business type then call
-        get_business_required_fields()
-
-        Raises:
-            TypeError: when the type couldn't be identified.
-                This shouldn't be raised as get_type validate the identifiers!
-
-        Returns: set of fields to be used on validation
+        Returns: ``set`` of fields to be used on validation
         """
         if self.get_type() == self.BUSINESS_TYPE:
             return self.get_business_required_fields()
-        elif self.get_type() == self.INDIVIDUAL_TYPE:
-            return self.get_individual_required_fields()
         else:
-            raise TypeError('Type not identified! '
-                            'This is not supposed to happen!!!')
+            return self.get_individual_required_fields()
 
     def get_all_fields(self):
         """
-        get all fields for instance.
+        get ``all fields`` for instance.
 
-        if instance is individual type then call
-        get_individual_required_fields() and
-        get_individual_non_required_fields()
+        if ``type`` is :py:attr:`BUSINESS_TYPE` then call
+        :py:meth:`get_business_required_fields` and
+        :py:meth:`get_business_non_required_fields`
 
-        if instance is business type then call
-        get_business_required_fields() and get_business_non_required_fields()
-
-        Raises:
-            TypeError: when the type couldn't be identified.
-                This shouldn't be raised as get_type validate the identifiers!
+        else ``type`` is :py:attr:`INDIVIDUAL_TYPE`! then call
+        :py:meth:`get_individual_required_fields` and
+        :py:meth:`get_individual_non_required_fields`
 
         Returns: set of all fields
         """
@@ -648,30 +612,29 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 self.get_business_non_required_fields(),
                 self.get_business_required_fields()
             )
-        elif self.get_type() == self.INDIVIDUAL_TYPE:
+        else:
             return fields.union(
                 self.get_individual_non_required_fields(),
                 self.get_individual_required_fields()
             )
-        else:
-            raise TypeError('Type not identified! '
-                            'This is not supposed to happen!!!')
 
     @classmethod
     def get_business_non_required_fields(cls):
         """
-        get set of non required fields for Business
+        get ``set`` of ``non required fields`` for
+        :py:attr:`BUSINESS_TYPE`.
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         return cls.get_non_required_fields()
 
     @classmethod
     def get_business_required_fields(cls):
         """
-        get set of required fields for Business
+        get ``set`` of ``required fields`` for
+        :py:attr:`BUSINESS_TYPE`
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(
@@ -681,18 +644,20 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     @classmethod
     def get_individual_non_required_fields(cls):
         """
-        get set of non required fields for Individual
+        get ``set`` of ``non required fields`` for
+        :py:attr:`INDIVIDUAL_TYPE`
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         return cls.get_non_required_fields()
 
     @classmethod
     def get_individual_required_fields(cls):
         """
-        get set of required fields for Individual
+        get ``set`` of ``required fields`` for
+        :py:attr:`INDIVIDUAL_TYPE`
 
-        Returns: set of fields
+        Returns: ``set`` of fields
         """
         fields = cls.get_required_fields()
         return fields.union(

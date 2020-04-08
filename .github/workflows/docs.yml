@@ -9,12 +9,11 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-18.04
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v1
+      - uses: actions/checkout@v1
       - name: Set up Python 3.7
-          uses: actions/setup-python@v1
-          with:
-            python-version: 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
       - name: Install dependencies
         run: make pip.install
       - name: Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.

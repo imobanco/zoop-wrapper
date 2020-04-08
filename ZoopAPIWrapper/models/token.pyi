@@ -2,7 +2,7 @@ from ZoopAPIWrapper.models.bank_account import BankAccount as BankAccount
 from ZoopAPIWrapper.models.base import BusinessOrIndividualModel as BusinessOrIndividualModel, ResourceModel as ResourceModel
 from ZoopAPIWrapper.models.card import Card as Card
 from ZoopAPIWrapper.utils import get_logger as get_logger
-from typing import Any, Optional, Set, Dict
+from typing import Any, Optional, Set, Dict, Union
 
 logger: Any
 
@@ -53,4 +53,4 @@ class Token(ResourceModel):
     @classmethod
     def get_bank_account_required_fields(cls): ...
     @classmethod
-    def from_dict(cls, data: Dict[str, Any], allow_empty: bool=...) -> Token: ... # type: ignore
+    def from_dict_or_instance(cls, data: Union[Dict[str, Any], Token], allow_empty: bool=..., **kwargs: Any) -> Token: ... # type: ignore

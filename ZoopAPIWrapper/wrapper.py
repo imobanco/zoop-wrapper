@@ -6,6 +6,7 @@ from ZoopAPIWrapper.models.bank_account import BankAccount
 from ZoopAPIWrapper.models.buyer import Buyer
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.models.transaction import Transaction
 from ZoopAPIWrapper.models.utils import get_instance_from_data
 from ZoopAPIWrapper.utils import (
     get_logger, config_logging
@@ -58,7 +59,10 @@ class RequestsWrapper:
                 response.instance = get_instance_from_data(response.data)
 
         if response.data.get('error'):
-            response.reason = response.data.get('error').get('message')
+            response.reason = f"{response.data.get('error').get('message')}"
+            reasons = response.data.get('error').get('reasons')
+            if reasons:
+                response.reason += f' {reasons}'
 
         response.raise_for_status()
         return response
@@ -127,7 +131,7 @@ class RequestsWrapper:
 
         Returns: processed response
         """
-        response = requests.post(url, data=data, auth=self._auth)
+        response = requests.post(url, json=data, auth=self._auth)
         response = self.__process_response(response)
         return response
 
@@ -322,7 +326,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Seller
         """
-        instance = Seller.from_dict(data)
+        instance = Seller.from_dict_or_instance(data)
         url = self._construct_url(action='sellers',
                                   subaction=instance.get_type_uri())
         return self._post_instance(url, instance=instance)
@@ -391,7 +395,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        instance = Token.from_dict(data)
+        instance = Token.from_dict_or_instance(data)
 
         bank_account_type = instance.get_bank_account_type()
         if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
@@ -481,7 +485,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of Buyer
         """
-        instance = Buyer.from_dict(data)
+        instance = Buyer.from_dict_or_instance(data)
         url = self._construct_url(action='buyers')
         return self._post_instance(url, instance=instance)
 
@@ -497,6 +501,119 @@ class ZoopWrapper(RequestsWrapper):
         url = self._construct_url(action='buyers',
                                   identifier=identifier)
         return self._delete(url)
+
+    def list_transactions(self):
+        """
+        list all transactions
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions')
+        return self._get(url)
+
+    def list_transactions_for_seller(self, identifier):
+        """
+        list all transactions from seller
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        url = self._construct_url(action='sellers',
+                                  identifier=identifier,
+                                  subaction='transactions')
+        return self._get(url)
+
+    def retrieve_transaction(self, identifier):
+        """
+        retrieve a transaction
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        url = self._construct_url(action='transactions', identifier=identifier)
+        return self._get(url)
+
+    def add_transaction(self, data: dict):
+        """
+        add transaction
+
+        Examples:
+            data = {
+                'amount' : 'foo',
+                'currency' : 'BRL',
+                'description' : 'foo',
+                'reference_id' : 'foo',
+                'on_behalf_of' : 'foo',
+                'customer': 'foo',
+                'payment_type' : 'foo',
+                'payment_method' : {
+                    'expiration_date' : expiration_date,
+                    'payment_limit_date' : payment_limit_date,
+                    'body_instructions' : instructions,
+                    'billing_instructions' : {
+                        'late_fee' : late_fee,
+                        'interest' : interest,
+                        'discount' : discount
+                    }
+                }
+            }
+
+            data = {
+                'amount': '1000',
+                'currency': 'BRL',
+                'description': 'meu boleto gerado para teste',
+                'on_behalf_of': 'seller_id',
+                'customer': 'buyer_id',
+                'payment_type': 'boleto',
+                'payment_method': {
+                    'expiration_date': '2020-06-20',
+                    'payment_limit_date': '2020-06-30',
+                    'billing_instructions': {
+                        'late_fee': {
+                            'mode': 'FIXED',
+                            'percentage': 30,
+                            'start_date': '2020-06-20'
+                        },
+                        'interest': {
+                            'mode': 'MONTHLY_PERCENTAGE',
+                            'percentage': 30,
+                            'start_date': '2020-06-20'
+                        },
+                        'discount': [{
+                            'mode': 'FIXED',
+                            'amount': 300,
+                            'limit_date': '2020-06-20'
+                        }]
+                    }
+                }
+            }
+
+        Args:
+            data: dict of data
+
+        Returns: response with instance of Transaction
+        """
+        instance = Transaction.from_dict_or_instance(data)
+        url = self._construct_url(action='transactions')
+        return self._post_instance(url, instance=instance)
+
+    def cancel_transaction(self, identifier):
+        """
+        cancel a transaction
+
+        Args:
+            identifier: uuid id
+
+        Returns: response
+        """
+        # @TODO: terminar de testar cancel transaction (card transaction)
+        url = self._construct_url(action='transactions', identifier=identifier,
+                                  subaction='void')
+        return self._get(url)
 
     def retrieve_invoice(self, identifier):
         """
@@ -554,7 +671,7 @@ class ZoopWrapper(RequestsWrapper):
 
         Returns: response with instance of BankAccount
         """
-        token = Token.from_dict(data)
+        token = Token.from_dict_or_instance(data)
 
         buyer_response = self.retrieve_buyer(buyer_identifier)
         buyer_instance = buyer_response.instance

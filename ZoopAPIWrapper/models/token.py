@@ -26,8 +26,6 @@ class Token(ResourceModel):
 
     Attributes:
         RESOURCE = 'token'
-        TYPE_ATTR: str with attribute name for token type
-            default is 'token_type'
 
         CARD_TYPE: str 'card' for card type
         CARD_IDENTIFIER: card attribute ('card_number') used to identify type
@@ -41,9 +39,6 @@ class Token(ResourceModel):
                                         BANK_ACCOUNT_IDENTIFIER}
 
         token_type: str for identified token type set by TYPE_ATTR
-        _created: boolean to verify if token is already created or not.
-            seted dynamically on init_custom_values after
-            identifying token type.
 
         type: optional bank_account or card. It has collision with
             BankAccount.type. So we need the above token_type
@@ -104,41 +99,19 @@ class Token(ResourceModel):
         """
         if type in self.TYPES:
             token_type = type
-            self._allow_empty = True
-            setattr(self, '_created', True)
-
-            if card is not None and bank_account is not None:
-                raise ValueError(
-                    'this should not happen!\n\n'
-                    f'type {type} is in {self.TYPES} but both'
-                    f'card and bank_account has been passed!\n'
-                    f'card: {card}\n\n'
-                    f'bank_account: {bank_account}\n\n'
-                    f'Kwargs were: {kwargs}'
-                )
-            elif card is not None:
+            if token_type == self.CARD_TYPE:
                 setattr(
                     self, self.CARD_TYPE,
-                    Card.from_dict_or_instance(card)
-                )
-            elif bank_account is not None:
-                setattr(
-                    self, self.BANK_ACCOUNT_TYPE,
-                    BankAccount.from_dict_or_instance(bank_account)
+                    Card.from_dict_or_instance(
+                        card, allow_empty=True)
                 )
             else:
-                raise ValueError(
-                    'this should not happen!\n\n'
-                    f'type {type} is in {self.TYPES} but neither'
-                    f'card or bank_account has been passed!\n'
-                    f'card: {card}\n\n'
-                    f'bank_account: {bank_account}\n\n'
-                    f'Kwargs were: {kwargs}'
+                setattr(
+                    self, self.BANK_ACCOUNT_TYPE,
+                    BankAccount.from_dict_or_instance(
+                        bank_account, allow_empty=True)
                 )
-
         else:
-            setattr(self, '_created', False)
-
             if self.CARD_IDENTIFIER in kwargs:
                 token_type = self.CARD_TYPE
             elif self.BANK_ACCOUNT_IDENTIFIER in kwargs:
@@ -148,7 +121,8 @@ class Token(ResourceModel):
                 raise TypeError(
                     f'Token type not identified! '
                     f'Please set one of these attributes {self.IDENTIFIERS}')
-        setattr(self, self.TYPE_ATTR, token_type)
+
+        setattr(self, 'token_type', token_type)
 
     def get_type(self):
         """
@@ -159,14 +133,12 @@ class Token(ResourceModel):
 
         Returns: str with token type
         """
-        token_type = getattr(
-            self, self.TYPE_ATTR, None
-        )
-        if token_type is None:
+        try:
+            return self.token_type
+        except AttributeError as e:
             raise TypeError(
                 f'Token type not identified! '
-                f'Please set one of these attributes {self.IDENTIFIERS}')
-        return token_type
+                f'Please set one of these attributes {self.IDENTIFIERS}') from e
 
     def get_bank_account_type(self):
         """
@@ -178,9 +150,9 @@ class Token(ResourceModel):
         Returns: str with bank_account type
         """
         if self.token_type == self.BANK_ACCOUNT_TYPE:
-            if self._created:
+            try:
                 return self.bank_account.get_type()
-            else:
+            except AttributeError:
                 return BankAccount.get_type(self)
         raise TypeError(f'Token is not of type {self.BANK_ACCOUNT_TYPE}')
 
@@ -200,9 +172,7 @@ class Token(ResourceModel):
         fields = self.get_required_fields()
         token_type = self.get_type()
 
-        if self._created:
-            return fields
-        elif token_type == self.CARD_TYPE:
+        if token_type == self.CARD_TYPE:
             return fields.union(
                 self.get_card_required_fields()
             )

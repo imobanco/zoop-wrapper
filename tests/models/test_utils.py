@@ -31,7 +31,7 @@ class UtilsTestCase(TestCase):
         get_instance_from_data(data)
 
         self.assertIsInstance(mocked_from_dict, MagicMock)
-        mocked_from_dict.assert_called_once_with(data)
+        mocked_from_dict.assert_called_once_with(data, allow_empty=True)
 
     @patch('ZoopAPIWrapper.models.utils.BankAccount.from_dict')
     def test_get_instance_bank_account(self, mocked_from_dict):
@@ -40,7 +40,7 @@ class UtilsTestCase(TestCase):
         get_instance_from_data(data)
 
         self.assertIsInstance(mocked_from_dict, MagicMock)
-        mocked_from_dict.assert_called_once_with(data)
+        mocked_from_dict.assert_called_once_with(data, allow_empty=True)
 
     @patch('ZoopAPIWrapper.models.utils.Token.from_dict')
     def test_get_instance_token(self, mocked_from_dict):
@@ -49,4 +49,4 @@ class UtilsTestCase(TestCase):
         get_instance_from_data(data)
 
         self.assertIsInstance(mocked_from_dict, MagicMock)
-        mocked_from_dict.assert_called_once_with(data)
+        mocked_from_dict.assert_called_once_with(data, allow_empty=True)

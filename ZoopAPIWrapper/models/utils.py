@@ -4,13 +4,15 @@ from ZoopAPIWrapper.models.card import Card
 from ZoopAPIWrapper.models.invoice import Invoice
 from ZoopAPIWrapper.models.seller import Seller
 from ZoopAPIWrapper.models.token import Token
+from ZoopAPIWrapper.models.transaction import Transaction
 from ZoopAPIWrapper.utils import get_logger
 
 
 logger = get_logger('models')
 
 
-RESOURCE_CLASSES = [BankAccount, Buyer, Card, Invoice, Seller, Token]
+RESOURCE_CLASSES = [
+    BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
 RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 
@@ -60,7 +62,7 @@ def get_instance_from_data(data):
 
     try:
         klass = _get_model_class_from_resource(resource)
-        return klass.from_dict(data)
+        return klass.from_dict(data, allow_empty=True)
     except ValueError as e:
         logger.info(e)
         return None

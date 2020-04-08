@@ -12,7 +12,7 @@ from tests.factories.invoice import (
 class BillingConfigurationTestCase(SetTestCase):
     def test_create_set_type_fail(self):
         self.assertRaises(
-            TypeError,
+            ValidationError,
             BillingConfigurationFactory
         )
 
@@ -46,12 +46,22 @@ class BillingConfigurationTestCase(SetTestCase):
 
     @staticmethod
     def test_validate_mode():
-        BillingConfiguration.validate_mode(BillingConfiguration.FIXED_MODE)
+        instance = MagicMock(
+            _allow_empty=False,
+            mode='foo'
+        )
+        BillingConfiguration.validate_mode(
+            instance, BillingConfiguration.FIXED_MODE)
 
     def test_validate_mode_raise(self):
+        instance = MagicMock(
+            _allow_empty=False,
+            mode='foo'
+        )
         self.assertRaises(
-            TypeError,
+            ValidationError,
             BillingConfiguration.validate_mode,
+            instance,
             'foo'
         )
 
@@ -107,8 +117,17 @@ class BillingConfigurationTestCase(SetTestCase):
             BillingConfiguration.get_all_fields(instance)
         )
 
+    def test_get_validation_fields_allow_empty(self):
+        instance = BillingConfiguration(allow_empty=True)
+        self.assertIsInstance(instance, BillingConfiguration)
+
+        self.assertEqual(
+            {'mode'},
+            instance.get_validation_fields()
+        )
+
     def test_get_validation_fields_fixed_discount(self):
-        instance = FixedDiscountFactory()
+        instance = FixedDiscountFactory(allow_empty=True)
         self.assertIsInstance(instance, BillingConfiguration)
 
         self.assertEqual(
@@ -117,7 +136,7 @@ class BillingConfigurationTestCase(SetTestCase):
         )
 
     def test_get_validation_fields_percent_discount(self):
-        instance = PercentDiscountFactory()
+        instance = PercentDiscountFactory(allow_empty=True)
         self.assertIsInstance(instance, BillingConfiguration)
 
         self.assertEqual(
@@ -126,7 +145,7 @@ class BillingConfigurationTestCase(SetTestCase):
         )
 
     def test_get_validation_fields_fixed_fee(self):
-        instance = FixedFeeFactory()
+        instance = FixedFeeFactory(allow_empty=True)
         self.assertIsInstance(instance, BillingConfiguration)
 
         self.assertEqual(
@@ -135,7 +154,7 @@ class BillingConfigurationTestCase(SetTestCase):
         )
 
     def test_get_validation_fields_percent_fee(self):
-        instance = PercentFeeFactory()
+        instance = PercentFeeFactory(allow_empty=True)
         self.assertIsInstance(instance, BillingConfiguration)
 
         self.assertEqual(

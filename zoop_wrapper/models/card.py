@@ -13,11 +13,6 @@ class CardVerificationChecklist(VerificationModel):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"security_code_check"}
@@ -29,8 +24,8 @@ class Card(PaymentMethod):
     Represent a Card.
     https://docs.zoop.co/reference#cart%C3%A3o
 
-    The RESOURCE attribute of this class is used to identify this Model.
-    Remember the resource on ZoopModel? BAM!
+    The :py:attr:`RESOURCE` is used to identify this Model.
+    Used to check against the ``resource`` attr of :py:class:`.ZoopObject`!
 
     Attributes:
         card_brand: company name
@@ -49,11 +44,11 @@ class Card(PaymentMethod):
 
     def init_custom_fields(self, verification_checklist=None, **kwargs):
         """
-        Initialize verification_checklist
+        Initialize :py:attr:`verification_checklist` as
+        :py:class:`CardVerificationChecklist`
 
         Args:
-            verification_checklist: dict of data or
-                CardVerificationChecklist instance
+            verification_checklist: dict of data or :py:class:`CardVerificationChecklist`
             **kwargs: kwargs
         """
         setattr(
@@ -64,11 +59,6 @@ class Card(PaymentMethod):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"expiration_month", "expiration_year", "holder_name"}
@@ -76,11 +66,6 @@ class Card(PaymentMethod):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"card_brand", "first4_digits", "last4_digits",

@@ -24,8 +24,8 @@ class BankAccount(BusinessOrIndividualModel):
     Represent a Bank Account.
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
 
-    The RESOURCE attribute of this class is used to identify this Model.
-    Remember the resource on ZoopModel? BAM!
+    The :py:attr:`RESOURCE` is used to identify this Model.
+    Used to check against the ``resource`` attr of :py:class:`.ZoopObject`!
 
     Attributes:
         SAVING_TYPE: str for saving type

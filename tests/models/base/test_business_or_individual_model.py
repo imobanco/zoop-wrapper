@@ -2,22 +2,23 @@ from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
 from zoop_wrapper.models.base import BusinessOrIndividualModel
+from zoop_wrapper.exceptions import ValidationError
 
 
 class BusinessOrIndividualTestCase(SetTestCase):
     def test_set_identifier_empty(self):
         instance = MagicMock()
 
-        self.assertRaises(TypeError,
-                          BusinessOrIndividualModel.set_identifier,
-                          instance, None, None)
+        self.assertRaises(
+            ValidationError, BusinessOrIndividualModel.set_identifier, instance, None, None
+        )
 
     def test_set_identifier_both(self):
         instance = MagicMock()
 
-        self.assertRaises(TypeError,
-                          BusinessOrIndividualModel.set_identifier,
-                          instance, 'foo', 'foo')
+        self.assertRaises(
+            ValidationError, BusinessOrIndividualModel.set_identifier, instance, "foo", "foo"
+        )
 
     def test_set_identifier_taxpayer_id(self):
         instance = MagicMock(
@@ -38,16 +39,12 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_get_type_empty_raise(self):
         instance = MagicMock(ein=None, taxpayer_id=None)
 
-        self.assertRaises(TypeError,
-                          BusinessOrIndividualModel.get_type,
-                          instance)
+        self.assertRaises(ValidationError, BusinessOrIndividualModel.get_type, instance)
 
     def test_get_type_both_raise(self):
         instance = MagicMock(ein='foo', taxpayer_id='foo')
 
-        self.assertRaises(TypeError,
-                          BusinessOrIndividualModel.get_type,
-                          instance)
+        self.assertRaises(ValidationError, BusinessOrIndividualModel.get_type, instance)
 
     def test_get_type_business(self):
         instance = MagicMock(ein='foo', taxpayer_id=None,

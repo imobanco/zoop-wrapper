@@ -2,8 +2,8 @@ from unittest.mock import MagicMock
 
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from zoop_wrapper.models.base import Address
-from zoop_wrapper.models.bank_account import (
-    BankAccount, BankAccountVerificationModel)
+from zoop_wrapper.models.bank_account import BankAccount, BankAccountVerificationModel
+from zoop_wrapper.exceptions import ValidationError
 from tests.factories.bank_account import (
     BankAccountFactory, IndividualBankAccountFactory,
     BusinessBankAccountFactory
@@ -28,7 +28,7 @@ class BankAccountTestCase(TestCase, SetTestCase):
         )
 
     def test_create(self):
-        self.assertRaises(TypeError, BankAccountFactory)
+        self.assertRaises(ValidationError, BankAccountFactory)
 
     def test_create_individual(self):
         instance = IndividualBankAccountFactory()

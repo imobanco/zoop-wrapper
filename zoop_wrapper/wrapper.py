@@ -45,7 +45,8 @@ class RequestsWrapper:
         Raises:
             HttpError: when response is not ok!
 
-        Returns: processed http response
+        Returns:
+            processed http response
         """
         response.data = response.json()
 
@@ -84,8 +85,8 @@ class RequestsWrapper:
             >>> rw._construct_url(action='seller', identifier='1', subaction='bank_accounts', search='account_number=1')  # noqa:
             'rw.__base_url/seller/1/bank_accounts/search?account_number=1'
 
-        Returns: full url for the request
-
+        Returns:
+            full url for the request
         """
         url = f"{self.__base_url}/"
         if action:
@@ -115,7 +116,8 @@ class RequestsWrapper:
         Args:
             url: url to be requested
 
-        Returns: processed response
+        Returns:
+            processed response
         """
         response = requests.get(url, auth=self._auth)
         response = self.__process_response(response)
@@ -129,7 +131,8 @@ class RequestsWrapper:
             url: url to be requested
             data: data to be posted
 
-        Returns: processed response
+        Returns:
+            processed response
         """
         response = requests.post(url, json=data, auth=self._auth)
         response = self.__process_response(response)
@@ -142,7 +145,8 @@ class RequestsWrapper:
         Args:
             url: url to be requested
 
-        Returns: processed response
+        Returns:
+            processed response
         """
         response = requests.delete(url, auth=self._auth)
         response = self.__process_response(response)
@@ -172,7 +176,8 @@ class ZoopWrapper(RequestsWrapper):
         """
         property of authentication
 
-        Returns: tuple with ZoopKey
+        Returns:
+            tuple with ZoopKey
         """
         return self.__key, ''
 
@@ -184,7 +189,8 @@ class ZoopWrapper(RequestsWrapper):
             url: url to be requested
             instance: instance to be posted
 
-        Returns: processed response
+        Returns:
+            processed response
         """
         if not isinstance(instance, ResourceModel):
             raise TypeError('instance must be a ZoopModel')
@@ -193,7 +199,9 @@ class ZoopWrapper(RequestsWrapper):
     def list_sellers(self):
         """
         list sellers
-        Returns: response with instances of Seller
+
+        Returns:
+            response with instances of Seller
         """
         url = self._construct_url(action='sellers')
         return self._get(url)
@@ -205,7 +213,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response with instance of Seller
+        Returns:
+            response with instance of Seller
         """
         url = self._construct_url(action='sellers', identifier=identifier)
         return self._get(url)
@@ -217,7 +226,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response with instances of BankAccount
+        Returns:
+            response with instances of BankAccount
         """
         url = self._construct_url(action='sellers',
                                   identifier=identifier,
@@ -232,7 +242,8 @@ class ZoopWrapper(RequestsWrapper):
             id_type: 'taxpayer_id' or 'ein'
             identifier: value of identifier
 
-        Returns: response with instance of Seller
+        Returns:
+            response with instance of Seller
         """
         url = self._construct_url(action='sellers',
                                   search=f"{id_type}={identifier}")
@@ -245,7 +256,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: ein (Employer Identification Number) is equivalent to CNPJ  # noqa:
 
-        Returns: response with instance of Seller
+        Returns:
+            response with instance of Seller
         """
         return self._search_seller('ein', identifier)
 
@@ -256,7 +268,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: taxpayer_id is equivalent to CPF  # noqa:
 
-        Returns: response with instance of Seller
+        Returns:
+            response with instance of Seller
         """
         return self._search_seller('taxpayer_id', identifier)
 
@@ -324,7 +337,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             data: dict of data
 
-        Returns: response with instance of Seller
+        Returns:
+            response with instance of Seller
         """
         instance = Seller.from_dict_or_instance(data)
         url = self._construct_url(action='sellers',
@@ -338,7 +352,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response without instance
+        Returns:
+            response without instance
         """
         url = self._construct_url(action='sellers', identifier=identifier)
         return self._delete(url)
@@ -346,7 +361,9 @@ class ZoopWrapper(RequestsWrapper):
     def list_bank_accounts(self):
         """
         list all bank accounts
-        Returns: response with instances of BankAccount
+
+        Returns:
+            response with instances of BankAccount
         """
         url = self._construct_url(action='bank_accounts')
         return self._get(url)
@@ -358,7 +375,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response with instance of BankAccount
+        Returns:
+            response with instance of BankAccount
         """
         url = self._construct_url(action='bank_accounts',
                                   identifier=identifier)
@@ -371,7 +389,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             token: Token instance for BankAccount
 
-        Returns: response with instance of Token
+        Returns:
+            response with instance of Token
         """
         url = self._construct_url(action='bank_accounts', subaction='tokens')
         return self._post_instance(url, instance=token)
@@ -393,7 +412,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             data: dict of data
 
-        Returns: response with instance of BankAccount
+        Returns:
+            response with instance of BankAccount
         """
         instance = Token.from_dict_or_instance(data)
 
@@ -424,7 +444,8 @@ class ZoopWrapper(RequestsWrapper):
         """
         list all buyers
 
-        Returns: response with instances of Buyer
+        Returns:
+            response with instances of Buyer
         """
         url = self._construct_url(action='buyers')
         return self._get(url)
@@ -436,7 +457,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response with instance of Buyer
+        Returns:
+            response with instance of Buyer
         """
         url = self._construct_url(action='buyers', identifier=identifier)
         return self._get(url)
@@ -450,7 +472,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: CPF or CNPJ
 
-        Returns: response with instance of Buyer
+        Returns:
+            response with instance of Buyer
         """
         url = self._construct_url(action='buyers',
                                   search=f'taxpayer_id={identifier}')
@@ -483,7 +506,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             data: dict of data
 
-        Returns: response with instance of Buyer
+        Returns:
+            response with instance of Buyer
         """
         instance = Buyer.from_dict_or_instance(data)
         url = self._construct_url(action='buyers')
@@ -496,7 +520,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response without instance
+        Returns:
+            response without instance
         """
         url = self._construct_url(action='buyers',
                                   identifier=identifier)
@@ -506,7 +531,8 @@ class ZoopWrapper(RequestsWrapper):
         """
         list all transactions
 
-        Returns: response
+        Returns:
+            response
         """
         url = self._construct_url(action='transactions')
         return self._get(url)
@@ -518,7 +544,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response
+        Returns:
+            response
         """
         url = self._construct_url(action='sellers',
                                   identifier=identifier,
@@ -532,7 +559,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response
+        Returns:
+            response
         """
         url = self._construct_url(action='transactions', identifier=identifier)
         return self._get(url)
@@ -595,7 +623,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             data: dict of data
 
-        Returns: response with instance of Transaction
+        Returns:
+            response with instance of Transaction
         """
         instance = Transaction.from_dict_or_instance(data)
         url = self._construct_url(action='transactions')
@@ -608,7 +637,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response
+        Returns:
+            response
         """
         # @TODO: terminar de testar cancel transaction (card transaction)
         url = self._construct_url(action='transactions', identifier=identifier,
@@ -622,7 +652,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response with instance of Invoice
+        Returns:
+            response with instance of Invoice
         """
         url = self._construct_url(action='boletos', identifier=identifier)
         return self._get(url)
@@ -634,7 +665,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             identifier: uuid id
 
-        Returns: response without instance
+        Returns:
+            response without instance
         """
         url = self._construct_url(action='cards',
                                   identifier=identifier)
@@ -647,7 +679,8 @@ class ZoopWrapper(RequestsWrapper):
         Args:
             card_token: Token instance for Card
 
-        Returns: response with instance of Token
+        Returns:
+            response with instance of Token
         """
         url = self._construct_url(action='cards', subaction='tokens')
         return self._post_instance(url, instance=card_token)
@@ -669,7 +702,8 @@ class ZoopWrapper(RequestsWrapper):
             data: dict of data
             buyer_identifier: uuid of buyer
 
-        Returns: response with instance of BankAccount
+        Returns:
+            response with instance of BankAccount
         """
         token = Token.from_dict_or_instance(data)
 

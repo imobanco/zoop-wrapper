@@ -17,7 +17,8 @@ class FieldError(Exception):
         """
         transform exception to dict
 
-        Returns: dict
+        Returns:
+            dict
         """
         return {self.name: self.reason}
 

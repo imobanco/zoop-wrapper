@@ -25,7 +25,7 @@ class Card(PaymentMethod):
     https://docs.zoop.co/reference#cart%C3%A3o
 
     The :attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
+    Used to check against :attr:`.resource`!
 
     Attributes:
         card_brand: company name

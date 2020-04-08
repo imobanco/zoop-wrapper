@@ -25,11 +25,11 @@ class BankAccount(BusinessOrIndividualModel):
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
 
     The :attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
+    Used to check against :attr:`.resource`!
 
     Attributes:
-        SAVING_TYPE: str for saving type
-        CHECKING_TYPE: str for checking type
+        SAVING_TYPE(str): value for saving type
+        CHECKING_TYPE(str): value for checking type
         TYPES: set of types
 
         type: type of account
@@ -67,7 +67,7 @@ class BankAccount(BusinessOrIndividualModel):
         as :class:`.BankAccountVerificationModel`.
 
         Args:
-            type: str containing type
+            type(str): value containing type
             address: dict of data or :class:`.Address`
             verification_checklist: dict of data or :class:`.BankAccountVerificationModel`
             **kwargs:
@@ -90,7 +90,7 @@ class BankAccount(BusinessOrIndividualModel):
         Validate bank account ``type``
 
         Args:
-            type: str of type to be validated
+            type(str): value of type to be validated
 
         Raises:
             ValidationError: when ``type`` is not in :attr:`TYPES`

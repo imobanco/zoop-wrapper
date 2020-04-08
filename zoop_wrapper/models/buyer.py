@@ -8,7 +8,7 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
     https://docs.zoop.co/reference#comprador-1
 
     The :attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
+    Used to check against :attr:`.resource`!
 
     Attributes:
         default_receipt_delivery_method: ?

@@ -16,10 +16,10 @@ flake8:
 	flake8 .
 
 stubgen:
-	stubgen ZoopAPIWrapper
+	stubgen zoop_wrapper
 
 mypy:
-	mypy ZoopAPIWrapper --ignore-missing-imports
+	mypy zoop_wrapper --ignore-missing-imports
 
 coverage:
 	coverage run -m unittest

@@ -18,7 +18,7 @@ RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 def _get_model_class_from_resource(resource):
     """
-    getter for model from resource
+    Get ``model class`` from ``resource``
 
     Examples:
         >>> _get_model_class_from_resource('seller')
@@ -27,12 +27,12 @@ def _get_model_class_from_resource(resource):
         BankAccount
 
     Args:
-        resource: string of resource
+        resource(str): value of resource
 
     Raises:
-        ValueError: when the resource is not identified
+        ValueError: when the ``resource`` is not identified
 
-    Returns: ZoopModel subclass
+    Returns: :class:`.ResourceModel` subclass
     """
     if resource in RESOURCES_DICT:
         return RESOURCES_DICT.get(resource)
@@ -42,8 +42,7 @@ def _get_model_class_from_resource(resource):
 
 def get_instance_from_data(data):
     """
-    getter for model from resource.
-    Factory Pattern
+    ``Factory Pattern`` for :class:`.ResourceModel` subclasses
 
     Examples:
         >>> data = {'resource': 'seller'}
@@ -54,9 +53,9 @@ def get_instance_from_data(data):
         BankAccount.from_dict(data)
 
     Args:
-        data: dict of data
+        data (dict): data
 
-    Returns: ZoopModel subclass instance or None
+    Returns: :class:`.ResourceModel` subclass or ``None``
     """
     resource = data.get('resource')
 

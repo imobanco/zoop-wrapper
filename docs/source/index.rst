@@ -10,6 +10,7 @@ Welcome to zoop-wrapper's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   zoop_wrapper
 
 
 Indices and tables

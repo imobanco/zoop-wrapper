@@ -5,7 +5,7 @@ from tests.factories.base import (
     ZoopObjectFactory, ResourceModelFactory
 )
 from tests.factories.invoice import InvoiceFactory
-from ZoopAPIWrapper.models.transaction import (
+from zoop_wrapper.models.transaction import (
     PointOfSale, History, Transaction
 )
 

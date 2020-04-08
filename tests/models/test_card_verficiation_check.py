@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.card import CardVerificationChecklist
+from zoop_wrapper.models.card import CardVerificationChecklist
 from tests.factories.card import (
     CardVerificationChecklistFactory
 )

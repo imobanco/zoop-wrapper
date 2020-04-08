@@ -1,7 +1,7 @@
-from ZoopAPIWrapper.models.base import (
+from zoop_wrapper.models.base import (
     PaymentMethod, ZoopObject
 )
-from ZoopAPIWrapper.exceptions import (
+from zoop_wrapper.exceptions import (
     FieldError, ValidationError
 )
 

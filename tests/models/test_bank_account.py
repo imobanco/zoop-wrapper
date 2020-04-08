@@ -1,8 +1,8 @@
 from unittest.mock import MagicMock
 
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
-from ZoopAPIWrapper.models.base import Address
-from ZoopAPIWrapper.models.bank_account import (
+from zoop_wrapper.models.base import Address
+from zoop_wrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel)
 from tests.factories.bank_account import (
     BankAccountFactory, IndividualBankAccountFactory,

@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import MarketPlaceModel
+from zoop_wrapper.models.base import MarketPlaceModel
 from tests.factories.base import MarketPlaceModelFactory
 
 

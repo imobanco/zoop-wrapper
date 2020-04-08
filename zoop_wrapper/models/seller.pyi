@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, FinancialModel as FinancialModel, Person as Person, SocialModel as SocialModel
+from zoop_wrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, FinancialModel as FinancialModel, Person as Person, SocialModel as SocialModel
 from typing import Any, Optional, Union, Dict
 
 class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):

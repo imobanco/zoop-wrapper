@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import PaymentMethod, Address
+from zoop_wrapper.models.base import PaymentMethod, Address
 from tests.factories.base import (
     PaymentMethodFactory)
 

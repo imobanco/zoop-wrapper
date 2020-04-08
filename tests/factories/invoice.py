@@ -1,7 +1,7 @@
 from factory import SubFactory
 from factory.faker import Faker
 
-from ZoopAPIWrapper.models.invoice import (
+from zoop_wrapper.models.invoice import (
     BillingConfiguration, BillingInstructions, Invoice
 )
 from tests.factories.base import (

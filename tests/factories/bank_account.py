@@ -2,7 +2,7 @@ from factory import SubFactory, LazyFunction
 from factory.faker import Faker
 from pycpfcnpj import gen
 
-from ZoopAPIWrapper.models.bank_account import (
+from zoop_wrapper.models.bank_account import (
     BankAccount, BankAccountVerificationModel
 )
 from tests.factories.base import (

@@ -1,5 +1,5 @@
 from tests.utils import APITestCase
-from ZoopAPIWrapper.models.transaction import Transaction
+from zoop_wrapper.models.transaction import Transaction
 from tests.factories.transaction import TransactionFactory
 
 

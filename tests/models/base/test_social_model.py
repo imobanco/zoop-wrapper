@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import SocialModel
+from zoop_wrapper.models.base import SocialModel
 from tests.factories.base import SocialModelFactory
 
 

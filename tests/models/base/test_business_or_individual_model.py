@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import BusinessOrIndividualModel
+from zoop_wrapper.models.base import BusinessOrIndividualModel
 
 
 class BusinessOrIndividualTestCase(SetTestCase):

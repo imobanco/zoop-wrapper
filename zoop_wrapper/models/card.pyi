@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import PaymentMethod as PaymentMethod, VerificationModel as VerificationModel
+from zoop_wrapper.models.base import PaymentMethod as PaymentMethod, VerificationModel as VerificationModel
 from typing import Any, Optional, Union, Dict
 
 class CardVerificationChecklist(VerificationModel):

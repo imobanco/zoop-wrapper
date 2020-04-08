@@ -1,7 +1,7 @@
 from factory import SubFactory
 from factory.faker import Faker
 
-from ZoopAPIWrapper.models.card import (
+from zoop_wrapper.models.card import (
     CardVerificationChecklist, Card
 )
 from tests.factories.base import (

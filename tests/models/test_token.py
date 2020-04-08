@@ -1,9 +1,9 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.card import Card
-from ZoopAPIWrapper.models.token import Token
+from zoop_wrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.card import Card
+from zoop_wrapper.models.token import Token
 from tests.factories.token import (
     CardTokenFactory, CreateCardTokenFactory,
     BankAccountTokenFactory, CreateIndividualBankAccountTokenFactory,

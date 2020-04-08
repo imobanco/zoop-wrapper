@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.buyer import Buyer
+from zoop_wrapper.models.buyer import Buyer
 from tests.factories.base import (
     MarketPlaceModelFactory, PersonFactory,
     SocialModelFactory, FinancialModelFactory)

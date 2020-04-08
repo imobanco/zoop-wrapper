@@ -1,7 +1,7 @@
 import copy
 
-from ZoopAPIWrapper.utils import get_logger
-from ZoopAPIWrapper.exceptions import ValidationError
+from zoop_wrapper.utils import get_logger
+from zoop_wrapper.exceptions import ValidationError
 
 
 logger = get_logger('models')

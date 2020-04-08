@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, MarketPlaceModel as MarketPlaceModel, VerificationModel as VerificationModel
+from zoop_wrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, MarketPlaceModel as MarketPlaceModel, VerificationModel as VerificationModel
 from typing import Any, Optional, Set
 
 class BankAccountVerificationModel(VerificationModel):

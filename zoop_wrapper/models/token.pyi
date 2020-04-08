@@ -1,7 +1,7 @@
-from ZoopAPIWrapper.models.bank_account import BankAccount as BankAccount
-from ZoopAPIWrapper.models.base import BusinessOrIndividualModel as BusinessOrIndividualModel, ResourceModel as ResourceModel
-from ZoopAPIWrapper.models.card import Card as Card
-from ZoopAPIWrapper.utils import get_logger as get_logger
+from zoop_wrapper.models.bank_account import BankAccount as BankAccount
+from zoop_wrapper.models.base import BusinessOrIndividualModel as BusinessOrIndividualModel, ResourceModel as ResourceModel
+from zoop_wrapper.models.card import Card as Card
+from zoop_wrapper.utils import get_logger as get_logger
 from typing import Any, Optional, Set, Dict, Union
 
 logger: Any

@@ -1,14 +1,14 @@
 import requests
 
-from ZoopAPIWrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
-from ZoopAPIWrapper.models.base import ResourceModel
-from ZoopAPIWrapper.models.bank_account import BankAccount
-from ZoopAPIWrapper.models.buyer import Buyer
-from ZoopAPIWrapper.models.seller import Seller
-from ZoopAPIWrapper.models.token import Token
-from ZoopAPIWrapper.models.transaction import Transaction
-from ZoopAPIWrapper.models.utils import get_instance_from_data
-from ZoopAPIWrapper.utils import (
+from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
+from zoop_wrapper.models.base import ResourceModel
+from zoop_wrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.buyer import Buyer
+from zoop_wrapper.models.seller import Seller
+from zoop_wrapper.models.token import Token
+from zoop_wrapper.models.transaction import Transaction
+from zoop_wrapper.models.utils import get_instance_from_data
+from zoop_wrapper.utils import (
     get_logger, config_logging
 )
 

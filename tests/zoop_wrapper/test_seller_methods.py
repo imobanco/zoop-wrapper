@@ -2,8 +2,8 @@ from pycpfcnpj import gen
 from requests import HTTPError
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.wrapper import MARKETPLACE_ID, ZOOP_KEY
-from ZoopAPIWrapper.models.seller import Seller
+from zoop_wrapper.wrapper import MARKETPLACE_ID, ZOOP_KEY
+from zoop_wrapper.models.seller import Seller
 from tests.factories.seller import (
     BusinessSellerFactory, IndividualSellerFactory
 )

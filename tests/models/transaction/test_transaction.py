@@ -1,11 +1,11 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.transaction import (
+from zoop_wrapper.models.transaction import (
     Transaction, PointOfSale, History
 )
-from ZoopAPIWrapper.models.card import Card
-from ZoopAPIWrapper.models.invoice import Invoice
+from zoop_wrapper.models.card import Card
+from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
 
 

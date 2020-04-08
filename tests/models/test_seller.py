@@ -1,7 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
-from ZoopAPIWrapper.models.seller import Seller
+from zoop_wrapper.models.seller import Seller
 from tests.factories.seller import (
     SellerFactory, IndividualSellerFactory, BusinessSellerFactory
 )
@@ -106,7 +106,7 @@ class SellerTestCase(TestCase, SetTestCase):
 
         self.assertIsInstance(instance, Seller)
 
-    @patch('ZoopAPIWrapper.models.seller.Person.init_custom_fields')
+    @patch('zoop_wrapper.models.seller.Person.init_custom_fields')
     def test_init_custom_fields_individual(self, mocked_person_init):
         instance = MagicMock(
             INDIVIDUAL_TYPE='foo',
@@ -119,8 +119,8 @@ class SellerTestCase(TestCase, SetTestCase):
         self.assertIsInstance(mocked_person_init, MagicMock)
         mocked_person_init.assert_called_once()
 
-    @patch('ZoopAPIWrapper.models.seller.Person.from_dict_or_instance')
-    @patch('ZoopAPIWrapper.models.seller.Address.from_dict_or_instance')
+    @patch('zoop_wrapper.models.seller.Person.from_dict_or_instance')
+    @patch('zoop_wrapper.models.seller.Address.from_dict_or_instance')
     def test_init_custom_fields_business(
             self, mocked_address_from_dict, mocked_person_from_dict):
         instance = MagicMock(

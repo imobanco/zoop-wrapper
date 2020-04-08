@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.card import Card, CardVerificationChecklist
+from zoop_wrapper.models.card import Card, CardVerificationChecklist
 from tests.factories.card import (
     CardFactory
 )

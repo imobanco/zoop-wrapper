@@ -1,5 +1,5 @@
 from logging import Logger
-from ZoopAPIWrapper.models.base import ResourceModel
+from zoop_wrapper.models.base import ResourceModel
 from typing import Any, List, Dict, Union
 
 logger: Logger

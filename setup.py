@@ -1,9 +1,9 @@
 from setuptools import setup
 
-setup(name='ZoopAPIWrapper',
+setup(name='zoop_wrapper',
       version='0.0.1',
       description='',
       url='https://github.com/imobanco/ZoopAPIWrapper',
       author='Imobanco',
-      packages=['ZoopAPIWrapper'],
+      packages=['zoop_wrapper'],
       )

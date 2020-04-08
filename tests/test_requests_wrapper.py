@@ -1,7 +1,7 @@
 from unittest.mock import patch
 
 from tests.utils import APITestCase
-from ZoopAPIWrapper.wrapper import RequestsWrapper
+from zoop_wrapper.wrapper import RequestsWrapper
 
 
 class RequestWrapperTestCase(APITestCase):
@@ -19,7 +19,7 @@ class RequestWrapperTestCase(APITestCase):
 
         self.assertEqual(url, f'foo/teste/123/')
 
-    @patch('ZoopAPIWrapper.wrapper.logger')
+    @patch('zoop_wrapper.wrapper.logger')
     def test_process_response_error(self, mocked_logger):
         response = self.build_response_mock(
             content={"error": {"message": "foo"}})
@@ -29,7 +29,7 @@ class RequestWrapperTestCase(APITestCase):
         self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
         self.assertEqual(processed_response.reason, "foo")
 
-    @patch('ZoopAPIWrapper.wrapper.logger')
+    @patch('zoop_wrapper.wrapper.logger')
     def test_process_response_error_reasons(self, mocked_logger):
         response = self.build_response_mock(
             content={"error": {"message": "foo", "reasons": ['bla bla bla']}})

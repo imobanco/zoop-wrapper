@@ -1,4 +1,4 @@
-from ZoopAPIWrapper.models.base import (
+from zoop_wrapper.models.base import (
     BusinessOrIndividualModel, Address, VerificationModel)
 
 

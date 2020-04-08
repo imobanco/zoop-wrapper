@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.transaction import History
+from zoop_wrapper.models.transaction import History
 
 
 class HistoryTestCase(SetTestCase):

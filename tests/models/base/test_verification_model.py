@@ -1,5 +1,5 @@
 from tests.utils import SetTestCase
-from ZoopAPIWrapper.models.base import VerificationModel
+from zoop_wrapper.models.base import VerificationModel
 from tests.factories.base import (
     VerificationModelFactory)
 

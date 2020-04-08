@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
-from ZoopAPIWrapper.models.base import Person, Address
+from zoop_wrapper.models.base import Person, Address
 from tests.factories.base import PersonFactory
 
 

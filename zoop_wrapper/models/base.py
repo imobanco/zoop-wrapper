@@ -17,10 +17,10 @@ class ZoopObject(object):
 
     def __init__(self, allow_empty=False, **kwargs):
         """
-        initialize all fields from get_all_fields method as
-        attributes from kwargs on instance.
+        initialize ``all fields`` from :meth:`get_all_fields` as
+        ``attributes`` from ``kwargs`` on instance.
 
-        Then validates fields.
+        Then call :meth:`validate_fields`.
 
         Args:
             allow_empty: boolean which disable validation of required fields
@@ -42,8 +42,8 @@ class ZoopObject(object):
     def init_custom_fields(self, **kwargs):
         """
         this method exists to set custom attributes such
-        as :py:class:`ZoopObject` instances. Since all attributes set on
-        :py:meth:`__init__` are ``dict's`` or ``variables``.
+        as :class:`ZoopObject` instances. Since all attributes set on
+        :meth:`__init__` are ``dict's`` or ``variables``.
 
         Args:
             **kwargs: dictionary of args
@@ -59,8 +59,8 @@ class ZoopObject(object):
         if ``data`` is ``None`` create a ``new empty dict``.\n
 
         ``data`` may be ``None`` for the cases we are explicitly calling
-        with ``allow_empty=True`` on :py:meth:`init_custom_fields` for some
-        custom :py:class:`ZoopObject` instance set.
+        with ``allow_empty=True`` on :meth:`init_custom_fields` for some
+        custom :class:`ZoopObject` instance set.
         Such as::
             instance = ZoopObject()
             setattr(
@@ -105,10 +105,10 @@ class ZoopObject(object):
     @classmethod
     def from_dict_or_instance(cls, data, **kwargs):
         """
-        check if ``data`` is already a :py:class:`ZoopObject` or
+        check if ``data`` is already a :class:`ZoopObject` or
         ``subclass``.\n
 
-        If not call :py:meth:`from_dict`.
+        If not call :meth:`from_dict`.
 
         Args:
             data: dict of data or instance
@@ -127,14 +127,14 @@ class ZoopObject(object):
         Verify if ``value`` passed is considered ``empty``!
 
         ``value`` may be ``None``.
-        As we set on :py:meth:`__init__`::
+        As we set on :meth:`__init__`::
             value = kwargs.get(field_name, None)
 
-        ``value`` may be ``{}`` if it was a :py:class:`ZoopObject`
+        ``value`` may be ``{}`` if it was a :class:`ZoopObject`
         with allow_empty! \n
 
         ``value`` may be ``[{}]`` if it was a ``list`` of
-        :py:class:`ZoopObject`'s with ``allow_empty``!!
+        :class:`ZoopObject`'s with ``allow_empty``!!
 
         Args:
             value: Value to be verified
@@ -179,15 +179,15 @@ class ZoopObject(object):
 
     def validate_fields(self, raise_exception=True, **kwargs):
         """
-        Validate fields returned from :py:meth:`get_validation_fields`.\n
+        Validate fields returned from :meth:`get_validation_fields`.\n
 
-        if :py:attr:`_allow_empty` is ``True`` don't validate!
+        if :attr:`_allow_empty` is ``True`` don't validate!
 
         Args:
             raise_exception: boolean to raise or not exception
 
         Raises:
-            :py:class:`.ValidationError`: if there's some ``required field`` missing and ``raise_exception==True``
+            :class:`.ValidationError`: if there's some ``required field`` missing and ``raise_exception==True``
 
         """
         if self._allow_empty:
@@ -209,10 +209,10 @@ class ZoopObject(object):
         This is necessary for classes/instances with
         different fields based on type.\n
 
-        Such as :py:class:`.Seller`, :py:class:`.BankAccount`,
-        :py:class:`.BillingConfiguration` and :py:class:`.Token`.\n
+        Such as :class:`.Seller`, :class:`.BankAccount`,
+        :class:`.BillingConfiguration` and :class:`.Token`.\n
 
-        Defaults to :py:meth:`get_required_fields`.
+        Defaults to :meth:`get_required_fields`.
 
         Returns: ``set`` of fields to be used on validation
         """
@@ -225,10 +225,10 @@ class ZoopObject(object):
         This is necessary for classes/instances with
         different fields based on type.\n
 
-        Such as :py:class:`.Seller`, :py:class:`.BankAccount`,
-        :py:class:`.BillingConfiguration` and :py:class:`.Token`.\n
+        Such as :class:`.Seller`, :class:`.BankAccount`,
+        :class:`.BillingConfiguration` and :class:`.Token`.\n
 
-        Defaults to :py:meth:`get_fields`.
+        Defaults to :meth:`get_fields`.
 
         Returns: ``set`` of all fields
         """
@@ -288,7 +288,7 @@ class ResourceModel(ZoopObject):
 
 class MarketPlaceModel(ResourceModel):
     """
-    This class represents a :py:class:`.ResourceModel` which belongs
+    This class represents a :class:`.ResourceModel` which belongs
     to some ``marketplace`` from ``Zoop``.
 
     Attributes:
@@ -344,10 +344,10 @@ class Person(ZoopObject):
 
     def init_custom_fields(self, address=None, **kwargs):
         """
-        Initialize :py:attr:`address` with :py:class:`.Address`
+        Initialize :attr:`address` with :class:`.Address`
 
         Args:
-            address: dict of data or :py:class:`.Address`
+            address: dict of data or :class:`.Address`
             **kwargs:
         """
         setattr(self, 'address',
@@ -449,10 +449,10 @@ class PaymentMethod(ResourceModel):
 
     def init_custom_fields(self, address=None, **kwargs):
         """
-        initialize :py:attr:`address` with :py:class:`.Address`
+        initialize :attr:`address` with :class:`.Address`
 
         Args:
-            address: dict of data or :py:class:`.Address`
+            address: dict of data or :class:`.Address`
             **kwargs: dic of kwargs
         """
         setattr(
@@ -497,7 +497,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        call :py:meth:`set_identifier`.
+        call :meth:`set_identifier`.
 
         Args:
             taxpayer_id: cpf value
@@ -512,7 +512,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         validate tuple of identifiers values
 
         Raises:
-            :py:class`.ValidationError`: when it's passed both identifiers or none
+            :class`.ValidationError`: when it's passed both identifiers or none
         """
         if ((taxpayer_id is not None and ein is not None) or
                 (taxpayer_id is None and ein is None)):
@@ -527,7 +527,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         get the ``dynamic type`` from instance
 
-        Returns: :py:attr:`BUSINESS_TYPE` or :py:attr:`INDIVIDUAL_TYPE`
+        Returns: :attr:`BUSINESS_TYPE` or :attr:`INDIVIDUAL_TYPE`
         """
         individual_identifier = getattr(
             self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
@@ -546,19 +546,19 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def get_type_uri(self):
         """
-        get the ``dynamic type uri`` for instance based on :py:meth:`get_type`
+        get the ``dynamic type uri`` for instance based on :meth:`get_type`
 
-        Returns: uri string for type from :py:attr:`URI`
+        Returns: uri string for type from :attr:`URI`
         """
         return self.URI.get(self.get_type())
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        set :py:attr:`taxpayer_id` or :py:attr:`ein` identifier.
+        set :attr:`taxpayer_id` or :attr:`ein` identifier.
         Exactly one of then have to be not None.\n
 
-        ``kwargs`` are there to be called from :py:meth:`.Seller.init_custom_fields`
-        and :py:meth:`.BankAccount.init_custom_fields` without getting
+        ``kwargs`` are there to be called from :meth:`.Seller.init_custom_fields`
+        and :meth:`.BankAccount.init_custom_fields` without getting
         ``taxpayer_id`` or ``ein`` variables.
 
         Args:
@@ -579,11 +579,11 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         Get ``validation fields`` for instance.
 
-        if ``type`` is :py:attr:`BUSINESS_TYPE` then call
-        :py:meth:`get_business_required_fields`
+        if ``type`` is :attr:`BUSINESS_TYPE` then call
+        :meth:`get_business_required_fields`
 
-        else ``type`` is :py:attr:`INDIVIDUAL_TYPE`! then call
-        :py:meth:`get_individual_required_fields`
+        else ``type`` is :attr:`INDIVIDUAL_TYPE`! then call
+        :meth:`get_individual_required_fields`
 
         Returns: ``set`` of fields to be used on validation
         """
@@ -596,13 +596,13 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         """
         get ``all fields`` for instance.
 
-        if ``type`` is :py:attr:`BUSINESS_TYPE` then call
-        :py:meth:`get_business_required_fields` and
-        :py:meth:`get_business_non_required_fields`
+        if ``type`` is :attr:`BUSINESS_TYPE` then call
+        :meth:`get_business_required_fields` and
+        :meth:`get_business_non_required_fields`
 
-        else ``type`` is :py:attr:`INDIVIDUAL_TYPE`! then call
-        :py:meth:`get_individual_required_fields` and
-        :py:meth:`get_individual_non_required_fields`
+        else ``type`` is :attr:`INDIVIDUAL_TYPE`! then call
+        :meth:`get_individual_required_fields` and
+        :meth:`get_individual_non_required_fields`
 
         Returns: set of all fields
         """
@@ -622,7 +622,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def get_business_non_required_fields(cls):
         """
         get ``set`` of ``non required fields`` for
-        :py:attr:`BUSINESS_TYPE`.
+        :attr:`BUSINESS_TYPE`.
 
         Returns: ``set`` of fields
         """
@@ -632,7 +632,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def get_business_required_fields(cls):
         """
         get ``set`` of ``required fields`` for
-        :py:attr:`BUSINESS_TYPE`
+        :attr:`BUSINESS_TYPE`
 
         Returns: ``set`` of fields
         """
@@ -645,7 +645,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def get_individual_non_required_fields(cls):
         """
         get ``set`` of ``non required fields`` for
-        :py:attr:`INDIVIDUAL_TYPE`
+        :attr:`INDIVIDUAL_TYPE`
 
         Returns: ``set`` of fields
         """
@@ -655,7 +655,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     def get_individual_required_fields(cls):
         """
         get ``set`` of ``required fields`` for
-        :py:attr:`INDIVIDUAL_TYPE`
+        :attr:`INDIVIDUAL_TYPE`
 
         Returns: ``set`` of fields
         """

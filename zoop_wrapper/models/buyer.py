@@ -7,8 +7,8 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
     Represent a buyer.
     https://docs.zoop.co/reference#comprador-1
 
-    The :py:attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :py:class:`.ZoopObject`!
+    The :attr:`RESOURCE` is used to identify this Model.
+    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
 
     Attributes:
         default_receipt_delivery_method: ?

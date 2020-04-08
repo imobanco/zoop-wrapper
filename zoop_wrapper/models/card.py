@@ -24,8 +24,8 @@ class Card(PaymentMethod):
     Represent a Card.
     https://docs.zoop.co/reference#cart%C3%A3o
 
-    The :py:attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :py:class:`.ZoopObject`!
+    The :attr:`RESOURCE` is used to identify this Model.
+    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
 
     Attributes:
         card_brand: company name
@@ -44,11 +44,11 @@ class Card(PaymentMethod):
 
     def init_custom_fields(self, verification_checklist=None, **kwargs):
         """
-        Initialize :py:attr:`verification_checklist` as
-        :py:class:`CardVerificationChecklist`
+        Initialize :attr:`verification_checklist` as
+        :class:`CardVerificationChecklist`
 
         Args:
-            verification_checklist: dict of data or :py:class:`CardVerificationChecklist`
+            verification_checklist: dict of data or :class:`CardVerificationChecklist`
             **kwargs: kwargs
         """
         setattr(

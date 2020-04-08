@@ -24,8 +24,8 @@ class BankAccount(BusinessOrIndividualModel):
     Represent a Bank Account.
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
 
-    The :py:attr:`RESOURCE` is used to identify this Model.
-    Used to check against the ``resource`` attr of :py:class:`.ZoopObject`!
+    The :attr:`RESOURCE` is used to identify this Model.
+    Used to check against the ``resource`` attr of :class:`.ZoopObject`!
 
     Attributes:
         SAVING_TYPE: str for saving type
@@ -61,15 +61,15 @@ class BankAccount(BusinessOrIndividualModel):
                            verification_checklist=None,
                            **kwargs):
         """
-        Initialize :py:attr:`address` as :py:class:`.Address`.\n
+        Initialize :attr:`address` as :class:`.Address`.\n
 
-        Initialize :py:attr:`verification_checklist`
-        as :py:class:`.BankAccountVerificationModel`.
+        Initialize :attr:`verification_checklist`
+        as :class:`.BankAccountVerificationModel`.
 
         Args:
             type: str containing type
-            address: dict of data or :py:class:`.Address`
-            verification_checklist: dict of data or :py:class:`.BankAccountVerificationModel`
+            address: dict of data or :class:`.Address`
+            verification_checklist: dict of data or :class:`.BankAccountVerificationModel`
             **kwargs:
         """
         self.set_identifier(**kwargs)
@@ -93,7 +93,7 @@ class BankAccount(BusinessOrIndividualModel):
             type: str of type to be validated
 
         Raises:
-            ValidationError: when ``type`` is not in :py:attr:`TYPES`
+            ValidationError: when ``type`` is not in :attr:`TYPES`
         """
         if type not in cls.TYPES:
             raise ValidationError(cls, FieldError('type', f'type must one of {cls.TYPES}'))

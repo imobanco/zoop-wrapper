@@ -1,8 +1,5 @@
-zoop\_wrapper.models package
+models
 ============================
-
-Submodules
-----------
 
 zoop\_wrapper.models.bank\_account module
 -----------------------------------------
@@ -72,15 +69,6 @@ zoop\_wrapper.models.utils module
 ---------------------------------
 
 .. automodule:: zoop_wrapper.models.utils
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: zoop_wrapper.models
    :members:
    :undoc-members:
    :show-inheritance:

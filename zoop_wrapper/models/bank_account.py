@@ -13,11 +13,6 @@ class BankAccountVerificationModel(VerificationModel):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {'deposit_check'}
@@ -66,15 +61,15 @@ class BankAccount(BusinessOrIndividualModel):
                            verification_checklist=None,
                            **kwargs):
         """
-        Initialize address as Address model.
-        Initialize verification_checklist
-        as BankAccountVerificationModel model.
+        Initialize :py:attr:`address` as :py:class:`.Address`.\n
+
+        Initialize :py:attr:`verification_checklist`
+        as :py:class:`.BankAccountVerificationModel`.
 
         Args:
             type: str containing type
-            address: dict of data or instance of Address
-            verification_checklist: dict of data or
-                instance of BankAccountVerificationModel
+            address: dict of data or :py:class:`.Address`
+            verification_checklist: dict of data or :py:class:`.BankAccountVerificationModel`
             **kwargs:
         """
         self.set_identifier(**kwargs)
@@ -92,24 +87,19 @@ class BankAccount(BusinessOrIndividualModel):
     @classmethod
     def validate_type(cls, type):
         """
-        Validate bank account type
+        Validate bank account ``type``
 
         Args:
             type: str of type to be validated
 
         Raises:
-            ValidationError: when type is not in valid TYPES
+            ValidationError: when ``type`` is not in :py:attr:`TYPES`
         """
         if type not in cls.TYPES:
             raise ValidationError(cls, FieldError('type', f'type must one of {cls.TYPES}'))
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"type", "holder_name", "bank_code",

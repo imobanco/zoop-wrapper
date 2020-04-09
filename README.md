@@ -73,4 +73,4 @@ A documentação da API da zoop não é uma das melhores, mas está disponível 
 Atenção: Não tenho conhecimento se TODOS testes podem ser realizados testes sem ônus ao desenvolvedor. 
 As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
 
-Saiba mais em: https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop
+Saiba mais na [documentação oficial da Zoop](https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop)

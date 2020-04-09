@@ -17,13 +17,10 @@ make config.env
 ```
 
 ## Docker + docker-compose
-
 Install [docker-ce](https://docs.docker.com/install/) and 
 [docker-compose](https://docs.docker.com/compose/install/) from each documentation.
 
-
 ### Running using Docker (development)
-
 First build a image named `zoopapiwrapper`.
 
 `docker build --tag zoopapiwrapper .`
@@ -40,7 +37,6 @@ bash
 ```
 
 ### Running using Docker Compose (development)
-
 First build:
 
 `docker-compose build`

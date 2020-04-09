@@ -1,4 +1,4 @@
-# zoop-wrapper
+![alt text](https://zoop.com.br/wp-content/themes/zoop/img/logo.svg "Zoop")
 [![tests](https://img.shields.io/github/workflow/status/imobanco/ZoopAPIWrapper/Python%20application%20tests)](https://github.com/imobanco/ZoopAPIWrapper/actions)
 [![PyPI - Downloads](https://img.shields.io/pypi/dm/zoop-wrapper)](https://pypi.org/project/zoop-wrapper/)
 ![PyPI](https://img.shields.io/pypi/v/zoop-wrapper)
@@ -11,9 +11,23 @@
 ![GitHub](https://img.shields.io/github/license/imobanco/ZoopAPIWrapper)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/imobanco/ZoopAPIWrapper)
 
-Receba e faça pagamentos com a Zoop
+
+# Introdução
+Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
+
+Você pode acessar a documentação oficial da Zoop acessando esse [link](https://docs.zoop.co/).
 
 ## Recursos disponíveis
+
+### Market place
+- [ ]  detalhes
+
+### webhooks
+- [ ]  Cadastro
+- [ ]  listagem
+- [ ]  detalhes
+- [ ]  remoção
+
 ### Buyer
 - [x]  Cadastro
 - [x]  listagem
@@ -26,13 +40,18 @@ Receba e faça pagamentos com a Zoop
 - [x]  detalhes
 - [x]  remoção
 
+### Token
+- [x]  Cadastro de token cartão de crédito
+- [x]  Cadastro de token conta bancária
+- [ ]  detalhes
+
 ### Cartão de crédito
-- [x]  Cadastro
+- [x]  Conexão
 - [x]  detalhes
 - [ ]  remoção
 
 ### Conta bancária
-- [x]  Cadastro
+- [x]  Conexão
 - [x]  listagem
 - [x]  detalhes
 - [ ]  remoção

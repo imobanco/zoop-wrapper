@@ -11,7 +11,6 @@
 ![GitHub](https://img.shields.io/github/license/imobanco/ZoopAPIWrapper)
 ![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/imobanco/ZoopAPIWrapper)
 
-
 # Introdução
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
 
@@ -20,52 +19,51 @@ Você pode acessar a documentação oficial da Zoop acessando esse [link](https:
 ## Recursos disponíveis
 
 ### Market place
-- [ ]  detalhes
+- [ ] detalhes
 
 ### webhooks
-- [ ]  Cadastro
-- [ ]  listagem
-- [ ]  detalhes
-- [ ]  remoção
+- [ ] Cadastro
+- [ ] listagem
+- [ ] detalhes
+- [ ] remoção
 
 ### Buyer
-- [x]  Cadastro
-- [x]  listagem
-- [x]  detalhes
-- [x]  remoção
+- [x] Cadastro
+- [x] listagem
+- [x] detalhes
+- [x] remoção
 
 ### Seller
-- [x]  Cadastro
-- [x]  listagem
-- [x]  detalhes
-- [x]  remoção
+- [x] Cadastro
+- [x] listagem
+- [x] detalhes
+- [x] remoção
 
 ### Token
-- [x]  Cadastro de token cartão de crédito
-- [x]  Cadastro de token conta bancária
-- [ ]  detalhes
+- [x] Cadastro de token cartão de crédito
+- [x] Cadastro de token conta bancária
+- [ ] detalhes
 
 ### Cartão de crédito
-- [x]  Conexão
-- [x]  detalhes
-- [ ]  remoção
+- [x] Conexão
+- [x] detalhes
+- [ ] remoção
 
 ### Conta bancária
-- [x]  Conexão
-- [x]  listagem
-- [x]  detalhes
-- [ ]  remoção
+- [x] Conexão
+- [x] listagem
+- [x] detalhes
+- [ ] remoção
 
 ### Boleto
-- [x]  detalhes
+- [x] detalhes
 
 ### Transação
-- [x]  listagem
-- [x]  detalhes
-- [x]  cancelamento
-- [x]  Cadastro transação boleto
-- [ ]  Cadastro transação cartão de crédito
-
+- [x] listagem
+- [x] detalhes
+- [x] cancelamento
+- [x] Cadastro transação boleto
+- [ ] Cadastro transação cartão de crédito
 
 ## Modo de usar
 A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST.

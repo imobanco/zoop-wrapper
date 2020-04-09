@@ -22,7 +22,7 @@ Install [docker-ce](https://docs.docker.com/install/) and
 [docker-compose](https://docs.docker.com/compose/install/) from each documentation.
 
 
-### Running using Docker (development):
+### Running using Docker (development)
 
 First build a image named `zoopapiwrapper`.
 
@@ -39,7 +39,7 @@ zoopapiwrapper \
 bash
 ```
 
-### Running using Docker Compose (development):
+### Running using Docker Compose (development)
 
 First build:
 

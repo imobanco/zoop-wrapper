@@ -1,6 +1,8 @@
 name: pypi deploy
 
-on: [push]
+on:
+  release:
+    types: [created]
 
 jobs:
   deploy:

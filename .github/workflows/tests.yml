@@ -29,7 +29,7 @@ jobs:
       - name: mypy check
         run: make mypy
 
-  test_36:
+  linux_36:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -44,7 +44,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_37:
+  linux_37:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -59,7 +59,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_38:
+  linux_38:
     runs-on: ubuntu-18.04
     steps:
       - uses: actions/checkout@v2
@@ -74,7 +74,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_w_36:
+  windows_36:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
@@ -89,7 +89,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_w_37:
+  windows_37:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
@@ -104,7 +104,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_w_38:
+  windows_38:
     runs-on: windows-2019
     steps:
       - uses: actions/checkout@v2
@@ -119,7 +119,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_m_36:
+  macos_36:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
@@ -134,7 +134,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_m_37:
+  macos_37:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2
@@ -149,7 +149,7 @@ jobs:
       - name: Test with pytest
         run: make test
 
-  test_m_38:
+  macos_38:
     runs-on: macos-10.15
     steps:
       - uses: actions/checkout@v2

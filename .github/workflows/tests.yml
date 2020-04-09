@@ -73,3 +73,93 @@ jobs:
         run: make config
       - name: Test with pytest
         run: make test
+
+  test_w_36:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test_w_37:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test_w_38:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test_m_36:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test_m_37:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test_m_38:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test

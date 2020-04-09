@@ -1,4 +1,4 @@
-Transações
+Exemplos de transações
 ========================================
 
 .. toctree::

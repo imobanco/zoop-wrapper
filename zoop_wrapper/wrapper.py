@@ -1,5 +1,7 @@
 import requests
 
+from decouple import config
+
 from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from zoop_wrapper.models.base import ResourceModel
 from zoop_wrapper.models.bank_account import BankAccount
@@ -161,12 +163,20 @@ class ZoopWrapper(RequestsWrapper):
         __key: zoop auth token
     """
 
-    def __init__(self):
-        self.__marketplace_id = MARKETPLACE_ID
-        self.__key = ZOOP_KEY
+    BASE_URL = "https://api.zoop.ws/v1/marketplaces/"
+
+    def __init__(self, marketplace_id=None, key=None):
+        if marketplace_id is None:
+            marketplace_id = MARKETPLACE_ID
+
+        if key is None:
+            key = ZOOP_KEY
+
+        self.__marketplace_id = marketplace_id
+        self.__key = key
 
         super().__init__(
-            base_url=f"https://api.zoop.ws/v1/marketplaces/" f"{self.__marketplace_id}"
+            base_url=f"{self.BASE_URL}{self.__marketplace_id}"
         )
 
     @property

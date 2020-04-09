@@ -1,4 +1,7 @@
-from zoop_wrapper.models.base import PaymentMethod as PaymentMethod, ZoopObject as ZoopObject
+from zoop_wrapper.models.base import (
+    PaymentMethod as PaymentMethod,
+    ZoopObject as ZoopObject,
+)
 from typing import Any, Optional, List
 
 class BillingConfiguration(ZoopObject):
@@ -15,7 +18,9 @@ class BillingConfiguration(ZoopObject):
     limit_date: Optional[str]
     amount: Optional[str]
     percentage: Optional[str]
-    def init_custom_fields(self, mode: Optional[str] = ..., is_discount: bool = ..., **kwarg: Any) -> None: ...
+    def init_custom_fields(
+        self, mode: Optional[str] = ..., is_discount: bool = ..., **kwarg: Any
+    ) -> None: ...
     def validate_mode(self, mode: str): ...
     def set_type(self, mode: str, is_discount: bool) -> None: ...
     def get_validation_fields(self) -> set: ...
@@ -35,7 +40,13 @@ class BillingInstructions(ZoopObject):
     late_fee: BillingConfiguration
     interest: BillingConfiguration
     discount: List[BillingConfiguration]
-    def init_custom_fields(self, late_fee: Optional[Any] = ..., interest: Optional[Any] = ..., discount: Optional[Any] = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(
+        self,
+        late_fee: Optional[Any] = ...,
+        interest: Optional[Any] = ...,
+        discount: Optional[Any] = ...,
+        **kwargs: Any
+    ) -> None: ...
     @classmethod
     def get_required_fields(cls) -> set: ...
 

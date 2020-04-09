@@ -1,6 +1,4 @@
-from zoop_wrapper.models.base import (
-    PaymentMethod, VerificationModel
-)
+from zoop_wrapper.models.base import PaymentMethod, VerificationModel
 
 
 class CardVerificationChecklist(VerificationModel):
@@ -14,9 +12,7 @@ class CardVerificationChecklist(VerificationModel):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {"security_code_check"}
-        )
+        return fields.union({"security_code_check"})
 
 
 class Card(PaymentMethod):
@@ -40,7 +36,8 @@ class Card(PaymentMethod):
         fingerprint: unique card identifier from company of card ?
         verification_checklist: CardVerificationChecklist model
     """
-    RESOURCE = 'card'
+
+    RESOURCE = "card"
 
     def init_custom_fields(self, verification_checklist=None, **kwargs):
         """
@@ -52,23 +49,30 @@ class Card(PaymentMethod):
             **kwargs: kwargs
         """
         setattr(
-            self, 'verification_checklist',
+            self,
+            "verification_checklist",
             CardVerificationChecklist.from_dict_or_instance(
-                verification_checklist, allow_empty=True)
+                verification_checklist, allow_empty=True
+            ),
         )
 
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {"expiration_month", "expiration_year", "holder_name"}
-        )
+        return fields.union({"expiration_month", "expiration_year", "holder_name"})
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {"card_brand", "first4_digits", "last4_digits",
-             "is_active", "is_valid", "is_verified", "fingerprint",
-             "verification_checklist"}
+            {
+                "card_brand",
+                "first4_digits",
+                "last4_digits",
+                "is_active",
+                "is_valid",
+                "is_verified",
+                "fingerprint",
+                "verification_checklist",
+            }
         )

@@ -8,11 +8,10 @@ from zoop_wrapper.models.transaction import Transaction
 from zoop_wrapper.utils import get_logger
 
 
-logger = get_logger('models')
+logger = get_logger("models")
 
 
-RESOURCE_CLASSES = [
-    BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
+RESOURCE_CLASSES = [BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
 RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 
@@ -38,7 +37,7 @@ def _get_model_class_from_resource(resource):
     if resource in RESOURCES_DICT:
         return RESOURCES_DICT.get(resource)
 
-    raise ValueError(f'model não identificado para resource {resource}!')
+    raise ValueError(f"model não identificado para resource {resource}!")
 
 
 def get_instance_from_data(data):
@@ -59,7 +58,7 @@ def get_instance_from_data(data):
     Returns:
             :class:`.ResourceModel` subclass or ``None``
     """
-    resource = data.get('resource')
+    resource = data.get("resource")
 
     try:
         klass = _get_model_class_from_resource(resource)

@@ -5,16 +5,10 @@ from tests.factories.base import SocialModelFactory
 
 class SocialTestCase(SetTestCase):
     def test_required_fields(self):
-        self.assertEqual(
-            set(),
-            SocialModel.get_required_fields()
-        )
+        self.assertEqual(set(), SocialModel.get_required_fields())
 
     def test_non_required_fields(self):
-        self.assertEqual(
-            {'facebook', 'twitter'},
-            SocialModel.get_non_required_fields()
-        )
+        self.assertEqual({"facebook", "twitter"}, SocialModel.get_non_required_fields())
 
     def test_create(self):
         instance = SocialModelFactory()

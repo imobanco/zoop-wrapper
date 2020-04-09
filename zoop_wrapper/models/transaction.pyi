@@ -1,4 +1,8 @@
-from zoop_wrapper.models.base import ResourceModel as ResourceModel, ZoopObject as ZoopObject, PaymentMethod as PaymentMethod
+from zoop_wrapper.models.base import (
+    ResourceModel as ResourceModel,
+    ZoopObject as ZoopObject,
+    PaymentMethod as PaymentMethod,
+)
 from zoop_wrapper.models.card import Card as Card
 from zoop_wrapper.models.invoice import Invoice as Invoice
 from typing import Any, Optional, Set, List
@@ -66,7 +70,15 @@ class Transaction(ResourceModel):
     expected_on: Optional[str]
     point_of_sale: Optional[PointOfSale]
     history: Optional[List[History]]
-    def init_custom_fields(self, payment_type: Optional[Any] = ..., payment_method: Optional[Any] = ..., point_of_sale: Optional[Any] = ..., history: Optional[Any] = ..., currency: str = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(
+        self,
+        payment_type: Optional[Any] = ...,
+        payment_method: Optional[Any] = ...,
+        point_of_sale: Optional[Any] = ...,
+        history: Optional[Any] = ...,
+        currency: str = ...,
+        **kwargs: Any
+    ) -> None: ...
     @classmethod
     def get_required_fields(cls): ...
     @classmethod

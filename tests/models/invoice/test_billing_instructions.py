@@ -1,19 +1,15 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from zoop_wrapper.models.invoice import (
-    BillingInstructions, BillingConfiguration
-)
-from tests.factories.invoice import (
-    BillingInstructionsFactory
-)
+from zoop_wrapper.models.invoice import BillingInstructions, BillingConfiguration
+from tests.factories.invoice import BillingInstructionsFactory
 
 
 class BillingInstructionsTestCase(SetTestCase):
     def test_get_required_fields(self):
         self.assertEqual(
-            {'late_fee', 'interest', 'discount'},
-            BillingInstructions.get_required_fields()
+            {"late_fee", "interest", "discount"},
+            BillingInstructions.get_required_fields(),
         )
 
     def test_create(self):

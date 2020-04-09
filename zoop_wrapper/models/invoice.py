@@ -1,9 +1,5 @@
-from zoop_wrapper.models.base import (
-    PaymentMethod, ZoopObject
-)
-from zoop_wrapper.exceptions import (
-    FieldError, ValidationError
-)
+from zoop_wrapper.models.base import PaymentMethod, ZoopObject
+from zoop_wrapper.exceptions import FieldError, ValidationError
 
 
 class BillingConfiguration(ZoopObject):
@@ -39,13 +35,12 @@ class BillingConfiguration(ZoopObject):
             is ``rounded up`` on the ``5º decimal point``
     """
 
-    PERCENTAGE_MODE = 'PERCENTAGE'
-    DAILY_PERCENTAGE_MODE = 'DAILY_PERCENTAGE'
-    MONTHLY_PERCENTAGE_MODE = 'MONTHLY_PERCENTAGE'
-    FIXED_MODE = 'FIXED'
+    PERCENTAGE_MODE = "PERCENTAGE"
+    DAILY_PERCENTAGE_MODE = "DAILY_PERCENTAGE"
+    MONTHLY_PERCENTAGE_MODE = "MONTHLY_PERCENTAGE"
+    FIXED_MODE = "FIXED"
 
-    PERCENT_MODES = {PERCENTAGE_MODE, DAILY_PERCENTAGE_MODE,
-                     MONTHLY_PERCENTAGE_MODE}
+    PERCENT_MODES = {PERCENTAGE_MODE, DAILY_PERCENTAGE_MODE, MONTHLY_PERCENTAGE_MODE}
     MODES = PERCENT_MODES.union({FIXED_MODE})
 
     def init_custom_fields(self, mode=None, is_discount=False, **kwarg):
@@ -73,10 +68,8 @@ class BillingConfiguration(ZoopObject):
             if self._allow_empty:
                 return False
             raise ValidationError(
-                self,
-                FieldError(
-                    'mode',
-                    f'Must be one of {BillingConfiguration.MODES}'))
+                self, FieldError("mode", f"Must be one of {BillingConfiguration.MODES}")
+            )
         return True
 
     def set_type(self, mode, is_discount):
@@ -88,8 +81,8 @@ class BillingConfiguration(ZoopObject):
             is_discount (bool): value
         """
         self.validate_mode(mode)
-        setattr(self, 'mode', mode)
-        setattr(self, 'is_discount', is_discount)
+        setattr(self, "mode", mode)
+        setattr(self, "is_discount", is_discount)
 
     def get_validation_fields(self):
         """
@@ -116,13 +109,9 @@ class BillingConfiguration(ZoopObject):
             fields = self.get_fee_required_fields()
 
         if self.mode in self.PERCENT_MODES:
-            return fields.union(
-                self.get_percent_required_fields()
-            )
+            return fields.union(self.get_percent_required_fields())
         else:
-            return fields.union(
-                self.get_fixed_required_fields()
-            )
+            return fields.union(self.get_fixed_required_fields())
 
     def get_all_fields(self):
         """
@@ -137,9 +126,7 @@ class BillingConfiguration(ZoopObject):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {'mode'}
-        )
+        return fields.union({"mode"})
 
     @classmethod
     def get_fee_required_fields(cls):
@@ -150,9 +137,7 @@ class BillingConfiguration(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'start_date'}
-        )
+        return fields.union({"start_date"})
 
     @classmethod
     def get_discount_required_fields(cls):
@@ -163,9 +148,7 @@ class BillingConfiguration(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'limit_date'}
-        )
+        return fields.union({"limit_date"})
 
     @classmethod
     def get_fixed_required_fields(cls):
@@ -176,9 +159,7 @@ class BillingConfiguration(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'amount'}
-        )
+        return fields.union({"amount"})
 
     @classmethod
     def get_percent_required_fields(cls):
@@ -189,9 +170,7 @@ class BillingConfiguration(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'percentage'}
-        )
+        return fields.union({"percentage"})
 
     @classmethod
     def from_dict_or_instance(cls, data, is_discount=False, **kwargs):
@@ -207,11 +186,7 @@ class BillingConfiguration(ZoopObject):
         Returns:
             instance initialized of :class:`BillingConfiguration`
         """
-        return super().from_dict_or_instance(
-            data,
-            is_discount=is_discount,
-            **kwargs
-        )
+        return super().from_dict_or_instance(data, is_discount=is_discount, **kwargs)
 
 
 class BillingInstructions(ZoopObject):
@@ -224,8 +199,7 @@ class BillingInstructions(ZoopObject):
         discount (list of :class:`.BillingConfiguration`): list of optional discount rules
     """
 
-    def init_custom_fields(self, late_fee=None, interest=None,
-                           discount=None, **kwargs):
+    def init_custom_fields(self, late_fee=None, interest=None, discount=None, **kwargs):
         """
         initialize late_fee, interest and discount.
 
@@ -236,27 +210,36 @@ class BillingInstructions(ZoopObject):
             **kwargs: kwargs
         """
         setattr(
-            self, 'late_fee',
-            BillingConfiguration.from_dict_or_instance(
-                late_fee, allow_empty=True))
+            self,
+            "late_fee",
+            BillingConfiguration.from_dict_or_instance(late_fee, allow_empty=True),
+        )
         setattr(
-            self, 'interest',
-            BillingConfiguration.from_dict_or_instance(
-                interest, allow_empty=True))
+            self,
+            "interest",
+            BillingConfiguration.from_dict_or_instance(interest, allow_empty=True),
+        )
         if isinstance(discount, list):
             setattr(
-                self, 'discount',
+                self,
+                "discount",
                 [
                     BillingConfiguration.from_dict_or_instance(
-                        item, allow_empty=True, is_discount=True)
+                        item, allow_empty=True, is_discount=True
+                    )
                     for item in discount
-                ]
+                ],
             )
         else:
             setattr(
-                self, 'discount',
-                [BillingConfiguration.from_dict_or_instance(
-                    discount, allow_empty=True, is_discount=True)])
+                self,
+                "discount",
+                [
+                    BillingConfiguration.from_dict_or_instance(
+                        discount, allow_empty=True, is_discount=True
+                    )
+                ],
+            )
 
     @classmethod
     def get_required_fields(cls):
@@ -267,9 +250,7 @@ class BillingInstructions(ZoopObject):
             ``set`` of fields
         """
         fields = super().get_required_fields()
-        return fields.union(
-            {'late_fee', 'interest', 'discount'}
-        )
+        return fields.union({"late_fee", "interest", "discount"})
 
 
 class Invoice(PaymentMethod):
@@ -281,7 +262,8 @@ class Invoice(PaymentMethod):
         security_code_check (bool): verification of security code
         billing_instructions (:class:`.BillingInstructions`): optional billing instructions
     """
-    RESOURCE = 'boleto'
+
+    RESOURCE = "boleto"
 
     def init_custom_fields(self, billing_instructions=None, **kwargs):
         """
@@ -294,24 +276,38 @@ class Invoice(PaymentMethod):
         super().init_custom_fields(**kwargs)
 
         setattr(
-            self, 'billing_instructions',
-            BillingInstructions.from_dict_or_instance(billing_instructions,
-                                                      allow_empty=True))
+            self,
+            "billing_instructions",
+            BillingInstructions.from_dict_or_instance(
+                billing_instructions, allow_empty=True
+            ),
+        )
 
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {'expiration_date', 'payment_limit_date'}
-        )
+        return fields.union({"expiration_date", "payment_limit_date"})
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union(
-            {'zoop_boleto_id', 'status', 'reference_number', 'url',
-             'document_number', 'recipient', 'bank_code', 'sequence',
-             'accepted', 'printed', 'downloaded', 'fingerprint',
-             'paid_at', 'barcode', 'billing_instructions',
-             'body_instructions'}
+            {
+                "zoop_boleto_id",
+                "status",
+                "reference_number",
+                "url",
+                "document_number",
+                "recipient",
+                "bank_code",
+                "sequence",
+                "accepted",
+                "printed",
+                "downloaded",
+                "fingerprint",
+                "paid_at",
+                "barcode",
+                "billing_instructions",
+                "body_instructions",
+            }
         )

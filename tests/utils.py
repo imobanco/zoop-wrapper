@@ -8,13 +8,14 @@ from zoop_wrapper.wrapper import ZoopWrapper
 class SetTestCase(TestCase):
     @staticmethod
     def __get_msg(container, contained):
-        return f'\n\nset {container} does not contains {contained}.\n\n' \
-               f'Excess: {contained - container}'
+        return (
+            f"\n\nset {container} does not contains {contained}.\n\n"
+            f"Excess: {contained - container}"
+        )
 
     def assertIsSubSet(self, contained: set, container: set):
         self.assertTrue(
-            contained.issubset(container),
-            msg=self.__get_msg(container, contained)
+            contained.issubset(container), msg=self.__get_msg(container, contained)
         )
 
 
@@ -22,10 +23,8 @@ class MockedLoggerTestCase(TestCase):
     def setUp(self):
         super().setUp()
 
-        self.patcher_address_loggger = patch(
-            "zoop_wrapper.models.base.logger")
-        self.patcher_wrapper_loggger = patch(
-            "zoop_wrapper.wrapper.logger")
+        self.patcher_address_loggger = patch("zoop_wrapper.models.base.logger")
+        self.patcher_wrapper_loggger = patch("zoop_wrapper.wrapper.logger")
 
         self.mocked_address_logger = self.patcher_address_loggger.start()
         self.mocked_wrapper_logger = self.patcher_wrapper_loggger.start()
@@ -60,10 +59,8 @@ class APITestCase(MockedLoggerTestCase):
     def build_response_mock(status_code=200, content=None):
         response = MagicMock(
             status_code=status_code,
-            json=MagicMock(
-                return_value=content if content else {}
-            ),
-            instance=None
+            json=MagicMock(return_value=content if content else {}),
+            instance=None,
         )
 
         def raise_for_status():

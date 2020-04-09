@@ -8,8 +8,7 @@ def config_logging(log_level):
         log_level: log level to be notified
     """
     logging.basicConfig(
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        level=log_level
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=log_level
     )
 
 
@@ -22,4 +21,4 @@ def get_logger(name):
     Returns:
         a new logger for zoop_wrapper.{name}
     """
-    return logging.getLogger(f'zoop_wrapper.{name}')
+    return logging.getLogger(f"zoop_wrapper.{name}")

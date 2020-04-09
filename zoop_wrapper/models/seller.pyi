@@ -1,4 +1,10 @@
-from zoop_wrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, FinancialModel as FinancialModel, Person as Person, SocialModel as SocialModel
+from zoop_wrapper.models.base import (
+    Address as Address,
+    BusinessOrIndividualModel as BusinessOrIndividualModel,
+    FinancialModel as FinancialModel,
+    Person as Person,
+    SocialModel as SocialModel,
+)
 from typing import Any, Optional, Union, Dict
 
 class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
@@ -43,4 +49,4 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     @property
     def full_name(self): ...
     @classmethod
-    def from_dict_or_instance(cls, data: Union[Dict[str, Any], Seller], allow_empty: bool=..., **kwargs: Any) -> Seller: ... # type: ignore
+    def from_dict_or_instance(cls, data: Union[Dict[str, Any], Seller], allow_empty: bool = ..., **kwargs: Any) -> Seller: ...  # type: ignore

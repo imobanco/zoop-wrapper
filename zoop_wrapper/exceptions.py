@@ -3,6 +3,7 @@ class FieldError(Exception):
     Exception to be used when the validation
     of some field fail.
     """
+
     def __init__(self, name, reason):
         """
         Args:
@@ -28,6 +29,7 @@ class ValidationError(Exception):
     Exception to be used when the validation
     of some ZoopObject occur.
     """
+
     def __init__(self, entity, errors):
         """
         Args:
@@ -45,8 +47,8 @@ class ValidationError(Exception):
             self.errors = [errors]
 
         super().__init__(
-            f'Validation failed for {self.class_name}! '
-            f'Errors: {self.parse_errors()}'
+            f"Validation failed for {self.class_name}! "
+            f"Errors: {self.parse_errors()}"
         )
 
     def parse_errors(self):

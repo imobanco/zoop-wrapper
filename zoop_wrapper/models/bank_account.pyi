@@ -1,4 +1,9 @@
-from zoop_wrapper.models.base import Address as Address, BusinessOrIndividualModel as BusinessOrIndividualModel, MarketPlaceModel as MarketPlaceModel, VerificationModel as VerificationModel
+from zoop_wrapper.models.base import (
+    Address as Address,
+    BusinessOrIndividualModel as BusinessOrIndividualModel,
+    MarketPlaceModel as MarketPlaceModel,
+    VerificationModel as VerificationModel,
+)
 from typing import Any, Optional, Set
 
 class BankAccountVerificationModel(VerificationModel):
@@ -21,14 +26,19 @@ class BankAccount(BusinessOrIndividualModel):
     country_code: Optional[str]
     customer: Optional[str]
     description: Optional[str]
-    debitable:  Optional[str]
+    debitable: Optional[str]
     fingerprint: Optional[str]
     is_active: Optional[bool]
     is_verified: Optional[bool]
     last4_digits: Optional[str]
     phone_number: Optional[str]
     type: Optional[str]
-    def init_custom_fields(self, address: Optional[Any] = ..., verification_checklist: Optional[Any] = ..., **kwargs: Any) -> None: ...
+    def init_custom_fields(
+        self,
+        address: Optional[Any] = ...,
+        verification_checklist: Optional[Any] = ...,
+        **kwargs: Any
+    ) -> None: ...
     @classmethod
     def validate_type(cls, type: str) -> None: ...
     @classmethod

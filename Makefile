@@ -15,7 +15,7 @@ test:
 black:
 	black --check .
 
-black.refactor:
+black.reformat:
 	black .
 
 stubgen:

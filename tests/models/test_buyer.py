@@ -9,9 +9,8 @@ from tests.factories.buyer import BuyerFactory
 class BuyerTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {"default_receipt_delivery_method", 'marketplace_id',
-             'resource'},
-            Buyer.get_non_required_fields()
+            {"default_receipt_delivery_method", "marketplace_id", "resource"},
+            Buyer.get_non_required_fields(),
         )
 
     def test_create(self):

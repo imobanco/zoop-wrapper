@@ -1,5 +1,9 @@
 from zoop_wrapper.models.base import (
-    MarketPlaceModel, Person, SocialModel, FinancialModel)
+    MarketPlaceModel,
+    Person,
+    SocialModel,
+    FinancialModel,
+)
 
 
 class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
@@ -13,11 +17,10 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
     Attributes:
         default_receipt_delivery_method: ?
     """
-    RESOURCE = 'buyer'
+
+    RESOURCE = "buyer"
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {'default_receipt_delivery_method'}
-        )
+        return fields.union({"default_receipt_delivery_method"})

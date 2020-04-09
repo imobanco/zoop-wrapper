@@ -5,26 +5,37 @@ from zoop_wrapper.models.base import Address
 from zoop_wrapper.models.bank_account import BankAccount, BankAccountVerificationModel
 from zoop_wrapper.exceptions import ValidationError
 from tests.factories.bank_account import (
-    BankAccountFactory, IndividualBankAccountFactory,
-    BusinessBankAccountFactory
+    BankAccountFactory,
+    IndividualBankAccountFactory,
+    BusinessBankAccountFactory,
 )
 
 
 class BankAccountTestCase(TestCase, SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
-            {"type", "holder_name", "bank_code",
-             "routing_number"},
-            BankAccount.get_required_fields()
+            {"type", "holder_name", "bank_code", "routing_number"},
+            BankAccount.get_required_fields(),
         )
 
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {"bank_name", "account_number", "description", "last4_digits",
-             "country_code", "phone_number", "is_active",
-             "is_verified", "debitable", "customer",
-             "fingerprint", "address", "verification_checklist"},
-            BankAccount.get_non_required_fields()
+            {
+                "bank_name",
+                "account_number",
+                "description",
+                "last4_digits",
+                "country_code",
+                "phone_number",
+                "is_active",
+                "is_verified",
+                "debitable",
+                "customer",
+                "fingerprint",
+                "address",
+                "verification_checklist",
+            },
+            BankAccount.get_non_required_fields(),
         )
 
     def test_create(self):
@@ -45,5 +56,6 @@ class BankAccountTestCase(TestCase, SetTestCase):
 
         BankAccount.init_custom_fields(instance)
         self.assertIsInstance(instance.address, Address)
-        self.assertIsInstance(instance.verification_checklist,
-                              BankAccountVerificationModel)
+        self.assertIsInstance(
+            instance.verification_checklist, BankAccountVerificationModel
+        )

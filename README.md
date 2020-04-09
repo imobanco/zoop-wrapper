@@ -14,7 +14,7 @@
 # Introdução
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
 
-Você pode acessar a documentação oficial da Zoop acessando esse [link](https://docs.zoop.co/).
+[Documentação oficial da Zoop](https://docs.zoop.co/).
 
 ## Recursos disponíveis
 

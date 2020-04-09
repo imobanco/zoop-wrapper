@@ -9,17 +9,8 @@ Welcome to zoop-wrapper's documentation!
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+   :numbered:
+   :hidden:
 
-   wrapper
-   models
-   constants
-   exceptions
-   utils
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   intro
+   api_ref

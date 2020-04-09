@@ -36,7 +36,8 @@ docs.start:
 	sphinx-quickstart
 
 docs.autodoc:
-	sphinx-apidoc --force --output-dir docs/source .
+	sphinx-apidoc --force --output-dir docs/ .
 
 docs.build:
-	sphinx-build docs/source/ docs/
+	cp README.md docs/intro.md
+	sphinx-build docs/ docs/__build/

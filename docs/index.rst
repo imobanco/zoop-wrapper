@@ -13,4 +13,5 @@ Welcome to zoop-wrapper's documentation!
    :hidden:
 
    intro
+   examples
    api_ref

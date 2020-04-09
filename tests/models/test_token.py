@@ -4,6 +4,7 @@ from tests.utils import SetTestCase
 from zoop_wrapper.models.bank_account import BankAccount
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.token import Token
+from zoop_wrapper.exceptions import ValidationError
 from tests.factories.token import (
     CardTokenFactory, CreateCardTokenFactory,
     BankAccountTokenFactory, CreateIndividualBankAccountTokenFactory,
@@ -17,7 +18,7 @@ class TokenTestCase(SetTestCase):
     def test_init_custom_fields_raise(self):
         instance = MagicMock()
 
-        self.assertRaises(TypeError, Token.init_custom_fields, instance)
+        self.assertRaises(ValidationError, Token.init_custom_fields, instance)
 
     def test_init_custom_fields_with_type_raise(self):
         """
@@ -28,9 +29,7 @@ class TokenTestCase(SetTestCase):
             TYPES={'foo'}
         )
 
-        self.assertRaises(
-            TypeError, Token.init_custom_fields,
-            instance, type='bar')
+        self.assertRaises(ValidationError, Token.init_custom_fields, instance, type="bar")
 
     def test_init_custom_fields_with_card(self):
         instance = MagicMock(
@@ -91,27 +90,6 @@ class TokenTestCase(SetTestCase):
         Token.init_custom_fields(instance, foo='bar', taxpayer_id='foo')
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
         self.assertEqual(instance.taxpayer_id, 'foo')
-
-    def test_get_type_raise(self):
-        instance = MagicMock(spec=['IDENTIFIERS'])
-
-        self.assertRaises(TypeError, Token.get_type, instance)
-
-    def test_get_type_card(self):
-        instance = MagicMock(
-            token_type=Token.CARD_TYPE
-        )
-
-        token_type = Token.get_type(instance)
-        self.assertEqual(token_type, Token.CARD_TYPE)
-
-    def test_get_type_bank_account(self):
-        instance = MagicMock(
-            token_type=Token.BANK_ACCOUNT_TYPE
-        )
-
-        token_type = Token.get_type(instance)
-        self.assertEqual(token_type, Token.BANK_ACCOUNT_TYPE)
 
     def test_get_non_required_fields(self):
         self.assertIsSubSet(

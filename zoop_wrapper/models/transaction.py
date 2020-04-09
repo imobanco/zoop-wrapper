@@ -14,11 +14,6 @@ class PointOfSale(ZoopObject):
     """
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {'entry_mode', 'identification_number'}
@@ -27,7 +22,7 @@ class PointOfSale(ZoopObject):
 
 class History(ZoopObject):
     """
-    Represents a update for Transaction
+    Represents a update for :class:`.Transaction`
 
     Attributes:
         id: uuid identifier
@@ -46,11 +41,6 @@ class History(ZoopObject):
     """
     @classmethod
     def get_non_required_fields(cls):
-        """
-        get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"id", "transaction", "amount", "operation_type",
@@ -65,23 +55,19 @@ class Transaction(ResourceModel):
     Represents a transaction
     https://docs.zoop.co/reference#transa%C3%A7%C3%A3o
 
+    The :attr:`RESOURCE` is used to identify this Model.
+    Used to check against :attr:`.resource`!
+
     Attributes:
-        RESOURCE: resource model string
-
-        CREDIT_TYPE: string for credit card type
-        BOLETO_TYPE: string for boleto type (Invoice)
-
-        PAYMENT_TYPES: a set with credit and boleto types
-
-        amount: integer amount value in 'centavos'
-        currency: coin currency string
-        description: string description
+        amount (int): integer amount value in 'centavos'
+        currency (str): coin currency string
+        description (str): value description
         reference_id: ??
-        on_behalf_of: seller uuid identifier
-        customer: customer uuid identifier
-        status: string for status
-        confirmed: string of cofirmation
-        original_amount: original amount value
+        on_behalf_of (str): seller uuid identifier
+        customer (str): customer uuid identifier
+        status (str): value for status
+        confirmed (str): value of cofirmation
+        original_amount (int): original amount value
         transaction_number: ??
         gateway_authorizer: ??
         app_transaction_uid: ??
@@ -90,23 +76,23 @@ class Transaction(ResourceModel):
         discounts: ??
         pre_authorization: ??
         sales_receipt:
-        statement_descriptor: string description
+        statement_descriptor (str): value description
         installment_plan: ??
-        refunded: boolean of verification
-        voided: boolean of verification
-        captured: boolean of verification
+        refunded (bool): boolean of verification
+        voided (bool): boolean of verification
+        captured (bool): boolean of verification
         fees: ??
         fee_details: ??
         location_latitude: ??
         location_longitude: ??
         individual: ??
         business: ??
-        expected_on:datetime string
+        expected_on (str):datetime string
 
-        payment_type: payment type string ('credit' or 'boleto')
-        payment_method: Card instance or Invoice instance
-        point_of_sale: PointOfSale instance
-        history: List of History instance
+        payment_type (str): payment type
+        payment_method (:class:`.Card` or :class:`.Invoice`): payment method used
+        point_of_sale (:class:`.PointOfSale`): ??
+        history (list of :class:`.History`): transaction updates
 
     """
     RESOURCE = 'transaction'
@@ -120,15 +106,19 @@ class Transaction(ResourceModel):
                            point_of_sale=None, history=None, currency='BRL',
                            **kwargs):
         """
-        Initialize payment_method based on payment_type from data.
-        Initialize point_of_sale and history from data.
+        Initialize :attr:`payment_method` as :class:`.Card` or :class:`.Invoice`
+        based on data.
+
+        Initialize :attr:`point_of_sale` as :class:`.PointOfSale`.
+
+        Initialize :attr:`history` as list of :class:`.History`.
 
         Args:
-            payment_type: string for payment type
-            payment_method: dict of data or instance
-            point_of_sale:  dict of data or instance of PointOfSale
-            history: dict of data or instance or list of History
-            currency: default currency set.
+            payment_type (str): value for payment type
+            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data
+            point_of_sale (dict or :class:`.PointOfSale`): point of sale data
+            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`
+            currency (str): default currency is 'BRL'.
                 So users may not need to pass currency!
             **kwargs: kwargs
         """
@@ -169,11 +159,6 @@ class Transaction(ResourceModel):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        Get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {'amount', 'currency', 'description', 'on_behalf_of',
@@ -182,11 +167,6 @@ class Transaction(ResourceModel):
 
     @classmethod
     def get_non_required_fields(cls):
-        """
-        Get set of non required fields
-
-        Returns: set of fields
-        """
         fields = super().get_non_required_fields()
         return fields.union(
             {"status", "confirmed", "original_amount", "transaction_number",

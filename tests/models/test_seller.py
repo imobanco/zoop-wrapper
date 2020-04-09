@@ -2,6 +2,7 @@ from unittest.mock import patch, MagicMock
 
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from zoop_wrapper.models.seller import Seller
+from zoop_wrapper.exceptions import ValidationError
 from tests.factories.seller import (
     SellerFactory, IndividualSellerFactory, BusinessSellerFactory
 )
@@ -94,7 +95,7 @@ class SellerTestCase(TestCase, SetTestCase):
         )
 
     def test_create(self):
-        self.assertRaises(TypeError, SellerFactory)
+        self.assertRaises(ValidationError, SellerFactory)
 
     def test_create_individual(self):
         instance = IndividualSellerFactory()

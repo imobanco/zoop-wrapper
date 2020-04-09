@@ -1,5 +1,6 @@
 from zoop_wrapper.models.base import (
     BusinessOrIndividualModel, Address, VerificationModel)
+from zoop_wrapper.exceptions import FieldError, ValidationError
 
 
 class BankAccountVerificationModel(VerificationModel):
@@ -12,11 +13,6 @@ class BankAccountVerificationModel(VerificationModel):
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {'deposit_check'}
@@ -28,14 +24,10 @@ class BankAccount(BusinessOrIndividualModel):
     Represent a Bank Account.
     https://docs.zoop.co/reference#conta-banc%C3%A1ria
 
-    The RESOURCE attribute of this class is used to identify this Model.
-    Remember the resource on ZoopModel? BAM!
+    The :attr:`RESOURCE` is used to identify this Model.
+    Used to check against :attr:`.resource`!
 
     Attributes:
-        SAVING_TYPE: str for saving type
-        CHECKING_TYPE: str for checking type
-        TYPES: set of types
-
         type: type of account
         account_number: account number
         bank_code: code of bank
@@ -64,6 +56,18 @@ class BankAccount(BusinessOrIndividualModel):
     def init_custom_fields(self, type=None, address=None,
                            verification_checklist=None,
                            **kwargs):
+        """
+        Initialize :attr:`address` as :class:`.Address`.\n
+
+        Initialize :attr:`verification_checklist`
+        as :class:`.BankAccountVerificationModel`.
+
+        Args:
+            type (str): value containing type
+            address (dict or :class:`.Address`): address
+            verification_checklist (dict or :class:`.BankAccountVerificationModel`): verifications
+            **kwargs:
+        """
         self.set_identifier(**kwargs)
         self.validate_type(type)
 
@@ -78,16 +82,20 @@ class BankAccount(BusinessOrIndividualModel):
 
     @classmethod
     def validate_type(cls, type):
+        """
+        Validate bank account ``type``
+
+        Args:
+            type (str): value of type to be validated
+
+        Raises:
+            ValidationError: when ``type`` is not in :attr:`TYPES`
+        """
         if type not in cls.TYPES:
-            raise TypeError(f'type must one of {cls.TYPES}')
+            raise ValidationError(cls, FieldError('type', f'type must one of {cls.TYPES}'))
 
     @classmethod
     def get_required_fields(cls):
-        """
-        get set of required fields
-
-        Returns: set of fields
-        """
         fields = super().get_required_fields()
         return fields.union(
             {"type", "holder_name", "bank_code",

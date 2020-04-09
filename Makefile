@@ -12,8 +12,11 @@ config: config.data config.env
 test:
 	python -m unittest
 
-flake8:
-	flake8 .
+black:
+	black --check .
+
+black.refactor:
+	black .
 
 stubgen:
 	stubgen zoop_wrapper
@@ -28,3 +31,12 @@ coverage:
 
 coverage.codacy: coverage
 	python-codacy-coverage -r coverage.xml -t $$CODACY_PROJECT_TOKEN
+
+docs.start:
+	sphinx-quickstart
+
+docs.autodoc:
+	sphinx-apidoc --force --output-dir docs/source .
+
+docs.build:
+	sphinx-build docs/source/ docs/

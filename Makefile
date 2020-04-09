@@ -1,6 +1,9 @@
 pip.install:
 	pip install -r requirements-dev.txt
 
+pip.install.build:
+	pip install -r requirements-build.txt
+
 config.data:
 	mkdir data
 
@@ -40,3 +43,7 @@ docs.autodoc:
 
 docs.build:
 	sphinx-build docs/source/ docs/
+
+package.build:
+	versioneer install
+	python setup.py sdist bdist_wheel

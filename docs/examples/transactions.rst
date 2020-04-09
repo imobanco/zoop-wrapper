@@ -3,7 +3,6 @@ Transações
 
 .. toctree::
    :maxdepth: 2
-   :caption: Transações:
 
    transaction/add_transaction_card
    transaction/add_transaction_invoice

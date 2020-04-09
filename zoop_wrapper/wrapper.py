@@ -1,7 +1,5 @@
 import requests
 
-from decouple import config
-
 from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
 from zoop_wrapper.models.base import ResourceModel
 from zoop_wrapper.models.bank_account import BankAccount

@@ -1,5 +1,8 @@
 from setuptools import setup
 
+# versioning
+import versioneer
+
 
 with open("README.md", "r") as fh:
     long_description = fh.read()
@@ -7,7 +10,8 @@ with open("README.md", "r") as fh:
 
 setup(
     name="zoop_wrapper",
-    version="0.0.1",
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
     author="Imobanco",
     description="Cliente não oficial Zoop",
     long_description=long_description,

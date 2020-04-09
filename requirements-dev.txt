@@ -1,6 +1,7 @@
 # Local development dependencies go here
 -r requirements.txt
 
+factory-boy==2.12.0
 black==19.10b0
 mypy==0.770
 coverage==5.0.4

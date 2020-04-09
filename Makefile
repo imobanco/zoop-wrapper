@@ -4,13 +4,8 @@ pip.install:
 pip.install.build:
 	pip install -r requirements-build.txt
 
-config.data:
-	mkdir data
-
 config.env:
 	cp .env.sample .env
-
-config: config.data config.env
 
 test:
 	python -m unittest

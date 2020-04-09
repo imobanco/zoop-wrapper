@@ -26,7 +26,7 @@ First build a image named `zoopapiwrapper`.
 `docker build --tag zoopapiwrapper .`
 
 Running in development:
-```
+```shell script
 docker run -it \
 --rm \
 --env-file .env \
@@ -46,7 +46,6 @@ For development use:
 `docker-compose run zoopapiwrapper bash`
 
 Note: the above command uses `run`, for development it is really handy.
-
 
 ## Bare python
 requires python>=3.6

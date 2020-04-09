@@ -40,4 +40,5 @@ docs.autodoc:
 
 docs.build:
 	cp README.md docs/intro.md
-	sphinx-build docs/ docs/__build/
+	sphinx-build docs/ docs/build/
+	touch docs/build/.nojekyll

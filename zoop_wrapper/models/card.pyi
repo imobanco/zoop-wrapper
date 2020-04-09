@@ -1,4 +1,7 @@
-from zoop_wrapper.models.base import PaymentMethod as PaymentMethod, VerificationModel as VerificationModel
+from zoop_wrapper.models.base import (
+    PaymentMethod as PaymentMethod,
+    VerificationModel as VerificationModel,
+)
 from typing import Any, Optional, Union, Dict
 
 class CardVerificationChecklist(VerificationModel):
@@ -15,7 +18,7 @@ class Card(PaymentMethod):
 
     card_brand: Optional[str]
     first4_digits: Optional[str]
-    last4_digits:Optional[ str]
+    last4_digits: Optional[str]
     is_active: Optional[bool]
     is_valid: Optional[bool]
     is_verified: Optional[bool]

@@ -5,7 +5,7 @@ from zoop_wrapper.utils import get_logger
 from zoop_wrapper.exceptions import FieldError, ValidationError
 
 
-logger = get_logger('models')
+logger = get_logger("models")
 
 
 class Token(ResourceModel):
@@ -54,19 +54,19 @@ class Token(ResourceModel):
         card_number (str): card number for :attr:`CARD_TYPE`
         security_code (str): security code for :attr:`CARD_TYPE`
     """
-    RESOURCE = 'token'
 
-    CARD_TYPE = 'card'
-    CARD_IDENTIFIER = 'card_number'
+    RESOURCE = "token"
 
-    BANK_ACCOUNT_TYPE = 'bank_account'
-    BANK_ACCOUNT_IDENTIFIER = 'bank_code'
+    CARD_TYPE = "card"
+    CARD_IDENTIFIER = "card_number"
+
+    BANK_ACCOUNT_TYPE = "bank_account"
+    BANK_ACCOUNT_IDENTIFIER = "bank_code"
 
     TYPES = {CARD_TYPE, BANK_ACCOUNT_TYPE}
     IDENTIFIERS = {CARD_IDENTIFIER, BANK_ACCOUNT_IDENTIFIER}
 
-    def init_custom_fields(self, type=None, card=None,
-                           bank_account=None, **kwargs):
+    def init_custom_fields(self, type=None, card=None, bank_account=None, **kwargs):
         """
         if ``type`` is :attr:`BANK_ACCOUNT_TYPE` or :attr:`CARD_TYPE`
         token is ``created``!\n
@@ -89,15 +89,15 @@ class Token(ResourceModel):
             token_type = type
             if token_type == self.CARD_TYPE:
                 setattr(
-                    self, self.CARD_TYPE,
-                    Card.from_dict_or_instance(
-                        card, allow_empty=True)
+                    self,
+                    self.CARD_TYPE,
+                    Card.from_dict_or_instance(card, allow_empty=True),
                 )
             else:
                 setattr(
-                    self, self.BANK_ACCOUNT_TYPE,
-                    BankAccount.from_dict_or_instance(
-                        bank_account, allow_empty=True)
+                    self,
+                    self.BANK_ACCOUNT_TYPE,
+                    BankAccount.from_dict_or_instance(bank_account, allow_empty=True),
                 )
         else:
             if self.CARD_IDENTIFIER in kwargs:
@@ -107,13 +107,15 @@ class Token(ResourceModel):
                 BusinessOrIndividualModel.set_identifier(self, **kwargs)
             else:
                 raise ValidationError(
-                    self, FieldError(
-                        'token_type',
-                        f'Token type not identified! '
-                        f'Please set one of these attributes {self.IDENTIFIERS}')
+                    self,
+                    FieldError(
+                        "token_type",
+                        f"Token type not identified! "
+                        f"Please set one of these attributes {self.IDENTIFIERS}",
+                    ),
                 )
 
-        setattr(self, 'token_type', token_type)
+        setattr(self, "token_type", token_type)
 
     def get_bank_account_type(self):
         """
@@ -130,7 +132,7 @@ class Token(ResourceModel):
                 return self.bank_account.get_type()
             except AttributeError:
                 return BankAccount.get_type(self)
-        raise TypeError(f'Token is not of type {self.BANK_ACCOUNT_TYPE}')
+        raise TypeError(f"Token is not of type {self.BANK_ACCOUNT_TYPE}")
 
     def get_validation_fields(self):
         """
@@ -153,21 +155,13 @@ class Token(ResourceModel):
         fields = set()
 
         if self.token_type == self.CARD_TYPE:
-            return fields.union(
-                self.get_card_required_fields()
-            )
+            return fields.union(self.get_card_required_fields())
         else:
-            fields = fields.union(
-                self.get_bank_account_required_fields()
-            )
+            fields = fields.union(self.get_bank_account_required_fields())
             if self.get_bank_account_type() == BankAccount.INDIVIDUAL_TYPE:
-                return fields.union(
-                    BankAccount.get_individual_required_fields()
-                )
+                return fields.union(BankAccount.get_individual_required_fields())
             else:
-                return fields.union(
-                    BankAccount.get_business_required_fields()
-                )
+                return fields.union(BankAccount.get_business_required_fields())
 
     def get_all_fields(self):
         """
@@ -187,20 +181,14 @@ class Token(ResourceModel):
         fields = self.get_validation_fields()
 
         if self.token_type == self.CARD_TYPE:
-            return fields.union(
-                self.get_card_non_required_fields()
-            )
+            return fields.union(self.get_card_non_required_fields())
         else:
-            return fields.union(
-                self.get_bank_account_non_required_fields()
-            )
+            return fields.union(self.get_bank_account_non_required_fields())
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {'type', 'used'}
-        )
+        return fields.union({"type", "used"})
 
     @classmethod
     def get_card_non_required_fields(cls):
@@ -211,9 +199,7 @@ class Token(ResourceModel):
             ``set`` of fields
         """
         fields = cls.get_non_required_fields()
-        return fields.union(
-            {'card'}
-        )
+        return fields.union({"card"})
 
     @classmethod
     def get_card_required_fields(cls):
@@ -225,8 +211,7 @@ class Token(ResourceModel):
         """
         fields = cls.get_required_fields()
         return fields.union(
-            Card.get_required_fields(),
-            {'card_number', 'security_code'}
+            Card.get_required_fields(), {"card_number", "security_code"}
         )
 
     @classmethod
@@ -238,9 +223,7 @@ class Token(ResourceModel):
             ``set`` of fields
         """
         fields = cls.get_non_required_fields()
-        return fields.union(
-            {'bank_account'}
-        )
+        return fields.union({"bank_account"})
 
     @classmethod
     def get_bank_account_required_fields(cls):
@@ -251,6 +234,4 @@ class Token(ResourceModel):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'account_number'}
-        )
+        return fields.union({"account_number"})

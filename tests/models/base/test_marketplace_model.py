@@ -5,15 +5,11 @@ from tests.factories.base import MarketPlaceModelFactory
 
 class MarketPlaceModelTestCase(SetTestCase):
     def test_required_fields(self):
-        self.assertEqual(
-            set(),
-            MarketPlaceModel.get_required_fields()
-        )
+        self.assertEqual(set(), MarketPlaceModel.get_required_fields())
 
     def test_non_required_fields(self):
         self.assertIsSubSet(
-            {'marketplace_id'},
-            MarketPlaceModel.get_non_required_fields()
+            {"marketplace_id"}, MarketPlaceModel.get_non_required_fields()
         )
 
     def test_create(self):

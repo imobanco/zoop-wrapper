@@ -4,7 +4,7 @@ from zoop_wrapper.utils import get_logger
 from zoop_wrapper.exceptions import ValidationError, FieldError
 
 
-logger = get_logger('models')
+logger = get_logger("models")
 
 
 class ZoopObject(object):
@@ -100,8 +100,7 @@ class ZoopObject(object):
         Returns:
             instance initialized of cls
         """
-        _data = cls.make_data_copy_with_kwargs(
-            data, allow_empty=allow_empty, **kwargs)
+        _data = cls.make_data_copy_with_kwargs(data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 
     @classmethod
@@ -202,7 +201,7 @@ class ZoopObject(object):
         for validation_field in self.get_validation_fields():
             value = getattr(self, validation_field, None)
             if value is None:
-                errors.append(FieldError(validation_field, 'missing required field'))
+                errors.append(FieldError(validation_field, "missing required field"))
 
         if errors and raise_exception:
             raise ValidationError(self, errors)
@@ -286,6 +285,7 @@ class ResourceModel(ZoopObject):
         updated_at: date of update
         metadata: dict with metadata
     """
+
     RESOURCE = None
 
     @classmethod
@@ -308,9 +308,7 @@ class MarketPlaceModel(ResourceModel):
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {'marketplace_id'}
-        )
+        return fields.union({"marketplace_id"})
 
 
 class Address(ZoopObject):
@@ -332,9 +330,16 @@ class Address(ZoopObject):
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {"line1", "line2", "line3",
-             "neighborhood", "city", "state",
-             "postal_code", "country_code"}
+            {
+                "line1",
+                "line2",
+                "line3",
+                "neighborhood",
+                "city",
+                "state",
+                "postal_code",
+                "country_code",
+            }
         )
 
 
@@ -360,23 +365,28 @@ class Person(ZoopObject):
             address: dict of data or :class:`.Address`
             **kwargs:
         """
-        setattr(self, 'address',
-                Address.from_dict_or_instance(address, allow_empty=True))
+        setattr(
+            self, "address", Address.from_dict_or_instance(address, allow_empty=True)
+        )
 
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union(
-            {"first_name", "last_name", "email",
-             "taxpayer_id", "phone_number", "address"}
+            {
+                "first_name",
+                "last_name",
+                "email",
+                "taxpayer_id",
+                "phone_number",
+                "address",
+            }
         )
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {"birthdate"}
-        )
+        return fields.union({"birthdate"})
 
     @property
     def full_name(self):
@@ -386,7 +396,7 @@ class Person(ZoopObject):
         Returns:
             string with the ``full name``
         """
-        return f'{self.first_name} {self.last_name}'
+        return f"{self.first_name} {self.last_name}"
 
 
 class SocialModel(ZoopObject):
@@ -401,9 +411,7 @@ class SocialModel(ZoopObject):
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {"facebook", "twitter"}
-        )
+        return fields.union({"facebook", "twitter"})
 
 
 class FinancialModel(ZoopObject):
@@ -425,9 +433,16 @@ class FinancialModel(ZoopObject):
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {'status', 'account_balance', 'current_balance',
-             'description', 'delinquent', 'payment_methods',
-             'default_debit', 'default_credit'}
+            {
+                "status",
+                "account_balance",
+                "current_balance",
+                "description",
+                "delinquent",
+                "payment_methods",
+                "default_debit",
+                "default_credit",
+            }
         )
 
 
@@ -443,9 +458,7 @@ class VerificationModel(ZoopObject):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {"postal_code_check", "address_line1_check"}
-        )
+        return fields.union({"postal_code_check", "address_line1_check"})
 
 
 class PaymentMethod(ResourceModel):
@@ -467,15 +480,13 @@ class PaymentMethod(ResourceModel):
             **kwargs: dic of kwargs
         """
         setattr(
-            self, 'address',
-            Address.from_dict_or_instance(address, allow_empty=True))
+            self, "address", Address.from_dict_or_instance(address, allow_empty=True)
+        )
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
-        return fields.union(
-            {'description', 'customer', 'address'}
-        )
+        return fields.union({"description", "customer", "address"})
 
 
 class BusinessOrIndividualModel(MarketPlaceModel):
@@ -490,16 +501,14 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         taxpayer_id: for ``type`` of :attr:`INDIVIDUAL_TYPE`
         ein: for ``type`` of :attr:`BUSINESS_TYPE`
     """
-    BUSINESS_IDENTIFIER = 'ein'
-    BUSINESS_TYPE = 'business'
 
-    INDIVIDUAL_IDENTIFIER = 'taxpayer_id'
-    INDIVIDUAL_TYPE = 'individual'
+    BUSINESS_IDENTIFIER = "ein"
+    BUSINESS_TYPE = "business"
 
-    URI = {
-        BUSINESS_TYPE: 'business',
-        INDIVIDUAL_TYPE: 'individuals'
-    }
+    INDIVIDUAL_IDENTIFIER = "taxpayer_id"
+    INDIVIDUAL_TYPE = "individual"
+
+    URI = {BUSINESS_TYPE: "business", INDIVIDUAL_TYPE: "individuals"}
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
@@ -520,13 +529,16 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Raises:
             :class`.ValidationError`: when it's passed both identifiers or none
         """
-        if ((taxpayer_id is not None and ein is not None) or
-                (taxpayer_id is None and ein is None)):
+        if (taxpayer_id is not None and ein is not None) or (
+            taxpayer_id is None and ein is None
+        ):
             raise ValidationError(
                 cls,
-                FieldError(f'{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER} '
-                           f'or {BusinessOrIndividualModel.BUSINESS_IDENTIFIER}',
-                           'missing identifier!')
+                FieldError(
+                    f"{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER} "
+                    f"or {BusinessOrIndividualModel.BUSINESS_IDENTIFIER}",
+                    "missing identifier!",
+                ),
             )
 
     def get_type(self):
@@ -537,13 +549,14 @@ class BusinessOrIndividualModel(MarketPlaceModel):
             :attr:`BUSINESS_TYPE` or :attr:`INDIVIDUAL_TYPE`
         """
         individual_identifier = getattr(
-            self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, None
+        )
         business_identifier = getattr(
-            self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, None)
+            self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, None
+        )
 
         BusinessOrIndividualModel.validate_identifiers(
-            individual_identifier,
-            business_identifier
+            individual_identifier, business_identifier
         )
 
         if individual_identifier:
@@ -577,9 +590,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         BusinessOrIndividualModel.validate_identifiers(taxpayer_id, ein)
 
         if taxpayer_id:
-            setattr(
-                self,
-                BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
+            setattr(self, BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER, taxpayer_id)
         else:
             setattr(self, BusinessOrIndividualModel.BUSINESS_IDENTIFIER, ein)
 
@@ -620,12 +631,12 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         if self.get_type() == self.BUSINESS_TYPE:
             return fields.union(
                 self.get_business_non_required_fields(),
-                self.get_business_required_fields()
+                self.get_business_required_fields(),
             )
         else:
             return fields.union(
                 self.get_individual_non_required_fields(),
-                self.get_individual_required_fields()
+                self.get_individual_required_fields(),
             )
 
     @classmethod
@@ -649,9 +660,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'ein'}
-        )
+        return fields.union({"ein"})
 
     @classmethod
     def get_individual_non_required_fields(cls):
@@ -674,6 +683,4 @@ class BusinessOrIndividualModel(MarketPlaceModel):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union(
-            {'taxpayer_id'}
-        )
+        return fields.union({"taxpayer_id"})

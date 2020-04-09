@@ -1,9 +1,13 @@
 from zoop_wrapper.models.base import (
-    BusinessOrIndividualModel, Person, SocialModel, Address, FinancialModel)
+    BusinessOrIndividualModel,
+    Person,
+    SocialModel,
+    Address,
+    FinancialModel,
+)
 
 
-class Seller(BusinessOrIndividualModel, Person,
-             FinancialModel, SocialModel):
+class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     """
     Represent a seller.
     https://docs.zoop.co/reference#vendedor-1
@@ -38,7 +42,8 @@ class Seller(BusinessOrIndividualModel, Person,
         business_facebook (str): optional value
         business_twitter (str): optional value
     """
-    RESOURCE = 'seller'
+
+    RESOURCE = "seller"
 
     def init_custom_fields(self, business_address=None, owner=None, **kwargs):
         """
@@ -58,13 +63,17 @@ class Seller(BusinessOrIndividualModel, Person,
 
         if self.get_type() == self.BUSINESS_TYPE:
             setattr(
-                self, 'owner',
-                Person.from_dict_or_instance(
-                    owner, allow_empty=self._allow_empty))
+                self,
+                "owner",
+                Person.from_dict_or_instance(owner, allow_empty=self._allow_empty),
+            )
             setattr(
-                self, 'business_address',
+                self,
+                "business_address",
                 Address.from_dict_or_instance(
-                    business_address, allow_empty=self._allow_empty))
+                    business_address, allow_empty=self._allow_empty
+                ),
+            )
         else:
             Person.init_custom_fields(self, **kwargs)
 
@@ -74,11 +83,17 @@ class Seller(BusinessOrIndividualModel, Person,
         return fields.union(
             BusinessOrIndividualModel.get_non_required_fields(),
             FinancialModel.get_non_required_fields(),
-            {"type", "statement_descriptor", "mcc",
-             "show_profile_online", "is_mobile",
-             "decline_on_fail_security_code",
-             "decline_on_fail_zipcode",
-             "merchant_code", "terminal_code"}
+            {
+                "type",
+                "statement_descriptor",
+                "mcc",
+                "show_profile_online",
+                "is_mobile",
+                "decline_on_fail_security_code",
+                "decline_on_fail_zipcode",
+                "merchant_code",
+                "terminal_code",
+            },
         )
 
     @classmethod
@@ -86,7 +101,7 @@ class Seller(BusinessOrIndividualModel, Person,
         fields = set()
         return fields.union(
             BusinessOrIndividualModel.get_required_fields(),
-            FinancialModel.get_required_fields()
+            FinancialModel.get_required_fields(),
         )
 
     @classmethod
@@ -100,8 +115,7 @@ class Seller(BusinessOrIndividualModel, Person,
         fields = cls.get_non_required_fields()
         return fields.union(
             super().get_business_non_required_fields(),
-            {'business_description', 'business_facebook',
-             'business_twitter'}
+            {"business_description", "business_facebook", "business_twitter"},
         )
 
     @classmethod
@@ -115,9 +129,15 @@ class Seller(BusinessOrIndividualModel, Person,
         fields = cls.get_required_fields()
         return fields.union(
             super().get_business_required_fields(),
-            {'business_name', 'business_phone',
-             'business_email', 'business_website',
-             'business_opening_date', 'owner', 'business_address'}
+            {
+                "business_name",
+                "business_phone",
+                "business_email",
+                "business_website",
+                "business_opening_date",
+                "owner",
+                "business_address",
+            },
         )
 
     @classmethod
@@ -133,7 +153,7 @@ class Seller(BusinessOrIndividualModel, Person,
             super().get_individual_non_required_fields(),
             SocialModel.get_non_required_fields(),
             Person.get_non_required_fields(),
-            {'website'}
+            {"website"},
         )
 
     @classmethod
@@ -148,7 +168,7 @@ class Seller(BusinessOrIndividualModel, Person,
         return fields.union(
             super().get_individual_required_fields(),
             SocialModel.get_required_fields(),
-            Person.get_required_fields()
+            Person.get_required_fields(),
         )
 
     @property
@@ -165,7 +185,7 @@ class Seller(BusinessOrIndividualModel, Person,
         Returns:
             string with the ``full name``
         """
-        owner = getattr(self, 'owner', None)
+        owner = getattr(self, "owner", None)
         if owner is not None:
             return owner.full_name
         return super().full_name

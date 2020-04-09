@@ -1,5 +1,8 @@
 from zoop_wrapper.models.base import (
-    BusinessOrIndividualModel, Address, VerificationModel)
+    BusinessOrIndividualModel,
+    Address,
+    VerificationModel,
+)
 from zoop_wrapper.exceptions import FieldError, ValidationError
 
 
@@ -14,9 +17,7 @@ class BankAccountVerificationModel(VerificationModel):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {'deposit_check'}
-        )
+        return fields.union({"deposit_check"})
 
 
 class BankAccount(BusinessOrIndividualModel):
@@ -47,15 +48,16 @@ class BankAccount(BusinessOrIndividualModel):
         phone_number: phone number
         verification_checklist: VerificationCheckList model
     """
-    RESOURCE = 'bank_account'
 
-    SAVING_TYPE = 'Savings'
-    CHECKING_TYPE = 'Checking'
+    RESOURCE = "bank_account"
+
+    SAVING_TYPE = "Savings"
+    CHECKING_TYPE = "Checking"
     TYPES = {SAVING_TYPE, CHECKING_TYPE}
 
-    def init_custom_fields(self, type=None, address=None,
-                           verification_checklist=None,
-                           **kwargs):
+    def init_custom_fields(
+        self, type=None, address=None, verification_checklist=None, **kwargs
+    ):
         """
         Initialize :attr:`address` as :class:`.Address`.\n
 
@@ -72,13 +74,16 @@ class BankAccount(BusinessOrIndividualModel):
         self.validate_type(type)
 
         setattr(
-            self, 'address',
-            Address.from_dict_or_instance(address, allow_empty=True))
+            self, "address", Address.from_dict_or_instance(address, allow_empty=True)
+        )
 
         setattr(
-            self, 'verification_checklist',
+            self,
+            "verification_checklist",
             BankAccountVerificationModel.from_dict_or_instance(
-                verification_checklist, allow_empty=True))
+                verification_checklist, allow_empty=True
+            ),
+        )
 
     @classmethod
     def validate_type(cls, type):
@@ -92,22 +97,32 @@ class BankAccount(BusinessOrIndividualModel):
             ValidationError: when ``type`` is not in :attr:`TYPES`
         """
         if type not in cls.TYPES:
-            raise ValidationError(cls, FieldError('type', f'type must one of {cls.TYPES}'))
+            raise ValidationError(
+                cls, FieldError("type", f"type must one of {cls.TYPES}")
+            )
 
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {"type", "holder_name", "bank_code",
-             "routing_number"}
-        )
+        return fields.union({"type", "holder_name", "bank_code", "routing_number"})
 
     @classmethod
     def get_non_required_fields(cls):
         fields = super().get_non_required_fields()
         return fields.union(
-            {"account_number", "description", "bank_name",
-             "last4_digits", "country_code", "phone_number",
-             "is_active", "is_verified", "debitable", "customer",
-             "fingerprint", "address", "verification_checklist"}
+            {
+                "account_number",
+                "description",
+                "bank_name",
+                "last4_digits",
+                "country_code",
+                "phone_number",
+                "is_active",
+                "is_verified",
+                "debitable",
+                "customer",
+                "fingerprint",
+                "address",
+                "verification_checklist",
+            }
         )

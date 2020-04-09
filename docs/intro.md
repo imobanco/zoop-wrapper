@@ -16,6 +16,19 @@ Cliente não oficial da Zoop feito em Python, para realizar integração com o g
 
 Você pode acessar a documentação oficial da Zoop acessando esse [link](https://docs.zoop.co/).
 
+## Configuração
+CONFIGURAR ENV
+
+## Modo de usar
+A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST.
+
+A documentação da API da zoop não é uma das melhores, mas está disponível abertamente.
+
+Atenção: Não tenho conhecimento se TODOS testes podem ser realizados testes sem ônus ao desenvolvedor. 
+As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
+
+Saiba mais na [documentação oficial da Zoop](https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop)
+
 ## Recursos disponíveis
 
 ### Market place
@@ -64,13 +77,3 @@ Você pode acessar a documentação oficial da Zoop acessando esse [link](https:
 - [x] cancelamento
 - [x] Cadastro transação boleto
 - [ ] Cadastro transação cartão de crédito
-
-## Modo de usar
-A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST.
-
-A documentação da API da zoop não é uma das melhores, mas está disponível abertamente.
-
-Atenção: Não tenho conhecimento se TODOS testes podem ser realizados testes sem ônus ao desenvolvedor. 
-As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
-
-Saiba mais na [documentação oficial da Zoop](https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop)

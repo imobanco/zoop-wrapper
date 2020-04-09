@@ -1,10 +1,13 @@
 import os
 
+from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 from zoop_wrapper.wrapper import ZoopWrapper
 from examples.utils import dump_response
 
 
-client = ZoopWrapper()
+client = ZoopWrapper(
+    marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY
+)
 
 card_transaction_id = "0b8361b8fdd1480783800229f87310c2"
 response = client.cancel_transaction(card_transaction_id)

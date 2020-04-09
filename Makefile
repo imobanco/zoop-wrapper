@@ -44,5 +44,6 @@ docs.autodoc:
 docs.build:
 	sphinx-build docs/source/ docs/
 
-build:
+package.build:
+	versioneer install
 	python setup.py sdist bdist_wheel

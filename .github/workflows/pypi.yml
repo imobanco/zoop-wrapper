@@ -16,7 +16,7 @@ jobs:
     - name: Install dependencies
       run: make pip.install.build
     - name: build package
-      run: make build
+      run: make package.build
     - name: deploy package
       env:
         TWINE_USERNAME: __token__

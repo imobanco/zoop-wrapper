@@ -11,9 +11,7 @@ from zoop_wrapper.models.invoice import (
 from examples.utils import dump_response
 
 
-client = ZoopWrapper(
-    marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY
-)
+client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 seller_id = "27e17b778b404a83bf8e25ec995e2ffe"
 buyer_or_seller_id = "e7eec0f640c14e21b35d20d58b49b584"

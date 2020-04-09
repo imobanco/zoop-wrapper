@@ -7,9 +7,7 @@ from zoop_wrapper.models.card import Card
 from examples.utils import dump_response
 
 
-client = ZoopWrapper(
-    marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY
-)
+client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 t = Transaction(
     customer="foo",

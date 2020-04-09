@@ -175,9 +175,7 @@ class ZoopWrapper(RequestsWrapper):
         self.__marketplace_id = marketplace_id
         self.__key = key
 
-        super().__init__(
-            base_url=f"{self.BASE_URL}{self.__marketplace_id}"
-        )
+        super().__init__(base_url=f"{self.BASE_URL}{self.__marketplace_id}")
 
     @property
     def _auth(self):

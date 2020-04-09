@@ -5,9 +5,7 @@ from zoop_wrapper.wrapper import ZoopWrapper
 from examples.utils import dump_response
 
 
-client = ZoopWrapper(
-    marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY
-)
+client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 response = client.list_transactions()
 

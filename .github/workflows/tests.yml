@@ -1,0 +1,165 @@
+name: tests
+
+on: [push]
+
+jobs:
+  black:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: pip install black
+    - name: Lint with black
+      run: black --check .
+
+  mypy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: pip install mypy
+      - name: mypy check
+        run: make mypy
+
+  linux_36:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  linux_37:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  linux_38:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  windows_36:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  windows_37:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  windows_38:
+    runs-on: windows-2019
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  macos_36:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  macos_37:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  macos_38:
+    runs-on: macos-10.15
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test

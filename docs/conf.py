@@ -27,8 +27,8 @@ sys.path.insert(0, os.path.abspath(".."))
 # -- Project information -----------------------------------------------------
 
 project = "zoop-wrapper"
-copyright = "2020, Rodrigo Castro"
-author = "Rodrigo Castro"
+copyright = "2020, Imobanco"
+author = "Imobanco"
 
 
 # -- General configuration ---------------------------------------------------

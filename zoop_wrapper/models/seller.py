@@ -46,7 +46,7 @@ class Seller(BusinessOrIndividualModel, Person,
         initialize :attr:`owner` with :class:`.Person` and
         initialize :attr:`business_address` with :class:`.Address`.
 
-        ``dynamic type`` is :attr:`.INDIVIDUAL_TYPE` then
+        Else ``dynamic type`` is :attr:`.INDIVIDUAL_TYPE`! Then
         initialize ``self`` with :class:`.Person`.
 
         Args:
@@ -65,10 +65,8 @@ class Seller(BusinessOrIndividualModel, Person,
                 self, 'business_address',
                 Address.from_dict_or_instance(
                     business_address, allow_empty=self._allow_empty))
-        elif self.get_type() == self.INDIVIDUAL_TYPE:
-            Person.init_custom_fields(self, **kwargs)
         else:
-            raise TypeError('Type not identified!')
+            Person.init_custom_fields(self, **kwargs)
 
     @classmethod
     def get_non_required_fields(cls):

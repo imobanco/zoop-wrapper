@@ -115,10 +115,10 @@ class Transaction(ResourceModel):
 
         Args:
             payment_type (str): value for payment type
-            payment_method: dict of data or instance
-            point_of_sale:  dict of data or instance of PointOfSale
-            history: dict of data or instance or list of History
-            currency: default currency set.
+            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data
+            point_of_sale (dict or :class:`.PointOfSale`): point of sale data
+            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`
+            currency (str): default currency is 'BRL'.
                 So users may not need to pass currency!
             **kwargs: kwargs
         """

@@ -15,7 +15,7 @@ autodocs, napoleon, read the docs theme and so on.
 ### Autodocs
 to generate the docs file from the code docstrings we use the command from the root folder of the package
 ```shell script
-sphinx-apidoc -f -o docs/source .
+sphinx-apidoc --force --output-dir docs/source .
 ```
 
 After we make modifications to the `rst`'s files.

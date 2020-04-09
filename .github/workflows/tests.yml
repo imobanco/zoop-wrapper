@@ -1,0 +1,105 @@
+name: tests
+
+on: [push]
+
+jobs:
+  black:
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8.2
+      uses: actions/setup-python@v1
+      with:
+        python-version: 3.8.2
+    - name: Install dependencies
+      run: pip install black
+    - name: Lint with black
+      run: black --check .
+
+  mypy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8.2
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8.2
+      - name: Install dependencies
+        run: pip install mypy
+      - name: mypy check
+        run: make mypy
+
+  test3.6:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.6
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test3.7:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.7
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.7
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test3.8:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.8
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test3.9:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test
+
+  test3.5:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python 3.5
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.5
+      - name: Install dependencies
+        run: make pip.install
+      - name: Config
+        run: make config
+      - name: Test with pytest
+        run: make test

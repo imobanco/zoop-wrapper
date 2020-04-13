@@ -1,0 +1,2 @@
+include versioneer.py
+include zoop_wrapper/_version.py

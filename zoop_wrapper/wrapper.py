@@ -161,13 +161,19 @@ class ZoopWrapper(RequestsWrapper):
         __key: zoop auth token
     """
 
-    def __init__(self):
-        self.__marketplace_id = MARKETPLACE_ID
-        self.__key = ZOOP_KEY
+    BASE_URL = "https://api.zoop.ws/v1/marketplaces/"
 
-        super().__init__(
-            base_url=f"https://api.zoop.ws/v1/marketplaces/" f"{self.__marketplace_id}"
-        )
+    def __init__(self, marketplace_id=None, key=None):
+        if marketplace_id is None:
+            marketplace_id = MARKETPLACE_ID
+
+        if key is None:
+            key = ZOOP_KEY
+
+        self.__marketplace_id = marketplace_id
+        self.__key = key
+
+        super().__init__(base_url=f"{self.BASE_URL}{self.__marketplace_id}")
 
     @property
     def _auth(self):

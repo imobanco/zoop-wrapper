@@ -39,8 +39,8 @@ jobs:
           python-version: 3.6
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -54,8 +54,8 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -69,8 +69,8 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -84,8 +84,8 @@ jobs:
           python-version: 3.6
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -99,8 +99,8 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -114,8 +114,8 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -129,8 +129,8 @@ jobs:
           python-version: 3.6
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -144,8 +144,8 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test
 
@@ -159,7 +159,7 @@ jobs:
           python-version: 3.8
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Test with pytest
         run: make test

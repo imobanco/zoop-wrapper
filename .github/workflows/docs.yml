@@ -19,12 +19,12 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: make pip.install
-      - name: Config
-        run: make config
+      - name: Config env
+        run: make config.env
       - name: Build
         run: make docs.build
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./docs/build

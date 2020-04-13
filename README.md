@@ -16,61 +16,108 @@ Cliente não oficial da Zoop feito em Python, para realizar integração com o g
 
 [Documentação oficial da Zoop](https://docs.zoop.co/).
 
+## Configuração
+Para utilizar o `zoop-wrapper` é necessário ter duas constantes/variáveis. sendo elas:
+```python
+ZOOP_KEY='chave de autenticação recebida da zoop'
+MARKETPLACE_ID='ID do market place'
+```
+
+Recomendamos criar um arquivo `.env` contendo essas varíaveis de ambiente. 
+
+Podem ser criadas diretamente no terminal utilizando (não recomendado):
+```shell script
+export ZOOP_KEY='chave de autenticação recebida da zoop'
+export MARKETPLACE_ID='ID do market place'
+```
+
+Podem ser criadas diretamente no `arquivo.py`, porém fazer isso além de ser não recomendado é uma **FALHA** 
+de segurança.
+
+## Modo de usar
+Na [pasta de exemplos](examples/) existem alguns demostrativos.
+
+## Documentação da Zoop
+A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST. 
+A documentação da API da zoop não é uma das melhores, mas está disponível abertamente.
+
+>Atenção: Não tenho conhecimento se TODOS testes podem ser realizados testes sem ônus ao desenvolvedor. 
+>As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
+
+Saiba mais na [documentação oficial da Zoop](https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop)
+
 ## Recursos disponíveis
 
-### Market place
-- [ ] detalhes
+<details>
+<summary>Market place</summary>
 
-### webhooks
+- [ ] detalhes
+</details>
+
+<details>
+<summary>webhooks</summary>
+
 - [ ] Cadastro
 - [ ] listagem
 - [ ] detalhes
 - [ ] remoção
+</details>
 
-### Buyer
+<details>
+<summary>Buyer</summary>
+
 - [x] Cadastro
 - [x] listagem
 - [x] detalhes
 - [x] remoção
+</details>
 
-### Seller
+<details>
+<summary>Seller</summary>
+
 - [x] Cadastro
 - [x] listagem
 - [x] detalhes
 - [x] remoção
+</details>
 
-### Token
+<details>
+<summary>Token</summary>
+
 - [x] Cadastro de token cartão de crédito
 - [x] Cadastro de token conta bancária
 - [ ] detalhes
+</details>
 
-### Cartão de crédito
+<details>
+<summary>Cartão de crédito</summary>
+
 - [x] Conexão
 - [x] detalhes
 - [ ] remoção
+</details>
 
-### Conta bancária
+<details>
+<summary>Conta bancária</summary>
+
 - [x] Conexão
 - [x] listagem
 - [x] detalhes
 - [ ] remoção
+</details>
 
-### Boleto
+<details>
+<summary>Boleto</summary>
+
 - [x] detalhes
+</details>
 
-### Transação
+<details>
+<summary>Transação</summary>
+
 - [x] listagem
 - [x] detalhes
 - [x] cancelamento
 - [x] Cadastro transação boleto
 - [ ] Cadastro transação cartão de crédito
-
-## Modo de usar
-A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST.
-
-A documentação da API da zoop não é uma das melhores, mas está disponível abertamente.
-
-Atenção: Não tenho conhecimento se TODOS testes podem ser realizados testes sem ônus ao desenvolvedor. 
-As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
-
-Saiba mais na [documentação oficial da Zoop](https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop)
+</details>

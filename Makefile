@@ -4,13 +4,8 @@ pip.install:
 pip.install.build:
 	pip install -r requirements-build.txt
 
-config.data:
-	mkdir data
-
 config.env:
 	cp .env.sample .env
-
-config: config.data config.env
 
 test:
 	python -m unittest
@@ -39,10 +34,12 @@ docs.start:
 	sphinx-quickstart
 
 docs.autodoc:
-	sphinx-apidoc --force --output-dir docs/source .
+	sphinx-apidoc --force --output-dir docs/ .
 
 docs.build:
-	sphinx-build docs/source/ docs/
+	cp README.md docs/intro.md
+	sphinx-build docs/ docs/build/
+	touch docs/build/.nojekyll
 
 package.build:
 	versioneer install

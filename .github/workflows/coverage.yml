@@ -16,6 +16,8 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: make pip.install
+      - name: Config env
+        run: make config.env
       - name: Codacy Coverage
         env:
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}

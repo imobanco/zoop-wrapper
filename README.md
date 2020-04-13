@@ -1,15 +1,15 @@
-![alt text](https://zoop.com.br/wp-content/themes/zoop/img/logo.svg "Zoop")
+[![alt text](https://zoop.com.br/wp-content/themes/zoop/img/logo.svg "Zoop")](https://docs.zoop.co/)
 
 [![tests](https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/tests)](https://github.com/imobanco/zoop-wrapper/actions?query=workflow%3Atests)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d78080aeddcc411696a91bb18f9fe953)](https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/d78080aeddcc411696a91bb18f9fe953)](https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Coverage)
 
-![PyPI](https://img.shields.io/pypi/v/zoop-wrapper)
-![PyPI - Python Version](https://img.shields.io/pypi/pyversions/zoop-wrapper)
+[![PyPI](https://img.shields.io/pypi/v/zoop-wrapper)](https://pypi.org/project/zoop-wrapper/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/zoop-wrapper)](https://pypi.org/project/zoop-wrapper/)
 
-![GitHub](https://img.shields.io/github/license/imobanco/zoop-wrapper)
-![GitHub contributors](https://img.shields.io/github/contributors/imobanco/zoop-wrapper)
-![Snyk Vulnerabilities for GitHub Repo](https://img.shields.io/snyk/vulnerabilities/github/imobanco/zoop-wrapper)
+[![GitHub](https://img.shields.io/github/license/imobanco/zoop-wrapper)](https://github.com/imobanco/zoop-wrapper/blob/dev/LICENSE)
+[![GitHub contributors](https://img.shields.io/github/contributors/imobanco/zoop-wrapper)](https://github.com/imobanco/zoop-wrapper/graphs/contributors)
+[![Known Vulnerabilities](https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt)
 
 # Introdução
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.

@@ -17,14 +17,25 @@ Cliente não oficial da Zoop feito em Python, para realizar integração com o g
 [Documentação oficial da Zoop](https://docs.zoop.co/).
 
 ## Configuração
-Para utilizar o `zoop-wrapper` é necessário configurar duas variáveis de ambiente. Sendo elas:
+Para utilizar o `zoop-wrapper` é necessário ter duas constantes/variáveis. sendo elas:
+```python
+ZOOP_KEY='chave de autenticação recebida da zoop'
+MARKETPLACE_ID='ID do market place'
+```
+
+Recomendamos criar um arquivo `.env` contendo essas varíaveis de ambiente. 
+
+Podem ser criadas diretamente no terminal utilizando (não recomendado):
 ```shell script
 export ZOOP_KEY='chave de autenticação recebida da zoop'
 export MARKETPLACE_ID='ID do market place'
 ```
 
+Podem ser criadas diretamente no `arquivo.py`, porém fazer isso além de ser não recomendado é uma **FALHA** 
+de segurança.
+
 ## Modo de usar
-na [pasta de exemplos](examples/) existem alguns demostrativos
+Na [pasta de exemplos](examples/) existem alguns demostrativos.
 
 ## Documentação da Zoop
 A Zoop fornece diversas formas de comunicação. Sendo uma telas API's baseadas na tecnologia REST. 

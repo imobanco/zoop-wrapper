@@ -1,0 +1,103 @@
+{
+    "id": "85b71fbeaa1346169a634e4af5bb86cd",
+    "resource": "transaction",
+    "status": "pending",
+    "amount": "10.00",
+    "original_amount": "10.00",
+    "currency": "BRL",
+    "description": "meu boleto gerado para teste",
+    "payment_type": "boleto",
+    "transaction_number": null,
+    "gateway_authorizer": "ITAU",
+    "app_transaction_uid": null,
+    "refunds": null,
+    "rewards": null,
+    "discounts": null,
+    "pre_authorization": null,
+    "sales_receipt": null,
+    "on_behalf_of": "27e17b778b404a83bf8e25ec995e2ffe",
+    "customer": "e7eec0f640c14e21b35d20d58b49b584",
+    "statement_descriptor": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
+    "payment_method": {
+        "id": "38a2932a929444a699a1a5b97ea0d2fb",
+        "zoop_boleto_id": null,
+        "resource": "boleto",
+        "description": "meu boleto gerado para teste",
+        "reference_number": "3360906",
+        "document_number": "3360906",
+        "expiration_date": "2020-06-20T00:00:00+00:00",
+        "payment_limit_date": "2020-06-30T00:00:00+00:00",
+        "recipient": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
+        "bank_code": "109",
+        "customer": "e7eec0f640c14e21b35d20d58b49b584",
+        "address": null,
+        "sequence": "63864",
+        "url": "https://api-boleto-production.s3.amazonaws.com/foo/27e17b778b404a83bf8e25ec995e2ffe/5e8cfef73d502008309b4779.html",
+        "accepted": false,
+        "printed": false,
+        "downloaded": false,
+        "fingerprint": null,
+        "paid_at": null,
+        "uri": "/v1/marketplaces/foo/boletos/38a2932a929444a699a1a5b97ea0d2fb",
+        "barcode": "34191090323609068893231339210002482920000001000",
+        "metadata": {},
+        "created_at": "2020-04-07T19:30:15+00:00",
+        "updated_at": "2020-04-07T22:30:15+00:00",
+        "status": "not_paid",
+        "billing_instructions": {
+            "late_fee": {
+                "mode": "PERCENTAGE",
+                "start_date": "2020-06-20",
+                "percentage": "50"
+            },
+            "discount": [
+                {
+                    "mode": "FIXED",
+                    "limit_date": "2020-06-20",
+                    "amount": "100"
+                }
+            ],
+            "interest": {
+                "mode": "MONTHLY_PERCENTAGE",
+                "start_date": "2020-06-20",
+                "percentage": "50.5556"
+            }
+        }
+    },
+    "source": null,
+    "point_of_sale": {
+        "entry_mode": "barcode",
+        "identification_number": null
+    },
+    "installment_plan": null,
+    "refunded": false,
+    "voided": false,
+    "captured": true,
+    "fees": "0.00",
+    "fee_details": null,
+    "location_latitude": null,
+    "location_longitude": null,
+    "uri": "/v1/marketplaces/foo/transactions/85b71fbeaa1346169a634e4af5bb86cd",
+    "metadata": {},
+    "expected_on": "1970-01-01T00:00:00+00:00",
+    "created_at": "2020-04-07T22:30:14+00:00",
+    "updated_at": "2020-04-07T22:30:15+00:00",
+    "payment_authorization": null,
+    "history": [
+        {
+            "id": "ebd31542e48b44a596fe0cabdaa44f78",
+            "transaction": "85b71fbeaa1346169a634e4af5bb86cd",
+            "amount": "10.00",
+            "operation_type": "created",
+            "status": "succeeded",
+            "response_code": null,
+            "response_message": null,
+            "authorization_code": null,
+            "authorizer_id": null,
+            "authorization_nsu": null,
+            "gatewayResponseTime": null,
+            "authorizer": null,
+            "created_at": "2020-04-07 22:30:14"
+        }
+    ]
+}

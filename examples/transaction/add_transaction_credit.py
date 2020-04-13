@@ -6,7 +6,7 @@ from zoop_wrapper.models.card import Card
 from examples.utils import dump_response
 
 """
-Nesse momento as constantes podem ser criadas no arquivo .py. 
+Nesse momento as constantes podem ser criadas no arquivo .py.
 Mas é recomendado utilizar como variável de ambiente em um '.env'
 """
 from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY

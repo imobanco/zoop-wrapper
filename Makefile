@@ -42,5 +42,4 @@ docs.build:
 	touch docs/build/.nojekyll
 
 package.build:
-	versioneer install
 	python setup.py sdist bdist_wheel

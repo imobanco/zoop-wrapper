@@ -1,6 +1,6 @@
 ![alt text](https://zoop.com.br/wp-content/themes/zoop/img/logo.svg "Zoop")
 
-[![tests](https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/Python%20application%20tests)](https://github.com/imobanco/zoop-wrapper/actions)
+[![tests](https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/tests)](https://github.com/imobanco/zoop-wrapper/actions?query=workflow%3Atests)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/d78080aeddcc411696a91bb18f9fe953)](https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Grade)
 [![Codacy Badge](https://api.codacy.com/project/badge/Coverage/d78080aeddcc411696a91bb18f9fe953)](https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Coverage)
 

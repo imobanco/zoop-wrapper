@@ -31,11 +31,9 @@ jobs:
 
   test:
     name: >-
-      test ${{ matrix.os }} {{ matrix.python }}
+      test [${{ matrix.os }}] (${{ matrix.python }})
     runs-on: ${{ matrix.os }}
     strategy:
-      # fail-fast: false
-      # max-parallel: 5
       matrix:
         python: [3.6, 3.7, 3.8]
         os: [ubuntu-18.04, windows-2019, macos-10.15]

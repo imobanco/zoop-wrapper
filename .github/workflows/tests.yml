@@ -29,134 +29,19 @@ jobs:
       - name: mypy check
         run: make mypy
 
-  linux_36:
-    runs-on: ubuntu-18.04
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        so: [ubuntu-18.04, windows-2019, macos-10.15]
+        python: [3.6, 3.7, 3.8]
     steps:
       - uses: actions/checkout@v2
       - name: Set up Python 3.6
         uses: actions/setup-python@v1
         with:
-          python-version: 3.6
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
+          python-version: ${{ matrix.python }}
 
-  linux_37:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  linux_38:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  windows_36:
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.6
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.6
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  windows_37:
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  windows_38:
-    runs-on: windows-2019
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  macos_36:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.6
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.6
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  macos_37:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.7
-      - name: Install dependencies
-        run: make pip.install
-      - name: Config env
-        run: make config.env
-      - name: Test with pytest
-        run: make test
-
-  macos_38:
-    runs-on: macos-10.15
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.8
       - name: Install dependencies
         run: make pip.install
       - name: Config env

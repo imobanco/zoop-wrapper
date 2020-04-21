@@ -35,7 +35,7 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
         Test search_buyer method.
         Got this buyer identifier from the json dump of buyers.
         """
-        self.set_get_mock(200, BuyerFactory(id="foo", taxpayer_id="bar").to_dict())
+        self.set_get_mock(200, BuyerFactory(id="foo").to_dict())
 
         response = self.client.search_buyer("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)

@@ -364,8 +364,7 @@ class Person(ZoopObject):
 
         if not cpf.validate(self.taxpayer_id):
             raise ValidationError(
-                self,
-                FieldError('taxpayer_id', "taxpayer_id inválido!")
+                self, FieldError("taxpayer_id", "taxpayer_id inválido!")
             )
 
     def init_custom_fields(self, address=None, **kwargs):
@@ -553,14 +552,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
             )
         elif taxpayer_id is not None and not cpf.validate(taxpayer_id):
             raise ValidationError(
-                cls,
-                FieldError('taxpayer_id', "taxpayer_id inválido!")
+                cls, FieldError("taxpayer_id", "taxpayer_id inválido!")
             )
         elif ein is not None and not cnpj.validate(ein):
-            raise ValidationError(
-                cls,
-                FieldError('ein', "ein inválido!")
-            )
+            raise ValidationError(cls, FieldError("ein", "ein inválido!"))
 
     def get_type(self):
         """

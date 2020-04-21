@@ -40,7 +40,12 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_set_identifier_invalid_taxpayer_id(self):
         instance = MagicMock(INDIVIDUAL_IDENTIFIER="taxpayer_id")
 
-        self.assertRaises(ValidationError, BusinessOrIndividualModel.set_identifier, instance, taxpayer_id="foo")
+        self.assertRaises(
+            ValidationError,
+            BusinessOrIndividualModel.set_identifier,
+            instance,
+            taxpayer_id="foo",
+        )
 
     def test_set_identifier_ein(self):
         instance = MagicMock(BUSINESS_IDENTIFIER="ein")
@@ -52,7 +57,12 @@ class BusinessOrIndividualTestCase(SetTestCase):
     def test_set_identifier_invalid_ein(self):
         instance = MagicMock(BUSINESS_IDENTIFIER="ein")
 
-        self.assertRaises(ValidationError, BusinessOrIndividualModel.set_identifier, instance, ein="foo")
+        self.assertRaises(
+            ValidationError,
+            BusinessOrIndividualModel.set_identifier,
+            instance,
+            ein="foo",
+        )
 
     def test_get_type_empty_raise(self):
         instance = MagicMock(ein=None, taxpayer_id=None)

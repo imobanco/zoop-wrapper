@@ -58,9 +58,7 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
 
         self.set_post_mock(200, IndividualBankAccountFactory(id="foo").to_dict())
 
-        self.set_get_mock(
-            200, IndividualSellerFactory(id="foo").to_dict()
-        )
+        self.set_get_mock(200, IndividualSellerFactory(id="foo").to_dict())
 
         data = CreateIndividualBankAccountTokenFactory().to_dict()
 

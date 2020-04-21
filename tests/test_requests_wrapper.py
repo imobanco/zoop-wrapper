@@ -21,18 +21,30 @@ class RequestWrapperTestCase(APITestCase):
 
     @patch("zoop_wrapper.wrapper.logger")
     def test_process_response_error(self, mocked_logger):
-        response = self.build_response_mock(status_code=400, content={"error": {"message": "foo", "status_code": 400}})
+        response = self.build_response_mock(
+            status_code=400, content={"error": {"message": "foo", "status_code": 400}}
+        )
 
-        self.assertRaises(HTTPError, self.client._RequestsWrapper__process_response, response)
-        self.assertEqual(response.data, {"error": {"message": "foo", "status_code": 400}})
+        self.assertRaises(
+            HTTPError, self.client._RequestsWrapper__process_response, response
+        )
+        self.assertEqual(
+            response.data, {"error": {"message": "foo", "status_code": 400}}
+        )
         self.assertEqual(response.reason, "foo")
 
     @patch("zoop_wrapper.wrapper.logger")
     def test_process_response_200_error(self, mocked_logger):
-        response = self.build_response_mock(status_code=200, content={"error": {"message": "foo", "status_code": 400}})
+        response = self.build_response_mock(
+            status_code=200, content={"error": {"message": "foo", "status_code": 400}}
+        )
 
-        self.assertRaises(HTTPError, self.client._RequestsWrapper__process_response, response)
-        self.assertEqual(response.data, {"error": {"message": "foo", "status_code": 400}})
+        self.assertRaises(
+            HTTPError, self.client._RequestsWrapper__process_response, response
+        )
+        self.assertEqual(
+            response.data, {"error": {"message": "foo", "status_code": 400}}
+        )
         self.assertEqual(response.reason, "foo")
 
     @patch("zoop_wrapper.wrapper.logger")

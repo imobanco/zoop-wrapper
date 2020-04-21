@@ -45,6 +45,12 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
 
     RESOURCE = "seller"
 
+    def validate_fields(self, raise_exception=True, **kwargs):
+        if self.get_type() == self.BUSINESS_TYPE:
+            BusinessOrIndividualModel.validate_fields(self, raise_exception, **kwargs)
+        else:
+            Person.validate_fields(self, raise_exception, **kwargs)
+
     def init_custom_fields(self, business_address=None, owner=None, **kwargs):
         """
         If ``dynamic type`` is :attr:`.BUSINESS_TYPE` then

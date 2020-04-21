@@ -1,5 +1,7 @@
 from unittest.mock import patch, MagicMock
 
+from pycpfcnpj import gen
+
 from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
 from zoop_wrapper.models.seller import Seller
 from zoop_wrapper.exceptions import ValidationError

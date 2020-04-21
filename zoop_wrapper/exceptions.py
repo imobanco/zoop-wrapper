@@ -1,5 +1,6 @@
 class FieldError(Exception):
     """
+    Exceção para ser usada quando a validação de algum campo falha.
     Exception to be used when the validation
     of some field fail.
     """
@@ -7,8 +8,8 @@ class FieldError(Exception):
     def __init__(self, name, reason):
         """
         Args:
-            name: name of the field
-            reason: string containing the reason of the fail
+            name: nome do campo
+            reason: motivo do erro
         """
         self.name = name
         self.reason = reason
@@ -16,7 +17,7 @@ class FieldError(Exception):
 
     def to_dict(self):
         """
-        transform exception to dict
+        transforma exceção para um dict
 
         Returns:
             dict
@@ -26,15 +27,14 @@ class FieldError(Exception):
 
 class ValidationError(Exception):
     """
-    Exception to be used when the validation
-    of some ZoopObject occur.
+    Exceção para ser usada quando a validação de um ZoopObject ocorre
     """
 
     def __init__(self, entity, errors):
         """
         Args:
-            entity: entity where the error occurred
-            errors: list or anything
+            entity: entidade na qual o erro ocorreu
+            errors: lista de qualquer coisa (preferencialmente :class:`.FieldError`)
         """
         if type(entity) == type:
             self.class_name = entity.__name__
@@ -47,14 +47,15 @@ class ValidationError(Exception):
             self.errors = [errors]
 
         super().__init__(
-            f"Validation failed for {self.class_name}! "
-            f"Errors: {self.parse_errors()}"
+            f"Validação falhou para {self.class_name}! "
+            f"Erros: {self.parse_errors()}"
         )
 
     def parse_errors(self):
         """
-        Parse the list of errors to plain list of something
-        Returns: list of something
+        Traduz os erros do tipo :class:`.FieldError` para dict na listagem de erros
+
+        Returns: lista de objetos serializáveis
         """
         errors_list = []
         for error in self.errors:

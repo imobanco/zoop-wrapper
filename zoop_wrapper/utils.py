@@ -1,24 +1,23 @@
 import logging
 
 
-def config_logging(log_level):
+def config_logging():
     """
-    configure logging
-    Args:
-        log_level: log level to be notified
+    configura o formato de log
     """
     logging.basicConfig(
-        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=log_level
+        format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
 
 
 def get_logger(name):
     """
-    Logger factory
+    factory de Logger's
+
     Args:
-        name: subname to generate logger
+        name: nome para gerar o logger
 
     Returns:
-        a new logger for zoop_wrapper.{name}
+        novo logger para zoop_wrapper.{name}
     """
     return logging.getLogger(f"zoop_wrapper.{name}")

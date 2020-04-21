@@ -14,11 +14,7 @@
 [![GitHub contributors](https://img.shields.io/github/contributors/imobanco/zoop-wrapper)](https://github.com/imobanco/zoop-wrapper/graphs/contributors)
 [![Known Vulnerabilities](https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt)
 
-<br/>
-
 </div>
-
-<br/>
 
 # Introdução
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.

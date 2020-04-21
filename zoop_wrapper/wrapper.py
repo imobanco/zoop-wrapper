@@ -1,4 +1,5 @@
 import requests
+from requests.models import Response
 
 from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from zoop_wrapper.models.base import ResourceModel
@@ -9,6 +10,7 @@ from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.transaction import Transaction
 from zoop_wrapper.models.utils import get_instance_from_data
 from zoop_wrapper.utils import get_logger, config_logging
+from zoop_wrapper.response import ZoopResponse
 
 
 config_logging()
@@ -27,7 +29,7 @@ class RequestsWrapper:
         self.__base_url = base_url
 
     @staticmethod
-    def __process_response(response):
+    def __process_response(response: Response) -> ZoopResponse:
         """
         add 'data' attribute to response from json content of response.
 
@@ -66,6 +68,7 @@ class RequestsWrapper:
                 response.reason += f" {reasons}"
 
         response.raise_for_status()
+        # noinspection PyTypeChecker
         return response
 
     def _construct_url(self, action=None, identifier=None, subaction=None, search=None):
@@ -108,7 +111,7 @@ class RequestsWrapper:
         """
         raise NotImplementedError("Must implement auth function!")
 
-    def _get(self, url):
+    def _get(self, url) -> ZoopResponse:
         """
         http get request wrapper
 
@@ -122,7 +125,7 @@ class RequestsWrapper:
         response = self.__process_response(response)
         return response
 
-    def _post(self, url, data):
+    def _post(self, url, data) -> ZoopResponse:
         """
         http post request wrapper
 
@@ -137,7 +140,7 @@ class RequestsWrapper:
         response = self.__process_response(response)
         return response
 
-    def _delete(self, url):
+    def _delete(self, url) -> ZoopResponse:
         """
         http delete request wrapper
 

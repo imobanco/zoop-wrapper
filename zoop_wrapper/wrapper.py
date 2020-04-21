@@ -60,10 +60,15 @@ class RequestsWrapper:
                 response.instance = get_instance_from_data(response.data)
 
         if response.data.get("error"):
-            response.reason = f"{response.data.get('error').get('message')}"
-            reasons = response.data.get("error").get("reasons")
-            if reasons:
-                response.reason += f" {reasons}"
+            error = response.data.get("error")
+
+            if error.get("reasons"):
+                response.reason += f" {error.get('reasons')}"
+            else:
+                response.reason = f"{error.get('message')}"
+
+            if error.get("status_code"):
+                response.status_code = error.get("status_code")
 
         response.raise_for_status()
         return response

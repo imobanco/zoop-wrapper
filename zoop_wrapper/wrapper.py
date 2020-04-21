@@ -62,10 +62,9 @@ class RequestsWrapper:
         if response.data.get("error"):
             error = response.data.get("error")
 
+            response.reason = f"{error.get('message')}"
             if error.get("reasons"):
                 response.reason += f" {error.get('reasons')}"
-            else:
-                response.reason = f"{error.get('message')}"
 
             if error.get("status_code"):
                 response.status_code = error.get("status_code")

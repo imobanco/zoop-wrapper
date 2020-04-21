@@ -1,5 +1,7 @@
 from unittest.mock import patch
 
+from requests.exceptions import HTTPError
+
 from tests.utils import APITestCase
 from zoop_wrapper.wrapper import RequestsWrapper
 
@@ -19,11 +21,19 @@ class RequestWrapperTestCase(APITestCase):
 
     @patch("zoop_wrapper.wrapper.logger")
     def test_process_response_error(self, mocked_logger):
-        response = self.build_response_mock(content={"error": {"message": "foo"}})
+        response = self.build_response_mock(status_code=400, content={"error": {"message": "foo", "status_code": 400}})
 
-        processed_response = self.client._RequestsWrapper__process_response(response)
-        self.assertEqual(processed_response.data, {"error": {"message": "foo"}})
-        self.assertEqual(processed_response.reason, "foo")
+        self.assertRaises(HTTPError, self.client._RequestsWrapper__process_response, response)
+        self.assertEqual(response.data, {"error": {"message": "foo", "status_code": 400}})
+        self.assertEqual(response.reason, "foo")
+
+    @patch("zoop_wrapper.wrapper.logger")
+    def test_process_response_200_error(self, mocked_logger):
+        response = self.build_response_mock(status_code=200, content={"error": {"message": "foo", "status_code": 400}})
+
+        self.assertRaises(HTTPError, self.client._RequestsWrapper__process_response, response)
+        self.assertEqual(response.data, {"error": {"message": "foo", "status_code": 400}})
+        self.assertEqual(response.reason, "foo")
 
     @patch("zoop_wrapper.wrapper.logger")
     def test_process_response_error_reasons(self, mocked_logger):

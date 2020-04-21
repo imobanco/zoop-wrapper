@@ -1,6 +1,6 @@
 import requests
 
-from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
+from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from zoop_wrapper.models.base import ResourceModel
 from zoop_wrapper.models.bank_account import BankAccount
 from zoop_wrapper.models.buyer import Buyer
@@ -11,7 +11,7 @@ from zoop_wrapper.models.utils import get_instance_from_data
 from zoop_wrapper.utils import get_logger, config_logging
 
 
-config_logging(LOG_LEVEL)
+config_logging()
 logger = get_logger("wrapper")
 
 

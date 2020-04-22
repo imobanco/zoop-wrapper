@@ -356,7 +356,7 @@ class Person(ZoopObject):
         first_name: first name
         last_name: last name
         phone_number: phone number
-        taxpayer_id: cpf
+        taxpayer_id: cpf válido
     """
 
     def validate_fields(self, raise_exception=True, **kwargs):
@@ -515,8 +515,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     Can be ``Business`` or ``Individual``.
 
     Attributes:
-        taxpayer_id: for ``type`` of :attr:`INDIVIDUAL_TYPE`
-        ein: for ``type`` of :attr:`BUSINESS_TYPE`
+        taxpayer_id: cpf válido para ``type`` :attr:`INDIVIDUAL_TYPE`
+        ein: cnpj para ``type`` :attr:`BUSINESS_TYPE`
     """
 
     BUSINESS_IDENTIFIER = "ein"

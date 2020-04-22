@@ -1,7 +1,7 @@
-wrapper
+response
 ============================
 
-.. automodule:: zoop_wrapper.wrapper
+.. automodule:: zoop_wrapper.response
    :members:
    :undoc-members:
    :show-inheritance:

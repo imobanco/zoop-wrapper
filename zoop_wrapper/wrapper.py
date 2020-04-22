@@ -1,6 +1,6 @@
 import requests
 
-from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID, LOG_LEVEL
+from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from zoop_wrapper.models.base import ResourceModel
 from zoop_wrapper.models.bank_account import BankAccount
 from zoop_wrapper.models.buyer import Buyer
@@ -9,9 +9,10 @@ from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.transaction import Transaction
 from zoop_wrapper.models.utils import get_instance_from_data
 from zoop_wrapper.utils import get_logger, config_logging
+from zoop_wrapper.response import ZoopResponse
 
 
-config_logging(LOG_LEVEL)
+config_logging()
 logger = get_logger("wrapper")
 
 
@@ -27,7 +28,7 @@ class RequestsWrapper:
         self.__base_url = base_url
 
     @staticmethod
-    def __process_response(response):
+    def __process_response(response) -> ZoopResponse:
         """
         add 'data' attribute to response from json content of response.
 
@@ -112,7 +113,7 @@ class RequestsWrapper:
         """
         raise NotImplementedError("Must implement auth function!")
 
-    def _get(self, url):
+    def _get(self, url) -> ZoopResponse:
         """
         http get request wrapper
 
@@ -123,10 +124,11 @@ class RequestsWrapper:
             processed response
         """
         response = requests.get(url, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 
-    def _post(self, url, data):
+    def _post(self, url, data) -> ZoopResponse:
         """
         http post request wrapper
 
@@ -138,10 +140,11 @@ class RequestsWrapper:
             processed response
         """
         response = requests.post(url, json=data, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 
-    def _delete(self, url):
+    def _delete(self, url) -> ZoopResponse:
         """
         http delete request wrapper
 
@@ -152,6 +155,7 @@ class RequestsWrapper:
             processed response
         """
         response = requests.delete(url, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 

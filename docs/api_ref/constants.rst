@@ -1,5 +1,5 @@
 constants
-------------------------------
+============================
 
 .. automodule:: zoop_wrapper.constants
    :members:

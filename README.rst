@@ -97,88 +97,67 @@ Saiba mais na `documentação oficial da Zoop <https://docs.zoop.co/docs/introdu
 Recursos disponíveis
 =====================
 
-.. list-table:: Market Place
-   :align: center
-
-   * - função
-   * - Albatross
-   * - Crunchy Frog
-   * - Gannet Ripple
-
-
-
 Market Place
-=============
-<details>
-<summary>Market place</summary>
 
-- [ ] detalhes
-</details>
+- ☐ detalhes
 
-<details>
-<summary>webhooks</summary>
 
-- [ ] Cadastro
-- [ ] listagem
-- [ ] detalhes
-- [ ] remoção
-</details>
+Webhooks
 
-<details>
-<summary>Buyer</summary>
+- ☐ Cadastro
+- ☐ listagem
+- ☐ detalhes
+- ☐ remoção
 
-- [x] Cadastro
-- [x] listagem
-- [x] detalhes
-- [x] remoção
-</details>
 
-<details>
-<summary>Seller</summary>
+Buyer
 
-- [x] Cadastro
-- [x] listagem
-- [x] detalhes
-- [x] remoção
-</details>
+- ☑ Cadastro
+- ☑ listagem
+- ☑ detalhes
+- ☑ remoção
 
-<details>
-<summary>Token</summary>
 
-- [x] Cadastro de token cartão de crédito
-- [x] Cadastro de token conta bancária
-- [ ] detalhes
-</details>
+Seller
 
-<details>
-<summary>Cartão de crédito</summary>
+- ☑ Cadastro
+- ☑ listagem
+- ☑ detalhes
+- ☑ remoção
 
-- [x] Conexão
-- [x] detalhes
-- [ ] remoção
-</details>
 
-<details>
-<summary>Conta bancária</summary>
+Token
 
-- [x] Conexão
-- [x] listagem
-- [x] detalhes
-- [ ] remoção
-</details>
+- ☑ Cadastro de token cartão de crédito
+- ☑ Cadastro de token conta bancária
+- ☐ detalhes
 
-<details>
-<summary>Boleto</summary>
 
-- [x] detalhes
-</details>
+Cartão de crédito
 
-<details>
-<summary>Transação</summary>
+- ☑ Conexão
+- ☑ detalhes
+- ☐ remoção
 
-- [x] listagem
-- [x] detalhes
-- [x] cancelamento
-- [x] Cadastro transação boleto
-- [ ] Cadastro transação cartão de crédito
-</details>
+
+Conta bancária
+
+- ☑ Conexão
+- ☑ listagem
+- ☑ detalhes
+- ☐ remoção
+
+
+Boleto
+
+- ☑ detalhes
+
+
+Transação
+
+- ☑ listagem
+- ☑ detalhes
+- ☑ cancelamento
+- ☑ Cadastro transação boleto
+- ☐ Cadastro transação cartão de crédito
+

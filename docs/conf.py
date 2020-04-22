@@ -13,14 +13,6 @@
 import os
 import sys
 
-from recommonmark.parser import CommonMarkParser
-
-
-source_parsers = {
-    ".md": CommonMarkParser,
-}
-
-source_suffix = [".rst", ".md"]
 
 sys.path.insert(0, os.path.abspath(".."))
 
@@ -39,8 +31,7 @@ author = "Imobanco"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.autosectionlabel",
-    "recommonmark",
+    "sphinx.ext.autosectionlabel"
 ]
 
 napoleon_include_private_with_doc = True

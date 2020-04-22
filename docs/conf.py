@@ -31,7 +31,7 @@ author = "Imobanco"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.autosectionlabel"
+    "sphinx.ext.autosectionlabel",
 ]
 
 napoleon_include_private_with_doc = True

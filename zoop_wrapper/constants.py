@@ -1,7 +1,9 @@
 from decouple import config  # type: ignore
 
-"""Zoop auth key"""
-ZOOP_KEY = config("ZOOP_KEY", default="")
 
-"""Zoop market place ID"""
+ZOOP_KEY = config("ZOOP_KEY", default="")
+"""Chave de autenticação da Zoop"""
+
+
 MARKETPLACE_ID = config("MARKETPLACE_ID", default="")
+"""Marketplace id da Zoop"""

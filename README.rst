@@ -7,49 +7,64 @@
 .. image:: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
    :target: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
    :alt: Zoop Logo
-   :height: 100px
+   :height: 150
    :align: center
 
-|br| |br|
+|br|
 
 .. container::
 
     .. image:: https://img.shields.io/pypi/v/zoop-wrapper
        :target: https://pypi.org/project/zoop-wrapper/
        :alt: PyPI Version
+       :height: 23
     .. image:: https://img.shields.io/pypi/pyversions/zoop-wrapper
        :target: https://pypi.org/project/zoop-wrapper/
        :alt: PyPI - Python Version
+       :height: 23
 
 .. container::
 
     .. image:: https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/tests
        :target: https://github.com/imobanco/zoop-wrapper/actions?query=workflow%3Atests
        :alt: Test status
+       :height: 23
     .. image:: https://img.shields.io/github/license/imobanco/zoop-wrapper
        :target: https://github.com/imobanco/zoop-wrapper/blob/dev/LICENSE
        :alt: Licença
+       :height: 23
     .. image:: https://img.shields.io/github/contributors/imobanco/zoop-wrapper
        :target: https://github.com/imobanco/zoop-wrapper/graphs/contributors
        :alt: Contributors
+       :height: 23
 
 .. container::
 
     .. image:: https://api.codacy.com/project/badge/Grade/d78080aeddcc411696a91bb18f9fe953
        :target: https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Grade
        :alt: Code grade
+       :height: 23
     .. image:: https://api.codacy.com/project/badge/Coverage/d78080aeddcc411696a91bb18f9fe953
        :target: https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Coverage
        :alt: Coverage
+       :height: 23
     .. image:: https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt
        :target: https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt
        :alt: Known Vulnerabilities
+       :height: 23
 
-==================
-Introdução
-==================
+|br|
+
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
 `Documentação oficial da Zoop <https://docs.zoop.co>`__
+
+
+Instalando
+===========
+
+.. code-block:: bash
+
+    pip install zoop-wrapper
 
 
 Configuração
@@ -76,10 +91,6 @@ Podem ser criadas também diretamente no `arquivo.py`
 .. danger::
 
     Fazer isso além de não ser recomendado é uma **FALHA** de segurança.
-
-Modo de usar
-==================
-Na `pasta de exemplos <examples/>`__ existem alguns demostrativos.
 
 Documentação da Zoop
 =====================

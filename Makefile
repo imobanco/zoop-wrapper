@@ -37,7 +37,6 @@ docs.autodoc:
 	sphinx-apidoc --force --output-dir docs/ .
 
 docs.build:
-	cp README.md docs/intro.md
 	sphinx-build docs/ docs/build/
 	touch docs/build/.nojekyll
 

@@ -1,5 +1,5 @@
 exceptions
--------------------------------
+============================
 
 .. automodule:: zoop_wrapper.exceptions
    :members:

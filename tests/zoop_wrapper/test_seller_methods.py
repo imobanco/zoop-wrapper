@@ -36,9 +36,7 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         """
         Test search_individual_seller method.
         """
-        self.set_get_mock(
-            200, IndividualSellerFactory(id="foo", taxpayer_id="bar").to_dict()
-        )
+        self.set_get_mock(200, IndividualSellerFactory(id="foo").to_dict())
 
         response = self.client.search_individual_seller("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -50,7 +48,7 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         """
         Test search_business_seller method.
         """
-        self.set_get_mock(200, BusinessSellerFactory(id="foo", ein="bar").to_dict())
+        self.set_get_mock(200, BusinessSellerFactory(id="foo").to_dict())
 
         response = self.client.search_business_seller("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)

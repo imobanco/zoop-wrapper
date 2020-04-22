@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock
 
+from pycpfcnpj import gen
+
 from tests.utils import SetTestCase
 from zoop_wrapper.models.bank_account import BankAccount
 from zoop_wrapper.models.card import Card
@@ -67,16 +69,18 @@ class TokenTestCase(SetTestCase):
         """
         instance = MagicMock(BANK_ACCOUNT_IDENTIFIER="foo")
 
-        Token.init_custom_fields(instance, foo="bar", ein="foo")
+        cnpj = gen.cnpj()
+        Token.init_custom_fields(instance, foo="bar", ein=cnpj)
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
-        self.assertEqual(instance.ein, "foo")
+        self.assertEqual(instance.ein, cnpj)
 
     def test_init_custom_fields_bank_account_individual(self):
-        instance = MagicMock(BANK_ACCOUNT_IDENTIFIER="foo", TYPE_ATTR="token_type")
+        instance = MagicMock(BANK_ACCOUNT_IDENTIFIER="foo")
 
-        Token.init_custom_fields(instance, foo="bar", taxpayer_id="foo")
+        cpf = gen.cpf()
+        Token.init_custom_fields(instance, foo="bar", taxpayer_id=cpf)
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
-        self.assertEqual(instance.taxpayer_id, "foo")
+        self.assertEqual(instance.taxpayer_id, cpf)
 
     def test_get_non_required_fields(self):
         self.assertIsSubSet({"type", "used"}, Token.get_non_required_fields())

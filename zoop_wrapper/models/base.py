@@ -1,5 +1,7 @@
 import copy
 
+from pycpfcnpj import cpf, cnpj
+
 from zoop_wrapper.utils import get_logger
 from zoop_wrapper.exceptions import ValidationError, FieldError
 
@@ -354,8 +356,23 @@ class Person(ZoopObject):
         first_name: first name
         last_name: last name
         phone_number: phone number
-        taxpayer_id: cpf
+        taxpayer_id: cpf válido
     """
+
+    def validate_fields(self, raise_exception=True, **kwargs):
+        """
+        O :attr:`taxpayer_id` precisa ser um CPF válido. Então verificamos isso.
+
+        Args:
+            raise_exception: Quando algum campo está faltando ou CPF é inválido
+            **kwargs:
+        """
+        super().validate_fields()
+
+        if not cpf.validate(self.taxpayer_id):
+            raise ValidationError(
+                self, FieldError("taxpayer_id", "taxpayer_id inválido!")
+            )
 
     def init_custom_fields(self, address=None, **kwargs):
         """
@@ -498,8 +515,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     Can be ``Business`` or ``Individual``.
 
     Attributes:
-        taxpayer_id: for ``type`` of :attr:`INDIVIDUAL_TYPE`
-        ein: for ``type`` of :attr:`BUSINESS_TYPE`
+        taxpayer_id: cpf válido para ``type`` :attr:`INDIVIDUAL_TYPE`
+        ein: cnpj para ``type`` :attr:`BUSINESS_TYPE`
     """
 
     BUSINESS_IDENTIFIER = "ein"
@@ -524,10 +541,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     @classmethod
     def validate_identifiers(cls, taxpayer_id, ein):
         """
-        validate tuple of identifiers values
+        valida tupla de valores de identificação
 
         Raises:
-            :class`.ValidationError`: when it's passed both identifiers or none
+            :class`.ValidationError`: quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
         """
         if (taxpayer_id is not None and ein is not None) or (
             taxpayer_id is None and ein is None
@@ -536,10 +553,16 @@ class BusinessOrIndividualModel(MarketPlaceModel):
                 cls,
                 FieldError(
                     f"{BusinessOrIndividualModel.INDIVIDUAL_IDENTIFIER} "
-                    f"or {BusinessOrIndividualModel.BUSINESS_IDENTIFIER}",
-                    "missing identifier!",
+                    f"ou {BusinessOrIndividualModel.BUSINESS_IDENTIFIER}",
+                    "identificadores faltando!",
                 ),
             )
+        elif taxpayer_id is not None and not cpf.validate(taxpayer_id):
+            raise ValidationError(
+                cls, FieldError("taxpayer_id", "taxpayer_id inválido!")
+            )
+        elif ein is not None and not cnpj.validate(ein):
+            raise ValidationError(cls, FieldError("ein", "ein inválido!"))
 
     def get_type(self):
         """

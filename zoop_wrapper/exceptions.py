@@ -1,8 +1,6 @@
 class FieldError(Exception):
     """
     Exceção para ser usada quando a validação de algum campo falha.
-    Exception to be used when the validation
-    of some field fail.
     """
 
     def __init__(self, name, reason):

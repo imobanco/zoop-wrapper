@@ -29,7 +29,7 @@ class RequestsWrapper:
         self.__base_url = base_url
 
     @staticmethod
-    def __process_response(response: Response) -> ZoopResponse:
+    def __process_response(response) -> ZoopResponse:
         """
         add 'data' attribute to response from json content of response.
 
@@ -68,7 +68,6 @@ class RequestsWrapper:
                 response.reason += f" {reasons}"
 
         response.raise_for_status()
-        # noinspection PyTypeChecker
         return response
 
     def _construct_url(self, action=None, identifier=None, subaction=None, search=None):
@@ -122,6 +121,7 @@ class RequestsWrapper:
             processed response
         """
         response = requests.get(url, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 
@@ -137,6 +137,7 @@ class RequestsWrapper:
             processed response
         """
         response = requests.post(url, json=data, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 
@@ -151,6 +152,7 @@ class RequestsWrapper:
             processed response
         """
         response = requests.delete(url, auth=self._auth)
+        # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 

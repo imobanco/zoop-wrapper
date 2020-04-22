@@ -47,8 +47,7 @@ class ValidationError(Exception):
             self.errors = [errors]
 
         super().__init__(
-            f"Validação falhou para {self.class_name}! "
-            f"Erros: {self.parse_errors()}"
+            f"Validação falhou para {self.class_name}! " f"Erros: {self.parse_errors()}"
         )
 
     def parse_errors(self):

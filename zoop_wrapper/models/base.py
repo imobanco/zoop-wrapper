@@ -360,6 +360,13 @@ class Person(ZoopObject):
     """
 
     def validate_fields(self, raise_exception=True, **kwargs):
+        """
+        O :attr:`taxpayer_id` precisa ser um CPF válido. Então verificamos isso.
+
+        Args:
+            raise_exception: Quando algum campo está faltando ou CPF é inválido
+            **kwargs:
+        """
         super().validate_fields()
 
         if not cpf.validate(self.taxpayer_id):

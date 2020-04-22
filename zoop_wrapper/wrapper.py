@@ -1,5 +1,4 @@
 import requests
-from requests.models import Response
 
 from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
 from zoop_wrapper.models.base import ResourceModel

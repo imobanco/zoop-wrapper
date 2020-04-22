@@ -7,7 +7,7 @@
 .. image:: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
    :target: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
    :alt: Zoop Logo
-   :height: 150
+   :height: 130
    :align: center
 
 |br|
@@ -56,6 +56,7 @@
 |br|
 
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
+
 `Documentação oficial da Zoop <https://docs.zoop.co>`__
 
 

@@ -544,7 +544,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         valida tupla de valores de identificação
 
         Raises:
-            :class`.ValidationError`: quando é passado os dois, ou nenhum, ou quando passado é inválido
+            :class`.ValidationError`: quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
         """
         if (taxpayer_id is not None and ein is not None) or (
             taxpayer_id is None and ein is None

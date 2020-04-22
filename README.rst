@@ -57,11 +57,13 @@
 
 Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.
 
-`Documentação oficial da Zoop <https://docs.zoop.co>`__
+`Documentação oficial da Zoop <https://docs.zoop.co>`_
 
 
 Instalando
 ===========
+
+Nosso pacote está hospedado no `PyPI <https://pypi.org/project/zoop-wrapper/>`_
 
 .. code-block:: bash
 
@@ -104,7 +106,7 @@ A documentação da API da zoop não é uma das melhores, mas está disponível 
 
     As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
 
-Saiba mais na `documentação oficial da Zoop <https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop>`__
+Saiba mais na `documentação oficial da Zoop <https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop>`_
 
 Recursos disponíveis
 =====================

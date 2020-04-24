@@ -1,4 +1,4 @@
-from zoop_wrapper.wrapper import ZoopWrapper  # noqa
+from .wrapper import ZoopWrapper  # noqa
 
 from ._version import get_versions
 

@@ -1,11 +1,11 @@
 from unittest.mock import MagicMock
 
-from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
+from tests.utils import SetTestCase
 from zoop_wrapper.models.base import Person, Address
 from tests.factories.base import PersonFactory
 
 
-class PersonTestCase(TestCase, SetTestCase):
+class PersonTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
             {

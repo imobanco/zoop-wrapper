@@ -1,6 +1,6 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
+from tests.utils import SetTestCase
 from zoop_wrapper.models.seller import Seller
 from zoop_wrapper.exceptions import ValidationError
 from tests.factories.seller import (
@@ -10,7 +10,7 @@ from tests.factories.seller import (
 )
 
 
-class SellerTestCase(TestCase, SetTestCase):
+class SellerTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(set(), Seller.get_required_fields())
 

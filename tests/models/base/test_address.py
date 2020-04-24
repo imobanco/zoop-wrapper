@@ -1,9 +1,9 @@
-from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
+from tests.utils import SetTestCase
 from zoop_wrapper.models.base import Address
 from tests.factories.base import AddressFactory
 
 
-class AddressTestCase(TestCase, SetTestCase):
+class AddressTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(set(), Address.get_required_fields())
 

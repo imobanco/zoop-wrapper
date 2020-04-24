@@ -19,27 +19,13 @@ class SetTestCase(TestCase):
         )
 
 
-class MockedLoggerTestCase(TestCase):
+class APITestCase(TestCase):
     def setUp(self):
         super().setUp()
 
-        self.patcher_address_loggger = patch("zoop_wrapper.models.base.logger")
-        self.patcher_wrapper_loggger = patch("zoop_wrapper.wrapper.logger")
-
-        self.mocked_address_logger = self.patcher_address_loggger.start()
-        self.mocked_wrapper_logger = self.patcher_wrapper_loggger.start()
-
-        self.addCleanup(self.patcher_address_loggger.stop)
-        self.addCleanup(self.patcher_wrapper_loggger.stop)
-
-
-class APITestCase(MockedLoggerTestCase):
-    def setUp(self):
-        super().setUp()
-
-        self.patcher_get = patch("zoop_wrapper.wrapper.requests.get")
-        self.patcher_post = patch("zoop_wrapper.wrapper.requests.post")
-        self.patcher_delete = patch("zoop_wrapper.wrapper.requests.delete")
+        self.patcher_get = patch("zoop_wrapper.wrapper.base.requests.get")
+        self.patcher_post = patch("zoop_wrapper.wrapper.base.requests.post")
+        self.patcher_delete = patch("zoop_wrapper.wrapper.base.requests.delete")
 
         self.mocked_get = self.patcher_get.start()
         self.mocked_post = self.patcher_post.start()

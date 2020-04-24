@@ -1,6 +1,6 @@
 from unittest.mock import MagicMock
 
-from tests.utils import MockedLoggerTestCase as TestCase, SetTestCase
+from tests.utils import SetTestCase
 from zoop_wrapper.models.base import Address
 from zoop_wrapper.models.bank_account import BankAccount, BankAccountVerificationModel
 from zoop_wrapper.exceptions import ValidationError
@@ -11,7 +11,7 @@ from tests.factories.bank_account import (
 )
 
 
-class BankAccountTestCase(TestCase, SetTestCase):
+class BankAccountTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
             {"type", "holder_name", "bank_code", "routing_number"},

@@ -1,11 +1,11 @@
-from zoop_wrapper.models.bank_account import BankAccount
-from zoop_wrapper.models.buyer import Buyer
-from zoop_wrapper.models.card import Card
-from zoop_wrapper.models.invoice import Invoice
-from zoop_wrapper.models.seller import Seller
-from zoop_wrapper.models.token import Token
-from zoop_wrapper.models.transaction import Transaction
-from zoop_wrapper.utils import get_logger
+from .bank_account import BankAccount
+from .buyer import Buyer
+from .card import Card
+from .invoice import Invoice
+from .seller import Seller
+from .token import Token
+from .transaction import Transaction
+from ..utils import get_logger
 
 
 logger = get_logger("models")

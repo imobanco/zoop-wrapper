@@ -1,9 +1,9 @@
-from zoop_wrapper.models.base import (
+from .base import (
     BusinessOrIndividualModel,
     Address,
     VerificationModel,
 )
-from zoop_wrapper.exceptions import FieldError, ValidationError
+from ..exceptions import FieldError, ValidationError
 
 
 class BankAccountVerificationModel(VerificationModel):

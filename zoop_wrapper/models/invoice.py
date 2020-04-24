@@ -1,5 +1,5 @@
-from zoop_wrapper.models.base import PaymentMethod, ZoopObject
-from zoop_wrapper.exceptions import FieldError, ValidationError
+from .base import PaymentMethod, ZoopObject
+from ..exceptions import FieldError, ValidationError
 
 
 class BillingConfiguration(ZoopObject):

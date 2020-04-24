@@ -1,8 +1,8 @@
-from zoop_wrapper.models.base import ResourceModel, BusinessOrIndividualModel
-from zoop_wrapper.models.bank_account import BankAccount
-from zoop_wrapper.models.card import Card
-from zoop_wrapper.utils import get_logger
-from zoop_wrapper.exceptions import FieldError, ValidationError
+from .base import ResourceModel, BusinessOrIndividualModel
+from .bank_account import BankAccount
+from .card import Card
+from ..utils import get_logger
+from ..exceptions import FieldError, ValidationError
 
 
 logger = get_logger("models")

@@ -35,7 +35,7 @@ class APITestCase(TestCase):
         self.addCleanup(self.patcher_post.stop)
         self.addCleanup(self.patcher_delete.stop)
 
-        self.client = ZoopWrapper()
+        self.client = ZoopWrapper(marketplace_id='foo', key='foo')
 
     def tearDown(self):
         super().tearDown()

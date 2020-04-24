@@ -3,20 +3,18 @@ from ..wrapper.base import BaseZoopWrapper
 
 class InvoiceWrapper(BaseZoopWrapper):
     """
-    Invoice Wrapper
-
-    Contains methods for :class:`.Invoice` resource
+    Possui os métodos do resource for :class:`.Invoice`
     """
 
     def retrieve_invoice(self, identifier):
         """
-        retrieve invoice
+        Pega um :class:`.Invoice`
 
         Args:
             identifier: uuid id
 
         Returns:
-            response with instance of Invoice
+            resposta com instância do :class:`.Invoice`
         """
         url = self._construct_url(action="boletos", identifier=identifier)
         return self._get(url)

@@ -4,9 +4,11 @@ from ..models.token import Token
 
 class CardWrapper(BaseZoopWrapper):
     """
-    Card Wrapper
+    Possui os métodos do resource :class:`.Card`
 
-    Contains methods for :class:`.Card` resource
+    .. warning:: Não importe isso diretamente!
+
+        Essa classe precisa de métodos presentes em outro wrapper`
     """
 
     def retrieve_card(self, identifier):
@@ -57,7 +59,7 @@ class CardWrapper(BaseZoopWrapper):
         """
         token = Token.from_dict_or_instance(data)
 
-        buyer_response = self.retrieve_buyer(buyer_identifier)
+        buyer_response = self.retrieve_buyer(buyer_identifier)  # type: ignore
         buyer_instance = buyer_response.instance
 
         token_response = self.__add_card_token(token)

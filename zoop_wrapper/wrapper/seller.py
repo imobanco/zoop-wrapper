@@ -4,9 +4,7 @@ from ..models.seller import Seller
 
 class SellerWrapper(BaseZoopWrapper):
     """
-    Seller Wrapper
-
-    Contains methods for :class:`.Seller` resource
+    Possui os métodos do resource :class:`.Seller`
     """
 
     def list_sellers(self):

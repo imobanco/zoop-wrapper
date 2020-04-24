@@ -5,9 +5,11 @@ from ..models.token import Token
 
 class BankAccountWrapper(BaseZoopWrapper):
     """
-    Bank Account Wrapper
+    Possui os métodos do resource :class:`.BankAccount`
 
-    Contains methods for :class:`.BankAccount` resource
+    .. warning:: Não importe isso diretamente!
+
+        Essa classe precisa de métodos presentes em outro wrapper`
     """
 
     def list_bank_accounts(self):
@@ -70,9 +72,9 @@ class BankAccountWrapper(BaseZoopWrapper):
 
         bank_account_type = instance.get_bank_account_type()
         if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
-            seller_response = self.search_individual_seller(instance.taxpayer_id)
+            seller_response = self.search_individual_seller(instance.taxpayer_id)  # type: ignore
         elif bank_account_type == BankAccount.BUSINESS_TYPE:
-            seller_response = self.search_business_seller(instance.ein)
+            seller_response = self.search_business_seller(instance.ein)  # type: ignore
         else:
             raise TypeError("this is not supposed to happen!")
 

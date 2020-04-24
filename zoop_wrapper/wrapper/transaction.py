@@ -4,9 +4,7 @@ from ..models.transaction import Transaction
 
 class TransactionWrapper(BaseZoopWrapper):
     """
-    Transaction Wrapper
-
-    Contains methods for :class:`.Transaction` resource
+    Possui os métodos do resource :class:`.Transaction`
     """
 
     def list_transactions(self):

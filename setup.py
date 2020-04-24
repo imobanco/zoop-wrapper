@@ -17,7 +17,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/imobanco/ZoopAPIWrapper",
-    packages=["zoop_wrapper", "zoop_wrapper.models"],
+    packages=["zoop_wrapper", "zoop_wrapper.models", "zoop_wrapper.wrapper"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "Development Status :: 3 - Alpha",

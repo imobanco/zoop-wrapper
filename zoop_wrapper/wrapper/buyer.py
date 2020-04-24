@@ -4,9 +4,7 @@ from ..models.buyer import Buyer
 
 class BuyerWrapper(BaseZoopWrapper):
     """
-    Buyer Wrapper
-
-    Contains methods for :class:`.Buyer` resource
+    Possui os métodos do resource :class:`.Buyer`
     """
 
     def list_buyers(self):

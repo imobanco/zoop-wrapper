@@ -13,10 +13,10 @@ logger = get_logger("wrapper")
 
 class RequestsWrapper:
     """
-    requests lib wrapper
+    wrapper da lib requests
 
     Attributes:
-        __base_url: base url to construct requests
+        __base_url: Url base para construir os requests
     """
 
     def __init__(self, base_url):
@@ -157,11 +157,11 @@ class RequestsWrapper:
 
 class BaseZoopWrapper(RequestsWrapper):
     """
-    Zoop API methods wrapper
+    wrapper da Zoop API
 
     Attributes:
-        __marketplace_id: marketplace id from zoop for the zoop account
-        __key: zoop auth token
+        __marketplace_id: marketplace id da zoop
+        __key: chave de autenticação da zoop
     """
 
     BASE_URL = "https://api.zoop.ws/v1/marketplaces/"

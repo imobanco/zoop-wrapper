@@ -32,11 +32,18 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosectionlabel",
+    'sphinx.ext.intersphinx',
+    'sphinx.ext.extlinks',
 ]
 
 napoleon_include_private_with_doc = True
 napoleon_include_special_with_doc = True
 napoleon_include_init_with_doc = True
+
+# Looks for objects in external projects
+intersphinx_mapping = {
+    'requests': ('https://requests.readthedocs.io/en/latest/', None),
+}
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

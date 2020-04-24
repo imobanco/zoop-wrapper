@@ -7,7 +7,7 @@ Documentação do zoop-wrapper
    :caption: Exemplos
    :maxdepth: 2
    :numbered:
-   :blob:
+   :glob:
 
    examples/*
 

@@ -6,7 +6,14 @@ from .seller import SellerWrapper
 from .transaction import TransactionWrapper
 
 
-class ZoopWrapper(BankAccountWrapper, BuyerWrapper, CardWrapper, InvoiceWrapper, SellerWrapper, TransactionWrapper):
+class ZoopWrapper(
+    BankAccountWrapper,
+    BuyerWrapper,
+    CardWrapper,
+    InvoiceWrapper,
+    SellerWrapper,
+    TransactionWrapper,
+):
     """
     Zoop Wrapper
 

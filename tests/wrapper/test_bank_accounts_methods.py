@@ -47,7 +47,9 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance, Token)
         self.assertIsInstance(response.instance.bank_account, BankAccount)
 
-    @patch("zoop_wrapper.wrapper.ZoopWrapper._BankAccountWrapper__add_bank_account_token")
+    @patch(
+        "zoop_wrapper.wrapper.ZoopWrapper._BankAccountWrapper__add_bank_account_token"
+    )
     def test_add_bank_account(self, mocked_add_token):
         """
         Test add_bank_account method.

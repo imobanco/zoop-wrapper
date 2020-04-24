@@ -1,20 +1,24 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import APITestCase
-from zoop_wrapper.wrapper import ZOOP_KEY
+from zoop_wrapper.wrapper.base import BaseZoopWrapper
 
 
 class ZoopWrapperTestCase(APITestCase):
-    def test_auth(self):
-        self.assertEqual(self.client._auth, (ZOOP_KEY, ""))
+    def setUp(self):
+        super().setUp()
+        self.client = BaseZoopWrapper(key="foo")
 
-    @patch("zoop_wrapper.wrapper.RequestsWrapper._post")
-    @patch("zoop_wrapper.wrapper.isinstance")
-    def test_post_instance(self, mocked_isinstance, mocked_post):
+    def test_auth(self):
+        self.assertEqual(self.client._auth, ("foo", ""))
+
+    @patch("zoop_wrapper.wrapper.base.RequestsWrapper._post")
+    def test_post_instance(self, mocked_post):
         instance = MagicMock()
         self.assertIsInstance(instance, MagicMock)
 
-        self.client._post_instance("bla", instance)
+        with patch("zoop_wrapper.wrapper.base.isinstance"):
+            self.client._post_instance("bla", instance)
 
         instance.to_dict.assert_called_once()
 

@@ -5,7 +5,7 @@
 |br|
 
 .. image:: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
-   :target: https://zoop.com.br/wp-content/themes/zoop/img/logo.svg
+   :target: #
    :alt: Zoop Logo
    :height: 130
    :align: center

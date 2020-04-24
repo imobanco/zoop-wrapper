@@ -61,12 +61,3 @@ zoop\_wrapper.wrapper.transaction module
    :members:
    :undoc-members:
    :show-inheritance:
-
-
-Module contents
----------------
-
-.. automodule:: zoop_wrapper.wrapper
-   :members:
-   :undoc-members:
-   :show-inheritance:

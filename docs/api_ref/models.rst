@@ -1,18 +1,18 @@
 models
 ============================
 
-zoop\_wrapper.models.bank\_account module
------------------------------------------
-
-.. automodule:: zoop_wrapper.models.bank_account
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 zoop\_wrapper.models.base module
 --------------------------------
 
 .. automodule:: zoop_wrapper.models.base
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+zoop\_wrapper.models.bank\_account module
+-----------------------------------------
+
+.. automodule:: zoop_wrapper.models.bank_account
    :members:
    :undoc-members:
    :show-inheritance:

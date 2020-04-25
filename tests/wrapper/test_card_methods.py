@@ -28,10 +28,10 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
 
         instance = CreateCardTokenFactory()
 
-        response = self.client._ZoopWrapper__add_card_token(instance)
+        response = self.client._CardWrapper__add_card_token(instance)
         self.assertEqual(response.status_code, 201, msg=response.data)
 
-    @patch("zoop_wrapper.wrapper.ZoopWrapper._ZoopWrapper__add_card_token")
+    @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
     def test_add_card(self, mocked_add_token):
         """
         Test add_card method.

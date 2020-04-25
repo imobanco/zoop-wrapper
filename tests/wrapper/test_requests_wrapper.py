@@ -3,7 +3,7 @@ from unittest.mock import patch
 from requests.exceptions import HTTPError
 
 from tests.utils import APITestCase
-from zoop_wrapper.wrapper import RequestsWrapper
+from zoop_wrapper.wrapper.base import RequestsWrapper
 
 
 class RequestWrapperTestCase(APITestCase):
@@ -19,8 +19,7 @@ class RequestWrapperTestCase(APITestCase):
 
         self.assertEqual(url, f"foo/teste/123/")
 
-    @patch("zoop_wrapper.wrapper.logger")
-    def test_process_response_error(self, mocked_logger):
+    def test_process_response_error(self):
         response = self.build_response_mock(
             status_code=400, content={"error": {"message": "foo", "status_code": 400}}
         )
@@ -33,8 +32,7 @@ class RequestWrapperTestCase(APITestCase):
         )
         self.assertEqual(response.reason, "foo")
 
-    @patch("zoop_wrapper.wrapper.logger")
-    def test_process_response_200_error(self, mocked_logger):
+    def test_process_response_200_error(self):
         response = self.build_response_mock(
             status_code=200, content={"error": {"message": "foo", "status_code": 400}}
         )
@@ -47,8 +45,7 @@ class RequestWrapperTestCase(APITestCase):
         )
         self.assertEqual(response.reason, "foo")
 
-    @patch("zoop_wrapper.wrapper.logger")
-    def test_process_response_error_reasons(self, mocked_logger):
+    def test_process_response_error_reasons(self):
         response = self.build_response_mock(
             content={"error": {"message": "foo", "reasons": ["bla bla bla"]}}
         )

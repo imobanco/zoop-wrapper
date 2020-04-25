@@ -1,6 +1,6 @@
-from zoop_wrapper.models.base import ZoopObject, ResourceModel
-from zoop_wrapper.models.card import Card
-from zoop_wrapper.models.invoice import Invoice
+from .base import ZoopObject, ResourceModel
+from .card import Card
+from .invoice import Invoice
 
 
 class PointOfSale(ZoopObject):

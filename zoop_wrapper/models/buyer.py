@@ -1,4 +1,4 @@
-from zoop_wrapper.models.base import (
+from .base import (
     MarketPlaceModel,
     Person,
     SocialModel,

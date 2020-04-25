@@ -2,8 +2,8 @@ import copy
 
 from pycpfcnpj import cpf, cnpj
 
-from zoop_wrapper.utils import get_logger
-from zoop_wrapper.exceptions import ValidationError, FieldError
+from ..utils import get_logger
+from ..exceptions import ValidationError, FieldError
 
 
 logger = get_logger("models")

@@ -1,4 +1,4 @@
-from zoop_wrapper.models.base import PaymentMethod, VerificationModel
+from .base import PaymentMethod, VerificationModel
 
 
 class CardVerificationChecklist(VerificationModel):

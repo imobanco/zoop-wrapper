@@ -7,8 +7,9 @@ Documentação do zoop-wrapper
    :caption: Exemplos
    :maxdepth: 2
    :numbered:
+   :glob:
 
-   examples/transactions
+   examples/*
 
 .. toctree::
    :caption: Referência

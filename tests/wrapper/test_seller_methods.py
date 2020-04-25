@@ -2,10 +2,9 @@ from pycpfcnpj import gen
 from requests import HTTPError
 
 from tests.utils import APITestCase
-from zoop_wrapper.wrapper import MARKETPLACE_ID, ZOOP_KEY
-from zoop_wrapper.models.seller import Seller
 from tests.factories.seller import BusinessSellerFactory, IndividualSellerFactory
 from tests.factories.bank_account import IndividualBankAccountFactory
+from zoop_wrapper.models.seller import Seller
 
 
 class ZoopWrapperSellerMethodsTestCase(APITestCase):
@@ -116,8 +115,8 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
 
         self.mocked_delete.assert_called_once_with(
-            f"https://api.zoop.ws/v1/marketplaces/{MARKETPLACE_ID}/" f"sellers/foo/",
-            auth=(ZOOP_KEY, ""),
+            f"https://api.zoop.ws/v1/marketplaces/foo/" f"sellers/foo/",
+            auth=("foo", ""),
         )
 
     def test_list_seller_bank_accounts(self):

@@ -1,0 +1,988 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="pt-br" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. wrapper &mdash; zoop-wrapper  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. models" href="models.html" />
+    <link rel="prev" title="4. response" href="response.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> zoop-wrapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Exemplos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/transactions.html">1. Exemplos de transações</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Referência</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="constants.html">1. constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">2. exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">3. utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="response.html">4. response</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5. wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.base">5.1. zoop_wrapper.wrapper.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.bank_account">5.2. zoop_wrapper.wrapper.bank_account module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.buyer">5.3. zoop_wrapper.wrapper.buyer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.card">5.4. zoop_wrapper.wrapper.card module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.invoice">5.5. zoop_wrapper.wrapper.invoice module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.seller">5.6. zoop_wrapper.wrapper.seller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-zoop_wrapper.wrapper.transaction">5.7. zoop_wrapper.wrapper.transaction module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="models.html">6. models</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">zoop-wrapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">5. </span>wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/api_ref/wrapper.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-zoop_wrapper.wrapper">
+<span id="wrapper"></span><h1><span class="section-number">5. </span>wrapper<a class="headerlink" href="#module-zoop_wrapper.wrapper" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.ZoopWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.</code><code class="sig-name descname">ZoopWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.ZoopWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper" title="zoop_wrapper.wrapper.bank_account.BankAccountWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.bank_account.BankAccountWrapper</span></code></a>, <a class="reference internal" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper" title="zoop_wrapper.wrapper.buyer.BuyerWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.buyer.BuyerWrapper</span></code></a>, <a class="reference internal" href="#zoop_wrapper.wrapper.card.CardWrapper" title="zoop_wrapper.wrapper.card.CardWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.card.CardWrapper</span></code></a>, <a class="reference internal" href="#zoop_wrapper.wrapper.invoice.InvoiceWrapper" title="zoop_wrapper.wrapper.invoice.InvoiceWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.invoice.InvoiceWrapper</span></code></a>, <a class="reference internal" href="#zoop_wrapper.wrapper.seller.SellerWrapper" title="zoop_wrapper.wrapper.seller.SellerWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.seller.SellerWrapper</span></code></a>, <a class="reference internal" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper" title="zoop_wrapper.wrapper.transaction.TransactionWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.transaction.TransactionWrapper</span></code></a></p>
+<p>Zoop Wrapper</p>
+<p>It contains methods for all resources.</p>
+</dd></dl>
+
+<div class="section" id="module-zoop_wrapper.wrapper.base">
+<span id="zoop-wrapper-wrapper-base-module"></span><h2><span class="section-number">5.1. </span>zoop_wrapper.wrapper.base module<a class="headerlink" href="#module-zoop_wrapper.wrapper.base" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.base.BaseZoopWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.base.</code><code class="sig-name descname">BaseZoopWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.RequestsWrapper" title="zoop_wrapper.wrapper.base.RequestsWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.RequestsWrapper</span></code></a></p>
+<p>wrapper da Zoop API</p>
+<dl class="py attribute">
+<dt id="zoop_wrapper.wrapper.base.BaseZoopWrapper.__marketplace_id">
+<code class="sig-name descname">__marketplace_id</code><a class="headerlink" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper.__marketplace_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>marketplace id da zoop</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="zoop_wrapper.wrapper.base.BaseZoopWrapper.__key">
+<code class="sig-name descname">__key</code><a class="headerlink" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper.__key" title="Permalink to this definition">¶</a></dt>
+<dd><p>chave de autenticação da zoop</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="zoop_wrapper.wrapper.base.BaseZoopWrapper.BASE_URL">
+<code class="sig-name descname">BASE_URL</code><em class="property"> = 'https://api.zoop.ws/v1/marketplaces/'</em><a class="headerlink" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper.BASE_URL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.BaseZoopWrapper._post_instance">
+<code class="sig-name descname">_post_instance</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">instance</span><span class="p">:</span> <span class="n"><a class="reference internal" href="models.html#zoop_wrapper.models.base.ResourceModel" title="zoop_wrapper.models.base.ResourceModel">zoop_wrapper.models.base.ResourceModel</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper._post_instance" title="Permalink to this definition">¶</a></dt>
+<dd><p>http post request wrapper with instance</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – url to be requested</p></li>
+<li><p><strong>instance</strong> – instance to be posted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.base.</code><code class="sig-name descname">RequestsWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">base_url</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>wrapper da lib requests</p>
+<dl class="py attribute">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper.__base_url">
+<code class="sig-name descname">__base_url</code><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper.__base_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>Url base para construir os requests</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper._RequestsWrapper__process_response">
+<em class="property">static </em><code class="sig-name descname">_RequestsWrapper__process_response</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">response</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="response.html#zoop_wrapper.response.ZoopResponse" title="zoop_wrapper.response.ZoopResponse">zoop_wrapper.response.ZoopResponse</a><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper._RequestsWrapper__process_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>add ‘data’ attribute to response from json content of response.</p>
+<p>add ‘instance’ or ‘instances’ attribute to response by resource.
+Only add ‘instance’ or ‘instances’ if there’s no <cite>deleted</cite> attribute
+which is set on all delete response (200 ok) and if there’s the
+<cite>resource</cite> attribute on response</p>
+<p>add ‘error’ attribute to response if had errors</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>response</strong> – http response</p>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><strong>HttpError</strong> – when response is not ok!</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>processed http response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper._construct_url">
+<code class="sig-name descname">_construct_url</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">action</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">identifier</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">subaction</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">search</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper._construct_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>construct url for the request</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>action</strong> – action endpoint</p></li>
+<li><p><strong>identifier</strong> – identifier detail string (ID)</p></li>
+<li><p><strong>subaction</strong> – subaction endpoint</p></li>
+<li><p><strong>search</strong> – query with urls args to be researched</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">rw</span> <span class="o">=</span> <span class="n">RequestsWrapper</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rw</span><span class="o">.</span><span class="n">_construct_url</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">&#39;seller&#39;</span><span class="p">,</span> <span class="n">identifier</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="n">subaction</span><span class="o">=</span><span class="s1">&#39;bank_accounts&#39;</span><span class="p">,</span> <span class="n">search</span><span class="o">=</span><span class="s1">&#39;account_number=1&#39;</span><span class="p">)</span>  <span class="c1"># noqa:</span>
+<span class="go">&#39;rw.__base_url/seller/1/bank_accounts/search?account_number=1&#39;</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>full url for the request</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper._delete">
+<code class="sig-name descname">_delete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="response.html#zoop_wrapper.response.ZoopResponse" title="zoop_wrapper.response.ZoopResponse">zoop_wrapper.response.ZoopResponse</a><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper._delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>http delete request wrapper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> – url to be requested</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper._get">
+<code class="sig-name descname">_get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="response.html#zoop_wrapper.response.ZoopResponse" title="zoop_wrapper.response.ZoopResponse">zoop_wrapper.response.ZoopResponse</a><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper._get" title="Permalink to this definition">¶</a></dt>
+<dd><p>http get request wrapper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>url</strong> – url to be requested</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.base.RequestsWrapper._post">
+<code class="sig-name descname">_post</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">url</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span> &#x2192; <a class="reference internal" href="response.html#zoop_wrapper.response.ZoopResponse" title="zoop_wrapper.response.ZoopResponse">zoop_wrapper.response.ZoopResponse</a><a class="headerlink" href="#zoop_wrapper.wrapper.base.RequestsWrapper._post" title="Permalink to this definition">¶</a></dt>
+<dd><p>http post request wrapper</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> – url to be requested</p></li>
+<li><p><strong>data</strong> – data to be posted</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>processed response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.bank_account">
+<span id="zoop-wrapper-wrapper-bank-account-module"></span><h2><span class="section-number">5.2. </span>zoop_wrapper.wrapper.bank_account module<a class="headerlink" href="#module-zoop_wrapper.wrapper.bank_account" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.bank_account.BankAccountWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.bank_account.</code><code class="sig-name descname">BankAccountWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource <a class="reference internal" href="models.html#zoop_wrapper.models.bank_account.BankAccount" title="zoop_wrapper.models.bank_account.BankAccount"><code class="xref py py-class docutils literal notranslate"><span class="pre">BankAccount</span></code></a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Não importe isso diretamente!</p>
+<p>Essa classe precisa de métodos presentes em outro wrapper`</p>
+</div>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.bank_account.BankAccountWrapper._BankAccountWrapper__add_bank_account_token">
+<code class="sig-name descname">_BankAccountWrapper__add_bank_account_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">token</span><span class="p">:</span> <span class="n"><a class="reference internal" href="models.html#zoop_wrapper.models.token.Token" title="zoop_wrapper.models.token.Token">zoop_wrapper.models.token.Token</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper._BankAccountWrapper__add_bank_account_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>add bank account token</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>token</strong> – Token instance for BankAccount</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Token</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.bank_account.BankAccountWrapper.add_bank_account">
+<code class="sig-name descname">add_bank_account</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper.add_bank_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>add bank account</p>
+<p class="rubric">Examples</p>
+<dl class="simple">
+<dt>data = {</dt><dd><p>‘taxpayer_id’ or ‘ein’: ‘foo’,
+‘holder_name’: ‘foo’,
+‘bank_code’: ‘foo’,
+‘routing_number’: ‘foo’,
+‘account_number’: ‘foo’,
+‘type’: ‘foo’</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – dict of data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of BankAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.bank_account.BankAccountWrapper.list_bank_accounts">
+<code class="sig-name descname">list_bank_accounts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper.list_bank_accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all bank accounts</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>response with instances of BankAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.bank_account.BankAccountWrapper.retrieve_bank_account">
+<code class="sig-name descname">retrieve_bank_account</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.bank_account.BankAccountWrapper.retrieve_bank_account" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve bank account</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of BankAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.buyer">
+<span id="zoop-wrapper-wrapper-buyer-module"></span><h2><span class="section-number">5.3. </span>zoop_wrapper.wrapper.buyer module<a class="headerlink" href="#module-zoop_wrapper.wrapper.buyer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.buyer.</code><code class="sig-name descname">BuyerWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource <a class="reference internal" href="models.html#zoop_wrapper.models.buyer.Buyer" title="zoop_wrapper.models.buyer.Buyer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Buyer</span></code></a></p>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper.add_buyer">
+<code class="sig-name descname">add_buyer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper.add_buyer" title="Permalink to this definition">¶</a></dt>
+<dd><p>add buyer</p>
+<p class="rubric">Examples</p>
+<dl>
+<dt>data = {</dt><dd><p>“first_name”: “foo”,
+“last_name”: “foo”,
+“email”: “foo”,
+“taxpayer_id”: “foo”,
+“phone_number”: “foo”,
+“birthdate”: ‘foo’,
+“address”: {</p>
+<blockquote>
+<div><p>“line1”: “foo”,
+“line2”: “foo”,
+“line3”: “foo”,
+“neighborhood”: “foo”,
+“city”: “foo”,
+“state”: “foo”,
+“postal_code”: “foo”,
+“country_code”: “foo”</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – dict of data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Buyer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper.list_buyers">
+<code class="sig-name descname">list_buyers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper.list_buyers" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all buyers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>response with instances of Buyer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper.remove_buyer">
+<code class="sig-name descname">remove_buyer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper.remove_buyer" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove buyer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response without instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper.retrieve_buyer">
+<code class="sig-name descname">retrieve_buyer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper.retrieve_buyer" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve buyer</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Buyer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.buyer.BuyerWrapper.search_buyer">
+<code class="sig-name descname">search_buyer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.buyer.BuyerWrapper.search_buyer" title="Permalink to this definition">¶</a></dt>
+<dd><p>search buyer by CPF or CNPJ.
+Yes, the name of the attribute is taxpayer_id for
+both.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – CPF or CNPJ</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Buyer</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.card">
+<span id="zoop-wrapper-wrapper-card-module"></span><h2><span class="section-number">5.4. </span>zoop_wrapper.wrapper.card module<a class="headerlink" href="#module-zoop_wrapper.wrapper.card" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.card.CardWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.card.</code><code class="sig-name descname">CardWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.card.CardWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource <a class="reference internal" href="models.html#zoop_wrapper.models.card.Card" title="zoop_wrapper.models.card.Card"><code class="xref py py-class docutils literal notranslate"><span class="pre">Card</span></code></a></p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Não importe isso diretamente!</p>
+<p>Essa classe precisa de métodos presentes em outro wrapper`</p>
+</div>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.card.CardWrapper._CardWrapper__add_card_token">
+<code class="sig-name descname">_CardWrapper__add_card_token</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">card_token</span><span class="p">:</span> <span class="n"><a class="reference internal" href="models.html#zoop_wrapper.models.token.Token" title="zoop_wrapper.models.token.Token">zoop_wrapper.models.token.Token</a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.card.CardWrapper._CardWrapper__add_card_token" title="Permalink to this definition">¶</a></dt>
+<dd><p>add card token</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>card_token</strong> – Token instance for Card</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Token</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.card.CardWrapper.add_card">
+<code class="sig-name descname">add_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">dict</span></em>, <em class="sig-param"><span class="n">buyer_identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.card.CardWrapper.add_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>add card</p>
+<p class="rubric">Examples</p>
+<dl class="simple">
+<dt>data = {</dt><dd><p>“holder_name”: “foo”,
+“expiration_month”: “foo”,
+“expiration_year”: “foo”,
+“card_number”: “foo”,
+“security_code”: “foo”</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data</strong> – dict of data</p></li>
+<li><p><strong>buyer_identifier</strong> – uuid of buyer</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of BankAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.card.CardWrapper.retrieve_card">
+<code class="sig-name descname">retrieve_card</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.card.CardWrapper.retrieve_card" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve card</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response without instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.invoice">
+<span id="zoop-wrapper-wrapper-invoice-module"></span><h2><span class="section-number">5.5. </span>zoop_wrapper.wrapper.invoice module<a class="headerlink" href="#module-zoop_wrapper.wrapper.invoice" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.invoice.InvoiceWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.invoice.</code><code class="sig-name descname">InvoiceWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.invoice.InvoiceWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource for <a class="reference internal" href="models.html#zoop_wrapper.models.invoice.Invoice" title="zoop_wrapper.models.invoice.Invoice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Invoice</span></code></a></p>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.invoice.InvoiceWrapper.retrieve_invoice">
+<code class="sig-name descname">retrieve_invoice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.invoice.InvoiceWrapper.retrieve_invoice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pega um <a class="reference internal" href="models.html#zoop_wrapper.models.invoice.Invoice" title="zoop_wrapper.models.invoice.Invoice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Invoice</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>resposta com instância do <a class="reference internal" href="models.html#zoop_wrapper.models.invoice.Invoice" title="zoop_wrapper.models.invoice.Invoice"><code class="xref py py-class docutils literal notranslate"><span class="pre">Invoice</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.seller">
+<span id="zoop-wrapper-wrapper-seller-module"></span><h2><span class="section-number">5.6. </span>zoop_wrapper.wrapper.seller module<a class="headerlink" href="#module-zoop_wrapper.wrapper.seller" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.seller.</code><code class="sig-name descname">SellerWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource <a class="reference internal" href="models.html#zoop_wrapper.models.seller.Seller" title="zoop_wrapper.models.seller.Seller"><code class="xref py py-class docutils literal notranslate"><span class="pre">Seller</span></code></a></p>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper._search_seller">
+<code class="sig-name descname">_search_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">id_type</span></em>, <em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper._search_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>search seller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>id_type</strong> – ‘taxpayer_id’ or ‘ein’</p></li>
+<li><p><strong>identifier</strong> – value of identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.add_seller">
+<code class="sig-name descname">add_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.add_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>add seller</p>
+<p class="rubric">Examples</p>
+<dl>
+<dt>data = {</dt><dd><p>‘taxpayer_id’: ‘foo’,
+‘first_name’: ‘foo’,
+‘last_name’: ‘foo’,
+‘email’: <a class="reference external" href="mailto:'foo&#37;&#52;&#48;bar&#46;com">‘foo<span>&#64;</span>bar<span>&#46;</span>com</a>’,
+‘phone_number’: ‘+55 84 99999-9999’,
+‘birthdate’: ‘1994-12-27’,
+‘address’: {</p>
+<blockquote>
+<div><p>‘line1’: ‘foo’,
+‘line2’: ‘123’,
+‘line3’: ‘barbar’,
+‘neighborhood’: ‘fooofoo’,
+‘city’: ‘Natal’,
+‘state’: ‘BR-RN’,
+‘postal_code’: ‘59152250’,
+‘country_code’: “BR”</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl>
+<dt>data = {</dt><dd><p>“business_name”: “foo”,
+“business_phone”: “foo”,
+“business_email”: “foo”,
+“business_website”: “foo”,
+“business_opening_date”: “foo”,
+“ein”: “foo”,
+‘owner’: {</p>
+<blockquote>
+<div><p>“first_name”: “foo”,
+“last_name”: “foo”,
+“email”: “foo”,
+“taxpayer_id”: “foo”,
+“phone_number”: “foo”,
+“birthdate”: ‘foo’,
+“address”: {</p>
+<blockquote>
+<div><p>“line1”: “foo”,
+“line2”: “foo”,
+“line3”: “foo”,
+“neighborhood”: “foo”,
+“city”: “foo”,
+“state”: “foo”,
+“postal_code”: “foo”,
+“country_code”: “foo”</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}
+“business_address”: {</p>
+<blockquote>
+<div><p>“line1”: “foo”,
+“line2”: “foo”,
+“line3”: “foo”,
+“neighborhood”: “foo”,
+“city”: “foo”,
+“state”: “foo”,
+“postal_code”: “foo”,
+“country_code”: “foo”</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – dict of data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.list_seller_bank_accounts">
+<code class="sig-name descname">list_seller_bank_accounts</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.list_seller_bank_accounts" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all bank accounts of some seller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instances of BankAccount</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.list_sellers">
+<code class="sig-name descname">list_sellers</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.list_sellers" title="Permalink to this definition">¶</a></dt>
+<dd><p>list sellers</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>response with instances of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.remove_seller">
+<code class="sig-name descname">remove_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.remove_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove seller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response without instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.retrieve_seller">
+<code class="sig-name descname">retrieve_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.retrieve_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve seller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.search_business_seller">
+<code class="sig-name descname">search_business_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.search_business_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>search seller by CNPJ</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – ein (Employer Identification Number) is equivalent to CNPJ  # noqa:</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.seller.SellerWrapper.search_individual_seller">
+<code class="sig-name descname">search_individual_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.seller.SellerWrapper.search_individual_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>search seller by CPF</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – taxpayer_id is equivalent to CPF  # noqa:</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Seller</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-zoop_wrapper.wrapper.transaction">
+<span id="zoop-wrapper-wrapper-transaction-module"></span><h2><span class="section-number">5.7. </span>zoop_wrapper.wrapper.transaction module<a class="headerlink" href="#module-zoop_wrapper.wrapper.transaction" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper">
+<em class="property">class </em><code class="sig-prename descclassname">zoop_wrapper.wrapper.transaction.</code><code class="sig-name descname">TransactionWrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">marketplace_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#zoop_wrapper.wrapper.base.BaseZoopWrapper" title="zoop_wrapper.wrapper.base.BaseZoopWrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">zoop_wrapper.wrapper.base.BaseZoopWrapper</span></code></a></p>
+<p>Possui os métodos do resource <a class="reference internal" href="models.html#zoop_wrapper.models.transaction.Transaction" title="zoop_wrapper.models.transaction.Transaction"><code class="xref py py-class docutils literal notranslate"><span class="pre">Transaction</span></code></a></p>
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper.add_transaction">
+<code class="sig-name descname">add_transaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="p">:</span> <span class="n">dict</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper.add_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>add transaction</p>
+<p class="rubric">Examples</p>
+<dl>
+<dt>data = {</dt><dd><p>‘amount’ : ‘foo’,
+‘currency’ : ‘BRL’,
+‘description’ : ‘foo’,
+‘reference_id’ : ‘foo’,
+‘on_behalf_of’ : ‘foo’,
+‘customer’: ‘foo’,
+‘payment_type’ : ‘foo’,
+‘payment_method’ : {</p>
+<blockquote>
+<div><p>‘expiration_date’ : expiration_date,
+‘payment_limit_date’ : payment_limit_date,
+‘body_instructions’ : instructions,
+‘billing_instructions’ : {</p>
+<blockquote>
+<div><p>‘late_fee’ : late_fee,
+‘interest’ : interest,
+‘discount’ : discount</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl>
+<dt>data = {</dt><dd><p>‘amount’: ‘1000’,
+‘currency’: ‘BRL’,
+‘description’: ‘meu boleto gerado para teste’,
+‘on_behalf_of’: ‘seller_id’,
+‘customer’: ‘buyer_id’,
+‘payment_type’: ‘boleto’,
+‘payment_method’: {</p>
+<blockquote>
+<div><p>‘expiration_date’: ‘2020-06-20’,
+‘payment_limit_date’: ‘2020-06-30’,
+‘billing_instructions’: {</p>
+<blockquote>
+<div><dl class="simple">
+<dt>‘late_fee’: {</dt><dd><p>‘mode’: ‘FIXED’,
+‘percentage’: 30,
+‘start_date’: ‘2020-06-20’</p>
+</dd>
+</dl>
+<p>},
+‘interest’: {</p>
+<blockquote>
+<div><p>‘mode’: ‘MONTHLY_PERCENTAGE’,
+‘percentage’: 30,
+‘start_date’: ‘2020-06-20’</p>
+</div></blockquote>
+<p>},
+‘discount’: [{</p>
+<blockquote>
+<div><p>‘mode’: ‘FIXED’,
+‘amount’: 300,
+‘limit_date’: ‘2020-06-20’</p>
+</div></blockquote>
+<p>}]</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>}</p>
+</dd>
+</dl>
+<p>}</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>data</strong> – dict of data</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response with instance of Transaction</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper.cancel_transaction">
+<code class="sig-name descname">cancel_transaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper.cancel_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>cancel a transaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper.list_transactions">
+<code class="sig-name descname">list_transactions</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper.list_transactions" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all transactions</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper.list_transactions_for_seller">
+<code class="sig-name descname">list_transactions_for_seller</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper.list_transactions_for_seller" title="Permalink to this definition">¶</a></dt>
+<dd><p>list all transactions from seller</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction">
+<code class="sig-name descname">retrieve_transaction</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">identifier</span></em><span class="sig-paren">)</span><a class="headerlink" href="#zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve a transaction</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>identifier</strong> – uuid id</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>response</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="models.html" class="btn btn-neutral float-right" title="6. models" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="response.html" class="btn btn-neutral float-left" title="4. response" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Imobanco
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

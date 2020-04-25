@@ -1,0 +1,445 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="pt-br" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. Exemplos de transações &mdash; zoop-wrapper  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. constants" href="../api_ref/constants.html" />
+    <link rel="prev" title="Documentação do zoop-wrapper" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> zoop-wrapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Exemplos</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">1. Exemplos de transações</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#criar-transacao-de-cartao-de-credito">1.1. Criar transação de cartão de crédito</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#criar-transacao-de-boleto">1.2. Criar transação de boleto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extornar-transacao-de-cartao">1.3. Extornar transação de cartão</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listar-transacoes">1.4. Listar transações</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#listar-transacoes-de-um-seller">1.5. Listar transações de um seller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#recuperar-detalhes-da-transacao">1.6. Recuperar detalhes da transação</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Referência</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/constants.html">1. constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/exceptions.html">2. exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/utils.html">3. utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/response.html">4. response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/wrapper.html">5. wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_ref/models.html">6. models</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">zoop-wrapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li><span class="section-number">1. </span>Exemplos de transações</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/examples/transactions.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="exemplos-de-transacoes">
+<h1><span class="section-number">1. </span>Exemplos de transações<a class="headerlink" href="#exemplos-de-transacoes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="criar-transacao-de-cartao-de-credito">
+<h2><span class="section-number">1.1. </span>Criar transação de cartão de crédito<a class="headerlink" href="#criar-transacao-de-cartao-de-credito" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.models.transaction</span> <span class="kn">import</span> <span class="n">Transaction</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.models.card</span> <span class="kn">import</span> <span class="n">Card</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span>
+    <span class="n">customer</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+    <span class="n">on_behalf_of</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span>
+    <span class="n">amount</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="n">reference_id</span><span class="o">=</span><span class="s2">&quot;1&quot;</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+    <span class="n">payment_type</span><span class="o">=</span><span class="s2">&quot;credit&quot;</span><span class="p">,</span>
+    <span class="n">payment_method</span><span class="o">=</span><span class="n">Card</span><span class="p">(</span>
+        <span class="n">expiration_year</span><span class="o">=</span><span class="s2">&quot;2021&quot;</span><span class="p">,</span> <span class="n">holder_name</span><span class="o">=</span><span class="s2">&quot;foo&quot;</span><span class="p">,</span> <span class="n">expiration_month</span><span class="o">=</span><span class="s2">&quot;08&quot;</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_transaction</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="criar-transacao-de-boleto">
+<h2><span class="section-number">1.2. </span>Criar transação de boleto<a class="headerlink" href="#criar-transacao-de-boleto" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.models.transaction</span> <span class="kn">import</span> <span class="n">Transaction</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.models.invoice</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">Invoice</span><span class="p">,</span>
+    <span class="n">BillingInstructions</span><span class="p">,</span>
+    <span class="n">BillingConfiguration</span><span class="p">,</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">seller_id</span> <span class="o">=</span> <span class="s2">&quot;27e17b778b404a83bf8e25ec995e2ffe&quot;</span>
+<span class="n">buyer_or_seller_id</span> <span class="o">=</span> <span class="s2">&quot;e7eec0f640c14e21b35d20d58b49b584&quot;</span>
+
+
+<span class="n">quantia_em_centavos</span> <span class="o">=</span> <span class="s2">&quot;1000&quot;</span>
+<span class="n">vencimento</span> <span class="o">=</span> <span class="s2">&quot;2020-06-20&quot;</span>
+<span class="n">limite</span> <span class="o">=</span> <span class="s2">&quot;2020-06-30&quot;</span>
+
+<span class="n">t</span> <span class="o">=</span> <span class="n">Transaction</span><span class="p">(</span>
+    <span class="n">amount</span><span class="o">=</span><span class="n">quantia_em_centavos</span><span class="p">,</span>
+    <span class="n">description</span><span class="o">=</span><span class="s2">&quot;meu boleto gerado para teste&quot;</span><span class="p">,</span>
+    <span class="n">on_behalf_of</span><span class="o">=</span><span class="n">seller_id</span><span class="p">,</span>
+    <span class="n">customer</span><span class="o">=</span><span class="n">buyer_or_seller_id</span><span class="p">,</span>
+    <span class="n">payment_type</span><span class="o">=</span><span class="s2">&quot;boleto&quot;</span><span class="p">,</span>
+    <span class="n">payment_method</span><span class="o">=</span><span class="n">Invoice</span><span class="p">(</span>
+        <span class="n">expiration_date</span><span class="o">=</span><span class="n">vencimento</span><span class="p">,</span>
+        <span class="n">payment_limit_date</span><span class="o">=</span><span class="n">limite</span><span class="p">,</span>
+        <span class="n">billing_instructions</span><span class="o">=</span><span class="n">BillingInstructions</span><span class="p">(</span>
+            <span class="n">late_fee</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="p">(</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="o">.</span><span class="n">PERCENTAGE_MODE</span><span class="p">,</span>
+                <span class="n">percentage</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                <span class="n">start_date</span><span class="o">=</span><span class="n">vencimento</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">interest</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="p">(</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="o">.</span><span class="n">MONTHLY_PERCENTAGE_MODE</span><span class="p">,</span>
+                <span class="n">percentage</span><span class="o">=</span><span class="mf">50.5555555555</span><span class="p">,</span>
+                <span class="n">start_date</span><span class="o">=</span><span class="n">vencimento</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">discount</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="p">(</span>
+                <span class="n">is_discount</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="n">BillingConfiguration</span><span class="o">.</span><span class="n">FIXED_MODE</span><span class="p">,</span>
+                <span class="n">amount</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+                <span class="n">limit_date</span><span class="o">=</span><span class="n">vencimento</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">t</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="c1"># _data = {</span>
+<span class="c1">#     &#39;amount&#39;: &#39;1000&#39;,</span>
+<span class="c1">#     &#39;currency&#39;: &#39;BRL&#39;,</span>
+<span class="c1">#     &#39;description&#39;: &#39;meu boleto gerado para teste&#39;,</span>
+<span class="c1">#     &#39;on_behalf_of&#39;: seller_id,</span>
+<span class="c1">#     &#39;customer&#39;: buyer_or_seller_id,</span>
+<span class="c1">#     &#39;payment_type&#39;: &#39;boleto&#39;,</span>
+<span class="c1">#     &#39;payment_method&#39;: {</span>
+<span class="c1">#         &#39;expiration_date&#39;: &#39;2020-06-20&#39;,</span>
+<span class="c1">#         &#39;payment_limit_date&#39;: &#39;2020-06-30&#39;,</span>
+<span class="c1">#         &#39;billing_instructions&#39;: {</span>
+<span class="c1">#             &#39;late_fee&#39;: {</span>
+<span class="c1">#                 &#39;mode&#39;: BillingConfiguration.PERCENTAGE_MODE,</span>
+<span class="c1">#                 &#39;percentage&#39;: 30,</span>
+<span class="c1">#                 &#39;start_date&#39;: &#39;2020-06-20&#39;</span>
+<span class="c1">#             },</span>
+<span class="c1">#             &#39;interest&#39;: {</span>
+<span class="c1">#                 &#39;mode&#39;: BillingConfiguration.MONTHLY_PERCENTAGE_MODE,</span>
+<span class="c1">#                 &#39;percentage&#39;: 30,</span>
+<span class="c1">#                 &#39;start_date&#39;: &#39;2020-06-20&#39;</span>
+<span class="c1">#             },</span>
+<span class="c1">#             &#39;discount&#39;: [{</span>
+<span class="c1">#                 &#39;mode&#39;: BillingConfiguration.FIXED_MODE,</span>
+<span class="c1">#                 &#39;amount&#39;: 300,</span>
+<span class="c1">#                 &#39;limit_date&#39;: &#39;2020-06-20&#39;</span>
+<span class="c1">#             }]</span>
+<span class="c1">#         }</span>
+<span class="c1">#     }</span>
+<span class="c1"># }</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">add_transaction</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extornar-transacao-de-cartao">
+<h2><span class="section-number">1.3. </span>Extornar transação de cartão<a class="headerlink" href="#extornar-transacao-de-cartao" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">card_transaction_id</span> <span class="o">=</span> <span class="s2">&quot;0b8361b8fdd1480783800229f87310c2&quot;</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">cancel_transaction</span><span class="p">(</span><span class="n">card_transaction_id</span><span class="p">)</span>
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listar-transacoes">
+<h2><span class="section-number">1.4. </span>Listar transações<a class="headerlink" href="#listar-transacoes" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_transactions</span><span class="p">()</span>
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listar-transacoes-de-um-seller">
+<h2><span class="section-number">1.5. </span>Listar transações de um seller<a class="headerlink" href="#listar-transacoes-de-um-seller" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">list_transactions_for_seller</span><span class="p">(</span><span class="s2">&quot;27e17b778b404a83bf8e25ec995e2ffe&quot;</span><span class="p">)</span>
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="recuperar-detalhes-da-transacao">
+<h2><span class="section-number">1.6. </span>Recuperar detalhes da transação<a class="headerlink" href="#recuperar-detalhes-da-transacao" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">zoop_wrapper.wrapper</span> <span class="kn">import</span> <span class="n">ZoopWrapper</span>
+<span class="kn">from</span> <span class="nn">examples.utils</span> <span class="kn">import</span> <span class="n">dump_response</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Nesse momento as constantes podem ser criadas no arquivo .py.</span>
+<span class="sd">Mas é recomendado utilizar como variável de ambiente em um &#39;.env&#39;</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">zoop_wrapper.constants</span> <span class="kn">import</span> <span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">ZOOP_KEY</span>
+
+
+<span class="n">client</span> <span class="o">=</span> <span class="n">ZoopWrapper</span><span class="p">(</span><span class="n">marketplace_id</span><span class="o">=</span><span class="n">MARKETPLACE_ID</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">ZOOP_KEY</span><span class="p">)</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">client</span><span class="o">.</span><span class="n">retrieve_transaction</span><span class="p">(</span><span class="s2">&quot;9ee5d17396bb4fdfa24bdddcb9563ca3&quot;</span><span class="p">)</span>
+
+<span class="n">dump_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../api_ref/constants.html" class="btn btn-neutral float-right" title="1. constants" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Documentação do zoop-wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Imobanco
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

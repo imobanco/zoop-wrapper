@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="pt-br" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="pt-br" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Documentação do zoop-wrapper &mdash; zoop-wrapper  documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. Exemplos de transações" href="examples/transactions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> zoop-wrapper
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Exemplos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/transactions.html">1. Exemplos de transações</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Referência</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/constants.html">1. constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/exceptions.html">2. exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/utils.html">3. utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/response.html">4. response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/wrapper.html">5. wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/models.html">6. models</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">zoop-wrapper</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>Documentação do zoop-wrapper</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="documentacao-do-zoop-wrapper">
+<h1>Documentação do zoop-wrapper<a class="headerlink" href="#documentacao-do-zoop-wrapper" title="Permalink to this headline">¶</a></h1>
+<p><br/></p>
+<a class="reference external image-reference" href="https://zoop.com.br/wp-content/themes/zoop/img/logo.svg"><img alt="Zoop Logo" class="align-center" height="130" src="https://zoop.com.br/wp-content/themes/zoop/img/logo.svg" /></a>
+<p><br/></p>
+<div class="docutils container">
+<a class="reference external image-reference" href="https://pypi.org/project/zoop-wrapper/"><img alt="PyPI Version" src="https://img.shields.io/pypi/v/zoop-wrapper" style="height: 23px;" /></a>
+<a class="reference external image-reference" href="https://pypi.org/project/zoop-wrapper/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/zoop-wrapper" style="height: 23px;" /></a>
+</div>
+<div class="docutils container">
+<a class="reference external image-reference" href="https://github.com/imobanco/zoop-wrapper/actions?query=workflow%3Atests"><img alt="Test status" src="https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/tests" style="height: 23px;" /></a>
+<a class="reference external image-reference" href="https://github.com/imobanco/zoop-wrapper/blob/dev/LICENSE"><img alt="Licença" src="https://img.shields.io/github/license/imobanco/zoop-wrapper" style="height: 23px;" /></a>
+<a class="reference external image-reference" href="https://github.com/imobanco/zoop-wrapper/graphs/contributors"><img alt="Contributors" src="https://img.shields.io/github/contributors/imobanco/zoop-wrapper" style="height: 23px;" /></a>
+</div>
+<div class="docutils container">
+<a class="reference external image-reference" href="https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;amp;utm_medium=referral&amp;amp;utm_content=imobanco/zoop-wrapper&amp;amp;utm_campaign=Badge_Grade"><img alt="Code grade" src="https://api.codacy.com/project/badge/Grade/d78080aeddcc411696a91bb18f9fe953" style="height: 23px;" /></a>
+<a class="reference external image-reference" href="https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;amp;utm_medium=referral&amp;amp;utm_content=imobanco/zoop-wrapper&amp;amp;utm_campaign=Badge_Coverage"><img alt="Coverage" src="https://api.codacy.com/project/badge/Coverage/d78080aeddcc411696a91bb18f9fe953" style="height: 23px;" /></a>
+<a class="reference external image-reference" href="https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt"><img alt="Known Vulnerabilities" src="https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt" style="height: 23px;" /></a>
+</div>
+<p><br/></p>
+<p>Cliente não oficial da Zoop feito em Python, para realizar integração com o gateway de pagamento.</p>
+<p><a class="reference external" href="https://docs.zoop.co">Documentação oficial da Zoop</a></p>
+</div>
+<div class="section" id="instalando">
+<h1>Instalando<a class="headerlink" href="#instalando" title="Permalink to this headline">¶</a></h1>
+<p>Nosso pacote está hospedado no <a class="reference external" href="https://pypi.org/project/zoop-wrapper/">PyPI</a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install zoop-wrapper
+</pre></div>
+</div>
+</div>
+<div class="section" id="configuracao">
+<h1>Configuração<a class="headerlink" href="#configuracao" title="Permalink to this headline">¶</a></h1>
+<p>Para utilizar o <cite>zoop-wrapper</cite> é necessário ter duas constantes/variáveis. sendo elas:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ZOOP_KEY</span><span class="o">=</span><span class="s1">&#39;chave de autenticação recebida da zoop&#39;</span>
+<span class="n">MARKETPLACE_ID</span><span class="o">=</span><span class="s1">&#39;ID do market place&#39;</span>
+</pre></div>
+</div>
+<p>Recomendamos criar um arquivo <cite>.env</cite> contendo essas varíaveis de ambiente.</p>
+<p>Podem ser criadas diretamente no terminal utilizando (não recomendado):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">ZOOP_KEY</span><span class="o">=</span><span class="s1">&#39;chave de autenticação recebida da zoop&#39;</span>
+<span class="nb">export</span> <span class="nv">MARKETPLACE_ID</span><span class="o">=</span><span class="s1">&#39;ID do market place&#39;</span>
+</pre></div>
+</div>
+<p>Podem ser criadas também diretamente no <cite>arquivo.py</cite></p>
+<div class="admonition danger">
+<p class="admonition-title">Danger</p>
+<p>Fazer isso além de não ser recomendado é uma <strong>FALHA</strong> de segurança.</p>
+</div>
+</div>
+<div class="section" id="documentacao-da-zoop">
+<h1>Documentação da Zoop<a class="headerlink" href="#documentacao-da-zoop" title="Permalink to this headline">¶</a></h1>
+<p>A Zoop fornece diversas formas de comunicação. Sendo uma telas API’s baseadas na tecnologia REST.
+A documentação da API da zoop não é uma das melhores, mas está disponível abertamente.</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Não tenho conhecimento se TODOS os testes podem ser realizados sem ônus ao desenvolvedor.</p>
+<p>As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).</p>
+</div>
+<p>Saiba mais na <a class="reference external" href="https://docs.zoop.co/docs/introdu%C3%A7%C3%A3o-a-zoop">documentação oficial da Zoop</a></p>
+</div>
+<div class="section" id="recursos-disponiveis">
+<h1>Recursos disponíveis<a class="headerlink" href="#recursos-disponiveis" title="Permalink to this headline">¶</a></h1>
+<p>Market Place</p>
+<ul class="simple">
+<li><p>☐ detalhes</p></li>
+</ul>
+<p>Webhooks</p>
+<ul class="simple">
+<li><p>☐ Cadastro</p></li>
+<li><p>☐ listagem</p></li>
+<li><p>☐ detalhes</p></li>
+<li><p>☐ remoção</p></li>
+</ul>
+<p>Buyer</p>
+<ul class="simple">
+<li><p>☑ Cadastro</p></li>
+<li><p>☑ listagem</p></li>
+<li><p>☑ detalhes</p></li>
+<li><p>☑ remoção</p></li>
+</ul>
+<p>Seller</p>
+<ul class="simple">
+<li><p>☑ Cadastro</p></li>
+<li><p>☑ listagem</p></li>
+<li><p>☑ detalhes</p></li>
+<li><p>☑ remoção</p></li>
+</ul>
+<p>Token</p>
+<ul class="simple">
+<li><p>☑ Cadastro de token cartão de crédito</p></li>
+<li><p>☑ Cadastro de token conta bancária</p></li>
+<li><p>☐ detalhes</p></li>
+</ul>
+<p>Cartão de crédito</p>
+<ul class="simple">
+<li><p>☑ Conexão</p></li>
+<li><p>☑ detalhes</p></li>
+<li><p>☐ remoção</p></li>
+</ul>
+<p>Conta bancária</p>
+<ul class="simple">
+<li><p>☑ Conexão</p></li>
+<li><p>☑ listagem</p></li>
+<li><p>☑ detalhes</p></li>
+<li><p>☐ remoção</p></li>
+</ul>
+<p>Boleto</p>
+<ul class="simple">
+<li><p>☑ detalhes</p></li>
+</ul>
+<p>Transação</p>
+<ul class="simple">
+<li><p>☑ listagem</p></li>
+<li><p>☑ detalhes</p></li>
+<li><p>☑ cancelamento</p></li>
+<li><p>☑ Cadastro transação boleto</p></li>
+<li><p>☐ Cadastro transação cartão de crédito</p></li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Exemplos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/transactions.html">1. Exemplos de transações</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#criar-transacao-de-cartao-de-credito">1.1. Criar transação de cartão de crédito</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#criar-transacao-de-boleto">1.2. Criar transação de boleto</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#extornar-transacao-de-cartao">1.3. Extornar transação de cartão</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#listar-transacoes">1.4. Listar transações</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#listar-transacoes-de-um-seller">1.5. Listar transações de um seller</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/transactions.html#recuperar-detalhes-da-transacao">1.6. Recuperar detalhes da transação</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Referência</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/constants.html">1. constants</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/exceptions.html">2. exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/utils.html">3. utils</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/response.html">4. response</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/wrapper.html">5. wrapper</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.base">5.1. zoop_wrapper.wrapper.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.bank_account">5.2. zoop_wrapper.wrapper.bank_account module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.buyer">5.3. zoop_wrapper.wrapper.buyer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.card">5.4. zoop_wrapper.wrapper.card module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.invoice">5.5. zoop_wrapper.wrapper.invoice module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.seller">5.6. zoop_wrapper.wrapper.seller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/wrapper.html#module-zoop_wrapper.wrapper.transaction">5.7. zoop_wrapper.wrapper.transaction module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_ref/models.html">6. models</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.base">6.1. zoop_wrapper.models.base module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.bank_account">6.2. zoop_wrapper.models.bank_account module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.buyer">6.3. zoop_wrapper.models.buyer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.card">6.4. zoop_wrapper.models.card module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.invoice">6.5. zoop_wrapper.models.invoice module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.seller">6.6. zoop_wrapper.models.seller module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.token">6.7. zoop_wrapper.models.token module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.transaction">6.8. zoop_wrapper.models.transaction module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_ref/models.html#module-zoop_wrapper.models.utils">6.9. zoop_wrapper.models.utils module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples/transactions.html" class="btn btn-neutral float-right" title="1. Exemplos de transações" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Imobanco
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,5 +1,4 @@
 from .base import BaseZoopWrapper
-from ..exceptions import ValidationError
 from ..response import ZoopResponse
 from ..models.seller import Seller
 

@@ -1,4 +1,4 @@
-from ..wrapper.base import BaseZoopWrapper
+from .base import BaseZoopWrapper
 
 
 class InvoiceWrapper(BaseZoopWrapper):

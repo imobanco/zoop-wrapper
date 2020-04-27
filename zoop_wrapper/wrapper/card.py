@@ -1,6 +1,6 @@
 from requests import HTTPError
 
-from ..wrapper.base import BaseZoopWrapper
+from .base import BaseZoopWrapper
 from ..exceptions import ValidationError, FieldError
 from ..models.token import Token
 

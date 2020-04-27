@@ -1,11 +1,11 @@
 import requests
 
-from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
+from ..constants import ZOOP_KEY, MARKETPLACE_ID
 from ..exceptions import ValidationError
-from zoop_wrapper.models.base import ResourceModel
-from zoop_wrapper.models.utils import get_instance_from_data
-from zoop_wrapper.utils import get_logger, config_logging
-from zoop_wrapper.response import ZoopResponse
+from ..models.base import ResourceModel
+from ..models.utils import get_instance_from_data
+from ..utils import get_logger, config_logging
+from ..response import ZoopResponse
 
 
 config_logging()

@@ -16,7 +16,7 @@ setup(
     description="Cliente não oficial Zoop",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/imobanco/ZoopAPIWrapper",
+    url="https://github.com/imobanco/zoop-wrapper",
     packages=["zoop_wrapper", "zoop_wrapper.models", "zoop_wrapper.wrapper"],
     classifiers=[
         "Programming Language :: Python :: 3",
@@ -38,7 +38,7 @@ setup(
     keywords="Zoop API client wrapper",
     project_urls={
         "Documentation": "https://zoop-wrapper.readthedocs.io",
-        "Source": "https://github.com/imobanco/ZoopAPIWrapper",
-        "Tracker": "https://github.com/imobanco/ZoopAPIWrapper/issues",
+        "Source": "https://github.com/imobanco/zoop-wrapper",
+        "Tracker": "https://github.com/imobanco/zoop-wrapper/issues",
     },
 )

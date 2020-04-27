@@ -26,7 +26,7 @@ class SellerWrapper(BaseZoopWrapper):
                     'line3': 'barbar',
                     'neighborhood': 'fooofoo',
                     'city': 'Natal',
-                    'state': 'BR-RN',
+                    'state': 'RN',
                     'postal_code': '59152250',
                     'country_code': "BR"
                 }
@@ -46,26 +46,26 @@ class SellerWrapper(BaseZoopWrapper):
                     "taxpayer_id": "foo",
                     "phone_number": "foo",
                     "birthdate": 'foo',
-                    "address": {
-                        "line1": "foo",
-                        "line2": "foo",
-                        "line3": "foo",
-                        "neighborhood": "foo",
-                        "city": "foo",
-                        "state": "foo",
-                        "postal_code": "foo",
-                        "country_code": "foo"
+                    'address': {
+                        'line1': 'foo',
+                        'line2': '123',
+                        'line3': 'barbar',
+                        'neighborhood': 'fooofoo',
+                        'city': 'Natal',
+                        'state': 'RN',
+                        'postal_code': '59152250',
+                        'country_code': "BR"
                     }
-                }
+                },
                 "business_address": {
-                    "line1": "foo",
-                    "line2": "foo",
-                    "line3": "foo",
-                    "neighborhood": "foo",
-                    "city": "foo",
-                    "state": "foo",
-                    "postal_code": "foo",
-                    "country_code": "foo"
+                    'line1': 'foo',
+                    'line2': '123',
+                    'line3': 'barbar',
+                    'neighborhood': 'fooofoo',
+                    'city': 'Natal',
+                    'state': 'RN',
+                    'postal_code': '59152250',
+                    'country_code': "BR"
                 }
             }
 

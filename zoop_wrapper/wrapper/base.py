@@ -25,23 +25,26 @@ class RequestsWrapper:
     @staticmethod
     def __process_response(response) -> ZoopResponse:
         """
-        add 'data' attribute to response from json content of response.
+        Processa a resposta.
 
-        add 'instance' or 'instances' attribute to response by resource.
-        Only add 'instance' or 'instances' if there's no `deleted` attribute
-        which is set on all delete response (200 ok) and if there's the
-        `resource` attribute on response
+        Adiciona o :attr:`.data` carregado do :meth:`requests.Response.json`.
 
-        add 'error' attribute to response if had errors
+        Adiciona o :attr:`.instance` ou :attr:`.instances` baseado no resource.
+
+        .. note::
+            Apenas adiciona :attr:`.instance` ou :attr:`.instances` se não tiver o dado 'deleted' no :attr:`.data`
+            que é retornado em todas as respostas de deleção (200 ok) e se tiver o dado `resource` no :attr:`.data`
+
+        Adiciona :attr:`.error` na resposta se tiver ocorrido erros
 
         Args:
-            response: http response
+            response (:class:`.Response`): objeto de resposta http
 
         Raises:
-            HttpError: when response is not ok!
+            HttpError: quando a resposta não foi ok (200 <= status <= 299)!
 
         Returns:
-            processed http response
+            objeto (:class:`.ZoopResponse`) de resposta http
         """
         response.data = response.json()
 
@@ -101,22 +104,37 @@ class RequestsWrapper:
     @property
     def _auth(self):
         """
-        property of authentication
+        Propriedade de autenticação
 
         Raises:
-            NotImplementedError: it's a abstract method
+            NotImplementedError: É um método abstrato!
         """
         raise NotImplementedError("Must implement auth function!")
 
-    def _get(self, url) -> ZoopResponse:
+    def _delete(self, url) -> ZoopResponse:
         """
-        http get request wrapper
+        http delete
 
         Args:
-            url: url to be requested
+            url: url de requisição
 
         Returns:
-            processed response
+            (:class:`.ZoopResponse`)
+        """
+        response = requests.delete(url, auth=self._auth)
+        # noinspection PyTypeChecker
+        response = self.__process_response(response)
+        return response
+
+    def _get(self, url) -> ZoopResponse:
+        """
+        http get
+
+        Args:
+            url: url de requisição
+
+        Returns:
+            (:class:`.ZoopResponse`)
         """
         response = requests.get(url, auth=self._auth)
         # noinspection PyTypeChecker
@@ -125,31 +143,32 @@ class RequestsWrapper:
 
     def _post(self, url, data) -> ZoopResponse:
         """
-        http post request wrapper
+        http post
 
         Args:
-            url: url to be requested
-            data: data to be posted
+            url: url de requisição
+            data (dict): dados da requisição
 
         Returns:
-            processed response
+            (:class:`.ZoopResponse`)
         """
         response = requests.post(url, json=data, auth=self._auth)
         # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
 
-    def _delete(self, url) -> ZoopResponse:
+    def _put(self, url, data) -> ZoopResponse:
         """
-        http delete request wrapper
+        http put
 
         Args:
-            url: url to be requested
+            url: url de requisição
+            data (dict): dados da requisição
 
         Returns:
-            processed response
+            (:class:`.ZoopResponse`)
         """
-        response = requests.delete(url, auth=self._auth)
+        response = requests.put(url, json=data, auth=self._auth)
         # noinspection PyTypeChecker
         response = self.__process_response(response)
         return response
@@ -181,23 +200,28 @@ class BaseZoopWrapper(RequestsWrapper):
     @property
     def _auth(self):
         """
-        property of authentication
+        Propriedade de autenticação.
+
+        :getter: Returns this direction's name
 
         Returns:
-            tuple with ZoopKey
+            tupla com :attr:`.ZoopKey` e ""
         """
         return self.__key, ""
 
     def _post_instance(self, url, instance: ResourceModel):
         """
-        http post request wrapper with instance
+        http post com instância de um :class:`.ResourceModel`.
 
         Args:
-            url: url to be requested
-            instance: instance to be posted
+            url: url da requisição
+            instance: instância a ser utilizada
+
+        Raises:
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ResourceModel`.
 
         Returns:
-            processed response
+            (:class:`.ZoopResponse`)
         """
         if not isinstance(instance, ResourceModel):
             raise TypeError("instance must be a ZoopModel")

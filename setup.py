@@ -37,7 +37,7 @@ setup(
     install_requires=["requests>=2.23.0", "python-decouple>=3.3", "pycpfcnpj>=1.5.1",],
     keywords="Zoop API client wrapper",
     project_urls={
-        "Documentation": "https://imobanco.github.io/ZoopAPIWrapper/",
+        "Documentation": "https://zoop-wrapper.readthedocs.io",
         "Source": "https://github.com/imobanco/ZoopAPIWrapper",
         "Tracker": "https://github.com/imobanco/ZoopAPIWrapper/issues",
     },

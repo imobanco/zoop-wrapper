@@ -9,7 +9,7 @@ class BankAccountWrapper(BaseZoopWrapper):
 
     .. warning:: Não importe isso diretamente!
 
-        Essa classe precisa de métodos presentes em outro wrapper`
+        Essa classe precisa de métodos presentes em outro wrapper
     """
 
     def list_bank_accounts(self):

@@ -44,7 +44,11 @@ class RequestWrapperTestCase(APITestCase):
         identifier = "123"
         subaction = "bar"
 
-        url = self.client._construct_url(identifier=identifier, subaction=subaction, sub_action_before_identifier=True)
+        url = self.client._construct_url(
+            identifier=identifier,
+            subaction=subaction,
+            sub_action_before_identifier=True,
+        )
 
         self.assertEqual(url, f"foo/bar/123/")
 

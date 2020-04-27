@@ -1,3 +1,5 @@
+from typing import Union
+
 from .base import BaseZoopWrapper
 from ..models.transaction import Transaction
 
@@ -45,7 +47,7 @@ class TransactionWrapper(BaseZoopWrapper):
         url = self._construct_url(action="transactions", identifier=identifier)
         return self._get(url)
 
-    def add_transaction(self, data: dict):
+    def add_transaction(self, data: Union[dict, Transaction]):
         """
         add transaction
 

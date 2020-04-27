@@ -26,8 +26,6 @@ t = Transaction(
     ),
 )
 
-data = t.to_dict()
-
-response = client.add_transaction(data)
+response = client.add_transaction(t)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

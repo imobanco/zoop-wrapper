@@ -1,3 +1,5 @@
+from typing import Union
+
 from .base import BaseZoopWrapper
 from ..response import ZoopResponse
 from ..models.seller import Seller
@@ -8,7 +10,7 @@ class SellerWrapper(BaseZoopWrapper):
     Possui os métodos do resource :class:`.Seller`
     """
 
-    def add_seller(self, data: dict) -> ZoopResponse:
+    def add_seller(self, data: Union[dict, Seller]) -> ZoopResponse:
         """
         Adiciona um :class:`.Seller`.
 
@@ -130,7 +132,7 @@ class SellerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="sellers", identifier=identifier)
         return self._delete(url)
 
-    def update_seller(self, identifier: str, data: dict) -> ZoopResponse:
+    def update_seller(self, identifier: str, data: Union[dict, Seller]) -> ZoopResponse:
         """
         Atualiza um :class:`.Seller`.
 

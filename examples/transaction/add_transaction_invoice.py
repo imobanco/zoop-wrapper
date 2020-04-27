@@ -56,7 +56,6 @@ t = Transaction(
     ),
 )
 
-data = t.to_dict()
 # _data = {
 #     'amount': '1000',
 #     'currency': 'BRL',
@@ -87,7 +86,7 @@ data = t.to_dict()
 #     }
 # }
 
-response = client.add_transaction(data)
+response = client.add_transaction(t)
 
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

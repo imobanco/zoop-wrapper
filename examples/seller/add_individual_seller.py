@@ -15,7 +15,7 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-t = Seller(
+s = Seller(
     taxpayer_id=gen.cpf(),
     first_name='foo',
     last_name='foo',
@@ -34,8 +34,7 @@ t = Seller(
     )
 )
 
-data = t.to_dict()
 
-response = client.add_seller(data)
+response = client.add_seller(s)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

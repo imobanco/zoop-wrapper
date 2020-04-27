@@ -243,3 +243,21 @@ class BaseZoopWrapper(RequestsWrapper):
         if not isinstance(instance, ResourceModel):
             raise ValidationError(self, "instance precisa ser um ResourceModel!")
         return self._post(url, data=instance.to_dict())
+
+    def _put_instance(self, url, instance: ResourceModel):
+        """
+        http put com instância de um :class:`.ResourceModel`.
+
+        Args:
+            url: url da requisição
+            instance: instância a ser utilizada
+
+        Raises:
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ResourceModel`.
+
+        Returns:
+            (:class:`.ZoopResponse`)
+        """
+        if not isinstance(instance, ResourceModel):
+            raise ValidationError(self, "instance precisa ser um ResourceModel!")
+        return self._put(url, data=instance.to_dict())

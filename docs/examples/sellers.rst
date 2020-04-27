@@ -13,13 +13,17 @@ Listar vendedores
 -----------------------------------------
 .. literalinclude:: ../../examples/seller/list_sellers.py
 
-Remover vendedor
------------------------------------------
-.. literalinclude:: ../../examples/seller/remove_seller.py
-
 Pegar vendedor
 -----------------------------------------
 .. literalinclude:: ../../examples/seller/retrieve_seller.py
+
+Atualizar vendedor
+-----------------------------------------
+.. literalinclude:: ../../examples/seller/update_seller.py
+
+Remover vendedor
+-----------------------------------------
+.. literalinclude:: ../../examples/seller/remove_seller.py
 
 Buscar vendedor empresa
 -----------------------------------------

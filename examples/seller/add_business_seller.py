@@ -27,28 +27,28 @@ s = Seller(
         email="foo",
         taxpayer_id=gen.cpf(),
         phone_number="foo",
-        birthdate='foo',
+        birthdate="foo",
         address=Address(
-            line1='foo',
-            line2='123',
-            line3='barbar',
-            neighborhood='fooofoo',
-            city='Natal',
-            state='RN',
-            postal_code='59152250',
-            country_code="BR"
-        )
+            line1="foo",
+            line2="123",
+            line3="barbar",
+            neighborhood="fooofoo",
+            city="Natal",
+            state="RN",
+            postal_code="59152250",
+            country_code="BR",
+        ),
     ),
     business_address=Address(
-        line1='foo',
-        line2='123',
-        line3='barbar',
-        neighborhood='fooofoo',
-        city='Natal',
-        state='RN',
-        postal_code='59152250',
-        country_code="BR"
-    )
+        line1="foo",
+        line2="123",
+        line3="barbar",
+        neighborhood="fooofoo",
+        city="Natal",
+        state="RN",
+        postal_code="59152250",
+        country_code="BR",
+    ),
 )
 
 

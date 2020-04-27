@@ -1,11 +1,11 @@
 import os
 
-from zoop_wrapper.wrapper import ZoopWrapper
-from zoop_wrapper.models.transaction import Transaction
-from zoop_wrapper.models.invoice import (
+from zoop_wrapper import ZoopWrapper
+from zoop_wrapper import Transaction
+from zoop_wrapper import (
     Invoice,
     BillingInstructions,
-    BillingConfiguration,
+    BillingConfiguration
 )
 from examples.utils import dump_response
 

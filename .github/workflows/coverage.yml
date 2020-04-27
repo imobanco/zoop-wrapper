@@ -3,7 +3,7 @@ name: coverage report upload
 on:
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   coverage:

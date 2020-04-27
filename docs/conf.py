@@ -26,10 +26,8 @@ project = "zoop-wrapper"
 copyright = "2020, Imobanco"
 author = "Imobanco"
 
-# The short X.Y version.
+# The lib version.
 version = zoop_wrapper.__version__
-# The full version, including alpha/beta/rc tags.
-release = zoop_wrapper.__version__
 
 
 # -- General configuration ---------------------------------------------------

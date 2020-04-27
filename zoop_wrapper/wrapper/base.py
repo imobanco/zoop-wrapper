@@ -39,13 +39,13 @@ class RequestsWrapper:
         Adiciona :attr:`.error` na resposta se tiver ocorrido erros
 
         Args:
-            response (:class:`.Response`): objeto de resposta http
+            response (:class:`requests.Response`): resposta a ser processada
 
         Raises:
             HttpError: quando a resposta não foi ok (200 <= status <= 299)!
 
         Returns:
-            objeto (:class:`.ZoopResponse`) de resposta http
+            'objeto' (:class:`.ZoopResponse`) de resposta http
         """
         response.data = response.json()
 

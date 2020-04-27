@@ -72,16 +72,24 @@ class RequestsWrapper:
         response.raise_for_status()
         return response
 
-    def _construct_url(self, action=None, identifier=None, subaction=None, search=None):
+    def _construct_url(
+        self,
+        action=None,
+        identifier=None,
+        subaction=None,
+        search=None,
+        sub_action_before_identifier=False,
+    ):
         # noinspection PyProtectedMember
         """
-        construct url for the request
+        Constrói a url para o request.
 
         Args:
-            action: action endpoint
-            identifier: identifier detail string (ID)
-            subaction: subaction endpoint
-            search: query with urls args to be researched
+            action: nome do resource
+            identifier: identificador de detalhe (ID)
+            subaction: subação do resource
+            search: query com url args para serem buscados
+            sub_action_before_identifier: flag para inverter a posição do identifier e subaction
 
         Examples:
             >>> rw = RequestsWrapper()
@@ -89,15 +97,23 @@ class RequestsWrapper:
             'rw.__base_url/seller/1/bank_accounts/search?account_number=1'
 
         Returns:
-            full url for the request
+            url completa para o request
         """
         url = f"{self.__base_url}/"
         if action:
             url += f"{action}/"
-        if identifier:
-            url += f"{identifier}/"
-        if subaction:
-            url += f"{subaction}/"
+
+        if sub_action_before_identifier:
+            if subaction:
+                url += f"{subaction}/"
+            if identifier:
+                url += f"{identifier}/"
+        else:
+            if identifier:
+                url += f"{identifier}/"
+            if subaction:
+                url += f"{subaction}/"
+
         if search:
             url += f"search?{search}"
         return url

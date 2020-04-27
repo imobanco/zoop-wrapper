@@ -115,7 +115,12 @@ class RequestsWrapper:
                 url += f"{subaction}/"
 
         if search:
-            url += f"search?{search}"
+            if isinstance(search, dict):
+                url += "search?"
+                for key, value in search.items():
+                    url += f"{key}={value}"
+            else:
+                url += f"search?{search}"
         return url
 
     @property

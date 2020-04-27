@@ -11,13 +11,56 @@ class RequestWrapperTestCase(APITestCase):
         super().setUp()
         self.client = RequestsWrapper("foo")
 
-    def test_construct_url(self):
+    def test_construct_url_action(self):
         action = "teste"
+
+        url = self.client._construct_url(action=action)
+
+        self.assertEqual(url, f"foo/teste/")
+
+    def test_construct_url_action_identifier(self):
         identifier = "123"
 
-        url = self.client._construct_url(action=action, identifier=identifier)
+        url = self.client._construct_url(identifier=identifier)
 
-        self.assertEqual(url, f"foo/teste/123/")
+        self.assertEqual(url, f"foo/123/")
+
+    def test_construct_url_subaction(self):
+        subaction = "bar"
+
+        url = self.client._construct_url(subaction=subaction)
+
+        self.assertEqual(url, f"foo/bar/")
+
+    def test_construct_url_subaction_identifier(self):
+        identifier = "123"
+        subaction = "bar"
+
+        url = self.client._construct_url(identifier=identifier, subaction=subaction)
+
+        self.assertEqual(url, f"foo/123/bar/")
+
+    def test_construct_url_subaction_identifier_inverted(self):
+        identifier = "123"
+        subaction = "bar"
+
+        url = self.client._construct_url(identifier=identifier, subaction=subaction, sub_action_before_identifier=True)
+
+        self.assertEqual(url, f"foo/bar/123/")
+
+    def test_construct_url_search(self):
+        search = "id=1"
+
+        url = self.client._construct_url(search=search)
+
+        self.assertEqual(url, f"foo/search?id=1")
+
+    def test_construct_url_search_dict(self):
+        search = {"id": 1}
+
+        url = self.client._construct_url(search=search)
+
+        self.assertEqual(url, f"foo/search?id=1")
 
     def test_process_response_error(self):
         response = self.build_response_mock(

@@ -1,6 +1,8 @@
 Documentação do zoop-wrapper
 ========================================
 
+Release v\ |version|
+
 .. include:: ../README.rst
 
 .. toctree::

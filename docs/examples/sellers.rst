@@ -20,3 +20,11 @@ Remover vendedor
 Pegar vendedor
 -----------------------------------------
 .. literalinclude:: ../../examples/seller/retrieve_seller.py
+
+Buscar vendedor empresa
+-----------------------------------------
+.. literalinclude:: ../../examples/seller/search_business_seller.py
+
+Buscar vendedor PF
+-----------------------------------------
+.. literalinclude:: ../../examples/seller/search_individual_seller.py

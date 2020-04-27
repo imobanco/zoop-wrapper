@@ -1,6 +1,7 @@
 import requests
 
 from zoop_wrapper.constants import ZOOP_KEY, MARKETPLACE_ID
+from ..exceptions import ValidationError
 from zoop_wrapper.models.base import ResourceModel
 from zoop_wrapper.models.utils import get_instance_from_data
 from zoop_wrapper.utils import get_logger, config_logging
@@ -224,5 +225,5 @@ class BaseZoopWrapper(RequestsWrapper):
             (:class:`.ZoopResponse`)
         """
         if not isinstance(instance, ResourceModel):
-            raise TypeError("instance must be a ZoopModel")
+            raise ValidationError(self, "instance precisa ser um ResourceModel!")
         return self._post(url, data=instance.to_dict())

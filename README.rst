@@ -106,7 +106,7 @@ A documentação da API da zoop não é uma das melhores, mas está disponível 
 
 .. warning::
 
-    Não tenho conhecimento se TODOS os testes podem ser realizados sem ônus ao desenvolvedor.
+    Não temos conhecimento se TODOS os testes podem ser realizados sem ônus ao desenvolvedor.
 
     As transações de cartão podem ser extornadas e não há problema em gerar boletos (não paga a baixa).
 

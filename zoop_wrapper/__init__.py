@@ -3,8 +3,12 @@ from .exceptions import ValidationError  # noqa
 from .models import (
     Address,
     BankAccount,
+    BillingConfiguration,
+    BillingInstructions,
     Buyer,
+    Card,
     Invoice,
+    Person,
     Seller,
     Transaction,
     Token,

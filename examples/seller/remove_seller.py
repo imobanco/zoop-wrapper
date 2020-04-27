@@ -1,6 +1,6 @@
 import os
 
-from zoop_wrapper import ZoopWrapper, Transaction, Card
+from zoop_wrapper import ZoopWrapper
 from examples.utils import dump_response
 
 """
@@ -12,18 +12,6 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-t = Transaction(
-    customer="foo",
-    on_behalf_of="bar",
-    amount="1",
-    reference_id="1",
-    description="foo",
-    payment_type="credit",
-    payment_method=Card(
-        expiration_year="2021", holder_name="foo", expiration_month="08"
-    ),
-)
-
-response = client.add_transaction(t)
+response = client.remove_seller("79bb6be6ac8a477cbc1d8f79236a0f75")
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

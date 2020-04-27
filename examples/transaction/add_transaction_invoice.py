@@ -1,11 +1,11 @@
 import os
 
-from zoop_wrapper.wrapper import ZoopWrapper
-from zoop_wrapper.models.transaction import Transaction
-from zoop_wrapper.models.invoice import (
+from zoop_wrapper import (
+    ZoopWrapper,
+    Transaction,
     Invoice,
-    BillingInstructions,
     BillingConfiguration,
+    BillingInstructions,
 )
 from examples.utils import dump_response
 
@@ -56,7 +56,6 @@ t = Transaction(
     ),
 )
 
-data = t.to_dict()
 # _data = {
 #     'amount': '1000',
 #     'currency': 'BRL',
@@ -87,7 +86,7 @@ data = t.to_dict()
 #     }
 # }
 
-response = client.add_transaction(data)
+response = client.add_transaction(t)
 
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

@@ -369,6 +369,9 @@ class Person(ZoopObject):
         """
         super().validate_fields()
 
+        if self._allow_empty:
+            return
+
         if not cpf.validate(self.taxpayer_id):
             raise ValidationError(
                 self, FieldError("taxpayer_id", "taxpayer_id inválido!")
@@ -525,7 +528,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     INDIVIDUAL_IDENTIFIER = "taxpayer_id"
     INDIVIDUAL_TYPE = "individual"
 
-    URI = {BUSINESS_TYPE: "business", INDIVIDUAL_TYPE: "individuals"}
+    URI = {BUSINESS_TYPE: "businesses", INDIVIDUAL_TYPE: "individuals"}
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """

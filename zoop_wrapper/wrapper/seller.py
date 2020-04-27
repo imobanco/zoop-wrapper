@@ -1,3 +1,5 @@
+from typing import Union
+
 from .base import BaseZoopWrapper
 from ..response import ZoopResponse
 from ..models.seller import Seller
@@ -8,27 +10,27 @@ class SellerWrapper(BaseZoopWrapper):
     Possui os métodos do resource :class:`.Seller`
     """
 
-    def add_seller(self, data: dict) -> ZoopResponse:
+    def add_seller(self, data: Union[dict, Seller]) -> ZoopResponse:
         """
         Adiciona um :class:`.Seller`.
 
         Examples:
             data = {
-                'taxpayer_id': 'foo',
-                'first_name': 'foo',
-                'last_name': 'foo',
-                'email': 'foo@bar.com',
-                'phone_number': '+55 84 99999-9999',
-                'birthdate': '1994-12-27',
-                'address': {
-                    'line1': 'foo',
-                    'line2': '123',
-                    'line3': 'barbar',
-                    'neighborhood': 'fooofoo',
-                    'city': 'Natal',
-                    'state': 'BR-RN',
-                    'postal_code': '59152250',
-                    'country_code': "BR"
+                "taxpayer_id": "foo",
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo@bar.com",
+                "phone_number": "+55 84 99999-9999",
+                "birthdate": "1994-12-27",
+                "address": {
+                    "line1": "foo",
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -39,33 +41,33 @@ class SellerWrapper(BaseZoopWrapper):
                 "business_website": "foo",
                 "business_opening_date": "foo",
                 "ein": "foo",
-                'owner': {
+                "owner": {
                     "first_name": "foo",
                     "last_name": "foo",
                     "email": "foo",
                     "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": 'foo',
+                    "birthdate": "foo",
                     "address": {
                         "line1": "foo",
-                        "line2": "foo",
-                        "line3": "foo",
-                        "neighborhood": "foo",
-                        "city": "foo",
-                        "state": "foo",
-                        "postal_code": "foo",
-                        "country_code": "foo"
+                        "line2": "123",
+                        "line3": "barbar",
+                        "neighborhood": "fooofoo",
+                        "city": "Natal",
+                        "state": "RN",
+                        "postal_code": "59152250",
+                        "country_code": "BR"
                     }
-                }
+                },
                 "business_address": {
                     "line1": "foo",
-                    "line2": "foo",
-                    "line3": "foo",
-                    "neighborhood": "foo",
-                    "city": "foo",
-                    "state": "foo",
-                    "postal_code": "foo",
-                    "country_code": "foo"
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -81,7 +83,7 @@ class SellerWrapper(BaseZoopWrapper):
 
     def list_sellers(self) -> ZoopResponse:
         """
-        lista :class:`.Seller`'s existentes na Zoop.
+        lista :class:`.Seller`"s existentes na Zoop.
 
         Returns:
             :class:`.ZoopResponse`
@@ -91,7 +93,7 @@ class SellerWrapper(BaseZoopWrapper):
 
     def list_seller_bank_accounts(self, identifier: str) -> ZoopResponse:
         """
-        Lista :class:`.BankAccount`'s de algum :class:`.Seller`
+        Lista :class:`.BankAccount`"s de algum :class:`.Seller`
 
         Args:
             identifier: id do :class:`.Seller`
@@ -130,27 +132,27 @@ class SellerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="sellers", identifier=identifier)
         return self._delete(url)
 
-    def update_seller(self, identifier: str, data: dict) -> ZoopResponse:
+    def update_seller(self, identifier: str, data: Union[dict, Seller]) -> ZoopResponse:
         """
         Atualiza um :class:`.Seller`.
 
         Examples:
             data = {
-                'taxpayer_id': 'foo',
-                'first_name': 'foo',
-                'last_name': 'foo',
-                'email': 'foo@bar.com',
-                'phone_number': '+55 84 99999-9999',
-                'birthdate': '1994-12-27',
-                'address': {
-                    'line1': 'foo',
-                    'line2': '123',
-                    'line3': 'barbar',
-                    'neighborhood': 'fooofoo',
-                    'city': 'Natal',
-                    'state': 'BR-RN',
-                    'postal_code': '59152250',
-                    'country_code': "BR"
+                "taxpayer_id": "foo",
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo@bar.com",
+                "phone_number": "+55 84 99999-9999",
+                "birthdate": "1994-12-27",
+                "address": {
+                    "line1": "foo",
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "BR-RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -161,13 +163,13 @@ class SellerWrapper(BaseZoopWrapper):
                 "business_website": "foo",
                 "business_opening_date": "foo",
                 "ein": "foo",
-                'owner': {
+                "owner": {
                     "first_name": "foo",
                     "last_name": "foo",
                     "email": "foo",
                     "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": 'foo',
+                    "birthdate": "foo",
                     "address": {
                         "line1": "foo",
                         "line2": "foo",
@@ -207,7 +209,7 @@ class SellerWrapper(BaseZoopWrapper):
         )
         return self._put_instance(url, instance=instance)
 
-    def search_seller(self, **kwargs) -> ZoopResponse:
+    def __search_seller(self, **kwargs) -> ZoopResponse:
         """
         Busca um :class:`.Seller`.
 
@@ -230,7 +232,7 @@ class SellerWrapper(BaseZoopWrapper):
         Returns:
             response with instance of Seller
         """
-        return self.search_seller(ein=identifier)
+        return self.__search_seller(ein=identifier)
 
     def search_individual_seller(self, identifier: str) -> ZoopResponse:
         """
@@ -242,4 +244,4 @@ class SellerWrapper(BaseZoopWrapper):
         Returns:
             response with instance of Seller
         """
-        return self.search_seller(taxpayer_id=identifier)
+        return self.__search_seller(taxpayer_id=identifier)

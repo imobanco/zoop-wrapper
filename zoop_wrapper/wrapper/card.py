@@ -11,7 +11,7 @@ class CardWrapper(BaseZoopWrapper):
 
     .. warning:: Não importe isso diretamente!
 
-        Essa classe precisa de métodos presentes em outro wrapper`
+        Essa classe precisa de métodos presentes em outro wrapper
     """
 
     def retrieve_card(self, identifier):
@@ -63,10 +63,10 @@ class CardWrapper(BaseZoopWrapper):
         token = Token.from_dict_or_instance(data)
 
         try:
-            self.retrieve_buyer(customer_identifier)
+            self.retrieve_buyer(customer_identifier)  # type: ignore
         except HTTPError:
             try:
-                self.retrieve_seller(customer_identifier)
+                self.retrieve_seller(customer_identifier)  # type: ignore
             except HTTPError:
                 raise ValidationError(
                     self,

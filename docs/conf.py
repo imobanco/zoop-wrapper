@@ -32,8 +32,8 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
     "sphinx.ext.autosectionlabel",
-    'sphinx.ext.intersphinx',
-    'sphinx.ext.extlinks',
+    "sphinx.ext.intersphinx",
+    "sphinx.ext.extlinks",
 ]
 
 napoleon_include_private_with_doc = True
@@ -42,7 +42,7 @@ napoleon_include_init_with_doc = True
 
 # Looks for objects in external projects
 intersphinx_mapping = {
-    'requests': ('https://requests.readthedocs.io/en/latest/', None),
+    "requests": ("https://requests.readthedocs.io/en/latest/", None),
 }
 
 # Add any paths that contain templates here, relative to this directory.
@@ -72,4 +72,4 @@ html_theme = "sphinx_rtd_theme"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
 
-master_doc = 'index'
+master_doc = "index"

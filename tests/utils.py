@@ -23,17 +23,20 @@ class APITestCase(TestCase):
     def setUp(self):
         super().setUp()
 
+        self.patcher_delete = patch("zoop_wrapper.wrapper.base.requests.delete")
         self.patcher_get = patch("zoop_wrapper.wrapper.base.requests.get")
         self.patcher_post = patch("zoop_wrapper.wrapper.base.requests.post")
-        self.patcher_delete = patch("zoop_wrapper.wrapper.base.requests.delete")
+        self.patcher_put = patch("zoop_wrapper.wrapper.base.requests.put")
 
+        self.mocked_delete = self.patcher_delete.start()
         self.mocked_get = self.patcher_get.start()
         self.mocked_post = self.patcher_post.start()
-        self.mocked_delete = self.patcher_delete.start()
+        self.mocked_put = self.patcher_put.start()
 
+        self.addCleanup(self.patcher_delete.stop)
         self.addCleanup(self.patcher_get.stop)
         self.addCleanup(self.patcher_post.stop)
-        self.addCleanup(self.patcher_delete.stop)
+        self.addCleanup(self.patcher_put.stop)
 
         self.client = ZoopWrapper(marketplace_id="foo", key="foo")
 

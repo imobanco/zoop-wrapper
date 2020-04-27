@@ -1,4 +1,4 @@
-from ..wrapper.base import BaseZoopWrapper
+from .base import BaseZoopWrapper
 from ..models.bank_account import BankAccount
 from ..models.token import Token
 

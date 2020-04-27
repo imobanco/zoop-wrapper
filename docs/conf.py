@@ -6,21 +6,30 @@
 
 # -- Path setup --------------------------------------------------------------
 
+import sys
+import os
+
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
+# sys.path.insert(0, os.path.abspath('.'))
 
-import os
-import sys
-
-
+# Insert Requests' path into the system.
 sys.path.insert(0, os.path.abspath(".."))
+sys.path.insert(0, os.path.abspath("_themes"))
+
+import zoop_wrapper
 
 # -- Project information -----------------------------------------------------
 
 project = "zoop-wrapper"
 copyright = "2020, Imobanco"
 author = "Imobanco"
+
+# The short X.Y version.
+version = zoop_wrapper.__version__
+# The full version, including alpha/beta/rc tags.
+release = zoop_wrapper.__version__
 
 
 # -- General configuration ---------------------------------------------------
@@ -31,7 +40,7 @@ author = "Imobanco"
 extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.napoleon",
-    "sphinx.ext.autosectionlabel",
+    "sphinx.ext.viewcode",
 ]
 
 napoleon_include_private_with_doc = True

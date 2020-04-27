@@ -1,10 +1,14 @@
 from unittest.mock import patch, MagicMock
 
-from tests.utils import APITestCase
+from requests import HTTPError
+
+from ..utils import APITestCase
+from ..factories.buyer import BuyerFactory
+from ..factories.card import CardFactory
+from ..factories.seller import SellerFactory
+from ..factories.token import CardTokenFactory, CreateCardTokenFactory
 from zoop_wrapper.models.card import Card
-from tests.factories.buyer import BuyerFactory
-from tests.factories.card import CardFactory
-from tests.factories.token import CardTokenFactory, CreateCardTokenFactory
+from zoop_wrapper.exceptions import ValidationError
 
 
 class ZoopWrapperCardMethodsTestCase(APITestCase):
@@ -34,7 +38,7 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
     @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
     def test_add_card(self, mocked_add_token):
         """
-        Test add_card method.
+        Testa o método add_card. No cenário em que é passado um buyer
         """
         mocked_add_token.return_value = MagicMock(
             instance=CardTokenFactory(allow_empty=True)
@@ -50,3 +54,58 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertIsInstance(response.instance, Card)
         self.assertEqual(response.instance.id, "foo")
+
+    @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
+    def test_add_card_buyer(self, mocked_add_token):
+        """
+        Testa se o método add_card está chamando o retrieve_buyer corretamente
+        """
+
+        data = CreateCardTokenFactory().to_dict()
+
+        with patch(
+            "zoop_wrapper.wrapper.BuyerWrapper.retrieve_buyer"
+        ) as mocked_retrieve:
+            self.client.add_card(data, "bar")
+
+            self.assertIsInstance(mocked_retrieve, MagicMock)
+            mocked_retrieve.assert_called_once_with("bar")
+
+    @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
+    def test_add_card_seller(self, mocked_add_token):
+        """
+        Testa se o método add_card está chamando o retrieve_seller corretamente
+        """
+
+        def request_get(url, **kwargs):
+            if "buyer" in url:
+                raise HTTPError()
+            return self.build_response_mock(200, SellerFactory(id="bar").to_dict())
+
+        self.mocked_get.side_effect = request_get
+
+        data = CreateCardTokenFactory().to_dict()
+
+        with patch(
+            "zoop_wrapper.wrapper.SellerWrapper.retrieve_seller"
+        ) as mocked_retrieve:
+            self.client.add_card(data, "bar")
+
+            self.assertIsInstance(mocked_retrieve, MagicMock)
+            mocked_retrieve.assert_called_once_with("bar")
+
+    @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
+    def test_add_card_raise_validation_error(self, mocked_add_token):
+        """
+        Testa se o método add_card irá levantar a exceção corretamente
+        """
+
+        def request_get(url, **kwargs):
+            raise HTTPError()
+
+        self.mocked_get.side_effect = request_get
+
+        data = CreateCardTokenFactory().to_dict()
+
+        with self.assertRaises(ValidationError):
+            self.client.add_card(data, "bar")

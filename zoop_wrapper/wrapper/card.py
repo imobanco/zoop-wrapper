@@ -1,4 +1,7 @@
+from requests import HTTPError
+
 from ..wrapper.base import BaseZoopWrapper
+from ..exceptions import ValidationError, FieldError
 from ..models.token import Token
 
 
@@ -8,7 +11,7 @@ class CardWrapper(BaseZoopWrapper):
 
     .. warning:: Não importe isso diretamente!
 
-        Essa classe precisa de métodos presentes em outro wrapper`
+        Essa classe precisa de métodos presentes em outro wrapper
     """
 
     def retrieve_card(self, identifier):
@@ -26,20 +29,20 @@ class CardWrapper(BaseZoopWrapper):
 
     def __add_card_token(self, card_token: Token):
         """
-        add card token
+        Cria um :class:`.Token` do tipo :class:`.Card`
 
         Args:
-            card_token: Token instance for Card
+            card_token: instância do :class:`.Token`
 
         Returns:
-            response with instance of Token
+            :class:`.ZoopResponse` com instância do :class:`.Token`
         """
         url = self._construct_url(action="cards", subaction="tokens")
         return self._post_instance(url, instance=card_token)
 
-    def add_card(self, data: dict, buyer_identifier):
+    def add_card(self, data: dict, customer_identifier):
         """
-        add card
+        Adiciona um cartão de crédito
 
         Examples:
             data = {
@@ -51,21 +54,32 @@ class CardWrapper(BaseZoopWrapper):
             }
 
         Args:
-            data: dict of data
-            buyer_identifier: uuid of buyer
+            data: dicionário de dados
+            customer_identifier: uuid do consumidor (:class:`.Buyer` ou :class:`.Seller`)
 
         Returns:
-            response with instance of BankAccount
+            :class:`.ZoopResponse` com instância do :class:`.Card`
         """
         token = Token.from_dict_or_instance(data)
 
-        buyer_response = self.retrieve_buyer(buyer_identifier)  # type: ignore
-        buyer_instance = buyer_response.instance
+        try:
+            self.retrieve_buyer(customer_identifier)  # type: ignore
+        except HTTPError:
+            try:
+                self.retrieve_seller(customer_identifier)  # type: ignore
+            except HTTPError:
+                raise ValidationError(
+                    self,
+                    FieldError(
+                        "customer_identifier",
+                        "Não existe Seller ou Buyer para esse identificador",
+                    ),
+                )
 
         token_response = self.__add_card_token(token)
         created_token = token_response.instance
 
-        data = {"customer": buyer_instance.id, "token": created_token.id}
+        data = {"customer": customer_identifier, "token": created_token.id}
 
         url = self._construct_url(action="cards")
         return self._post(url, data=data)

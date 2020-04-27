@@ -130,6 +130,7 @@ Webhooks
 
 Buyer
 
+- ☐ Atualização
 - ☑ Cadastro
 - ☑ listagem
 - ☑ detalhes
@@ -138,6 +139,7 @@ Buyer
 
 Seller
 
+- ☑ Atualização
 - ☑ Cadastro
 - ☑ listagem
 - ☑ detalhes
@@ -160,6 +162,7 @@ Cartão de crédito
 
 Conta bancária
 
+- ☐ Atualização
 - ☑ Conexão
 - ☑ listagem
 - ☑ detalhes

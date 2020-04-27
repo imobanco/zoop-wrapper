@@ -16,21 +16,21 @@ class SellerWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                'taxpayer_id': 'foo',
-                'first_name': 'foo',
-                'last_name': 'foo',
-                'email': 'foo@bar.com',
-                'phone_number': '+55 84 99999-9999',
-                'birthdate': '1994-12-27',
-                'address': {
-                    'line1': 'foo',
-                    'line2': '123',
-                    'line3': 'barbar',
-                    'neighborhood': 'fooofoo',
-                    'city': 'Natal',
-                    'state': 'RN',
-                    'postal_code': '59152250',
-                    'country_code': "BR"
+                "taxpayer_id": "foo",
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo@bar.com",
+                "phone_number": "+55 84 99999-9999",
+                "birthdate": "1994-12-27",
+                "address": {
+                    "line1": "foo",
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -41,33 +41,33 @@ class SellerWrapper(BaseZoopWrapper):
                 "business_website": "foo",
                 "business_opening_date": "foo",
                 "ein": "foo",
-                'owner': {
+                "owner": {
                     "first_name": "foo",
                     "last_name": "foo",
                     "email": "foo",
                     "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": 'foo',
-                    'address': {
-                        'line1': 'foo',
-                        'line2': '123',
-                        'line3': 'barbar',
-                        'neighborhood': 'fooofoo',
-                        'city': 'Natal',
-                        'state': 'RN',
-                        'postal_code': '59152250',
-                        'country_code': "BR"
+                    "birthdate": "foo",
+                    "address": {
+                        "line1": "foo",
+                        "line2": "123",
+                        "line3": "barbar",
+                        "neighborhood": "fooofoo",
+                        "city": "Natal",
+                        "state": "RN",
+                        "postal_code": "59152250",
+                        "country_code": "BR"
                     }
                 },
                 "business_address": {
-                    'line1': 'foo',
-                    'line2': '123',
-                    'line3': 'barbar',
-                    'neighborhood': 'fooofoo',
-                    'city': 'Natal',
-                    'state': 'RN',
-                    'postal_code': '59152250',
-                    'country_code': "BR"
+                    "line1": "foo",
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -83,7 +83,7 @@ class SellerWrapper(BaseZoopWrapper):
 
     def list_sellers(self) -> ZoopResponse:
         """
-        lista :class:`.Seller`'s existentes na Zoop.
+        lista :class:`.Seller`"s existentes na Zoop.
 
         Returns:
             :class:`.ZoopResponse`
@@ -93,7 +93,7 @@ class SellerWrapper(BaseZoopWrapper):
 
     def list_seller_bank_accounts(self, identifier: str) -> ZoopResponse:
         """
-        Lista :class:`.BankAccount`'s de algum :class:`.Seller`
+        Lista :class:`.BankAccount`"s de algum :class:`.Seller`
 
         Args:
             identifier: id do :class:`.Seller`
@@ -138,21 +138,21 @@ class SellerWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                'taxpayer_id': 'foo',
-                'first_name': 'foo',
-                'last_name': 'foo',
-                'email': 'foo@bar.com',
-                'phone_number': '+55 84 99999-9999',
-                'birthdate': '1994-12-27',
-                'address': {
-                    'line1': 'foo',
-                    'line2': '123',
-                    'line3': 'barbar',
-                    'neighborhood': 'fooofoo',
-                    'city': 'Natal',
-                    'state': 'BR-RN',
-                    'postal_code': '59152250',
-                    'country_code': "BR"
+                "taxpayer_id": "foo",
+                "first_name": "foo",
+                "last_name": "foo",
+                "email": "foo@bar.com",
+                "phone_number": "+55 84 99999-9999",
+                "birthdate": "1994-12-27",
+                "address": {
+                    "line1": "foo",
+                    "line2": "123",
+                    "line3": "barbar",
+                    "neighborhood": "fooofoo",
+                    "city": "Natal",
+                    "state": "BR-RN",
+                    "postal_code": "59152250",
+                    "country_code": "BR"
                 }
             }
 
@@ -163,13 +163,13 @@ class SellerWrapper(BaseZoopWrapper):
                 "business_website": "foo",
                 "business_opening_date": "foo",
                 "ein": "foo",
-                'owner': {
+                "owner": {
                     "first_name": "foo",
                     "last_name": "foo",
                     "email": "foo",
                     "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": 'foo',
+                    "birthdate": "foo",
                     "address": {
                         "line1": "foo",
                         "line2": "foo",

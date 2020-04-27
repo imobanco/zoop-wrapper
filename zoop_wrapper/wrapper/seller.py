@@ -209,7 +209,7 @@ class SellerWrapper(BaseZoopWrapper):
         )
         return self._put_instance(url, instance=instance)
 
-    def search_seller(self, **kwargs) -> ZoopResponse:
+    def __search_seller(self, **kwargs) -> ZoopResponse:
         """
         Busca um :class:`.Seller`.
 
@@ -232,7 +232,7 @@ class SellerWrapper(BaseZoopWrapper):
         Returns:
             response with instance of Seller
         """
-        return self.search_seller(ein=identifier)
+        return self.__search_seller(ein=identifier)
 
     def search_individual_seller(self, identifier: str) -> ZoopResponse:
         """
@@ -244,4 +244,4 @@ class SellerWrapper(BaseZoopWrapper):
         Returns:
             response with instance of Seller
         """
-        return self.search_seller(taxpayer_id=identifier)
+        return self.__search_seller(taxpayer_id=identifier)

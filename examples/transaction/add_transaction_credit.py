@@ -1,8 +1,6 @@
 import os
 
-from zoop_wrapper import ZoopWrapper
-from zoop_wrapper import Transaction
-from zoop_wrapper import Card
+from zoop_wrapper import ZoopWrapper, Transaction, Card
 from examples.utils import dump_response
 
 """

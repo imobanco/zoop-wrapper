@@ -2,8 +2,7 @@ import os
 
 from pycpfcnpj import gen
 
-from zoop_wrapper import ZoopWrapper
-from zoop_wrapper import Seller, Address, Person
+from zoop_wrapper import ZoopWrapper, Seller, Address, Person
 from examples.utils import dump_response
 
 """

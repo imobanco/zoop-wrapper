@@ -20,7 +20,7 @@ jobs:
           )
         with:
           project: Backlog
-          column: To do
+          column: Review in progress
           repo-token: ${{ secrets.GH_TOKEN }}
 
       - name: move new issues or unlabeled to 'To do'

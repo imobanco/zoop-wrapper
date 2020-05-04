@@ -10,10 +10,6 @@ jobs:
   automate-project-columns:
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ github.event_name }}
-      - run: echo ${{ github.event.action }}
-
-
       - name: move 'new' PR to 'Review in progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
@@ -30,7 +26,7 @@ jobs:
       - name: move new issue or unlabeled to 'To do'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
-          github.event_name == 'issue' &&
+          github.event_name == 'issues' &&
           (
             github.event.action == 'opened' ||
             (
@@ -46,7 +42,7 @@ jobs:
       - name: move issue labeled to 'In progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
-          github.event_name == 'issue' &&
+          github.event_name == 'issues' &&
           (
             contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
           )
@@ -58,7 +54,7 @@ jobs:
       - name: move issue labeled to 'Blocked'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
-          github.event_name == 'issue' &&
+          github.event_name == 'issues' &&
           (
             contains(github.event.issue.labels.*.name, 'Status: Bloqueado')
           )

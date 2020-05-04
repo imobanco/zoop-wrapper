@@ -9,45 +9,46 @@ class BuyerWrapper(BaseZoopWrapper):
 
     def list_buyers(self):
         """
-        list all buyers
+        Lista todos os :class:`.Buyer`'s
 
         Returns:
-            response with instances of Buyer
+            :class:`.ZoopResponse`
         """
         url = self._construct_url(action="buyers")
         return self._get(url)
 
     def retrieve_buyer(self, identifier):
         """
-        retrieve buyer
+        Pega um :class:`.Buyer`
 
         Args:
             identifier: uuid id
 
         Returns:
-            response with instance of Buyer
+            :class:`.ZoopResponse`
         """
         url = self._construct_url(action="buyers", identifier=identifier)
         return self._get(url)
 
     def search_buyer(self, identifier):
         """
-        search buyer by CPF or CNPJ.
-        Yes, the name of the attribute is taxpayer_id for
-        both.
+        Buscar um :class:`.Buyer` pelo CPF ou CNPJ
+
+        .. note::
+            Sim, o atributo é o :attr:`.taxpayer_id` para os dois. Veja o código para entender.
 
         Args:
-            identifier: CPF or CNPJ
+            identifier: CPF ou CNPJ
 
         Returns:
-            response with instance of Buyer
+            :class:`.ZoopResponse`
         """
         url = self._construct_url(action="buyers", search=f"taxpayer_id={identifier}")
         return self._get(url)
 
     def add_buyer(self, data: dict):
         """
-        add buyer
+        Adiciona um :class:`.Buyer`
 
         Examples:
             data = {
@@ -70,10 +71,10 @@ class BuyerWrapper(BaseZoopWrapper):
             }
 
         Args:
-            data: dict of data
+            data (dict ou :class:`.Buyer`): dados do :class:`.Buyer`
 
         Returns:
-            response with instance of Buyer
+            :class:`.ZoopResponse`
         """
         instance = Buyer.from_dict_or_instance(data)
         url = self._construct_url(action="buyers")
@@ -81,13 +82,13 @@ class BuyerWrapper(BaseZoopWrapper):
 
     def remove_buyer(self, identifier):
         """
-        remove buyer
+        Remove um :class:`.Buyer`
 
         Args:
             identifier: uuid id
 
         Returns:
-            response without instance
+           :class:`.ZoopResponse`
         """
         url = self._construct_url(action="buyers", identifier=identifier)
         return self._delete(url)

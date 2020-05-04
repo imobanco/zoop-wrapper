@@ -10,7 +10,7 @@ jobs:
   automate-project-columns:
     runs-on: ubuntu-latest
     steps:
-      - name: move new PR's to 'Review in progress'
+      - name: move 'new' PR to 'Review in progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           github.event_name == 'pull_request' &&
@@ -23,7 +23,7 @@ jobs:
           column: Review in progress
           repo-token: ${{ secrets.GH_TOKEN }}
 
-      - name: move new issues or unlabeled to 'To do'
+      - name: move new issue or unlabeled to 'To do'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           github.event_name == 'issue' &&
@@ -39,7 +39,7 @@ jobs:
           column: To do
           repo-token: ${{ secrets.GH_TOKEN }}
 
-      - name: move issues labeled to 'In progress'
+      - name: move issue labeled to 'In progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           github.event_name == 'issue' &&
@@ -51,7 +51,7 @@ jobs:
           column: In progress
           repo-token: ${{ secrets.GH_TOKEN }}
 
-      - name: move issues labeled to 'Blocked'
+      - name: move issue labeled to 'Blocked'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           github.event_name == 'issue' &&

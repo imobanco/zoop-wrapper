@@ -13,7 +13,7 @@ jobs:
       - name: move new PR's to 'Review in progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
-          github.event == 'pull_request' &&
+          github.event_name == 'pull_request' &&
           (
             github.event.action == 'opened' ||
             github.event.action == 'reopened'
@@ -26,10 +26,13 @@ jobs:
       - name: move new issues or unlabeled to 'To do'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
-          github.event.action == 'opened' ||
+          github.event_name == 'issue' &&
           (
-            github.event.action == 'unlabeled' &&
-            !contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
+            github.event.action == 'opened' ||
+            (
+              github.event.action == 'unlabeled' &&
+              !contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
+            )
           )
         with:
           project: Backlog
@@ -39,6 +42,7 @@ jobs:
       - name: move issues labeled to 'In progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
+          github.event_name == 'issue' &&
           (
             contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
           )
@@ -50,6 +54,7 @@ jobs:
       - name: move issues labeled to 'Blocked'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
+          github.event_name == 'issue' &&
           (
             contains(github.event.issue.labels.*.name, 'Status: Bloqueado')
           )

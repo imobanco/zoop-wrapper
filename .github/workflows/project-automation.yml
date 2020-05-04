@@ -3,12 +3,27 @@ name: project-automation
 on:
   issues:
     types: [opened, labeled, unlabeled]
+  pull_request:
+    types: [opened, reopened]
 
 jobs:
   automate-project-columns:
     runs-on: ubuntu-latest
     steps:
-      - name: assign new issues or unlabeled to 'To do'
+      - name: move new PR's to 'Review in progress'
+        uses: alex-page/github-project-automation-plus@v0.2.2
+        if: |
+          github.event == 'pull_request' &&
+          (
+            github.event.action == 'opened' ||
+            github.event.action == 'reopened'
+          )
+        with:
+          project: Backlog
+          column: To do
+          repo-token: ${{ secrets.GH_TOKEN }}
+
+      - name: move new issues or unlabeled to 'To do'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           github.event.action == 'opened' ||
@@ -21,7 +36,7 @@ jobs:
           column: To do
           repo-token: ${{ secrets.GH_TOKEN }}
 
-      - name: assign issues labeled to 'In progress'
+      - name: move issues labeled to 'In progress'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           (
@@ -32,7 +47,7 @@ jobs:
           column: In progress
           repo-token: ${{ secrets.GH_TOKEN }}
 
-      - name: assign issues labeled to 'Blocked'
+      - name: move issues labeled to 'Blocked'
         uses: alex-page/github-project-automation-plus@v0.2.2
         if: |
           (

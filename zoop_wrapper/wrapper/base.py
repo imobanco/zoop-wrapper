@@ -4,11 +4,10 @@ from ..constants import ZOOP_KEY, MARKETPLACE_ID
 from ..exceptions import ValidationError
 from ..models.base import ResourceModel
 from ..models.utils import get_instance_from_data
-from ..utils import get_logger, config_logging
+from ..utils import get_logger
 from ..response import ZoopResponse
 
 
-config_logging()
 logger = get_logger("wrapper")
 
 

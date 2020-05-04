@@ -13,7 +13,7 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 b = Buyer(
-    taxpayer_id='19249382944',
+    taxpayer_id="19249382944",
     first_name="foo",
     last_name="foo",
     email="foo@bar.com",

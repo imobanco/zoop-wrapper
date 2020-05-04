@@ -1,0 +1,44 @@
+name: project-automation
+
+on:
+  issues:
+    types: [opened, labeled, unlabeled]
+
+jobs:
+  automate-project-columns:
+    runs-on: ubuntu-latest
+    steps:
+      - name: assign new issues or unlabeled to 'To do'
+        uses: alex-page/github-project-automation-plus@v0.2.2
+        if: |
+          github.event.action == 'opened' ||
+          (
+            github.event.action == 'unlabeled' &&
+            !contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
+          )
+        with:
+          project: Backlog
+          column: To do
+          repo-token: ${{ secrets.GH_TOKEN }}
+
+      - name: assign issues labeled to 'In progress'
+        uses: alex-page/github-project-automation-plus@v0.2.2
+        if: |
+          (
+            contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
+          )
+        with:
+          project: Backlog
+          column: In progress
+          repo-token: ${{ secrets.GH_TOKEN }}
+
+      - name: assign issues labeled to 'Blocked'
+        uses: alex-page/github-project-automation-plus@v0.2.2
+        if: |
+          (
+            contains(github.event.issue.labels.*.name, 'Status: Bloqueado')
+          )
+        with:
+          project: Backlog
+          column: Blocked
+          repo-token: ${{ secrets.GH_TOKEN }}

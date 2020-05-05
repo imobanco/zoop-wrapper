@@ -10,10 +10,10 @@ config.env:
 test:
 	python -m unittest
 
-black:
+black.check:
 	black --check .
 
-black.reformat:
+black:
 	black .
 
 stubgen:

@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: pip install black
     - name: Lint with black
-      run: black --check .
+      run: make black.check
 
   mypy:
     runs-on: ubuntu-18.04

@@ -28,11 +28,8 @@ jobs:
         if: |
           github.event_name == 'issues' &&
           (
-            github.event.action == 'opened' ||
-            (
-              github.event.action == 'unlabeled' &&
-              !contains(github.event.issue.labels.*.name, 'Status: Em Progresso')
-            )
+            !contains(github.event.issue.labels.*.name, 'Status: Em Progresso') &&
+            !contains(github.event.issue.labels.*.name, 'Status: Bloqueado')
           )
         with:
           project: Backlog

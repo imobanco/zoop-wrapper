@@ -18,7 +18,12 @@ jobs:
         run: make pip.install
       - name: Config env
         run: make config.env
-      - name: Codacy Coverage
-        env:
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        run: make coverage.codacy
+      - name: make coverage
+        run: make coverage
+      - uses: codecov/codecov-action@v1
+#        with:
+#          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+#          file: ./coverage.xml # optional
+#          flags: unittests # optional
+#          name: codecov-umbrella # optional
+#          fail_ci_if_error: true # optional (default = false)

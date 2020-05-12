@@ -26,7 +26,7 @@ jobs:
       - name: make coverage
         run: make coverage
       - uses: codecov/codecov-action@v1
-#        with:
+        with:
 #          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
           file: ./coverage.xml # optional
 #          flags: unittests # optional

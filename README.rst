@@ -32,7 +32,7 @@
     .. image:: https://codecov.io/gh/imobanco/zoop-wrapper/branch/master/graph/badge.svg
        :target: https://codecov.io/gh/imobanco/zoop-wrapper
        :alt: Coverage
-       :height: 23
+       :height: 21
     .. image:: https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt
        :target: https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt
        :alt: Known Vulnerabilities

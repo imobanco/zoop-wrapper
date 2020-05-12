@@ -1,7 +1,9 @@
 name: coverage report upload
 
 on:
-  [push]
+  push:
+    branches:
+      - master
 
 jobs:
   coverage:

@@ -29,8 +29,8 @@
        :target: https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Grade
        :alt: Code grade
        :height: 23
-    .. image:: https://api.codacy.com/project/badge/Coverage/d78080aeddcc411696a91bb18f9fe953
-       :target: https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Coverage
+    .. image:: https://codecov.io/gh/imobanco/zoop-wrapper/branch/master/graph/badge.svg
+       :target: https://codecov.io/gh/imobanco/zoop-wrapper
        :alt: Coverage
        :height: 23
     .. image:: https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt

@@ -1,5 +1,5 @@
 {
-    "id": "4561671d9276495b8edb2d2688c2a685",
+    "id": "8818dc0cbe1843cc8140f0bb362620c7",
     "status": "pending",
     "resource": "seller",
     "type": "business",
@@ -14,7 +14,7 @@
     "business_opening_date": "0000-00-00",
     "business_facebook": null,
     "business_twitter": null,
-    "ein": "44431904079819",
+    "ein": "70722684542436",
     "statement_descriptor": null,
     "mcc": null,
     "business_address": {
@@ -32,7 +32,7 @@
         "last_name": "foo",
         "email": "foo",
         "phone_number": "foo",
-        "taxpayer_id": "98936283421",
+        "taxpayer_id": "19642334372",
         "birthdate": "0000-00-00",
         "address": {
             "line1": null,
@@ -55,9 +55,9 @@
     "default_credit": null,
     "merchant_code": null,
     "terminal_code": null,
-    "uri": "/v1/marketplaces/foo/sellers/businesses/",
-    "marketplace_id": "foo",
+    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/sellers/businesses/",
+    "marketplace_id": "d77c2258b51d49269191502695f939f4",
     "metadata": {},
-    "created_at": "2020-04-27T19:47:16+00:00",
-    "updated_at": "2020-04-27T19:47:16+00:00"
+    "created_at": "2020-05-13T21:00:30+00:00",
+    "updated_at": "2020-05-13T21:00:30+00:00"
 }

@@ -15,13 +15,12 @@ card = Card(
             holder_name="foo",
             expiration_year="foo",
             expiration_month="foo",
-            # campos opcionais?
+            # campos opcionais
             uri="foo",
             updated_at="foo",
             is_verified="foo",
             created_at="foo",
             customer="foo",
-            verification_checklist="foo",
             first4_digits="foo",
             is_active="foo",
             last4_digits="foo",
@@ -45,6 +44,6 @@ card = Card(
 )
 
 
-# response = client.add_seller(card)
-#
+response = client.add_seller(card)
+
 # dump_response(response, os.path.basename(__file__).split(".")[0])

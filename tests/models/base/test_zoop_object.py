@@ -95,6 +95,8 @@ class ZoopObjectTestCase(SetTestCase):
 
     def test_from_dict_data_raise_if_not_none_or_dict(self):
 
+        self.mocked_required_fields.return_value = {}
+
         other_values = [
             "",
             1,

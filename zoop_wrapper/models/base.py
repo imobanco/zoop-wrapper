@@ -108,9 +108,9 @@ class ZoopObject(object):
         if not isinstance(data, dict):
             raise ValidationError(
                 cls,
-                f"A variável data deveria ser um "
-                f"dicionário: mas é type = {type(data).__name__},"
-                f" e tem valor: data = {data}",
+                f"A variável data deveria ser um dicionário! "
+                f"Mas é do tipo {type(data).__name__} "
+                f"e o valor foi ({data})",
             )
 
         _data = cls.make_data_copy_with_kwargs(data, allow_empty=allow_empty, **kwargs)

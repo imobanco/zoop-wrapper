@@ -76,16 +76,14 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertEqual(data, {})
         self.assertEqual(new_data.get("foo"), "bar")
 
-    def test_make_data_none_copy_with_args(self):
-        data = None
-        new_data = ZoopObject.make_data_copy_with_kwargs(data, foo="bar")
-
-        self.assertEqual(data, None)
-        self.assertEqual(new_data.get("foo"), "bar")
-
     def test_from_dict_empty(self):
         data = {}
         self.assertRaises(ValidationError, ZoopObject.from_dict, data)
+
+    def test_from_dict_none_allow_empty(self):
+        data = None
+        instance = ZoopObject.from_dict(data, allow_empty=True)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_from_dict_allow_empty(self):
         data = {}
@@ -99,6 +97,29 @@ class ZoopObjectTestCase(SetTestCase):
         self.assertIsInstance(instance, ZoopObject)
         self.assertEqual(instance.id, 1)
         self.assertIsNone(instance.name)
+
+    def test_from_dict_data_raise_if_not_none_or_dict(self):
+
+        self.mocked_required_fields.return_value = set()
+
+        other_values = [
+            "",
+            1,
+            [],
+            set(),
+            (),
+            1.0,
+            [""],
+            [1],
+            [[]],
+            [{}],
+            [set()],
+            [()],
+            [1.0],
+        ]
+        for value in other_values:
+            with self.subTest(f"Valor:{value}"):
+                self.assertRaises(ValidationError, ZoopObject.from_dict, value)
 
     def test_validate_allow_empty(self):
         instance = ZoopObjectFactory(allow_empty=True)

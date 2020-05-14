@@ -77,14 +77,11 @@ class ZoopObject(object):
         Returns:
             new dict of data
         """
-        if data is None:
-            _data = {}
-        else:
-            _data = copy.deepcopy(data)
+        data = copy.deepcopy(data)
 
-        _data.update(kwargs)
+        data.update(kwargs)
 
-        return _data
+        return data
 
     @classmethod
     def from_dict(cls, data, allow_empty=False, **kwargs):
@@ -99,9 +96,23 @@ class ZoopObject(object):
             allow_empty: boolean
             **kwargs: kwargs
 
+        Raises:
+            :class:`.ValidationError`: se data não for do tipo``dict`` ou for ``None``
+
         Returns:
             instance initialized of cls
         """
+        if data is None:
+            data = {}
+
+        if not isinstance(data, dict):
+            raise ValidationError(
+                cls,
+                f"A variável data deveria ser um "
+                f"dicionário: mas é type = {type(data).__name__},"
+                f" e tem valor: data = {data}",
+            )
+
         _data = cls.make_data_copy_with_kwargs(data, allow_empty=allow_empty, **kwargs)
         return cls(**_data)
 

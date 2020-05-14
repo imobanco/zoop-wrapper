@@ -80,6 +80,10 @@ class ZoopObjectTestCase(SetTestCase):
         data = {}
         self.assertRaises(ValidationError, ZoopObject.from_dict, data)
 
+    def test_from_dict_none(self):
+        data = None
+        self.assertRaises(ValidationError, ZoopObject.from_dict, data)
+
     def test_from_dict_allow_empty(self):
         data = {}
         instance = ZoopObject.from_dict(data, allow_empty=True)
@@ -95,13 +99,12 @@ class ZoopObjectTestCase(SetTestCase):
 
     def test_from_dict_data_raise_if_not_none_or_dict(self):
 
-        self.mocked_required_fields.return_value = {}
+        self.mocked_required_fields.return_value = set()
 
         other_values = [
             "",
             1,
             [],
-            {},
             set(),
             (),
             1.0,

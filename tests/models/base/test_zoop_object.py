@@ -80,9 +80,10 @@ class ZoopObjectTestCase(SetTestCase):
         data = {}
         self.assertRaises(ValidationError, ZoopObject.from_dict, data)
 
-    def test_from_dict_none(self):
+    def test_from_dict_none_allow_empty(self):
         data = None
-        self.assertRaises(ValidationError, ZoopObject.from_dict, data)
+        instance = ZoopObject.from_dict(data, allow_empty=True)
+        self.assertIsInstance(instance, ZoopObject)
 
     def test_from_dict_allow_empty(self):
         data = {}

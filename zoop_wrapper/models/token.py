@@ -110,8 +110,8 @@ class Token(ResourceModel):
                     self,
                     FieldError(
                         "token_type",
-                        f"Token type not identified! "
-                        f"Please set one of these attributes {self.IDENTIFIERS}",
+                        f"Tipo de token não identificado! "
+                        f"Configure um desses atributos {self.IDENTIFIERS}",
                     ),
                 )
 

@@ -16,13 +16,14 @@ client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 card_token = Token(
     holder_name="foo",
     expiration_year="2030",
-    expiration_month='05',
-    card_number=Faker('credit_card_number').generate(),
-    security_code=123
+    expiration_month="05",
+    card_number=Faker("credit_card_number").generate(),
+    security_code=123,
 )
 
 
 from examples.seller.retrieve_seller import seller_id  # noqa
+
 customer_id = seller_id
 
 

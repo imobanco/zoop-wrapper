@@ -1,3 +1,5 @@
+from typing import Union
+
 from requests import HTTPError
 
 from .base import BaseZoopWrapper
@@ -40,9 +42,9 @@ class CardWrapper(BaseZoopWrapper):
         url = self._construct_url(action="cards", subaction="tokens")
         return self._post_instance(url, instance=card_token)
 
-    def add_card(self, data: dict, customer_identifier):
+    def add_card(self, data: Union[dict, Token], customer_identifier: str):
         """
-        Adiciona um cartão de crédito
+        Adiciona um cartão de crédito utilizando um Token de cartão de crédito
 
         Examples:
             data = {

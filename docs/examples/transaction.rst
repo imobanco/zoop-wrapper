@@ -1,4 +1,4 @@
-Exemplos de transações
+Exemplos de transação
 ========================================
 
 Criar transação de cartão de crédito

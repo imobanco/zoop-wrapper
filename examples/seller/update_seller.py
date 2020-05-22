@@ -31,6 +31,8 @@ s = Seller(
     ),
 )
 
-response = client.update_seller("0e084bb6a60f47e8ac45949d5040eb92", s)
+seller_id = "0e084bb6a60f47e8ac45949d5040eb92"
+
+response = client.update_seller(seller_id, s)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

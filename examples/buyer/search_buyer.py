@@ -12,6 +12,8 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-response = client.search_buyer("19249382944")
+cpf_ou_cnpj = "19249382944"
+
+response = client.search_buyer(cpf_ou_cnpj)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

@@ -1,4 +1,4 @@
-Exemplos de compradores
+Exemplos de comprador
 ========================================
 
 Criar comprador

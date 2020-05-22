@@ -1,6 +1,8 @@
 import os
 
-from zoop_wrapper import ZoopWrapper, Card, Address
+from factory.faker import Faker
+
+from zoop_wrapper import ZoopWrapper, Token
 from examples.utils import dump_response
 
 """
@@ -11,39 +13,19 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-card = Card(
-            holder_name="foo",
-            expiration_year="foo",
-            expiration_month="foo",
-            # campos opcionais
-            uri="foo",
-            updated_at="foo",
-            is_verified="foo",
-            created_at="foo",
-            customer="foo",
-            first4_digits="foo",
-            is_active="foo",
-            last4_digits="foo",
-            id="foo",
-            is_valid="foo",
-            metadata="foo",
-            card_brand="foo",
-            fingerprint="foo",
-            description="foo",
-            address=Address(
-            line1="foo",
-            line2="123",
-            line3="barbar",
-            neighborhood="fooofoo",
-            city="Natal",
-            state="RN",
-            postal_code="59152250",
-            country_code="BR",
-            ),
-            resource="foo",
+card_token = Token(
+    holder_name="foo",
+    expiration_year="2030",
+    expiration_month='05',
+    card_number=Faker('credit_card_number').generate(),
+    security_code=123
 )
 
 
-response = client.add_seller(card)
+from examples.seller.retrieve_seller import seller_id  # noqa
+customer_id = seller_id
 
-# dump_response(response, os.path.basename(__file__).split(".")[0])
+
+response = client.add_card(card_token, customer_id)
+
+dump_response(response, os.path.basename(__file__).split(".")[0])

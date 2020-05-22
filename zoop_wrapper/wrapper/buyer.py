@@ -1,3 +1,5 @@
+from typing import Union
+
 from .base import BaseZoopWrapper
 from ..models.buyer import Buyer
 
@@ -17,7 +19,7 @@ class BuyerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="buyers")
         return self._get(url)
 
-    def retrieve_buyer(self, identifier):
+    def retrieve_buyer(self, identifier: str):
         """
         Pega um :class:`.Buyer`
 
@@ -30,7 +32,7 @@ class BuyerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="buyers", identifier=identifier)
         return self._get(url)
 
-    def search_buyer(self, identifier):
+    def search_buyer(self, identifier: str):
         """
         Buscar um :class:`.Buyer` pelo CPF ou CNPJ
 
@@ -46,7 +48,7 @@ class BuyerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="buyers", search=f"taxpayer_id={identifier}")
         return self._get(url)
 
-    def add_buyer(self, data: dict):
+    def add_buyer(self, data: Union[dict, Buyer]):
         """
         Adiciona um :class:`.Buyer`
 
@@ -80,7 +82,7 @@ class BuyerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="buyers")
         return self._post_instance(url, instance=instance)
 
-    def remove_buyer(self, identifier):
+    def remove_buyer(self, identifier: str):
         """
         Remove um :class:`.Buyer`
 

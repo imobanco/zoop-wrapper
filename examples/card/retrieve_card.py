@@ -1,6 +1,6 @@
 import os
 
-from zoop_wrapper import ZoopWrapper, Card
+from zoop_wrapper import ZoopWrapper
 from examples.utils import dump_response
 
 """
@@ -11,10 +11,8 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-card = Card(
+card_id = '4abf4010cc93414ca585463fdc7b44d6'
 
-)
+response = client.retrieve_card(card_id)
 
-# response = client.add_seller(card)
-#
-# dump_response(response, os.path.basename(__file__).split(".")[0])
+dump_response(response, os.path.basename(__file__).split(".")[0])

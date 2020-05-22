@@ -1,4 +1,4 @@
-Exemplos de vendedores
+Exemplos de vendedor
 ========================================
 
 Criar vendedor empresa

@@ -232,3 +232,53 @@ class Transaction(ResourceModel):
                 "history",
             }
         )
+
+
+class Source(ZoopObject):
+
+    CARD_PRESENT_TYPE = "card_present_type"
+    CARD_NOT_PRESENT_TYPE = "card_not_present_type"
+
+    SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
+
+    def init_custom_fields(
+        self,
+        source_type=None,
+        **kwargs,
+    ):
+        if source_type not in Source.SOURCE_TYPES:
+            raise ValueError(
+                f"O parâmetro source_type deve ser um " f"de {Source.SOURCE_TYPES}"
+            )
+        elif source_type == Source.CARD_PRESENT_TYPE:
+            pass
+            setattr(
+                self,
+                "payment_method",
+                Card.from_dict_or_instance(
+                    payment_method, allow_empty=self._allow_empty
+                ),
+            )
+        else:
+            pass
+
+    @classmethod
+    def get_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union(
+            {
+                "card",
+                "type",
+            }
+        )
+
+    @classmethod
+    def get_non_required_fields(cls):
+        fields = super().get_non_required_fields()
+        return fields.union(
+            {
+                "amount",
+                "currency",
+                "usage",
+            }
+        )

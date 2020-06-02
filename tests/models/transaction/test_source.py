@@ -23,6 +23,16 @@ class SourceTestCase(SetTestCase):
         # self.assertEqual(len(instance.history), 1)
         # self.assertIsInstance(instance.history[0], History)
 
+    def test_init_custom_fields_card_present_not_type(self):
+        instance = MagicMock()
+
+        Source.init_custom_fields(instance, source_type=Source.CARD_NOT_PRESENT_TYPE)
+        # self.assertIsInstance(instance.payment_method, Invoice)
+        # self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        # self.assertIsInstance(instance.history, list)
+        # self.assertEqual(len(instance.history), 1)
+        # self.assertIsInstance(instance.history[0], History)
+
     # def test_init_custom_fields_card(self):
     #     instance = MagicMock()
     #

@@ -245,8 +245,10 @@ class Source(ZoopObject):
         self,
         source_type=None,
         card=None,
+        type="card",
         **kwargs,
     ):
+        setattr(self, "type", type)
         if source_type not in Source.SOURCE_TYPES:
             raise ValueError(
                 f"O parâmetro source_type deve ser um " f"de {Source.SOURCE_TYPES}"

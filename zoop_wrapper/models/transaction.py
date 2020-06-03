@@ -289,10 +289,9 @@ class Source(ZoopObject):
         fields = set()
 
         if self.card_type == self.CARD_PRESENT_TYPE:
-            return fields.union(self.get_required_fields())
+            return fields.union(self.get_card_present_required_fields())
         else:
-            return fields.union(self.get_non_required_fields())
-
+            return fields.union(self.get_card_not_present_required_fields())
 
     def get_all_fields(self):
         """
@@ -309,12 +308,7 @@ class Source(ZoopObject):
         Returns:
             ``set`` of all fields
         """
-        fields = self.get_validation_fields()
-
-        if self.card_type == self.CARD_PRESENT_TYPE:
-            return fields.union(self.get_card_present_required_fields())
-        else:
-            return fields.union(self.get_card_not_present_required_fields())
+        return self.get_validation_fields()
 
     @classmethod
     def get_required_fields(cls):
@@ -345,8 +339,7 @@ class Source(ZoopObject):
         Returns:
             ``set`` of fields
         """
-        fields = cls.get_non_required_fields()
-        return fields.union({"type"})
+        return cls.get_required_fields()
 
     @classmethod
     def get_card_present_required_fields(cls):
@@ -357,4 +350,4 @@ class Source(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union({"amount", "currency", "type", "usage"})
+        return fields.union({"amount", "currency", "usage"})

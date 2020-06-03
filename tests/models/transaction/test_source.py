@@ -18,6 +18,14 @@ class SourceTestCase(SetTestCase):
 
         self.assertRaises(ValidationError, Source.init_custom_fields, instance)
 
+    def test_init_custom_fields_with_source_type_wrong(self):
+
+        instance = MagicMock(SOURCE_TYPES={"foo"})
+
+        self.assertRaises(
+            ValidationError, Source.init_custom_fields, instance, type="bar"
+        )
+
     def test_init_custom_fields_card_present_type(self):
         instance = MagicMock()
 

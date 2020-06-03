@@ -1,6 +1,7 @@
 from .base import ZoopObject, ResourceModel
 from .card import Card
 from .invoice import Invoice
+from .token import Token
 
 
 class PointOfSale(ZoopObject):
@@ -250,14 +251,14 @@ class Source(ZoopObject):
         setattr(self, 'type', type)
 
         setattr(self, "card",
-                Card.from_dict_or_instance(card, allow_empty=True))
+                Token.from_dict_or_instance(card, allow_empty=True))
 
         if self.card.id is not None:
             card_type = Source.CARD_NOT_PRESENT_TYPE
-        elif self.card.first4_digits is not None:
+        elif self.card.card_number is not None:
             card_type = Source.CARD_PRESENT_TYPE
             setattr(self, "card",
-                    Card.from_dict_or_instance(card))
+                    Token.from_dict_or_instance(card))
         else:
             raise ValueError(
                 f"Tipo do source não identificado! "
@@ -315,17 +316,6 @@ class Source(ZoopObject):
             {
                 "card",
                 "type",
-            }
-        )
-
-    @classmethod
-    def get_non_required_fields(cls):
-        fields = super().get_non_required_fields()
-        return fields.union(
-            {
-                "amount",
-                "currency",
-                "usage",
             }
         )
 

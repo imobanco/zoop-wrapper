@@ -64,9 +64,7 @@ class SourceTestCase(SetTestCase):
     def test_get_card_not_present_required_fields(self):
         self.assertEqual(
             {
-                "amount",
-                "currency",
-                "usage",
+                "card",
                 "type",
             },
             Source.get_card_not_present_required_fields(),

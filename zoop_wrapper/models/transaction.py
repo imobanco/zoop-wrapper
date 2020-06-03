@@ -247,24 +247,22 @@ class Source(ZoopObject):
         type="card",
         **kwargs,
     ):
-        setattr(self, "type", type)
-        if card is None:
-            raise ValueError(
-                f"É obrigatório que se passe um cartão de um dos tipos " f"{Source.SOURCE_TYPES}"
-            )
-        elif "usage" in kwargs:
-            setattr(self, "card", Card.from_dict_or_instance(card))
-            card_type = Source.CARD_PRESENT_TYPE
-        else:
-            setattr(self, "card",
-                    Card.from_dict_or_instance(card, allow_empty=True))
+        setattr(self, 'type', type)
 
-            if card.id is None:
-                raise ValueError(
-                    "É obrigatório que se forneça o id do cartão."
-                )
+        setattr(self, "card",
+                Card.from_dict_or_instance(card, allow_empty=True))
 
+        if card.id is not None:
             card_type = Source.CARD_NOT_PRESENT_TYPE
+        elif card.card_number is not None:
+            card_type = Source.CARD_PRESENT_TYPE
+            setattr(self, "card",
+                    Card.from_dict_or_instance(card))
+        else:
+            raise ValueError(
+                f"Tipo do source não identificado! "
+                f"Utilize um dos tipos {Source.SOURCE_TYPES}"
+            )
 
         setattr(self, "card_type", card_type)
 

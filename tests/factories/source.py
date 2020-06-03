@@ -8,11 +8,20 @@ from zoop_wrapper.models.transaction import Source
 from zoop_wrapper.models.transaction import PointOfSale, History, Transaction
 
 
-class SourceFactory(ZoopObjectFactory):
+class SourceCardPresentFactory(ZoopObjectFactory):
     class Meta:
         model = Source
 
     card = SubFactory(CardFactory)
     type = "card"
     currency = "BRL"
+    usage = "single_use"
     amount = Faker("pyfloat", positive=True, max_value=999999)
+
+
+class SourceCardNotPresentFactory(ZoopObjectFactory):
+    class Meta:
+        model = Source
+
+    card = SubFactory(CardFactory)
+    type = "card"

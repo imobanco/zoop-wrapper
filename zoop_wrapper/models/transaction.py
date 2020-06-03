@@ -252,9 +252,9 @@ class Source(ZoopObject):
         setattr(self, "card",
                 Card.from_dict_or_instance(card, allow_empty=True))
 
-        if card.id is not None:
+        if self.card.id is not None:
             card_type = Source.CARD_NOT_PRESENT_TYPE
-        elif card.first4_digits is not None:
+        elif self.card.first4_digits is not None:
             card_type = Source.CARD_PRESENT_TYPE
             setattr(self, "card",
                     Card.from_dict_or_instance(card))

@@ -14,7 +14,7 @@ class SourceTestCase(SetTestCase):
     def test_init_custom_fields_raise_type(self):
         instance = MagicMock()
 
-        self.assertRaises(AttributeError, Source.init_custom_fields, instance)
+        self.assertRaises(ValueError, Source.init_custom_fields, instance)
 
     def test_init_custom_fields_card_present_type(self):
         instance = MagicMock()

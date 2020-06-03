@@ -14,7 +14,7 @@ class SourceTestCase(SetTestCase):
     def test_init_custom_fields_raise_type(self):
         instance = MagicMock()
 
-        self.assertRaises(ValueError, Source.init_custom_fields, instance)
+        self.assertRaises(AttributeError, Source.init_custom_fields, instance)
 
     def test_init_custom_fields_card_present_type(self):
         instance = MagicMock()
@@ -23,23 +23,6 @@ class SourceTestCase(SetTestCase):
 
         self.assertIsInstance(instance.card, Card)
 
-    # def test_init_custom_fields_card_present_not_type(self):
-    #     instance = MagicMock()
-    #
-    #     Source.init_custom_fields(instance, source_type="card_not_present_type",
-    #                               card=CardFactory(id="1"))
-    #     self.assertIsInstance(instance.card, Card)
-
-    # def test_init_custom_fields_card(self):
-    #     instance = MagicMock()
-    #
-    #     Transaction.init_custom_fields(instance, payment_type=Transaction.CREDIT_TYPE)
-    #     self.assertIsInstance(instance.payment_method, Card)
-    #     self.assertIsInstance(instance.point_of_sale, PointOfSale)
-    #     self.assertIsInstance(instance.history, list)
-    #     self.assertEqual(len(instance.history), 1)
-    #     self.assertIsInstance(instance.history[0], History)
-    #
     def test_non_required_fields(self):
         self.assertIsSubSet(
             {
@@ -59,9 +42,13 @@ class SourceTestCase(SetTestCase):
             Source.get_required_fields(),
         )
 
-    # def test_create(self):
-    #     instance = SourceFactory()
-    #     self.assertIsInstance(instance, Source)
+    def test_create_card_present(self):
+        instance = SourceCardPresentFactory()
+        self.assertIsInstance(instance, Source)
+
+    def test_create_card_not_present(self):
+        instance = SourceCardNotPresentFactory(card=CardFactory(id="123"))
+        self.assertIsInstance(instance, Source)
 
     def test_get_card_not_present_required_fields(self):
         self.assertEqual(

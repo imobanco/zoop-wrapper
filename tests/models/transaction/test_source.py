@@ -17,16 +17,16 @@ class SourceTestCase(SetTestCase):
     def test_init_custom_fields_card_present_type(self):
         instance = MagicMock()
 
-        Source.init_custom_fields(instance, source_type="card_present_type",
-                                  card=CardFactory())
+        Source.init_custom_fields(instance, card=CardFactory(), usage="single_use")
+
         self.assertIsInstance(instance.card, Card)
 
-    def test_init_custom_fields_card_present_not_type(self):
-        instance = MagicMock()
-
-        Source.init_custom_fields(instance, source_type="card_not_present_type",
-                                  card=CardFactory(id="1"))
-        self.assertIsInstance(instance.card, Card)
+    # def test_init_custom_fields_card_present_not_type(self):
+    #     instance = MagicMock()
+    #
+    #     Source.init_custom_fields(instance, source_type="card_not_present_type",
+    #                               card=CardFactory(id="1"))
+    #     self.assertIsInstance(instance.card, Card)
 
     # def test_init_custom_fields_card(self):
     #     instance = MagicMock()
@@ -60,3 +60,49 @@ class SourceTestCase(SetTestCase):
     # def test_create(self):
     #     instance = SourceFactory()
     #     self.assertIsInstance(instance, Source)
+
+    def test_get_card_not_present_required_fields(self):
+        self.assertEqual(
+            {
+                "amount",
+                "currency",
+                "usage",
+                "type",
+            },
+            Source.get_card_not_present_required_fields(),
+        )
+
+    def test_get_card_present_required_fields(self):
+        self.assertEqual(
+            {
+                "amount",
+                "card",
+                "currency",
+                "type",
+                "usage",
+            },
+            Source.get_card_present_required_fields(),
+        )
+
+    # def test_get_validation_fields(self):
+    #     instance = SourceFactory(allow_empty=True)
+    #     self.assertIsInstance(instance, Source)
+    #
+    #     self.assertEqual(
+    #         {
+    #             "card",
+    #         },
+    #         instance.get_validation_fields(),
+    #     )
+
+    # def test_get_all_fields(self):
+    #     self.assertEqual(
+    #         {
+    #             "amount",
+    #             "card",
+    #             "currency",
+    #             "type",
+    #             "usage",
+    #         },
+    #         Source.get_all_fields(),
+    #     )

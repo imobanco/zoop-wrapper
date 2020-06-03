@@ -243,17 +243,16 @@ class Source(ZoopObject):
 
     def init_custom_fields(
         self,
-        source_type=None,
         card=None,
         type="card",
         **kwargs,
     ):
         setattr(self, "type", type)
-        if source_type not in Source.SOURCE_TYPES:
+        if card is None:
             raise ValueError(
-                f"O parâmetro source_type deve ser um " f"de {Source.SOURCE_TYPES}"
+                f"É obrigatório que se passe um cartão de um dos tipos " f"{Source.SOURCE_TYPES}"
             )
-        elif source_type == Source.CARD_PRESENT_TYPE:
+        elif "usage" in kwargs:
             setattr(self, "card", Card.from_dict_or_instance(card))
             card_type = Source.CARD_PRESENT_TYPE
         else:
@@ -292,33 +291,30 @@ class Source(ZoopObject):
         if self.card_type == self.CARD_PRESENT_TYPE:
             return fields.union(self.get_required_fields())
         else:
-            return fields.union(BankAccount.get_individual_required_fields())
+            return fields.union(self.get_non_required_fields())
 
 
-    # def get_all_fields(self):
-    #     """
-    #     Get ``all fields`` for instance.
-    #
-    #     ``fields`` is :meth:`get_validation_fields`
-    #
-    #     if :attr:`token_type` is :attr:`CARD_TYPE` return
-    #     ``fields`` union :meth:`get_card_non_required_fields`.
-    #
-    #     else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE` return
-    #     ``fields`` union :meth:`get_bank_account_non_required_fields`.
-    #
-    #     Returns:
-    #         ``set`` of all fields
-    #     """
-    #     fields = self.get_validation_fields()
-    #
-    #     if self.token_type == self.CARD_TYPE:
-    #         return fields.union(self.get_card_non_required_fields())
-    #     else:
-    #         return fields.union(self.get_bank_account_non_required_fields())
-    # from zoop_wrapper.models.card import Card
-    # from zoop_wrapper.models.transaction import Source
-    # s = Source(source_type="card_not_present_type", card=Card(id='1', allow_empty=True), allow_empty=True)
+    def get_all_fields(self):
+        """
+        Get ``all fields`` for instance.
+
+        ``fields`` is :meth:`get_validation_fields`
+
+        if :attr:`token_type` is :attr:`CARD_TYPE` return
+        ``fields`` union :meth:`get_card_non_required_fields`.
+
+        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE` return
+        ``fields`` union :meth:`get_bank_account_non_required_fields`.
+
+        Returns:
+            ``set`` of all fields
+        """
+        fields = self.get_validation_fields()
+
+        if self.card_type == self.CARD_PRESENT_TYPE:
+            return fields.union(self.get_card_present_required_fields())
+        else:
+            return fields.union(self.get_card_not_present_required_fields())
 
     @classmethod
     def get_required_fields(cls):
@@ -340,3 +336,25 @@ class Source(ZoopObject):
                 "usage",
             }
         )
+
+    @classmethod
+    def get_card_not_present_required_fields(cls):
+        """
+        Get ``set`` of ``non required fields`` for :attr:`CARD_TYPE`.
+
+        Returns:
+            ``set`` of fields
+        """
+        fields = cls.get_non_required_fields()
+        return fields.union({"type"})
+
+    @classmethod
+    def get_card_present_required_fields(cls):
+        """
+        Get ``set`` of ``non required fields`` for :attr:`CARD_TYPE`.
+
+        Returns:
+            ``set`` of fields
+        """
+        fields = cls.get_required_fields()
+        return fields.union({"amount", "currency", "type", "usage"})

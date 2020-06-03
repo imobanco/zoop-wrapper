@@ -3,6 +3,8 @@ from unittest.mock import MagicMock
 from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Source
 from tests.factories.card import CardFactory
+from tests.factories.source import SourceFactory
+
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
@@ -82,25 +84,48 @@ class SourceTestCase(SetTestCase):
             Source.get_card_present_required_fields(),
         )
 
-    # def test_get_validation_fields(self):
-    #     instance = SourceFactory(allow_empty=True)
-    #     self.assertIsInstance(instance, Source)
-    #
-    #     self.assertEqual(
-    #         {
-    #             "card",
-    #         },
-    #         instance.get_validation_fields(),
-    #     )
+    def test_get_validation_fields_card_not_present(self):
+        instance = SourceFactory(card=CardFactory(id="123"))
+        self.assertIsInstance(instance, Source)
 
-    # def test_get_all_fields(self):
+        self.assertEqual(
+            {
+                "card",
+                "type",
+            },
+            instance.get_validation_fields(),
+        )
+
+    def test_get_all_fields_card_not_present(self):
+        instance = SourceFactory(card=CardFactory(id="123"))
+        self.assertIsInstance(instance, Source)
+        self.assertEqual(
+            {
+                "card",
+                "type",
+            },
+            instance.get_all_fields(),
+        )
+
+    def test_get_validation_fields_card_present(self):
+        instance = SourceFactory()
+        self.assertIsInstance(instance, Source)
+
+        self.assertEqual(
+            {
+                "card",
+                "type",
+            },
+            instance.get_validation_fields(),
+        )
+
+    # def test_get_all_fields_card_present(self):
+    #     instance = SourceFactory()
+    #     self.assertIsInstance(instance, Source)
     #     self.assertEqual(
     #         {
-    #             "amount",
     #             "card",
-    #             "currency",
     #             "type",
-    #             "usage",
     #         },
-    #         Source.get_all_fields(),
+    #         instance.get_all_fields(),
     #     )

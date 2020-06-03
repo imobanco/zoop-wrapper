@@ -255,6 +255,7 @@ class Source(ZoopObject):
             )
         elif source_type == Source.CARD_PRESENT_TYPE:
             setattr(self, "card", Card.from_dict_or_instance(card))
+            card_type = Source.CARD_PRESENT_TYPE
         else:
             setattr(self, "card",
                     Card.from_dict_or_instance(card, allow_empty=True))
@@ -264,34 +265,35 @@ class Source(ZoopObject):
                     "É obrigatório que se forneça o id do cartão."
                 )
 
-    # def get_validation_fields(self):
-    #     """
-    #     Get ``validation fields`` for instance.\n
-    #
-    #     if :attr:`token_type` is :attr:`CARD_TYPE` card return
-    #     :meth:`get_card_required_fields`.
-    #
-    #     else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE`!
-    #     ``fields`` is :meth:`get_bank_account_required_fields`.\n
-    #     if ``bank account type`` is :attr:`.INDIVIDUAL_TYPE` return ``fields`` union
-    #     :meth:`.get_individual_required_fields`.\n
-    #
-    #     else ``bank account type`` is :attr:`.BUSINESS_TYPE` return ``fields`` union
-    #     :meth:`.get_business_required_fields`.
-    #
-    #     Returns:
-    #         ``set`` of fields to be validated
-    #     """
-    #     fields = set()
-    #
-    #     if self.token_type == self.CARD_TYPE:
-    #         return fields.union(self.get_card_required_fields())
-    #     else:
-    #         fields = fields.union(self.get_bank_account_required_fields())
-    #         if self.get_bank_account_type() == BankAccount.INDIVIDUAL_TYPE:
-    #             return fields.union(BankAccount.get_individual_required_fields())
-    #         else:
-    #             return fields.union(BankAccount.get_business_required_fields())
+            card_type = Source.CARD_NOT_PRESENT_TYPE
+
+        setattr(self, "card_type", card_type)
+
+    def get_validation_fields(self):
+        """
+        Get ``validation fields`` for instance.\n
+
+        if :attr:`token_type` is :attr:`CARD_TYPE` card return
+        :meth:`get_card_required_fields`.
+
+        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE`!
+        ``fields`` is :meth:`get_bank_account_required_fields`.\n
+        if ``bank account type`` is :attr:`.INDIVIDUAL_TYPE` return ``fields`` union
+        :meth:`.get_individual_required_fields`.\n
+
+        else ``bank account type`` is :attr:`.BUSINESS_TYPE` return ``fields`` union
+        :meth:`.get_business_required_fields`.
+
+        Returns:
+            ``set`` of fields to be validated
+        """
+        fields = set()
+
+        if self.card_type == self.CARD_PRESENT_TYPE:
+            return fields.union(self.get_required_fields())
+        else:
+            return fields.union(BankAccount.get_individual_required_fields())
+
 
     # def get_all_fields(self):
     #     """

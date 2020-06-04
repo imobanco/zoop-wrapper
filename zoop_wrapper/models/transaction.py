@@ -164,6 +164,8 @@ class Transaction(ResourceModel):
                 ),
             )
 
+        setattr(self, "payment_type2", payment_type)
+
         setattr(
             self,
             "point_of_sale",
@@ -206,7 +208,7 @@ class Transaction(ResourceModel):
         """
         fields = self.get_required_fields()
 
-        if self.payment_method == self.CARD_TYPE:
+        if self.payment_type2 == self.CARD_TYPE:
             return fields.union(self.get_card_required_fields())
         else:
             return fields.union(self.get_boleto_required_fields())
@@ -296,7 +298,6 @@ class Transaction(ResourceModel):
                 "history",
             }
         )
-
 
 
 class Source(ZoopObject):

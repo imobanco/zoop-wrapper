@@ -76,14 +76,18 @@ class TransactionFactory(ResourceModelFactory):
     history = SubFactory(HistoryFactory)
 
 
-class TransactionSource(TransactionFactory):
+class TransactionCredit(TransactionFactory):
     class Meta:
         model = Transaction
 
+    payment_type = "credit"
     source = SubFactory(SourceCardPresentFactory)
+
 
 class TransactionBoleto(TransactionFactory):
     class Meta:
         model = Transaction
+
+    payment_type = "boleto"
 
     boleto = SubFactory(InvoiceFactory)

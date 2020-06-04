@@ -4,7 +4,7 @@ from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
 from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.invoice import Invoice
-from tests.factories.transaction import TransactionFactory
+from tests.factories.transaction import TransactionFactory, TransactionCredit, TransactionBoleto
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
 
 
@@ -112,27 +112,80 @@ class TransactionTestCase(SetTestCase):
         )
 
     def test_get_validation_fields_credit(self):
-        instance = TransactionFactory(payment_method="credit", allow_empty=True)
+        instance = TransactionCredit()
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {
                 "payment_method",
+                "customer",
+                "payment_type",
+                "description",
+                "on_behalf_of",
+                "currency",
+                "amount",
+                "source",
             },
             instance.get_validation_fields(),
         )
 
     def test_get_validation_fields_boleto(self):
-        instance = TransactionFactory(payment_method="boleto", allow_empty=True)
+        instance = TransactionBoleto()
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {
                 "payment_method",
+                "on_behalf_of",
+                "currency",
+                "payment_type",
+                "amount",
+                "customer",
+                "description",
             },
             instance.get_validation_fields(),
         )
 
-    def test_get_all_fields_card(self):
-        instance = TransactionFactory(allow_empty=True)
-        self.assertIsInstance(instance, Token)
+    def test_get_all_fields_credit(self):
+        instance = TransactionFactory()
+        self.assertIsInstance(instance, Transaction)
 
-        self.assertIsSubSet({" "}, instance.get_all_fields())
+        self.assertIsSubSet(
+            {'status',
+             'metadata',
+             'id',
+             'business',
+             'point_of_sale',
+             'uri',
+             'app_transaction_uid',
+             'description',
+             'transaction_number',
+             'refunded',
+             'confirmed',
+             'refunds',
+             'pre_authorization',
+             'payment_method',
+             'sales_receipt',
+             'on_behalf_of',
+             'expected_on',
+             'customer',
+             'location_longitude',
+             'resource',
+             'gateway_authorizer',
+             'history',
+             'rewards',
+             'voided',
+             'installment_plan',
+             'location_latitude',
+             'captured',
+             'payment_type',
+             'amount',
+             'statement_descriptor',
+             'updated_at',
+             'created_at',
+             'currency',
+             'fee_details',
+             'reference_id',
+             'individual',
+             'discounts',
+             'original_amount',
+             'fees',
+             }, instance.get_all_fields())

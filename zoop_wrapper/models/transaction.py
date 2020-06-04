@@ -147,7 +147,7 @@ class Transaction(ResourceModel):
             raise ValueError(
                 f"payment_type must be one " f"of {Transaction.PAYMENT_TYPES}"
             )
-        elif payment_type == Transaction.CREDIT_TYPE:
+        elif payment_type == Transaction.CARD_TYPE:
             setattr(
                 self,
                 "source",

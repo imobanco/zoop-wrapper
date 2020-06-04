@@ -5,7 +5,7 @@ from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, S
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
-from tests.factories.source import SourceCardPresentFactory
+from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
 
 
 class TransactionTestCase(SetTestCase):
@@ -24,23 +24,27 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(len(instance.history), 1)
         self.assertIsInstance(instance.history[0], History)
 
-    def test_init_custom_fields_card(self):
-        instance = MagicMock()
-
-        Transaction.init_custom_fields(instance, payment_type=Transaction.CREDIT_TYPE)
-        self.assertIsInstance(instance.payment_method, Card)
-        self.assertIsInstance(instance.point_of_sale, PointOfSale)
-        self.assertIsInstance(instance.history, list)
-        self.assertEqual(len(instance.history), 1)
-        self.assertIsInstance(instance.history[0], History)
-
-    def test_init_custom_fields_source(self):
+    def test_init_custom_fields_source_card_present(self):
         instance = MagicMock()
 
         Transaction.init_custom_fields(
             instance,
-            payment_type=Transaction.SOURCE_TYPE,
+            payment_type=Transaction.CARD_TYPE,
             source=SourceCardPresentFactory().to_dict()
+        )
+        # self.assertIsInstance(instance.payment_method, Source)
+        # self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        # self.assertIsInstance(instance.history, list)
+        # self.assertEqual(len(instance.history), 1)
+        # self.assertIsInstance(instance.history[0], History)
+
+    def test_init_custom_fields_source_card_not_present(self):
+        instance = MagicMock()
+
+        Transaction.init_custom_fields(
+            instance,
+            payment_type=Transaction.CARD_TYPE,
+            source=SourceCardNotPresentFactory().to_dict()
         )
         # self.assertIsInstance(instance.payment_method, Source)
         # self.assertIsInstance(instance.point_of_sale, PointOfSale)

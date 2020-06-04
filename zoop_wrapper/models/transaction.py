@@ -111,8 +111,9 @@ class Transaction(ResourceModel):
 
     CREDIT_TYPE = "credit"
     BOLETO_TYPE = "boleto"
+    SOURCE_TYPE = "source"
 
-    PAYMENT_TYPES = {CREDIT_TYPE, BOLETO_TYPE}
+    PAYMENT_TYPES = {CREDIT_TYPE, BOLETO_TYPE, SOURCE_TYPE}
 
     def init_custom_fields(
         self,
@@ -151,6 +152,14 @@ class Transaction(ResourceModel):
                 self,
                 "payment_method",
                 Card.from_dict_or_instance(
+                    payment_method, allow_empty=self._allow_empty
+                ),
+            )
+        elif payment_type == Transaction.SOURCE_TYPE:
+            setattr(
+                self,
+                "payment_method",
+                Source.from_dict_or_instance(
                     payment_method, allow_empty=self._allow_empty
                 ),
             )

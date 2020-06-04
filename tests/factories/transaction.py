@@ -3,6 +3,7 @@ from factory.faker import Faker
 
 from tests.factories.base import ZoopObjectFactory, ResourceModelFactory
 from tests.factories.invoice import InvoiceFactory
+from tests.factories.source import SourceCardPresentFactory
 from zoop_wrapper.models.transaction import PointOfSale, History, Transaction
 
 
@@ -73,3 +74,16 @@ class TransactionFactory(ResourceModelFactory):
     payment_method = SubFactory(InvoiceFactory)
     point_of_sale = SubFactory(PointOfSaleFactory)
     history = SubFactory(HistoryFactory)
+
+
+class TransactionSource(TransactionFactory):
+    class Meta:
+        model = Transaction
+
+    source = SubFactory(SourceCardPresentFactory)
+
+class TransactionBoleto(TransactionFactory):
+    class Meta:
+        model = Transaction
+
+    boleto = SubFactory(InvoiceFactory)

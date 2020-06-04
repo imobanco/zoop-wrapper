@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from zoop_wrapper.models.transaction import Transaction, PointOfSale, History
+from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
@@ -32,6 +32,16 @@ class TransactionTestCase(SetTestCase):
         self.assertIsInstance(instance.history, list)
         self.assertEqual(len(instance.history), 1)
         self.assertIsInstance(instance.history[0], History)
+
+    def test_init_custom_fields_source(self):
+        instance = MagicMock()
+
+        Transaction.init_custom_fields(instance, payment_type=Transaction.SOURCE_TYPE)
+        # self.assertIsInstance(instance.payment_method, Source)
+        # self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        # self.assertIsInstance(instance.history, list)
+        # self.assertEqual(len(instance.history), 1)
+        # self.assertIsInstance(instance.history[0], History)
 
     def test_non_required_fields(self):
         self.assertIsSubSet(

@@ -186,6 +186,48 @@ class Transaction(ResourceModel):
                 [History.from_dict_or_instance(history, allow_empty=True)],
             )
 
+    def get_validation_fields(self):
+        """
+        Get ``validation fields`` for instance.\n
+
+        if :attr:`token_type` is :attr:`CARD_TYPE` card return
+        :meth:`get_card_required_fields`.
+
+        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE`!
+        ``fields`` is :meth:`get_bank_account_required_fields`.\n
+        if ``bank account type`` is :attr:`.INDIVIDUAL_TYPE` return ``fields`` union
+        :meth:`.get_individual_required_fields`.\n
+
+        else ``bank account type`` is :attr:`.BUSINESS_TYPE` return ``fields`` union
+        :meth:`.get_business_required_fields`.
+
+        Returns:
+            ``set`` of fields to be validated
+        """
+        fields = set()
+
+        if self.payment_method == self.CARD_TYPE:
+            return fields.union(self.get_card_required_fields())
+        else:
+            return fields.union(self.get_boleto_required_fields())
+
+    def get_all_fields(self):
+        """
+        Get ``all fields`` for instance.
+
+        ``fields`` is :meth:`get_validation_fields`
+
+        if :attr:`token_type` is :attr:`CARD_TYPE` return
+        ``fields`` union :meth:`get_card_non_required_fields`.
+
+        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE` return
+        ``fields`` union :meth:`get_bank_account_non_required_fields`.
+
+        Returns:
+            ``set`` of all fields
+        """
+        return self.get_validation_fields()
+
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
@@ -197,6 +239,24 @@ class Transaction(ResourceModel):
                 "on_behalf_of",
                 "customer",
                 "payment_type",
+                "payment_method",
+            }
+        )
+
+    @classmethod
+    def get_card_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union(
+            {
+                "source",
+            }
+        )
+
+    @classmethod
+    def get_boleto_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union(
+            {
                 "payment_method",
             }
         )
@@ -234,6 +294,7 @@ class Transaction(ResourceModel):
                 "history",
             }
         )
+
 
 
 class Source(ZoopObject):

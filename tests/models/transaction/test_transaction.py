@@ -94,3 +94,45 @@ class TransactionTestCase(SetTestCase):
     def test_create(self):
         instance = TransactionFactory()
         self.assertIsInstance(instance, Transaction)
+
+    def test_get_card_required_fields(self):
+        self.assertEqual(
+            {
+                "source",
+            },
+            Transaction.get_card_required_fields(),
+        )
+
+    def test_get_boleto_required_fields(self):
+        self.assertEqual(
+            {
+                "payment_method",
+            },
+            Transaction.get_boleto_required_fields(),
+        )
+
+    def test_get_validation_fields_credit(self):
+        instance = TransactionFactory(payment_method="credit", allow_empty=True)
+        self.assertIsInstance(instance, Transaction)
+        self.assertEqual(
+            {
+                "payment_method",
+            },
+            instance.get_validation_fields(),
+        )
+
+    def test_get_validation_fields_boleto(self):
+        instance = TransactionFactory(payment_method="boleto", allow_empty=True)
+        self.assertIsInstance(instance, Transaction)
+        self.assertEqual(
+            {
+                "payment_method",
+            },
+            instance.get_validation_fields(),
+        )
+
+    def test_get_all_fields_card(self):
+        instance = TransactionFactory(allow_empty=True)
+        self.assertIsInstance(instance, Token)
+
+        self.assertIsSubSet({" "}, instance.get_all_fields())

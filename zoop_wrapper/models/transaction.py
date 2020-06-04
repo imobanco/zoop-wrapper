@@ -204,7 +204,7 @@ class Transaction(ResourceModel):
         Returns:
             ``set`` of fields to be validated
         """
-        fields = set()
+        fields = self.get_required_fields()
 
         if self.payment_method == self.CARD_TYPE:
             return fields.union(self.get_card_required_fields())
@@ -226,7 +226,9 @@ class Transaction(ResourceModel):
         Returns:
             ``set`` of all fields
         """
-        return self.get_validation_fields()
+        fields = self.get_validation_fields()
+
+        return fields.union(self.get_non_required_fields())
 
     @classmethod
     def get_required_fields(cls):

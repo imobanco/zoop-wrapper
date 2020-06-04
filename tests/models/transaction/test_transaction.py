@@ -33,10 +33,6 @@ class TransactionTestCase(SetTestCase):
             source=SourceCardPresentFactory().to_dict()
         )
         self.assertIsInstance(instance.source, Source)
-        # self.assertIsInstance(instance.point_of_sale, PointOfSale)
-        # self.assertIsInstance(instance.history, list)
-        # self.assertEqual(len(instance.history), 1)
-        # self.assertIsInstance(instance.history[0], History)
 
     def test_init_custom_fields_source_card_not_present(self):
         instance = MagicMock()
@@ -47,10 +43,6 @@ class TransactionTestCase(SetTestCase):
             source=SourceCardNotPresentFactory().to_dict()
         )
         self.assertIsInstance(instance.source, Source)
-        # self.assertIsInstance(instance.point_of_sale, PointOfSale)
-        # self.assertIsInstance(instance.history, list)
-        # self.assertEqual(len(instance.history), 1)
-        # self.assertIsInstance(instance.history[0], History)
 
     def test_non_required_fields(self):
         self.assertIsSubSet(

@@ -5,6 +5,7 @@ from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, S
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
+from tests.factories.source import SourceCardPresentFactory
 
 
 class TransactionTestCase(SetTestCase):
@@ -36,7 +37,11 @@ class TransactionTestCase(SetTestCase):
     def test_init_custom_fields_source(self):
         instance = MagicMock()
 
-        Transaction.init_custom_fields(instance, payment_type=Transaction.SOURCE_TYPE)
+        Transaction.init_custom_fields(
+            instance,
+            payment_type=Transaction.SOURCE_TYPE,
+            source=SourceCardPresentFactory().to_dict()
+        )
         # self.assertIsInstance(instance.payment_method, Source)
         # self.assertIsInstance(instance.point_of_sale, PointOfSale)
         # self.assertIsInstance(instance.history, list)

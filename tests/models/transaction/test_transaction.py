@@ -2,7 +2,7 @@ from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
-from zoop_wrapper.models.card import Card
+from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import TransactionFactory
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
@@ -32,7 +32,7 @@ class TransactionTestCase(SetTestCase):
             payment_type=Transaction.CARD_TYPE,
             source=SourceCardPresentFactory().to_dict()
         )
-        # self.assertIsInstance(instance.payment_method, Source)
+        self.assertIsInstance(instance.source, Source)
         # self.assertIsInstance(instance.point_of_sale, PointOfSale)
         # self.assertIsInstance(instance.history, list)
         # self.assertEqual(len(instance.history), 1)
@@ -46,7 +46,7 @@ class TransactionTestCase(SetTestCase):
             payment_type=Transaction.CARD_TYPE,
             source=SourceCardNotPresentFactory().to_dict()
         )
-        # self.assertIsInstance(instance.payment_method, Source)
+        self.assertIsInstance(instance.source, Source)
         # self.assertIsInstance(instance.point_of_sale, PointOfSale)
         # self.assertIsInstance(instance.history, list)
         # self.assertEqual(len(instance.history), 1)

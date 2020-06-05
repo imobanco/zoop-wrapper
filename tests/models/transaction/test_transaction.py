@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
@@ -144,9 +144,18 @@ class TransactionTestCase(SetTestCase):
             instance.get_validation_fields(),
         )
 
-    def test_get_all_fields_credit(self):
-        instance = TransactionFactory()
+    def test_get_all_fields(self):
+        with patch("zoop_wrapper.models.transaction.Source.get_validation_fields") as mocked_get_validation_fields, patch("zoop_wrapper.models.transaction.Source.get_non_required_fields") as mocked_get_non_required_fields:
+            instance = TransactionBoleto()
+
+        mocked_get_validation_fields.reset_mock()
+        mocked_get_non_required_fields.reset_mock()
+        instance.get_all_fields()
+
         self.assertIsInstance(instance, Transaction)
+        mocked_get_validation_fields.assert_called_once()
+        mocked_get_non_required_fields.assert_called_once()
+
 
         self.assertIsSubSet(
             {'status',

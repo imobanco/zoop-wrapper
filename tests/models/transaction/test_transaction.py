@@ -145,56 +145,13 @@ class TransactionTestCase(SetTestCase):
         )
 
     def test_get_all_fields(self):
-        with patch("zoop_wrapper.models.transaction.Source.get_validation_fields") as mocked_get_validation_fields, patch("zoop_wrapper.models.transaction.Source.get_non_required_fields") as mocked_get_non_required_fields:
-            instance = TransactionBoleto()
+        with patch("zoop_wrapper.models.transaction.Transaction.get_validation_fields") as mocked_get_validation_fields, patch("zoop_wrapper.models.transaction.Transaction.get_non_required_fields") as mocked_get_non_required_fields:
+            instance = TransactionFactory()
 
-        mocked_get_validation_fields.reset_mock()
-        mocked_get_non_required_fields.reset_mock()
-        instance.get_all_fields()
+            mocked_get_validation_fields.reset_mock()
+            mocked_get_non_required_fields.reset_mock()
+            instance.get_all_fields()
 
-        self.assertIsInstance(instance, Transaction)
-        mocked_get_validation_fields.assert_called_once()
-        mocked_get_non_required_fields.assert_called_once()
-
-
-        self.assertIsSubSet(
-            {'status',
-             'metadata',
-             'id',
-             'business',
-             'point_of_sale',
-             'uri',
-             'app_transaction_uid',
-             'description',
-             'transaction_number',
-             'refunded',
-             'confirmed',
-             'refunds',
-             'pre_authorization',
-             'payment_method',
-             'sales_receipt',
-             'on_behalf_of',
-             'expected_on',
-             'customer',
-             'location_longitude',
-             'resource',
-             'gateway_authorizer',
-             'history',
-             'rewards',
-             'voided',
-             'installment_plan',
-             'location_latitude',
-             'captured',
-             'payment_type',
-             'amount',
-             'statement_descriptor',
-             'updated_at',
-             'created_at',
-             'currency',
-             'fee_details',
-             'reference_id',
-             'individual',
-             'discounts',
-             'original_amount',
-             'fees',
-             }, instance.get_all_fields())
+            self.assertIsInstance(instance, Transaction)
+            mocked_get_validation_fields.assert_called_once()
+            mocked_get_non_required_fields.assert_called_once()

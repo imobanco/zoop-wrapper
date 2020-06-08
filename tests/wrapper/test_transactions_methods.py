@@ -85,8 +85,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
     def test_add_transaction_credit(self):
         self.set_post_mock(201, TransactionCredit().to_dict())
 
-        # print(TransactionCredit().to_dict())
-
         data = {
             "original_amount": -1776.0,
             "source": {

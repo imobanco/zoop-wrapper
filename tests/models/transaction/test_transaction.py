@@ -86,7 +86,6 @@ class TransactionTestCase(SetTestCase):
                 "on_behalf_of",
                 "customer",
                 "payment_type",
-                "payment_method",
             },
             Transaction.get_required_fields(),
         )
@@ -116,7 +115,6 @@ class TransactionTestCase(SetTestCase):
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {
-                "payment_method",
                 "customer",
                 "payment_type",
                 "description",

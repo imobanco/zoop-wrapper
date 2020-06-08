@@ -242,8 +242,7 @@ class Transaction(ResourceModel):
                 "description",
                 "on_behalf_of",
                 "customer",
-                "payment_type",
-                "payment_method",
+                "payment_type"
             }
         )
 

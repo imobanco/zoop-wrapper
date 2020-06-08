@@ -98,6 +98,12 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(
             {
                 "source",
+                'description',
+                'amount',
+                'currency',
+                'payment_type',
+                'on_behalf_of',
+                'customer',
             },
             Transaction.get_card_required_fields(),
         )
@@ -106,6 +112,12 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(
             {
                 "payment_method",
+                'customer',
+                'payment_type',
+                'amount',
+                'description',
+                'currency',
+                'on_behalf_of',
             },
             Transaction.get_boleto_required_fields(),
         )

@@ -1,5 +1,6 @@
 from tests.utils import APITestCase
 from zoop_wrapper.models.transaction import Transaction, Source
+from zoop_wrapper.models.base import PaymentMethod
 from tests.factories.transaction import (
     TransactionFactory,
     TransactionCredit,
@@ -45,7 +46,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance, Transaction)
         self.assertEqual(response.instance.id, "foo")
 
-    def test_add_transaction(self):
+    def test_add_transaction_invoice(self):
         self.set_post_mock(201, TransactionFactory().to_dict())
 
         data = {
@@ -78,6 +79,8 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         response = self.client.add_transaction(data)
         self.assertEqual(response.status_code, 201, msg=response.data)
+        self.assertEqual(response.instance.payment_type, "boleto")
+        self.assertIsInstance(response.instance.payment_method, PaymentMethod)
 
     def test_add_transaction_credit(self):
         self.set_post_mock(201, TransactionCredit().to_dict())
@@ -86,9 +89,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         data = {
             "original_amount": -1776.0,
-            "point_of_sale": {"entry_mode": "barcode", "identification_number": 123},
-            "expected_on": "2020-6-4",
-            "resource": "transaction",
             "source": {
                 "card": {
                     "expiration_month": 2,
@@ -105,67 +105,12 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 },
                 "type": "card",
             },
-            "statement_descriptor": "Could.",
-            "created_at": "1908-09-09",
             "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
-            "id": "e45d8840-a5f6-4536-bc6f-898a072a9ec0",
-            "captured": False,
-            "uri": "https://www.peterson.net/terms.jsp",
             "currency": "BRL",
             "reference_id": "Exactly there develop.",
-            "history": [
-                {
-                    "status": "succeeded",
-                    "transaction": "1e2c6fc1-ec9f-4ca5-ad96-218907543062",
-                    "id": "73119f1e-b56b-4057-848f-b10db0dd6759",
-                    "created_at": "2018-12-24",
-                    "amount": 5.35,
-                    "operation_type": "created",
-                }
-            ],
             "payment_type": "credit",
             "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
-            "status": "failed",
-            "confirmed": "0",
-            "fees": "0.0",
-            "voided": True,
-            "refunded": False,
-            "updated_at": "2020-06-01",
             "amount": -5658.2277,
-            "payment_method": {
-                "downloaded": True,
-                "bank_code": 275,
-                "url": "http://taylor-abbott.com/blog/list/categories/terms.html",
-                "sequence": 732,
-                "zoop_boleto_id": "f656d59b-3c77-470b-9dbc-3edd7d8516fe",
-                "fingerprint": "9bf84367-f56f-41d0-9110-c44767444e27",
-                "status": "not_paid",
-                "paid_at": "2020-06-01",
-                "reference_number": 5032,
-                "body_instructions": ["pague este boleto!"],
-                "document_number": 97,
-                "recipient": "Rich, Kemp and Serrano",
-                "accepted": False,
-                "printed": False,
-                "payment_limit_date": "2020-06-4",
-                "barcode": 6616,
-                "billing_instructions": {
-                    "interest": {
-                        "start_date": "2020-06-02",
-                        "mode": "PERCENTAGE",
-                        "percentage": -2056.6,
-                    },
-                    "late_fee": {
-                        "start_date": "2020-06-02",
-                        "mode": "FIXED",
-                        "amount": -2717.214,
-                    },
-                    "discount": [
-                        {"limit_date": "2020-06-02", "mode": "FIXED", "amount": -623.0,}
-                    ],
-                },
-                "expiration_date": "2020-06-03",
-            },
             "description": "Per hold relationship message suffer economy.",
         }
 

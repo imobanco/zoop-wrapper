@@ -1,8 +1,6 @@
 import os
 
-from factory.faker import Faker
-
-from zoop_wrapper import ZoopWrapper, Transaction, Token, Card
+from zoop_wrapper import ZoopWrapper, Transaction, Source, Token
 from examples.utils import dump_response
 
 """
@@ -14,23 +12,18 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-card_token = Token(
-    holder_name="foo",
-    expiration_year="2030",
-    expiration_month="05",
-    card_number=Faker("credit_card_number").generate(),
-    security_code=123,
-)
+card_id_brian = "6408de3a490b4679adfc462810b68a85"
+seller_brian = "0b05a360f4b749498f74e13004c08024"
+seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 
 t = Transaction(
-    source=card_token.to_dict(),
-    on_behalf_of="27e17b778b404a83bf8e25ec995e2ffe",
-    customer="0e084bb6a60f47e8ac45949d5040eb92",
-    amount="1",
+    source=Source(card=Token(id=card_id_brian, allow_empty=True)),
+    on_behalf_of=seller_denise,
+    customer=seller_brian,
+    amount="500",
     description="Uma descrição breve da motivação da sua transação",
     statement_descriptor="Loja do Joao",
     payment_type="credit",
-    allow_empty=True,
 )
 
 response = client.add_transaction(t)

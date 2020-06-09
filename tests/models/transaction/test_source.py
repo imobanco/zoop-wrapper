@@ -13,11 +13,6 @@ from zoop_wrapper.exceptions import ValidationError
 
 
 class SourceTestCase(SetTestCase):
-    def test_init_custom_fields_raise_type(self):
-        instance = MagicMock()
-
-        self.assertRaises(ValidationError, Source.init_custom_fields, instance)
-
     def test_init_custom_fields_with_source_type_wrong(self):
 
         instance = MagicMock(SOURCE_TYPES={"foo"})

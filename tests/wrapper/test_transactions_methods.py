@@ -96,13 +96,15 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                     "expiration_year": 2011,
                 },
                 "type": "card",
+                "currency": "BRL",
+                "usage": "single_use",
+                "amount": -5658.2277,
             },
             "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
-            "currency": "BRL",
             "reference_id": "Exactly there develop.",
             "payment_type": "credit",
-            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "amount": -5658.2277,
+            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "description": "Per hold relationship message suffer economy.",
         }
 

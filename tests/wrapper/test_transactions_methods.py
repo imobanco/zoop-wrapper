@@ -82,7 +82,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertEqual(response.instance.payment_type, "boleto")
         self.assertIsInstance(response.instance.payment_method, PaymentMethod)
 
-    def test_add_transaction_credit(self):
+    def test_add_transaction_card_present(self):
         self.set_post_mock(201, TransactionCredit().to_dict())
 
         data = {
@@ -90,16 +90,36 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "source": {
                 "card": {
                     "expiration_month": 2,
-                    "created_at": "1933-03-06",
-                    "used": True,
-                    "id": "5000be1e-3e68-4296-9780-a39b1fcd08f1",
-                    "updated_at": "2020-06-01",
                     "holder_name": "Michael Baker",
                     "security_code": "912",
-                    "resource": "token",
-                    "uri": "https://willis.biz/explore/explore/author/",
                     "card_number": "3539736185431858",
                     "expiration_year": 2011,
+                },
+                "type": "card",
+            },
+            "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
+            "currency": "BRL",
+            "reference_id": "Exactly there develop.",
+            "payment_type": "credit",
+            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
+            "amount": -5658.2277,
+            "description": "Per hold relationship message suffer economy.",
+        }
+
+        response = self.client.add_transaction(data)
+        self.assertEqual(response.status_code, 201, msg=response.data)
+        self.assertEqual(response.instance.payment_type, "credit")
+        self.assertIsInstance(response.instance.source.card, Token)
+        self.assertIsInstance(response.instance.source, Source)
+
+    def test_add_transaction_card_not_present(self):
+        self.set_post_mock(201, TransactionCredit().to_dict())
+
+        data = {
+            "original_amount": -1776.0,
+            "source": {
+                "card": {
+                    "id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"
                 },
                 "type": "card",
             },

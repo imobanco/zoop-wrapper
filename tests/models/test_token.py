@@ -39,22 +39,18 @@ class TokenTestCase(SetTestCase):
     def test_init_custom_fields_with_allow_empty(self):
         """
         Nesse cenário o Token é usado como se fosse
-        um cartão recebendo dados junto com o id.
+        um cartão recebendo seus dados juntamente do id.
 
-        Dado:
-            - um id de um cartão c1 (previamente já criado noa Zoop)
-
-        Então:
-            -
-
-        Note: que não faz sentido fazer o test do assertIsInstance para
-        este caso, pois None ...
+        Dado um cartão c1 (previamente já criado noa Zoop)
+        Quando for criado um Token(id=c1.id, allow_empty=True) t1
+        Então o t1.token_type deve ser None
         """
-        instance = MagicMock(TYPES={"card"}, CARD_TYPE="card")
+        c1 = MagicMock(id='1')
 
-        Token.init_custom_fields(instance, type="card", card=CardFactory())
-        self.assertEqual(instance.token_type, "card")
+        instance = MagicMock(TYPES={"card"}, CARD_TYPE="card", _allow_empty=True)
 
+        Token.init_custom_fields(instance, id=c1.id)
+        self.assertEqual(instance.token_type, None)
 
     def test_init_custom_fields_with_bank_account(self):
         instance = MagicMock(TYPES={"bank_account"}, BANK_ACCOUNT_TYPE="bank_account")

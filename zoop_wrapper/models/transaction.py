@@ -2,6 +2,7 @@ from .base import ZoopObject, ResourceModel
 from .card import Card
 from .invoice import Invoice
 from .token import Token
+from ..exceptions import ValidationError
 
 
 class PointOfSale(ZoopObject):
@@ -314,21 +315,28 @@ class Source(ZoopObject):
     ):
         setattr(self, 'type', type)
 
-        setattr(self, "card",
-                Token.from_dict_or_instance(card, allow_empty=True))
+        """
+        Ver documentação do :meth:`.from_dict_or_instance`.
+        
+        Precisamos pegar o atributo `id` para identificar o tipo.
+        """
 
-        if self.card.id is not None:
+        token_for_card = Token.from_dict_or_instance(card, allow_empty=True)
+
+        if token_for_card.id is not None:
             card_type = Source.CARD_NOT_PRESENT_TYPE
-        elif self.card.card_number is not None:
-            card_type = Source.CARD_PRESENT_TYPE
-            setattr(self, "card",
-                    Token.from_dict_or_instance(card))
         else:
-            raise ValueError(
-                f"Tipo do source não identificado! "
-                f"Utilize um dos tipos {Source.SOURCE_TYPES}"
-            )
+            try:
+                token_for_card = Token.from_dict_or_instance(card)
+                card_type = Source.CARD_PRESENT_TYPE
+            except ValidationError as e:
+                raise ValidationError(
+                    self,
+                    f"Tipo do source não identificado! "
+                    f"Utilize um dos tipos {Source.SOURCE_TYPES}"
+                ) from e
 
+        setattr(self, "card", token_for_card)
         setattr(self, "card_type", card_type)
 
     def get_validation_fields(self):

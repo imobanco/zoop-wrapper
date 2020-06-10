@@ -315,6 +315,7 @@ class Source(ZoopObject):
         **kwargs,
     ):
         setattr(self, 'type', type)
+        setattr(self, 'currency', currency)
 
         """
         Ver documentação do :meth:`.from_dict_or_instance`.
@@ -389,7 +390,9 @@ class Source(ZoopObject):
             {
                 "card",
                 "type",
-                "currency"
+                "currency",
+                "usage",
+                "amount"
             }
         )
 

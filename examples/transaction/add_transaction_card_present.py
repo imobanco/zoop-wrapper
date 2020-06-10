@@ -16,12 +16,17 @@ seller_brian = "0b05a360f4b749498f74e13004c08024"
 seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 
 t = Transaction(
-    customer="foo",
-    on_behalf_of="bar",
-    amount="1",
-    reference_id="1",
-    description="foo",
+    source=Source(card=Token(holder_name="foo",
+                            expiration_month="05",
+                            expiration_year="2030",
+                            card_number=Faker("credit_card_number").generate(),
+                            security_code=123),
+                  usage="single_use", amount="1234"),
+    on_behalf_of=seller_denise,
+    customer=seller_brian,
+    amount="1234",
     payment_type="credit",
+    description="Uma descrição breve da motivação da sua transação",
 )
 
 

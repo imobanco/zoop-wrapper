@@ -120,12 +120,10 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         data = {
             "original_amount": -1776.0,
             "source": {
-                "card": {
-                    "id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"
-                },
+                "card": {"id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"},
                 "type": "card",
                 "amount": 1234,
-                "usage": "single_use"
+                "usage": "single_use",
             },
             "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
             "currency": "BRL",

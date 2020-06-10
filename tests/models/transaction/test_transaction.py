@@ -4,7 +4,11 @@ from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
 from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.invoice import Invoice
-from tests.factories.transaction import TransactionFactory, TransactionCredit, TransactionBoleto
+from tests.factories.transaction import (
+    TransactionFactory,
+    TransactionCredit,
+    TransactionBoleto,
+)
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
 
 
@@ -30,7 +34,7 @@ class TransactionTestCase(SetTestCase):
         Transaction.init_custom_fields(
             instance,
             payment_type=Transaction.CARD_TYPE,
-            source=SourceCardPresentFactory().to_dict()
+            source=SourceCardPresentFactory().to_dict(),
         )
         self.assertIsInstance(instance.source, Source)
 
@@ -40,7 +44,9 @@ class TransactionTestCase(SetTestCase):
         Transaction.init_custom_fields(
             instance,
             payment_type=Transaction.CARD_TYPE,
-            source=SourceCardNotPresentFactory(amount=1234, usage="single_use").to_dict(),
+            source=SourceCardNotPresentFactory(
+                amount=1234, usage="single_use"
+            ).to_dict(),
             allow_empty=True,
         )
         self.assertIsInstance(instance.source, Source)
@@ -99,12 +105,12 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(
             {
                 "source",
-                'description',
-                'amount',
-                'currency',
-                'payment_type',
-                'on_behalf_of',
-                'customer',
+                "description",
+                "amount",
+                "currency",
+                "payment_type",
+                "on_behalf_of",
+                "customer",
             },
             Transaction.get_card_required_fields(),
         )
@@ -113,12 +119,12 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(
             {
                 "payment_method",
-                'customer',
-                'payment_type',
-                'amount',
-                'description',
-                'currency',
-                'on_behalf_of',
+                "customer",
+                "payment_type",
+                "amount",
+                "description",
+                "currency",
+                "on_behalf_of",
             },
             Transaction.get_boleto_required_fields(),
         )
@@ -156,7 +162,11 @@ class TransactionTestCase(SetTestCase):
         )
 
     def test_get_all_fields(self):
-        with patch("zoop_wrapper.models.transaction.Transaction.get_validation_fields") as mocked_get_validation_fields, patch("zoop_wrapper.models.transaction.Transaction.get_non_required_fields") as mocked_get_non_required_fields:
+        with patch(
+            "zoop_wrapper.models.transaction.Transaction.get_validation_fields"
+        ) as mocked_get_validation_fields, patch(
+            "zoop_wrapper.models.transaction.Transaction.get_non_required_fields"
+        ) as mocked_get_non_required_fields:
             instance = TransactionFactory()
 
             mocked_get_validation_fields.reset_mock()

@@ -152,9 +152,7 @@ class Transaction(ResourceModel):
             setattr(
                 self,
                 "source",
-                Source.from_dict_or_instance(
-                    source, allow_empty=self._allow_empty
-                ),
+                Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
             )
         else:
             setattr(
@@ -243,27 +241,19 @@ class Transaction(ResourceModel):
                 "description",
                 "on_behalf_of",
                 "customer",
-                "payment_type"
+                "payment_type",
             }
         )
 
     @classmethod
     def get_card_required_fields(cls):
         fields = cls.get_required_fields()
-        return fields.union(
-            {
-                "source",
-            }
-        )
+        return fields.union({"source",})
 
     @classmethod
     def get_boleto_required_fields(cls):
         fields = cls.get_required_fields()
-        return fields.union(
-            {
-                "payment_method",
-            }
-        )
+        return fields.union({"payment_method",})
 
     @classmethod
     def get_non_required_fields(cls):
@@ -308,14 +298,10 @@ class Source(ZoopObject):
     SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
 
     def init_custom_fields(
-        self,
-        card=None,
-        type="card",
-        currency="BRL",
-        **kwargs,
+        self, card=None, type="card", currency="BRL", **kwargs,
     ):
-        setattr(self, 'type', type)
-        setattr(self, 'currency', currency)
+        setattr(self, "type", type)
+        setattr(self, "currency", currency)
 
         """
         Ver documentação do :meth:`.from_dict_or_instance`.
@@ -335,7 +321,7 @@ class Source(ZoopObject):
                 raise ValidationError(
                     self,
                     f"Tipo do source não identificado! "
-                    f"Utilize um dos tipos {Source.SOURCE_TYPES}"
+                    f"Utilize um dos tipos {Source.SOURCE_TYPES}",
                 ) from e
 
         setattr(self, "card", token_for_card)
@@ -386,15 +372,7 @@ class Source(ZoopObject):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {
-                "card",
-                "type",
-                "currency",
-                "usage",
-                "amount"
-            }
-        )
+        return fields.union({"card", "type", "currency", "usage", "amount"})
 
     @classmethod
     def get_card_not_present_required_fields(cls):

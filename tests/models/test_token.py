@@ -45,7 +45,7 @@ class TokenTestCase(SetTestCase):
         Quando for criado um Token(id=c1.id, allow_empty=True) t1
         Então o t1.token_type deve ser None
         """
-        c1 = MagicMock(id='1')
+        c1 = MagicMock(id="1")
 
         instance = MagicMock(TYPES={"card"}, CARD_TYPE="card", _allow_empty=True)
 

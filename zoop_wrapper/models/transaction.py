@@ -311,6 +311,7 @@ class Source(ZoopObject):
         self,
         card=None,
         type="card",
+        currency="BRL",
         **kwargs,
     ):
         setattr(self, 'type', type)
@@ -388,6 +389,7 @@ class Source(ZoopObject):
             {
                 "card",
                 "type",
+                "currency"
             }
         )
 
@@ -410,4 +412,4 @@ class Source(ZoopObject):
             ``set`` of fields
         """
         fields = cls.get_required_fields()
-        return fields.union({"amount", "currency", "usage"})
+        return fields.union({"amount", "usage"})

@@ -40,7 +40,8 @@ class TransactionTestCase(SetTestCase):
         Transaction.init_custom_fields(
             instance,
             payment_type=Transaction.CARD_TYPE,
-            source=SourceCardNotPresentFactory().to_dict()
+            source=SourceCardNotPresentFactory(amount=1234, usage="single_use").to_dict(),
+            allow_empty=True,
         )
         self.assertIsInstance(instance.source, Source)
 

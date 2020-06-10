@@ -124,6 +124,8 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                     "id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"
                 },
                 "type": "card",
+                "amount": 1234,
+                "usage": "single_use"
             },
             "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
             "currency": "BRL",

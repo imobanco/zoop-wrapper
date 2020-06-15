@@ -387,10 +387,10 @@ class Source(ZoopObject):
     @classmethod
     def get_card_present_required_fields(cls):
         """
-        Get ``set`` of ``non required fields`` for :attr:`CARD_TYPE`.
+        Método get do ``set`` de ``non required fields`` para :attr:`CARD_TYPE`.
 
         Returns:
-            ``set`` of fields
+            ``set`` de campos
         """
         fields = cls.get_required_fields()
         return fields.union({"amount", "usage"})

@@ -339,7 +339,7 @@ class Source(ZoopObject):
         Se ``bank account type`` é :attr:`.INDIVIDUAL_TYPE` return ``campos`` união
         :meth:`.get_individual_required_fields`.\n
 
-        Senão ``bank account type`` é :attr:`.BUSINESS_TYPE` return ``fields`` união
+        Senão ``bank account type`` é :attr:`.BUSINESS_TYPE` return ``campos`` união
         :meth:`.get_business_required_fields`.
 
         Returns:

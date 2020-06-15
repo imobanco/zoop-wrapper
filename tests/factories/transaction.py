@@ -75,7 +75,7 @@ class TransactionFactory(ResourceModelFactory):
     history = SubFactory(HistoryFactory)
 
 
-class TransactionCredit(TransactionFactory):
+class TransactionCreditFactory(TransactionFactory):
     class Meta:
         model = Transaction
 

@@ -3,7 +3,7 @@ from zoop_wrapper.models.transaction import Transaction, Source
 from zoop_wrapper.models.base import PaymentMethod
 from tests.factories.transaction import (
     TransactionFactory,
-    TransactionCredit,
+    TransactionCreditFactory,
     TransactionBoletoFactory,
 )
 from zoop_wrapper.models.card import Card
@@ -83,7 +83,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance.payment_method, PaymentMethod)
 
     def test_add_transaction_card_present(self):
-        self.set_post_mock(201, TransactionCredit().to_dict())
+        self.set_post_mock(201, TransactionCreditFactory().to_dict())
 
         data = {
             "original_amount": -1776.0,
@@ -115,7 +115,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance.source, Source)
 
     def test_add_transaction_card_not_present(self):
-        self.set_post_mock(201, TransactionCredit().to_dict())
+        self.set_post_mock(201, TransactionCreditFactory().to_dict())
 
         data = {
             "original_amount": -1776.0,

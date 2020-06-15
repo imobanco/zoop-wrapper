@@ -6,7 +6,7 @@ from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import (
     TransactionFactory,
-    TransactionCredit,
+    TransactionCreditFactory,
     TransactionBoletoFactory,
 )
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
@@ -130,7 +130,7 @@ class TransactionTestCase(SetTestCase):
         )
 
     def test_get_validation_fields_credit(self):
-        instance = TransactionCredit()
+        instance = TransactionCreditFactory()
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {

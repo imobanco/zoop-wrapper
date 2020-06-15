@@ -4,7 +4,7 @@ from zoop_wrapper.models.base import PaymentMethod
 from tests.factories.transaction import (
     TransactionFactory,
     TransactionCredit,
-    TransactionBoleto,
+    TransactionBoletoFactory,
 )
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
@@ -16,7 +16,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Test list_transactions method
         """
-        self.set_get_mock(200, {"items": [TransactionBoleto()]})
+        self.set_get_mock(200, {"items": [TransactionBoletoFactory()]})
 
         response = self.client.list_transactions()
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -27,7 +27,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Test list_transactions_for_seller method
         """
-        self.set_get_mock(200, {"items": [TransactionBoleto(on_behalf_of="foo")]})
+        self.set_get_mock(200, {"items": [TransactionBoletoFactory(on_behalf_of="foo")]})
 
         response = self.client.list_transactions_for_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -38,7 +38,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Test retrieve_transaction method.
         """
-        self.set_get_mock(200, TransactionBoleto(id="foo").to_dict())
+        self.set_get_mock(200, TransactionBoletoFactory(id="foo").to_dict())
 
         response = self.client.retrieve_transaction("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
@@ -47,7 +47,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertEqual(response.instance.id, "foo")
 
     def test_add_transaction_invoice(self):
-        self.set_post_mock(201, TransactionBoleto().to_dict())
+        self.set_post_mock(201, TransactionBoletoFactory().to_dict())
 
         data = {
             "amount": "1000",

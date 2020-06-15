@@ -83,7 +83,7 @@ class TransactionCredit(TransactionFactory):
     source = SubFactory(SourceCardPresentFactory)
 
 
-class TransactionBoleto(TransactionFactory):
+class TransactionBoletoFactory(TransactionFactory):
     class Meta:
         model = Transaction
 

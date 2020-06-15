@@ -122,8 +122,15 @@ class TransactionWrapper(BaseZoopWrapper):
         Returns:
             response
         """
-        # @TODO: terminar de testar cancel transaction (card transaction)
+        transaction_response = self.retrieve_transaction(identifier)
+        transaction = transaction_response.instance
+
+        data = {
+            "amount": transaction.amount,
+            "on_behalf_of": transaction.on_behalf_of,
+        }
+
         url = self._construct_url(
             action="transactions", identifier=identifier, subaction="void"
         )
-        return self._get(url)
+        return self._post(url, data=data)

@@ -212,13 +212,8 @@ class Transaction(ResourceModel):
         """
         Pega ``todos os campos`` para instância.
 
-        ``campo`` é :meth:`get_validation_fields`
-
-        Se :attr:`token_type` é :attr:`CARD_TYPE` return
-        ``campo`` união :meth:`get_card_non_required_fields`.
-
-        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE` return
-        ``campo`` união :meth:`get_bank_account_non_required_fields`.
+        o conjunto de campos é construído com base no :meth:`get_validation_fields` 
+        com a união do :meth:`get_non_required_fields`.
 
         Returns:
             ``set`` de todos os campos

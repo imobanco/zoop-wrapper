@@ -322,16 +322,11 @@ class Source(ZoopObject):
         """
         Pega ``campos de validação`` da instâcia.\n
 
-        Se :attr:`token_type` é :attr:`CARD_TYPE` card return
-        :meth:`get_card_required_fields`.
-
-        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE`!
-        ``campos`` é :meth:`get_bank_account_required_fields`.\n
-        Se ``bank account type`` é :attr:`.INDIVIDUAL_TYPE` return ``campos`` união
-        :meth:`.get_individual_required_fields`.\n
-
-        Senão ``bank account type`` é :attr:`.BUSINESS_TYPE` return ``campos`` união
-        :meth:`.get_business_required_fields`.
+        O conjunto de campos é construído com base no :attr:`card_type`.
+        
+         Se for :attr:`CARD_PRESENT_TYPE` utiliza o :meth:`get_card_present_required_fields`.
+         
+         Se não, utiliza o :meth:`get_card_not_present_required_fields`.
 
         Returns:
             ``set`` de campos para ser validados

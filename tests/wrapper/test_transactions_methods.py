@@ -142,17 +142,12 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance.source.card, Token)
         self.assertIsInstance(response.instance.source, Source)
 
-    # def test_cancel_transaction(self):
-    # @TODO: terminar cancel transaction
-    #
-    #     self.set_delete_mock(
-    #         200,
-    #         {
-    #             'id': 'foo',
-    #             'resource': 'buyer',
-    #             'deleted': True
-    #         }
-    #     )
-    #
-    #     response = self.client.remove_buyer('foo')
-    #     self.assertEqual(response.status_code, 200, msg=response.data)
+    def test_cancel_transaction(self):
+
+        self.set_delete_mock(
+            200,
+        #     CHAMADA da factory criada
+        )
+
+        response = self.client.remove_buyer('foo')
+        self.assertEqual(response.status_code, 200, msg=response.data)

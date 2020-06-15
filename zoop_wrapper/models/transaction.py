@@ -191,16 +191,12 @@ class Transaction(ResourceModel):
         """
         Pega os ``campos de validação`` para uma instância.\n
 
-        Se :attr:`token_type` é :attr:`CARD_TYPE` cartão retorna
-        :meth:`get_card_required_fields`.
+        O conjunto de campos é feito com base no :attr:`payment_type`.
+        
+         Se for :attr:`CARD_TYPE` utiliza o :meth:`get_card_required_fields`.
 
-        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE`!
-        ``fields`` é :meth:`get_bank_account_required_fields`.\n
-        Se ``bank account type`` é :attr:`.INDIVIDUAL_TYPE` return ``campos`` união
-        :meth:`.get_individual_required_fields`.\n
-
-        Senão ``bank account type`` é :attr:`.BUSINESS_TYPE` retorna ``campos`` união
-        :meth:`.get_business_required_fields`.
+        Se não, ele é :attr:`payment_type` é :attr:`BOLETO_TYPE`!
+        Utiliza o :meth:`get_boleto_required_fields`.
 
         Returns:
             ``set`` de campos para serem validados

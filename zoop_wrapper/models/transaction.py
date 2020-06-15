@@ -117,6 +117,8 @@ class Transaction(ResourceModel):
 
     def init_custom_fields(
         self,
+        id=None,
+        amount=None,
         payment_type=None,
         payment_method=None,
         source=None,
@@ -144,24 +146,47 @@ class Transaction(ResourceModel):
         """
         setattr(self, "currency", currency)
 
-        if payment_type not in Transaction.PAYMENT_TYPES:
-            raise ValueError(
-                f"payment_type must be one " f"of {Transaction.PAYMENT_TYPES}"
-            )
-        elif payment_type == Transaction.CARD_TYPE:
-            setattr(
-                self,
-                "source",
-                Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
-            )
+        if id is not None:
+            if payment_method.get('resource') == 'card':
+                setattr(
+                    self,
+                    "payment_method",
+                    Card.from_dict_or_instance(payment_method, allow_empty=self._allow_empty),
+                )
+            else:
+                setattr(
+                    self,
+                    "payment_method",
+                    Invoice.from_dict_or_instance(
+                        payment_method, allow_empty=self._allow_empty
+                    ),
+                )
+
+            amount = float(amount)
+            amount *= 100
+            amount = int(amount)
+
+            setattr(self, 'amount', amount)
+
         else:
-            setattr(
-                self,
-                "payment_method",
-                Invoice.from_dict_or_instance(
-                    payment_method, allow_empty=self._allow_empty
-                ),
-            )
+            if payment_type not in Transaction.PAYMENT_TYPES:
+                raise ValueError(
+                    f"payment_type must be one " f"of {Transaction.PAYMENT_TYPES}"
+                )
+            elif payment_type == Transaction.CARD_TYPE:
+                setattr(
+                    self,
+                    "source",
+                    Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
+                )
+            else:
+                setattr(
+                    self,
+                    "payment_method",
+                    Invoice.from_dict_or_instance(
+                        payment_method, allow_empty=self._allow_empty
+                    ),
+                )
 
         setattr(self, "payment_type", payment_type)
 

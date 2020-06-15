@@ -90,4 +90,4 @@ class TransactionBoleto(TransactionFactory):
 
     payment_type = "boleto"
 
-    boleto = SubFactory(InvoiceFactory)
+    payment_method = SubFactory(InvoiceFactory)

@@ -324,9 +324,9 @@ class Source(ZoopObject):
 
         O conjunto de campos é construído com base no :attr:`card_type`.
         
-         Se for :attr:`CARD_PRESENT_TYPE` utiliza o :meth:`get_card_present_required_fields`.
+        Se for :attr:`CARD_PRESENT_TYPE` utiliza o :meth:`get_card_present_required_fields`.
          
-         Se não, utiliza o :meth:`get_card_not_present_required_fields`.
+        Se não, utiliza o :meth:`get_card_not_present_required_fields`.
 
         Returns:
             ``set`` de campos para ser validados

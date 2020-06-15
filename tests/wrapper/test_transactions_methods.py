@@ -38,7 +38,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Test retrieve_transaction method.
         """
-        self.set_get_mock(200, TransactionFactory(id="foo").to_dict())
+        self.set_get_mock(200, TransactionFactory(payment_limit_date="2030-06-12", expiration_date="2030-06-23", id="foo").to_dict())
 
         response = self.client.retrieve_transaction("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)

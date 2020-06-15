@@ -189,21 +189,21 @@ class Transaction(ResourceModel):
 
     def get_validation_fields(self):
         """
-        Get ``validation fields`` for instance.\n
+        Pega os ``campos de validação`` para uma instância.\n
 
-        if :attr:`token_type` is :attr:`CARD_TYPE` card return
+        Se :attr:`token_type` é :attr:`CARD_TYPE` cartão retorna
         :meth:`get_card_required_fields`.
 
-        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE`!
-        ``fields`` is :meth:`get_bank_account_required_fields`.\n
-        if ``bank account type`` is :attr:`.INDIVIDUAL_TYPE` return ``fields`` union
+        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE`!
+        ``fields`` é :meth:`get_bank_account_required_fields`.\n
+        Se ``bank account type`` é :attr:`.INDIVIDUAL_TYPE` return ``campos`` união
         :meth:`.get_individual_required_fields`.\n
 
-        else ``bank account type`` is :attr:`.BUSINESS_TYPE` return ``fields`` union
+        Senão ``bank account type`` é :attr:`.BUSINESS_TYPE` retorna ``campos`` união
         :meth:`.get_business_required_fields`.
 
         Returns:
-            ``set`` of fields to be validated
+            ``set`` de campos para serem validados
         """
         fields = set()
 

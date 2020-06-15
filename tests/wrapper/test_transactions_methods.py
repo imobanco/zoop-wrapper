@@ -27,7 +27,9 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Test list_transactions_for_seller method
         """
-        self.set_get_mock(200, {"items": [TransactionBoletoFactory(on_behalf_of="foo")]})
+        self.set_get_mock(
+            200, {"items": [TransactionBoletoFactory(on_behalf_of="foo")]}
+        )
 
         response = self.client.list_transactions_for_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)

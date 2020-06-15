@@ -377,10 +377,11 @@ class Source(ZoopObject):
     @classmethod
     def get_card_not_present_required_fields(cls):
         """
-        Get ``set`` of ``non required fields`` for :attr:`CARD_TYPE`.
+        Método get do ``set`` de ``required fields`` para :attr:`CARD_TYPE`
+        quando o cartão é presente.
 
         Returns:
-            ``set`` of fields
+            ``set`` de campos
         """
         return cls.get_required_fields()
 

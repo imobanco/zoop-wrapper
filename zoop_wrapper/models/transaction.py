@@ -342,13 +342,7 @@ class Source(ZoopObject):
         """
         Pega ``todos os campos`` da instância.
 
-        ``fields`` é :meth:`get_validation_fields`
-
-        Se :attr:`token_type` é :attr:`CARD_TYPE` return
-        ``fields`` união :meth:`get_card_non_required_fields`.
-
-        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE` return
-        ``fields`` união :meth:`get_bank_account_non_required_fields`.
+        O conjunto de todos os campos é igual ao conjunto de campos a serem validados
 
         Returns:
             ``set`` de todos os campos

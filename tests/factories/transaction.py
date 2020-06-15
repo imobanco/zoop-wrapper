@@ -71,7 +71,6 @@ class TransactionFactory(ResourceModelFactory):
     expected_on = Faker("date_this_month")
 
     payment_type = "boleto"
-    payment_method = SubFactory(InvoiceFactory)
     point_of_sale = SubFactory(PointOfSaleFactory)
     history = SubFactory(HistoryFactory)
 

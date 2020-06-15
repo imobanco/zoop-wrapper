@@ -19,17 +19,11 @@ from tests.factories.bank_account import IndividualBankAccountFactory
 
 
 class TokenTestCase(SetTestCase):
-    def test_init_custom_fields_raise(self):
-        instance = MagicMock()
-
-        self.assertRaises(ValidationError, Token.init_custom_fields, instance)
-
     def test_init_custom_fields_with_type_raise(self):
         """
-        If there's type and is not in TYPES raise TypeError!
-        are not passed raise
+        TODO: documentar
         """
-        instance = MagicMock(TYPES={"foo"})
+        instance = MagicMock(TYPES={"foo"}, _allow_empty=False)
 
         self.assertRaises(
             ValidationError, Token.init_custom_fields, instance, type="bar"
@@ -41,6 +35,22 @@ class TokenTestCase(SetTestCase):
         Token.init_custom_fields(instance, type="card", card=CardFactory())
         self.assertEqual(instance.token_type, "card")
         self.assertIsInstance(instance.card, Card)
+
+    def test_init_custom_fields_with_allow_empty(self):
+        """
+        Nesse cenário o Token é usado como se fosse
+        um cartão recebendo seus dados juntamente do id.
+
+        Dado um cartão c1 (previamente já criado noa Zoop)
+        Quando for criado um Token(id=c1.id, allow_empty=True) t1
+        Então o t1.token_type deve ser None
+        """
+        c1 = MagicMock(id="1")
+
+        instance = MagicMock(TYPES={"card"}, CARD_TYPE="card", _allow_empty=True)
+
+        Token.init_custom_fields(instance, id=c1.id)
+        self.assertEqual(instance.token_type, None)
 
     def test_init_custom_fields_with_bank_account(self):
         instance = MagicMock(TYPES={"bank_account"}, BANK_ACCOUNT_TYPE="bank_account")

@@ -3,6 +3,7 @@ from factory.faker import Faker
 
 from tests.factories.base import ZoopObjectFactory, ResourceModelFactory
 from tests.factories.invoice import InvoiceFactory
+from tests.factories.source import SourceCardPresentFactory
 from zoop_wrapper.models.transaction import PointOfSale, History, Transaction
 
 
@@ -69,7 +70,22 @@ class TransactionFactory(ResourceModelFactory):
     business = None
     expected_on = Faker("date_this_month")
 
-    payment_type = "boleto"
-    payment_method = SubFactory(InvoiceFactory)
     point_of_sale = SubFactory(PointOfSaleFactory)
     history = SubFactory(HistoryFactory)
+
+
+class TransactionCreditFactory(TransactionFactory):
+    class Meta:
+        model = Transaction
+
+    payment_type = "credit"
+    source = SubFactory(SourceCardPresentFactory)
+
+
+class TransactionBoletoFactory(TransactionFactory):
+    class Meta:
+        model = Transaction
+
+    payment_type = "boleto"
+
+    payment_method = SubFactory(InvoiceFactory)

@@ -1,9 +1,13 @@
 Exemplos de transação
 ========================================
 
-Criar transação de cartão de crédito
------------------------------------------
-.. literalinclude:: ../../examples/transaction/add_transaction_credit.py
+Criar transação de cartão de crédito não presente
+--------------------------------------------------
+.. literalinclude:: ../../examples/transaction/add_transaction_card_not_present.py
+
+Criar transação de cartão de crédito presente
+----------------------------------------------
+.. literalinclude:: ../../examples/transaction/add_transaction_card_present.py
 
 Criar transação de boleto
 -----------------------------------------

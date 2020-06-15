@@ -85,6 +85,7 @@ class Token(ResourceModel):
             bank_account (dict or :class:`.BankAccount`):  data
             **kwargs: kwargs
         """
+
         if type in self.TYPES:
             token_type = type
             if token_type == self.CARD_TYPE:
@@ -105,6 +106,8 @@ class Token(ResourceModel):
             elif self.BANK_ACCOUNT_IDENTIFIER in kwargs:
                 token_type = self.BANK_ACCOUNT_TYPE
                 BusinessOrIndividualModel.set_identifier(self, **kwargs)
+            elif self._allow_empty:
+                token_type = None
             else:
                 raise ValidationError(
                     self,
@@ -156,12 +159,14 @@ class Token(ResourceModel):
 
         if self.token_type == self.CARD_TYPE:
             return fields.union(self.get_card_required_fields())
-        else:
+        elif self.token_type == self.BANK_ACCOUNT_TYPE:
             fields = fields.union(self.get_bank_account_required_fields())
             if self.get_bank_account_type() == BankAccount.INDIVIDUAL_TYPE:
                 return fields.union(BankAccount.get_individual_required_fields())
             else:
                 return fields.union(BankAccount.get_business_required_fields())
+        else:
+            return fields
 
     def get_all_fields(self):
         """
@@ -182,8 +187,10 @@ class Token(ResourceModel):
 
         if self.token_type == self.CARD_TYPE:
             return fields.union(self.get_card_non_required_fields())
-        else:
+        elif self.token_type == self.BANK_ACCOUNT_TYPE:
             return fields.union(self.get_bank_account_non_required_fields())
+        else:
+            return fields.union(self.get_non_required_fields())
 
     @classmethod
     def get_non_required_fields(cls):

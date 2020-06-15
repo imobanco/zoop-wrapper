@@ -119,10 +119,14 @@ class ZoopObject(object):
     @classmethod
     def from_dict_or_instance(cls, data, **kwargs):
         """
-        check if ``data`` is already a :class:`ZoopObject` or
-        ``subclass``.\n
+        Esse método existe para fazer um tratamento dos inputs de dados.
 
-        If not call :meth:`from_dict`.
+        O atributo :attr:`data` pode ser um dict ou um :class:`.ZoopOject`.
+
+        Verifica se :attr:`data` já é uma instância da classse :class:`ZoopObject` or
+        uma ``subclasse``.\n
+
+        Se não for, chama :meth:`from_dict`.
 
         Args:
             data: dict of data or instance

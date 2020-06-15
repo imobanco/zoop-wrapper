@@ -1,6 +1,8 @@
 from .base import ZoopObject, ResourceModel
 from .card import Card
 from .invoice import Invoice
+from .token import Token
+from ..exceptions import ValidationError
 
 
 class PointOfSale(ZoopObject):
@@ -108,15 +110,16 @@ class Transaction(ResourceModel):
 
     RESOURCE = "transaction"
 
-    CREDIT_TYPE = "credit"
+    CARD_TYPE = "credit"
     BOLETO_TYPE = "boleto"
 
-    PAYMENT_TYPES = {CREDIT_TYPE, BOLETO_TYPE}
+    PAYMENT_TYPES = {CARD_TYPE, BOLETO_TYPE}
 
     def init_custom_fields(
         self,
         payment_type=None,
         payment_method=None,
+        source=None,
         point_of_sale=None,
         history=None,
         currency="BRL",
@@ -145,13 +148,11 @@ class Transaction(ResourceModel):
             raise ValueError(
                 f"payment_type must be one " f"of {Transaction.PAYMENT_TYPES}"
             )
-        elif payment_type == Transaction.CREDIT_TYPE:
+        elif payment_type == Transaction.CARD_TYPE:
             setattr(
                 self,
-                "payment_method",
-                Card.from_dict_or_instance(
-                    payment_method, allow_empty=self._allow_empty
-                ),
+                "source",
+                Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
             )
         else:
             setattr(
@@ -161,6 +162,8 @@ class Transaction(ResourceModel):
                     payment_method, allow_empty=self._allow_empty
                 ),
             )
+
+        setattr(self, "payment_type", payment_type)
 
         setattr(
             self,
@@ -184,6 +187,41 @@ class Transaction(ResourceModel):
                 [History.from_dict_or_instance(history, allow_empty=True)],
             )
 
+    def get_validation_fields(self):
+        """
+        Pega os ``campos de validação`` para uma instância.\n
+
+        O conjunto de campos é feito com base no :attr:`payment_type`.
+        
+         Se for :attr:`CARD_TYPE` utiliza o :meth:`get_card_required_fields`.
+
+        Se não, ele é :attr:`payment_type` é :attr:`BOLETO_TYPE`!
+        Utiliza o :meth:`get_boleto_required_fields`.
+
+        Returns:
+            ``set`` de campos para serem validados
+        """
+        fields = set()
+
+        if self.payment_type == self.CARD_TYPE:
+            return fields.union(self.get_card_required_fields())
+        else:
+            return fields.union(self.get_boleto_required_fields())
+
+    def get_all_fields(self):
+        """
+        Pega ``todos os campos`` para instância.
+
+        o conjunto de campos é construído com base no :meth:`get_validation_fields` 
+        com a união do :meth:`get_non_required_fields`.
+
+        Returns:
+            ``set`` de todos os campos
+        """
+        fields = self.get_validation_fields()
+
+        return fields.union(self.get_non_required_fields())
+
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
@@ -195,9 +233,18 @@ class Transaction(ResourceModel):
                 "on_behalf_of",
                 "customer",
                 "payment_type",
-                "payment_method",
             }
         )
+
+    @classmethod
+    def get_card_required_fields(cls):
+        fields = cls.get_required_fields()
+        return fields.union({"source",})
+
+    @classmethod
+    def get_boleto_required_fields(cls):
+        fields = cls.get_required_fields()
+        return fields.union({"payment_method",})
 
     @classmethod
     def get_non_required_fields(cls):
@@ -232,3 +279,99 @@ class Transaction(ResourceModel):
                 "history",
             }
         )
+
+
+class Source(ZoopObject):
+
+    CARD_PRESENT_TYPE = "card_present_type"
+    CARD_NOT_PRESENT_TYPE = "card_not_present_type"
+
+    SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
+
+    def init_custom_fields(
+        self, card=None, type="card", currency="BRL", **kwargs,
+    ):
+        setattr(self, "type", type)
+        setattr(self, "currency", currency)
+
+        """
+        Ver documentação do :meth:`.from_dict_or_instance`.
+        
+        Precisamos pegar o atributo `id` para identificar o tipo.
+        """
+
+        token_for_card = Token.from_dict_or_instance(card, allow_empty=True)
+
+        if token_for_card.id is not None:
+            card_type = Source.CARD_NOT_PRESENT_TYPE
+        else:
+            try:
+                token_for_card = Token.from_dict_or_instance(card)
+                card_type = Source.CARD_PRESENT_TYPE
+            except ValidationError as e:
+                raise ValidationError(
+                    self,
+                    f"Tipo do source não identificado! "
+                    f"Utilize um dos tipos {Source.SOURCE_TYPES}",
+                ) from e
+
+        setattr(self, "card", token_for_card)
+        setattr(self, "card_type", card_type)
+
+    def get_validation_fields(self):
+        """
+        Pega ``campos de validação`` da instâcia.\n
+
+        O conjunto de campos é construído com base no :attr:`card_type`.
+        
+        Se for :attr:`CARD_PRESENT_TYPE` utiliza o :meth:`get_card_present_required_fields`.
+         
+        Se não, utiliza o :meth:`get_card_not_present_required_fields`.
+
+        Returns:
+            ``set`` de campos para ser validados
+        """
+        fields = set()
+
+        if self.card_type == self.CARD_PRESENT_TYPE:
+            return fields.union(self.get_card_present_required_fields())
+        else:
+            return fields.union(self.get_card_not_present_required_fields())
+
+    def get_all_fields(self):
+        """
+        Pega ``todos os campos`` da instância.
+
+        O conjunto de todos os campos é igual ao conjunto de campos a serem validados
+
+        Returns:
+            ``set`` de todos os campos
+        """
+        return self.get_validation_fields()
+
+    @classmethod
+    def get_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union({"card", "type", "currency", "usage", "amount"})
+
+    @classmethod
+    def get_card_not_present_required_fields(cls):
+        """
+        Método get do ``set`` de ``required fields`` para :attr:`CARD_TYPE`
+        quando o cartão é presente.
+
+        Returns:
+            ``set`` de campos
+        """
+        return cls.get_required_fields()
+
+    @classmethod
+    def get_card_present_required_fields(cls):
+        """
+        Método get do ``set`` de ``non required fields`` para :attr:`CARD_TYPE`.
+
+        Returns:
+            ``set`` de campos
+        """
+        fields = cls.get_required_fields()
+        return fields.union({"amount", "usage"})

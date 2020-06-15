@@ -10,6 +10,7 @@ from .models import (
     Invoice,
     Person,
     Seller,
+    Source,
     Transaction,
     Token,
 )  # noqa

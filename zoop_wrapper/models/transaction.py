@@ -214,18 +214,18 @@ class Transaction(ResourceModel):
 
     def get_all_fields(self):
         """
-        Get ``all fields`` for instance.
+        Pega ``todos os campos`` para instância.
 
-        ``fields`` is :meth:`get_validation_fields`
+        ``campo`` é :meth:`get_validation_fields`
 
-        if :attr:`token_type` is :attr:`CARD_TYPE` return
-        ``fields`` union :meth:`get_card_non_required_fields`.
+        Se :attr:`token_type` é :attr:`CARD_TYPE` return
+        ``campo`` união :meth:`get_card_non_required_fields`.
 
-        else :attr:`token_type` is :attr:`BANK_ACCOUNT_TYPE` return
-        ``fields`` union :meth:`get_bank_account_non_required_fields`.
+        Senão :attr:`token_type` é :attr:`BANK_ACCOUNT_TYPE` return
+        ``campo`` união :meth:`get_bank_account_non_required_fields`.
 
         Returns:
-            ``set`` of all fields
+            ``set`` de todos os campos
         """
         fields = self.get_validation_fields()
 

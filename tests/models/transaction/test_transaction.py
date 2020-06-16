@@ -19,6 +19,24 @@ class TransactionTestCase(SetTestCase):
 
         self.assertRaises(ValidationError, Transaction.init_custom_fields, instance)
 
+    def test_init_custom_fields_created_invoice(self):
+        pass
+
+    def test_init_custom_fields_created_card(self):
+        pass
+
+    def test_init_custom_fields_created_raise(self):
+        pass
+
+    def test_init_custom_fields_created_float_parse(self):
+        instance = MagicMock(amount=None)
+
+        self.assertIsNone(instance.amount)
+
+        # Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount=5.00)
+
+        # self.assertIsNone(instance.amount)
+
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()
 

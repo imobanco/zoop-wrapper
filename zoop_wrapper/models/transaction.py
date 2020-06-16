@@ -1,4 +1,4 @@
-from .base import ZoopObject, ResourceModel
+from .base import ZoopObject, ResourceModel, PaymentMethod
 from .card import Card
 from .invoice import Invoice
 from .token import Token
@@ -113,6 +113,8 @@ class Transaction(ResourceModel):
     CARD_TYPE = "credit"
     BOLETO_TYPE = "boleto"
 
+    CARD_CREATED_TYPE = "card"
+
     PAYMENT_TYPES = {CARD_TYPE, BOLETO_TYPE}
 
     def init_custom_fields(
@@ -146,14 +148,16 @@ class Transaction(ResourceModel):
         """
         setattr(self, "currency", currency)
 
+        pm = PaymentMethod.from_dict_or_instance(payment_method, allow_empty=True)
+
         if id is not None:
-            if payment_method.get('resource') == 'card':
+            if pm.resource == Transaction.CARD_CREATED_TYPE:
                 setattr(
                     self,
                     "payment_method",
                     Card.from_dict_or_instance(payment_method, allow_empty=self._allow_empty),
                 )
-            else:
+            elif pm.resource == Transaction.BOLETO_TYPE:
                 setattr(
                     self,
                     "payment_method",
@@ -161,6 +165,12 @@ class Transaction(ResourceModel):
                         payment_method, allow_empty=self._allow_empty
                     ),
                 )
+            else:
+                raise ValidationError(
+                    self,
+                    f"Essa transação já tem ID. O tipo do payment_method deve ser "
+                    f"{Transaction.CARD_CREATED_TYPE} ou "
+                    f"{Transaction.BOLETO_TYPE}!")
 
             amount = float(amount)
             amount *= 100

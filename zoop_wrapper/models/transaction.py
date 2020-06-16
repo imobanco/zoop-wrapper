@@ -148,16 +148,15 @@ class Transaction(ResourceModel):
         """
         setattr(self, "currency", currency)
 
-        pm = PaymentMethod.from_dict_or_instance(payment_method, allow_empty=True)
 
         if id is not None:
-            if pm.resource == Transaction.CARD_CREATED_TYPE:
+            if payment_type == Transaction.CARD_TYPE:
                 setattr(
                     self,
                     "payment_method",
                     Card.from_dict_or_instance(payment_method, allow_empty=self._allow_empty),
                 )
-            elif pm.resource == Transaction.BOLETO_TYPE:
+            elif payment_type == Transaction.BOLETO_TYPE:
                 setattr(
                     self,
                     "payment_method",
@@ -168,9 +167,9 @@ class Transaction(ResourceModel):
             else:
                 raise ValidationError(
                     self,
-                    f"Essa transação já tem ID. O tipo do payment_method deve ser "
-                    f"{Transaction.CARD_CREATED_TYPE} ou "
-                    f"{Transaction.BOLETO_TYPE}!")
+                    f"Já existe id para o objeto. payment_type precisa ser um valor "
+                    f"do conjunto {Transaction.PAYMENT_TYPES}"
+                )
 
             amount = float(amount)
             amount *= 100

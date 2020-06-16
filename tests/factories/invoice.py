@@ -60,6 +60,8 @@ class InvoiceFactory(PaymentMethodFactory):
     class Meta:
         model = Invoice
 
+    resource = 'boleto'
+
     expiration_date = Faker("date_this_month")
 
     zoop_boleto_id = Faker("uuid4")

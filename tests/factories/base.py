@@ -150,7 +150,7 @@ class VerificationModelFactory(ZoopObjectFactory):
     address_line1_check = Faker("pybool")
 
 
-class PaymentMethodFactory(ZoopObjectFactory):
+class PaymentMethodFactory(ResourceModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.

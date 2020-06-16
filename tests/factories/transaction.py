@@ -87,6 +87,15 @@ class TransactionBoletoFactory(TransactionFactory):
     class Meta:
         model = Transaction
 
+    payment_type = "boleto"
+
+    payment_method = SubFactory(InvoiceFactory)
+
+
+class CreateTransactionBoletoFactory(TransactionFactory):
+    class Meta:
+        model = Transaction
+
     id = None
     payment_type = "boleto"
 

@@ -145,10 +145,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
     def test_cancel_transaction(self):
 
-        self.set_delete_mock(
-            200,
-            CancelTransactionCardFactory(id="foo").to_dict()
-        )
+        self.set_delete_mock(200, CancelTransactionCardFactory(id="foo").to_dict())
 
-        response = self.client.remove_buyer('foo')
+        response = self.client.remove_buyer("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)

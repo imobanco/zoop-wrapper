@@ -12,7 +12,9 @@ class InvoiceTestCase(SetTestCase):
         )
 
     def test_non_required_fields(self):
-        with patch("zoop_wrapper.models.invoice.PaymentMethod.get_non_required_fields") as mocked_super_non_required_fields:
+        with patch(
+            "zoop_wrapper.models.invoice.PaymentMethod.get_non_required_fields"
+        ) as mocked_super_non_required_fields:
             mocked_super_non_required_fields.return_value = set()
 
             self.assertIsSubSet(

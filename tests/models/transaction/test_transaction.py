@@ -22,7 +22,9 @@ class TransactionTestCase(SetTestCase):
     def test_init_custom_fields_created_invoice(self):
         instance = MagicMock()
 
-        Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount="23.45")
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.BOLETO_TYPE, id="foo", amount="23.45"
+        )
         self.assertEqual(instance.amount, 2345)
         self.assertIsInstance(instance.payment_method, Invoice)
         self.assertIsInstance(instance.point_of_sale, PointOfSale)
@@ -33,7 +35,9 @@ class TransactionTestCase(SetTestCase):
     def test_init_custom_fields_created_card(self):
         instance = MagicMock()
 
-        Transaction.init_custom_fields(instance, payment_type=Transaction.CARD_TYPE, id='foo', amount="23.45")
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.CARD_TYPE, id="foo", amount="23.45"
+        )
         self.assertEqual(instance.amount, 2345)
         self.assertIsInstance(instance.payment_method, Card)
         self.assertIsInstance(instance.point_of_sale, PointOfSale)
@@ -44,14 +48,23 @@ class TransactionTestCase(SetTestCase):
     def test_init_custom_fields_created_raise(self):
         instance = MagicMock()
 
-        self.assertRaises(ValidationError, Transaction.init_custom_fields, instance, payment_type="bar", id='foo', amount="23.45")
+        self.assertRaises(
+            ValidationError,
+            Transaction.init_custom_fields,
+            instance,
+            payment_type="bar",
+            id="foo",
+            amount="23.45",
+        )
 
     def test_init_custom_fields_created_float_parse(self):
         instance = MagicMock(amount=None)
 
         self.assertIsNone(instance.amount)
 
-        Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount="12.34")
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.BOLETO_TYPE, id="foo", amount="12.34"
+        )
 
         self.assertEqual(instance.amount, 1234)
 

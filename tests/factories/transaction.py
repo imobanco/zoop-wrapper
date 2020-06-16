@@ -112,4 +112,3 @@ class CancelTransactionCardFactory(TransactionFactory):
     payment_method = SubFactory(CardFactory)
 
     source = SubFactory(SourceCardPresentFactory)
-

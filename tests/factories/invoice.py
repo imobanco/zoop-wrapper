@@ -60,7 +60,7 @@ class InvoiceFactory(PaymentMethodFactory):
     class Meta:
         model = Invoice
 
-    resource = 'boleto'
+    resource = "boleto"
 
     expiration_date = Faker("date_this_month")
 

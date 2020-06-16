@@ -33,9 +33,9 @@ class TransactionTestCase(SetTestCase):
 
         self.assertIsNone(instance.amount)
 
-        # Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount=5.00)
+        Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount="12.34")
 
-        # self.assertIsNone(instance.amount)
+        self.assertEqual(instance.amount, 1234)
 
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()

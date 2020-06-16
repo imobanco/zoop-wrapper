@@ -100,3 +100,15 @@ class CreateTransactionBoletoFactory(TransactionFactory):
     payment_type = "boleto"
 
     payment_method = SubFactory(InvoiceFactory)
+
+
+class CancelTransactionCardFactory(TransactionFactory):
+    class Meta:
+        model = Transaction
+
+    id = None
+    payment_type = "credit"
+
+    payment_method = SubFactory(SourceCardPresentFactory)
+
+    source = SubFactory(SourceCardPresentFactory)

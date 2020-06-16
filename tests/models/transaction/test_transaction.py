@@ -3,7 +3,7 @@ from unittest.mock import MagicMock, patch
 from tests.utils import SetTestCase
 from zoop_wrapper.exceptions import ValidationError
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
-from zoop_wrapper.models.token import Token
+from zoop_wrapper.models.token import Token, Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import (
     TransactionFactory,
@@ -20,13 +20,31 @@ class TransactionTestCase(SetTestCase):
         self.assertRaises(ValidationError, Transaction.init_custom_fields, instance)
 
     def test_init_custom_fields_created_invoice(self):
-        pass
+        instance = MagicMock()
+
+        Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE, id='foo', amount="23.45")
+        self.assertEqual(instance.amount, 2345)
+        self.assertIsInstance(instance.payment_method, Invoice)
+        self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        self.assertIsInstance(instance.history, list)
+        self.assertEqual(len(instance.history), 1)
+        self.assertIsInstance(instance.history[0], History)
 
     def test_init_custom_fields_created_card(self):
-        pass
+        instance = MagicMock()
+
+        Transaction.init_custom_fields(instance, payment_type=Transaction.CARD_TYPE, id='foo', amount="23.45")
+        self.assertEqual(instance.amount, 2345)
+        self.assertIsInstance(instance.payment_method, Card)
+        self.assertIsInstance(instance.point_of_sale, PointOfSale)
+        self.assertIsInstance(instance.history, list)
+        self.assertEqual(len(instance.history), 1)
+        self.assertIsInstance(instance.history[0], History)
 
     def test_init_custom_fields_created_raise(self):
-        pass
+        instance = MagicMock()
+
+        self.assertRaises(ValidationError, Transaction.init_custom_fields, instance, payment_type="bar", id='foo', amount="23.45")
 
     def test_init_custom_fields_created_float_parse(self):
         instance = MagicMock(amount=None)

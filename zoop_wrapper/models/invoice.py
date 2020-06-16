@@ -290,7 +290,7 @@ class Invoice(PaymentMethod):
 
     @classmethod
     def get_non_required_fields(cls):
-        fields = super().get_required_fields()
+        fields = super().get_non_required_fields()
         return fields.union(
             {
                 "zoop_boleto_id",

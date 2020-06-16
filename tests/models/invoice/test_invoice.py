@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from tests.utils import SetTestCase
 from zoop_wrapper.models.invoice import Invoice, BillingInstructions
@@ -12,27 +12,32 @@ class InvoiceTestCase(SetTestCase):
         )
 
     def test_non_required_fields(self):
-        self.assertIsSubSet(
-            {
-                "zoop_boleto_id",
-                "status",
-                "reference_number",
-                "document_number",
-                "recipient",
-                "bank_code",
-                "sequence",
-                "url",
-                "accepted",
-                "printed",
-                "downloaded",
-                "fingerprint",
-                "paid_at",
-                "barcode",
-                "body_instructions",
-                "billing_instructions",
-            },
-            Invoice.get_non_required_fields(),
-        )
+        with patch("zoop_wrapper.models.invoice.PaymentMethod.get_non_required_fields") as mocked_super_non_required_fields:
+            mocked_super_non_required_fields.return_value = set()
+
+            self.assertIsSubSet(
+                {
+                    "zoop_boleto_id",
+                    "status",
+                    "reference_number",
+                    "document_number",
+                    "recipient",
+                    "bank_code",
+                    "sequence",
+                    "url",
+                    "accepted",
+                    "printed",
+                    "downloaded",
+                    "fingerprint",
+                    "paid_at",
+                    "barcode",
+                    "body_instructions",
+                    "billing_instructions",
+                },
+                Invoice.get_non_required_fields(),
+            )
+
+            mocked_super_non_required_fields.assert_called_once()
 
     def test_init_custom_fields(self):
         instance = MagicMock(spec=Invoice)

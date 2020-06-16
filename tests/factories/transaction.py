@@ -106,6 +106,7 @@ class CancelTransactionCardFactory(TransactionFactory):
     class Meta:
         model = Transaction
 
+    # ?
     id = None
     payment_type = "credit"
 

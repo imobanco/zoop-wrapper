@@ -5,6 +5,7 @@ from tests.factories.transaction import (
     TransactionFactory,
     TransactionCreditFactory,
     TransactionBoletoFactory,
+    CancelTransactionCardFactory,
 )
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
@@ -146,7 +147,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         self.set_delete_mock(
             200,
-        #     CHAMADA da factory criada
+            CancelTransactionCardFactory(id="foo").to_dict()
         )
 
         response = self.client.remove_buyer('foo')

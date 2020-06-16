@@ -3,6 +3,7 @@ from factory.faker import Faker
 
 from tests.factories.base import ZoopObjectFactory, ResourceModelFactory
 from tests.factories.invoice import InvoiceFactory
+from tests.factories.card import CardFactory
 from tests.factories.source import SourceCardPresentFactory
 from zoop_wrapper.models.transaction import PointOfSale, History, Transaction
 
@@ -106,10 +107,9 @@ class CancelTransactionCardFactory(TransactionFactory):
     class Meta:
         model = Transaction
 
-    # ?
-    id = None
     payment_type = "credit"
 
-    payment_method = SubFactory(SourceCardPresentFactory)
+    payment_method = SubFactory(CardFactory)
 
     source = SubFactory(SourceCardPresentFactory)
+

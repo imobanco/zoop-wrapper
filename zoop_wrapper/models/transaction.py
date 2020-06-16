@@ -113,8 +113,6 @@ class Transaction(ResourceModel):
     CARD_TYPE = "credit"
     BOLETO_TYPE = "boleto"
 
-    CARD_CREATED_TYPE = "card"
-
     PAYMENT_TYPES = {CARD_TYPE, BOLETO_TYPE}
 
     def init_custom_fields(

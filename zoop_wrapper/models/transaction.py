@@ -170,8 +170,10 @@ class Transaction(ResourceModel):
 
         else:
             if payment_type not in Transaction.PAYMENT_TYPES:
-                raise ValueError(
-                    f"payment_type must be one " f"of {Transaction.PAYMENT_TYPES}"
+                raise ValidationError(
+                    self,
+                    f"payment_type precisa ser um valor "
+                    f"do conjunto {Transaction.PAYMENT_TYPES}"
                 )
             elif payment_type == Transaction.CARD_TYPE:
                 setattr(

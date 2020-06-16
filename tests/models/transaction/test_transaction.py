@@ -1,6 +1,7 @@
 from unittest.mock import MagicMock, patch
 
 from tests.utils import SetTestCase
+from zoop_wrapper.exceptions import ValidationError
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
 from zoop_wrapper.models.token import Token
 from zoop_wrapper.models.invoice import Invoice
@@ -16,7 +17,7 @@ class TransactionTestCase(SetTestCase):
     def test_init_custom_fields_raise_type(self):
         instance = MagicMock()
 
-        self.assertRaises(ValueError, Transaction.init_custom_fields, instance)
+        self.assertRaises(ValidationError, Transaction.init_custom_fields, instance)
 
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()

@@ -154,6 +154,13 @@ class Transaction(ResourceModel):
             )
 
         if id is not None:
+            amount = float(amount)
+            amount *= 100
+            amount = int(amount)
+
+            setattr(self, "amount", amount)
+
+        if id is not None:
             if payment_type == Transaction.CARD_TYPE:
                 setattr(
                     self,
@@ -170,12 +177,6 @@ class Transaction(ResourceModel):
                         payment_method, allow_empty=self._allow_empty
                     ),
                 )
-
-            amount = float(amount)
-            amount *= 100
-            amount = int(amount)
-
-            setattr(self, "amount", amount)
 
         else:
             if payment_type == Transaction.CARD_TYPE:

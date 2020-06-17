@@ -182,6 +182,11 @@ class Transaction(ResourceModel):
                     payment_method, allow_empty=self._allow_empty
                 ),
             )
+        else:
+            raise ValidationError(
+                self,
+                f"Alguma coisa muito errada aconteceu!! "
+            )
 
         setattr(self, "payment_type", payment_type)
 

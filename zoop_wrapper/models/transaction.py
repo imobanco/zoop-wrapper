@@ -183,7 +183,7 @@ class Transaction(ResourceModel):
                 "source",
                 Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
             )
-        else:
+        elif id is None and payment_type == Transaction.BOLETO_TYPE:
             setattr(
                 self,
                 "payment_method",

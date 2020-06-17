@@ -74,9 +74,7 @@ class TransactionTestCase(SetTestCase):
         Quando init_custom_fields rodar
         Então o amount após conversão deve continuar sendo 1234
         """
-        instance = MagicMock(amount=1234)
-
-        self.assertEqual(instance.amount, 1234)
+        instance = MagicMock()
 
         Transaction.init_custom_fields(
             instance, payment_type=Transaction.BOLETO_TYPE
@@ -90,9 +88,7 @@ class TransactionTestCase(SetTestCase):
         Quando init_custom_fields rodar
         Então o amount após conversão deve ser 5678
         """
-        instance = MagicMock(amount=56.78)
-
-        self.assertEqual(instance.amount, 56.78)
+        instance = MagicMock()
 
         Transaction.init_custom_fields(
             instance, payment_type=Transaction.BOLETO_TYPE

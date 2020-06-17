@@ -155,8 +155,9 @@ class Transaction(ResourceModel):
                 f"do conjunto {Transaction.PAYMENT_TYPES}",
             )
 
-        amount = convert_currency_float_value_to_cents(amount)
-        setattr(self, "amount", amount)
+        if amount is not None:
+            amount = convert_currency_float_value_to_cents(amount)
+            setattr(self, "amount", amount)
 
         if id is not None and payment_type == Transaction.CARD_TYPE:
             setattr(

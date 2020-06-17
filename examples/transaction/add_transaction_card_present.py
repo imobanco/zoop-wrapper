@@ -31,7 +31,6 @@ t = Transaction(
     ),
     on_behalf_of=seller_denise,
     customer=seller_brian,
-    amount="1234",
     payment_type="credit",
     description="Uma descrição breve da motivação da sua transação",
 )

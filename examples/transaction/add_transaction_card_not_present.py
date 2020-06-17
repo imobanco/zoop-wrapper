@@ -25,7 +25,6 @@ t = Transaction(
     description="Uma descrição breve da motivação da sua transação",
     statement_descriptor="Loja do Joao",
     payment_type="credit",
-    allow_empty=True,
 )
 
 response = client.add_transaction(t)

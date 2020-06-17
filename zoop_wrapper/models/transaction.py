@@ -248,7 +248,6 @@ class Transaction(ResourceModel):
         fields = super().get_required_fields()
         return fields.union(
             {
-                "amount",
                 "currency",
                 "description",
                 "on_behalf_of",
@@ -265,7 +264,7 @@ class Transaction(ResourceModel):
     @classmethod
     def get_boleto_required_fields(cls):
         fields = cls.get_required_fields()
-        return fields.union({"payment_method",})
+        return fields.union({"payment_method", "amount",})
 
     @classmethod
     def get_non_required_fields(cls):

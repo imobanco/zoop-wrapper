@@ -146,7 +146,9 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance.source, Source)
 
     def test_cancel_transaction(self):
-        with patch("zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction") as mocked_retrieve_transaction:
+        with patch(
+            "zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction"
+        ) as mocked_retrieve_transaction:
             self.set_post_mock(200, CancelTransactionCardFactory(id="foo").to_dict())
 
             response = self.client.cancel_transaction("foo")

@@ -181,10 +181,7 @@ class Transaction(ResourceModel):
                 ),
             )
         else:
-            raise ValidationError(
-                self,
-                f"Alguma coisa muito errada aconteceu!! "
-            )
+            raise ValidationError(self, f"Alguma coisa muito errada aconteceu!! ")
 
         setattr(self, "payment_type", payment_type)
 

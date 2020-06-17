@@ -74,12 +74,10 @@ class TransactionTestCase(SetTestCase):
         Quando init_custom_fields rodar
         Então o amount após conversão deve continuar sendo 1234
         """
-        instance = MagicMock(amount=1234)
-
-        self.assertEqual(instance.amount, 1234)
+        instance = MagicMock()
 
         Transaction.init_custom_fields(
-            instance, payment_type=Transaction.BOLETO_TYPE
+            instance, payment_type=Transaction.BOLETO_TYPE, amount=1234
         )
 
         self.assertEqual(instance.amount, 1234)
@@ -90,21 +88,20 @@ class TransactionTestCase(SetTestCase):
         Quando init_custom_fields rodar
         Então o amount após conversão deve ser 5678
         """
-        instance = MagicMock(amount=56.78)
-
-        self.assertEqual(instance.amount, 56.78)
+        instance = MagicMock()
 
         Transaction.init_custom_fields(
-            instance, payment_type=Transaction.BOLETO_TYPE
+            instance, payment_type=Transaction.BOLETO_TYPE, amount=56.78
         )
 
         self.assertEqual(instance.amount, 5678)
 
-
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()
 
-        Transaction.init_custom_fields(instance, payment_type=Transaction.BOLETO_TYPE)
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.BOLETO_TYPE, amount=1234
+        )
         self.assertIsInstance(instance.payment_method, Invoice)
         self.assertIsInstance(instance.point_of_sale, PointOfSale)
         self.assertIsInstance(instance.history, list)
@@ -118,6 +115,7 @@ class TransactionTestCase(SetTestCase):
             instance,
             payment_type=Transaction.CARD_TYPE,
             source=SourceCardPresentFactory().to_dict(),
+            amount=1234,
         )
         self.assertIsInstance(instance.source, Source)
 
@@ -130,6 +128,7 @@ class TransactionTestCase(SetTestCase):
             source=SourceCardNotPresentFactory(
                 amount=1234, usage="single_use"
             ).to_dict(),
+            amount=1234,
             allow_empty=True,
         )
         self.assertIsInstance(instance.source, Source)

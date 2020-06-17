@@ -4,6 +4,8 @@ from .invoice import Invoice
 from .token import Token
 from ..exceptions import ValidationError
 
+from zoop_wrapper.utils import convert_currency_float_value_to_cents
+
 
 class PointOfSale(ZoopObject):
     """
@@ -152,18 +154,9 @@ class Transaction(ResourceModel):
                 f"payment_type precisa ser um valor "
                 f"do conjunto {Transaction.PAYMENT_TYPES}",
             )
-        # if not str(amount).isdigit():
-        #     flag = True
 
-        if amount is None:
-            1/0
-
-        if id is not None and not isinstance(amount, int):
-            amount = float(amount)
-            amount *= 100
-            amount = int(amount)
-
-            setattr(self, "amount", amount)
+        amount = convert_currency_float_value_to_cents(amount)
+        setattr(self, "amount", amount)
 
         if id is not None and payment_type == Transaction.CARD_TYPE:
             setattr(

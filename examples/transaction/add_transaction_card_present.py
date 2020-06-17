@@ -1,5 +1,7 @@
 import os
 
+from factory.faker import Faker
+
 from zoop_wrapper import ZoopWrapper, Transaction, Card, Source, Token
 from examples.utils import dump_response
 

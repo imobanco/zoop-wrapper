@@ -5,7 +5,6 @@ from requests import Response
 from zoop_wrapper.wrapper import ZoopWrapper
 
 
-
 class SetTestCase(TestCase):
     @staticmethod
     def __get_msg(container, contained):

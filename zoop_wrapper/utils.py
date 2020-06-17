@@ -39,7 +39,7 @@ def convert_currency_float_value_to_cents(value):
     try:
         float(value)
     except (ValueError, TypeError) as e:
-        raise FieldError(value, 'O input é inválido') from e
+        raise FieldError(value, "O input é inválido") from e
 
     try:
         if isinstance(value, float):

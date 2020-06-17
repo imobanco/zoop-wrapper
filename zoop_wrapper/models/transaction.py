@@ -171,7 +171,11 @@ class Transaction(ResourceModel):
                     ),
                 )
             else:
-
+                raise ValidationError(
+                    self,
+                    f"Já existe id para o objeto. payment_type precisa ser um valor "
+                    f"do conjunto {Transaction.PAYMENT_TYPES}",
+                )
 
             amount = float(amount)
             amount *= 100

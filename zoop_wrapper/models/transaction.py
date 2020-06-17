@@ -152,8 +152,13 @@ class Transaction(ResourceModel):
                 f"payment_type precisa ser um valor "
                 f"do conjunto {Transaction.PAYMENT_TYPES}",
             )
+        # if not str(amount).isdigit():
+        #     flag = True
 
-        if id is not None and not str(amount).isdigit():
+        if amount is None:
+            1/0
+
+        if id is not None and not isinstance(amount, int):
             amount = float(amount)
             amount *= 100
             amount = int(amount)

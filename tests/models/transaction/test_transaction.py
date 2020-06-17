@@ -68,6 +68,39 @@ class TransactionTestCase(SetTestCase):
 
         self.assertEqual(instance.amount, 1234)
 
+    def test_init_custom_fields_user_given_integer_amount(self):
+        """
+        Dado que um usuário criou a transação com amount 1234
+        Quando init_custom_fields rodar
+        Então o amount após conversão deve continuar sendo 1234
+        """
+        instance = MagicMock(amount=1234)
+
+        self.assertEqual(instance.amount, 1234)
+
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.BOLETO_TYPE
+        )
+
+        self.assertEqual(instance.amount, 1234)
+
+    def test_init_custom_fields_user_given_float_amount(self):
+        """
+        Dado que um usuário criou a transação com amount 56.78
+        Quando init_custom_fields rodar
+        Então o amount após conversão deve ser 5678
+        """
+        instance = MagicMock(amount=56.78)
+
+        self.assertEqual(instance.amount, 56.78)
+
+        Transaction.init_custom_fields(
+            instance, payment_type=Transaction.BOLETO_TYPE
+        )
+
+        self.assertEqual(instance.amount, 5678)
+
+
     def test_init_custom_fields_invoice(self):
         instance = MagicMock()
 

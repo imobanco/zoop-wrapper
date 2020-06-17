@@ -162,7 +162,7 @@ class Transaction(ResourceModel):
                         payment_method, allow_empty=self._allow_empty
                     ),
                 )
-            elif payment_type == Transaction.BOLETO_TYPE:
+            else:
                 setattr(
                     self,
                     "payment_method",

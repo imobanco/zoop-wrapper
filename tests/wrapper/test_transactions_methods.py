@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from tests.utils import APITestCase
 from zoop_wrapper.models.transaction import Transaction, Source
 from zoop_wrapper.models.base import PaymentMethod
@@ -144,8 +146,9 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.assertIsInstance(response.instance.source, Source)
 
     def test_cancel_transaction(self):
+        with patch("zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction") as mocked_retrieve_transaction:
+            self.set_post_mock(200, CancelTransactionCardFactory(id="foo").to_dict())
 
-        self.set_post_mock(200, CancelTransactionCardFactory(id="foo").to_dict())
-
-        response = self.client.cancel_transaction("foo")
-        self.assertEqual(response.status_code, 200, msg=response.data)
+            response = self.client.cancel_transaction("foo")
+            self.assertEqual(response.status_code, 200, msg=response.data)
+            mocked_retrieve_transaction.assert_called_once()

@@ -146,6 +146,13 @@ class Transaction(ResourceModel):
         """
         setattr(self, "currency", currency)
 
+        if payment_type not in Transaction.PAYMENT_TYPES:
+            raise ValidationError(
+                self,
+                f"payment_type precisa ser um valor "
+                f"do conjunto {Transaction.PAYMENT_TYPES}",
+            )
+
         if id is not None:
             if payment_type == Transaction.CARD_TYPE:
                 setattr(
@@ -177,13 +184,7 @@ class Transaction(ResourceModel):
             setattr(self, "amount", amount)
 
         else:
-            if payment_type not in Transaction.PAYMENT_TYPES:
-                raise ValidationError(
-                    self,
-                    f"payment_type precisa ser um valor "
-                    f"do conjunto {Transaction.PAYMENT_TYPES}",
-                )
-            elif payment_type == Transaction.CARD_TYPE:
+            if payment_type == Transaction.CARD_TYPE:
                 setattr(
                     self,
                     "source",

@@ -168,22 +168,13 @@ class Transaction(ResourceModel):
                     payment_method, allow_empty=self._allow_empty
                 ),
             )
-        elif id is not None and payment_type == Transaction.BOLETO_TYPE:
-            setattr(
-                self,
-                "payment_method",
-                Invoice.from_dict_or_instance(
-                    payment_method, allow_empty=self._allow_empty
-                ),
-            )
-
         elif id is None and payment_type == Transaction.CARD_TYPE:
             setattr(
                 self,
                 "source",
                 Source.from_dict_or_instance(source, allow_empty=self._allow_empty),
             )
-        elif id is None and payment_type == Transaction.BOLETO_TYPE:
+        elif payment_type == Transaction.BOLETO_TYPE:
             setattr(
                 self,
                 "payment_method",

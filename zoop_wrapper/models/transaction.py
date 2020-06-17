@@ -315,6 +315,8 @@ class Source(ZoopObject):
         setattr(self, "type", type)
         setattr(self, "currency", currency)
 
+        kwargs["amount"] = convert_currency_float_value_to_cents(kwargs["amount"])
+
         """
         Ver documentação do :meth:`.from_dict_or_instance`.
         

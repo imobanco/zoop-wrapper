@@ -169,7 +169,6 @@ class TransactionTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
             {
-                "amount",
                 "currency",
                 "description",
                 "on_behalf_of",
@@ -188,7 +187,6 @@ class TransactionTestCase(SetTestCase):
             {
                 "source",
                 "description",
-                "amount",
                 "currency",
                 "payment_type",
                 "on_behalf_of",
@@ -221,7 +219,6 @@ class TransactionTestCase(SetTestCase):
                 "description",
                 "on_behalf_of",
                 "currency",
-                "amount",
                 "source",
             },
             instance.get_validation_fields(),

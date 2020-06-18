@@ -13,22 +13,22 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 b = Buyer(
-    taxpayer_id="19249382944",
-    first_name="foo",
-    last_name="foo",
-    email="foo@bar.com",
-    phone_number="+55 84 99999-9999",
-    birthdate="1994-12-27",
     address=Address(
+        city="Natal",
+        country_code="BR",
         line1="foo",
         line2="123",
         line3="barbar",
         neighborhood="fooofoo",
-        city="Natal",
-        state="RN",
         postal_code="59152250",
-        country_code="BR",
+        state="RN",
     ),
+    birthdate="1994-12-27",
+    email="foo@bar.com",
+    first_name="foo",
+    last_name="foo",
+    phone_number="+55 84 99999-9999",
+    taxpayer_id="19249382944",
 )
 
 """

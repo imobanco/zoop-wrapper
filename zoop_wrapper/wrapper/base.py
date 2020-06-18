@@ -86,9 +86,9 @@ class RequestsWrapper:
         Args:
             action: nome do resource
             identifier: identificador de detalhe (ID)
-            subaction: subação do resource
             search: query com url args para serem buscados
             sub_action_before_identifier: flag para inverter a posição do identifier e subaction
+            subaction: subação do resource
 
         Examples:
             >>> rw = RequestsWrapper()

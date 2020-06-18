@@ -59,22 +59,22 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         self.set_post_mock(201, {})
 
         data = {
-            "taxpayer_id": gen.cpf(),
-            "first_name": "foo",
-            "last_name": "bar",
-            "email": "foo@bar.com",
-            "phone_number": "+55 84 99999-9999",
-            "birthdate": "1994-12-27",
             "address": {
+                "city": "Natal",
+                "country_code": "BR",
                 "line1": "foo",
                 "line2": "123",
                 "line3": "barbar",
                 "neighborhood": "fooofoo",
-                "city": "Natal",
-                "state": "BR-RN",
                 "postal_code": "59152250",
-                "country_code": "BR",
+                "state": "BR-RN",
             },
+            "birthdate": "1994-12-27",
+            "email": "foo@bar.com",
+            "first_name": "foo",
+            "last_name": "bar",
+            "phone_number": "+55 84 99999-9999",
+            "taxpayer_id": gen.cpf(),
         }
 
         response = self.client.add_seller(data)
@@ -88,22 +88,22 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         self.set_post_mock(409, {"error": {"message": "Esse seller é duplicado!!!!"}})
 
         data = {
-            "taxpayer_id": 12685293892,
-            "first_name": "foo",
-            "last_name": "bar",
-            "email": "foo@bar.com",
-            "phone_number": "+55 84 99999-9999",
-            "birthdate": "1994-12-27",
             "address": {
+                "city": "Natal",
+                "country_code": "BR",
                 "line1": "foo",
                 "line2": "123",
                 "line3": "barbar",
                 "neighborhood": "fooofoo",
-                "city": "Natal",
-                "state": "BR-RN",
                 "postal_code": "59152250",
-                "country_code": "BR",
+                "state": "BR-RN",
             },
+            "birthdate": "1994-12-27",
+            "email": "foo@bar.com",
+            "first_name": "foo",
+            "last_name": "bar",
+            "phone_number": "+55 84 99999-9999",
+            "taxpayer_id": 12685293892,
         }
 
         self.assertRaises(HTTPError, self.client.add_seller, data)

@@ -51,33 +51,31 @@ class BillingInstructionsFactory(ZoopObjectFactory):
     class Meta:
         model = BillingInstructions
 
-    late_fee = SubFactory(FixedFeeFactory)
-    interest = SubFactory(PercentFeeFactory)
     discount = SubFactory(FixedDiscountFactory)
+    interest = SubFactory(PercentFeeFactory)
+    late_fee = SubFactory(FixedFeeFactory)
 
 
 class InvoiceFactory(PaymentMethodFactory):
     class Meta:
         model = Invoice
 
-    resource = "boleto"
-
-    expiration_date = Faker("date_this_month")
-
-    zoop_boleto_id = Faker("uuid4")
-    status = "not_paid"
-    reference_number = Faker("pyint")
-    document_number = Faker("pyint")
-    recipient = Faker("company")
-    bank_code = Faker("pyint")
-    sequence = Faker("pyint")
-    url = Faker("uri")
     accepted = Faker("pybool")
-    printed = Faker("pybool")
+    bank_code = Faker("pyint")
+    barcode = Faker("pyint")
+    billing_instructions = SubFactory(BillingInstructionsFactory)
+    body_instructions = ["pague este boleto!"]
+    document_number = Faker("pyint")
     downloaded = Faker("pybool")
+    expiration_date = Faker("date_this_month")
     fingerprint = Faker("uuid4")
     paid_at = Faker("date_this_month")
-    barcode = Faker("pyint")
     payment_limit_date = Faker("date_this_month")
-    body_instructions = ["pague este boleto!"]
-    billing_instructions = SubFactory(BillingInstructionsFactory)
+    printed = Faker("pybool")
+    recipient = Faker("company")
+    reference_number = Faker("pyint")
+    resource = "boleto"
+    sequence = Faker("pyint")
+    status = "not_paid"
+    url = Faker("uri")
+    zoop_boleto_id = Faker("uuid4")

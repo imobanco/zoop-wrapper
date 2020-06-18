@@ -9,12 +9,12 @@ class PersonTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
             {
+                "address",
+                "email",
                 "first_name",
                 "last_name",
-                "email",
-                "taxpayer_id",
                 "phone_number",
-                "address",
+                "taxpayer_id",
             },
             Person.get_required_fields(),
         )

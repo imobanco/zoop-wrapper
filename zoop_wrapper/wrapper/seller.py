@@ -16,58 +16,58 @@ class SellerWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                "taxpayer_id": "foo",
+                "birthdate": "1994-12-27",
+                "email": "foo@bar.com",
                 "first_name": "foo",
                 "last_name": "foo",
-                "email": "foo@bar.com",
                 "phone_number": "+55 84 99999-9999",
-                "birthdate": "1994-12-27",
+                "taxpayer_id": "foo",
                 "address": {
+                    "city": "Natal",
+                    "country_code": "BR"
                     "line1": "foo",
                     "line2": "123",
                     "line3": "barbar",
                     "neighborhood": "fooofoo",
-                    "city": "Natal",
-                    "state": "RN",
                     "postal_code": "59152250",
-                    "country_code": "BR"
+                    "state": "RN",
                 }
             }
 
             data = {
-                "business_name": "foo",
-                "business_phone": "foo",
                 "business_email": "foo",
-                "business_website": "foo",
+                "business_name": "foo",
                 "business_opening_date": "foo",
+                "business_phone": "foo",
+                "business_website": "foo",
                 "ein": "foo",
                 "owner": {
+                    "birthdate": "foo",
+                    "email": "foo",
                     "first_name": "foo",
                     "last_name": "foo",
-                    "email": "foo",
-                    "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": "foo",
+                    "taxpayer_id": "foo",
                     "address": {
+                        "city": "Natal",
+                        "country_code": "BR"
                         "line1": "foo",
                         "line2": "123",
                         "line3": "barbar",
                         "neighborhood": "fooofoo",
-                        "city": "Natal",
-                        "state": "RN",
                         "postal_code": "59152250",
-                        "country_code": "BR"
+                        "state": "RN",
                     }
                 },
                 "business_address": {
+                    "city": "Natal",
+                    "country_code": "BR"
                     "line1": "foo",
                     "line2": "123",
                     "line3": "barbar",
                     "neighborhood": "fooofoo",
-                    "city": "Natal",
-                    "state": "RN",
                     "postal_code": "59152250",
-                    "country_code": "BR"
+                    "state": "RN",
                 }
             }
 
@@ -138,58 +138,58 @@ class SellerWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                "taxpayer_id": "foo",
+                "birthdate": "1994-12-27",
+                "email": "foo@bar.com",
                 "first_name": "foo",
                 "last_name": "foo",
-                "email": "foo@bar.com",
                 "phone_number": "+55 84 99999-9999",
-                "birthdate": "1994-12-27",
+                "taxpayer_id": "foo",
                 "address": {
+                    "city": "Natal",
+                    "country_code": "BR"
                     "line1": "foo",
                     "line2": "123",
                     "line3": "barbar",
                     "neighborhood": "fooofoo",
-                    "city": "Natal",
-                    "state": "BR-RN",
                     "postal_code": "59152250",
-                    "country_code": "BR"
+                    "state": "BR-RN",
                 }
             }
 
             data = {
-                "business_name": "foo",
-                "business_phone": "foo",
                 "business_email": "foo",
-                "business_website": "foo",
+                "business_name": "foo",
                 "business_opening_date": "foo",
+                "business_phone": "foo",
+                "business_website": "foo",
                 "ein": "foo",
                 "owner": {
+                    "birthdate": "foo",
+                    "email": "foo",
                     "first_name": "foo",
                     "last_name": "foo",
-                    "email": "foo",
-                    "taxpayer_id": "foo",
                     "phone_number": "foo",
-                    "birthdate": "foo",
+                    "taxpayer_id": "foo",
                     "address": {
+                        "city": "foo",
+                        "country_code": "foo"
                         "line1": "foo",
                         "line2": "foo",
                         "line3": "foo",
                         "neighborhood": "foo",
-                        "city": "foo",
-                        "state": "foo",
                         "postal_code": "foo",
-                        "country_code": "foo"
+                        "state": "foo",
                     }
                 }
                 "business_address": {
+                    "city": "foo",
+                    "country_code": "foo"
                     "line1": "foo",
                     "line2": "foo",
                     "line3": "foo",
                     "neighborhood": "foo",
-                    "city": "foo",
-                    "state": "foo",
                     "postal_code": "foo",
-                    "country_code": "foo"
+                    "state": "foo",
                 }
             }
 

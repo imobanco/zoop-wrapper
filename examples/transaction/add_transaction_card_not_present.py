@@ -17,14 +17,14 @@ seller_brian = "0b05a360f4b749498f74e13004c08024"
 seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 
 t = Transaction(
+    customer=seller_brian,
+    description="Uma descrição breve da motivação da sua transação",
+    on_behalf_of=seller_denise,
+    payment_type="credit",
+    statement_descriptor="Loja do Joao",
     source=Source(
         card=Token(id=card_id_brian, allow_empty=True), usage="single_use", amount="500"
     ),
-    on_behalf_of=seller_denise,
-    customer=seller_brian,
-    description="Uma descrição breve da motivação da sua transação",
-    statement_descriptor="Loja do Joao",
-    payment_type="credit",
 )
 
 response = client.add_transaction(t)

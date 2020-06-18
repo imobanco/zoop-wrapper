@@ -47,21 +47,21 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
         self.set_post_mock(201, BuyerFactory().to_dict())
 
         data = {
+            "birthdate": "foo",
+            "email": "foo@bar.com",
             "first_name": "foo",
             "last_name": "foo",
-            "email": "foo@bar.com",
-            "taxpayer_id": gen.cpf(),
             "phone_number": "foo",
-            "birthdate": "foo",
+            "taxpayer_id": gen.cpf(),
             "address": {
+                "city": "foo",
+                "country_code": "BR",
                 "line1": "foo",
                 "line2": "foo",
                 "line3": "foo",
-                # "neighborhood": "foo",
-                "city": "foo",
-                "state": "RN",
                 "postal_code": "foo",
-                "country_code": "BR",
+                "state": "RN",
+                # "neighborhood": "foo",
             },
         }
 

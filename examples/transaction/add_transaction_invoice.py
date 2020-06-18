@@ -1,11 +1,11 @@
 import os
 
 from zoop_wrapper import (
-    ZoopWrapper,
-    Transaction,
-    Invoice,
     BillingConfiguration,
     BillingInstructions,
+    Invoice,
+    Transaction,
+    ZoopWrapper,
 )
 from examples.utils import dump_response
 
@@ -28,9 +28,9 @@ limite = "2020-06-30"
 
 t = Transaction(
     amount=quantia_em_centavos,
+    customer=buyer_or_seller_id,
     description="meu boleto gerado para teste",
     on_behalf_of=seller_id,
-    customer=buyer_or_seller_id,
     payment_type="boleto",
     payment_method=Invoice(
         expiration_date=vencimento,
@@ -47,10 +47,10 @@ t = Transaction(
                 start_date=vencimento,
             ),
             discount=BillingConfiguration(
-                is_discount=True,
-                mode=BillingConfiguration.FIXED_MODE,
                 amount=100,
+                is_discount=True,
                 limit_date=vencimento,
+                mode=BillingConfiguration.FIXED_MODE,
             ),
         ),
     ),

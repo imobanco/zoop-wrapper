@@ -4,10 +4,10 @@ from tests.utils import APITestCase
 from zoop_wrapper.models.transaction import Transaction, Source
 from zoop_wrapper.models.base import PaymentMethod
 from tests.factories.transaction import (
-    TransactionFactory,
-    TransactionCreditFactory,
-    TransactionBoletoFactory,
     CancelTransactionCardFactory,
+    TransactionBoletoFactory,
+    TransactionCreditFactory,
+    TransactionFactory,
 )
 from zoop_wrapper.models.card import Card
 from zoop_wrapper.models.invoice import Invoice
@@ -57,9 +57,9 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         data = {
             "amount": "1000",
             "currency": "BRL",
+            "customer": "buyer_id",
             "description": "meu boleto gerado para teste",
             "on_behalf_of": "seller_id",
-            "customer": "buyer_id",
             "payment_type": "boleto",
             "payment_method": {
                 "expiration_date": "2020-06-20",
@@ -91,26 +91,26 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.set_post_mock(201, TransactionCreditFactory().to_dict())
 
         data = {
+            "amount": -5658.2277,
+            "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
+            "description": "Per hold relationship message suffer economy.",
+            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "original_amount": -1776.0,
+            "payment_type": "credit",
+            "reference_id": "Exactly there develop.",
             "source": {
                 "card": {
+                    "card_number": "3539736185431858",
                     "expiration_month": 2,
+                    "expiration_year": 2011,
                     "holder_name": "Michael Baker",
                     "security_code": "912",
-                    "card_number": "3539736185431858",
-                    "expiration_year": 2011,
                 },
-                "type": "card",
-                "currency": "BRL",
-                "usage": "single_use",
                 "amount": -5658.2277,
+                "currency": "BRL",
+                "type": "card",
+                "usage": "single_use",
             },
-            "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
-            "reference_id": "Exactly there develop.",
-            "payment_type": "credit",
-            "amount": -5658.2277,
-            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
-            "description": "Per hold relationship message suffer economy.",
         }
 
         response = self.client.add_transaction(data)
@@ -123,20 +123,20 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         self.set_post_mock(201, TransactionCreditFactory().to_dict())
 
         data = {
+            "amount": -5658.2277,
+            "currency": "BRL",
+            "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
+            "description": "Per hold relationship message suffer economy.",
+            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "original_amount": -1776.0,
+            "payment_type": "credit",
+            "reference_id": "Exactly there develop.",
             "source": {
+                "amount": 1234,
                 "card": {"id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"},
                 "type": "card",
-                "amount": 1234,
                 "usage": "single_use",
             },
-            "customer": "daef3fbc-a95a-4e18-9515-2e6915f639ad",
-            "currency": "BRL",
-            "reference_id": "Exactly there develop.",
-            "payment_type": "credit",
-            "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
-            "amount": -5658.2277,
-            "description": "Per hold relationship message suffer economy.",
         }
 
         response = self.client.add_transaction(data)

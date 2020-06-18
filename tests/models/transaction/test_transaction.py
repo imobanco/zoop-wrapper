@@ -136,32 +136,32 @@ class TransactionTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertIsSubSet(
             {
-                "status",
-                "confirmed",
-                "original_amount",
-                "transaction_number",
-                "gateway_authorizer",
                 "app_transaction_uid",
-                "refunds",
-                "rewards",
-                "discounts",
-                "pre_authorization",
-                "sales_receipt",
-                "statement_descriptor",
-                "point_of_sale",
-                "installment_plan",
-                "refunded",
-                "voided",
+                "business",
                 "captured",
-                "fees",
+                "confirmed",
+                "discounts",
+                "expected_on",
                 "fee_details",
+                "fees",
+                "gateway_authorizer",
+                "history",
+                "individual",
+                "installment_plan",
                 "location_latitude",
                 "location_longitude",
-                "individual",
-                "business",
-                "expected_on",
-                "history",
+                "original_amount",
+                "point_of_sale",
+                "pre_authorization",
                 "reference_id",
+                "refunded",
+                "refunds",
+                "rewards",
+                "sales_receipt",
+                "statement_descriptor",
+                "status",
+                "transaction_number",
+                "voided",
             },
             Transaction.get_non_required_fields(),
         )
@@ -170,9 +170,9 @@ class TransactionTestCase(SetTestCase):
         self.assertEqual(
             {
                 "currency",
+                "customer",
                 "description",
                 "on_behalf_of",
-                "customer",
                 "payment_type",
             },
             Transaction.get_required_fields(),
@@ -185,12 +185,12 @@ class TransactionTestCase(SetTestCase):
     def test_get_card_required_fields(self):
         self.assertEqual(
             {
-                "source",
-                "description",
                 "currency",
-                "payment_type",
-                "on_behalf_of",
                 "customer",
+                "description",
+                "on_behalf_of",
+                "payment_type",
+                "source",
             },
             Transaction.get_card_required_fields(),
         )
@@ -198,13 +198,13 @@ class TransactionTestCase(SetTestCase):
     def test_get_boleto_required_fields(self):
         self.assertEqual(
             {
-                "payment_method",
-                "customer",
-                "payment_type",
                 "amount",
-                "description",
                 "currency",
+                "customer",
+                "description",
                 "on_behalf_of",
+                "payment_method",
+                "payment_type",
             },
             Transaction.get_boleto_required_fields(),
         )
@@ -214,11 +214,11 @@ class TransactionTestCase(SetTestCase):
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {
+                "currency",
                 "customer",
-                "payment_type",
                 "description",
                 "on_behalf_of",
-                "currency",
+                "payment_type",
                 "source",
             },
             instance.get_validation_fields(),
@@ -229,13 +229,13 @@ class TransactionTestCase(SetTestCase):
         self.assertIsInstance(instance, Transaction)
         self.assertEqual(
             {
-                "payment_method",
-                "on_behalf_of",
-                "currency",
-                "payment_type",
                 "amount",
+                "currency",
                 "customer",
                 "description",
+                "on_behalf_of",
+                "payment_method",
+                "payment_type",
             },
             instance.get_validation_fields(),
         )

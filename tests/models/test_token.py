@@ -139,11 +139,11 @@ class TokenTestCase(SetTestCase):
 
         self.assertEqual(
             {
-                "security_code",
-                "expiration_year",
                 "card_number",
-                "holder_name",
                 "expiration_month",
+                "expiration_year",
+                "holder_name",
+                "security_code",
             },
             instance.get_validation_fields(),
         )
@@ -154,12 +154,12 @@ class TokenTestCase(SetTestCase):
 
         self.assertEqual(
             {
-                "holder_name",
-                "type",
                 "account_number",
-                "taxpayer_id",
                 "bank_code",
+                "holder_name",
                 "routing_number",
+                "taxpayer_id",
+                "type",
             },
             instance.get_validation_fields(),
         )
@@ -170,12 +170,12 @@ class TokenTestCase(SetTestCase):
 
         self.assertEqual(
             {
-                "holder_name",
-                "type",
                 "account_number",
-                "ein",
                 "bank_code",
+                "ein",
+                "holder_name",
                 "routing_number",
+                "type",
             },
             instance.get_validation_fields(),
         )
@@ -192,14 +192,14 @@ class TokenTestCase(SetTestCase):
 
         self.assertIsSubSet(
             {
+                "card",
+                "card_number",
+                "expiration_month",
+                "expiration_year",
+                "holder_name",
+                "security_code",
                 "type",
                 "used",
-                "security_code",
-                "expiration_year",
-                "card_number",
-                "holder_name",
-                "expiration_month",
-                "card",
             },
             instance.get_all_fields(),
         )
@@ -216,15 +216,15 @@ class TokenTestCase(SetTestCase):
 
         self.assertIsSubSet(
             {
-                "used",
-                "type",
-                "bank_account",
-                "holder_name",
-                "type",
                 "account_number",
-                "taxpayer_id",
+                "bank_account",
                 "bank_code",
+                "holder_name",
                 "routing_number",
+                "taxpayer_id",
+                "type",
+                "type",
+                "used",
             },
             instance.get_all_fields(),
         )
@@ -235,15 +235,15 @@ class TokenTestCase(SetTestCase):
 
         self.assertIsSubSet(
             {
-                "used",
-                "type",
-                "bank_account",
-                "holder_name",
-                "type",
                 "account_number",
-                "ein",
+                "bank_account",
                 "bank_code",
+                "ein",
+                "holder_name",
                 "routing_number",
+                "type",
+                "type",
+                "used",
             },
             instance.get_all_fields(),
         )

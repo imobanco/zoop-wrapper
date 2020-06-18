@@ -20,59 +20,57 @@ class HistoryFactory(ZoopObjectFactory):
     class Meta:
         model = History
 
-    id = Faker("uuid4")
-    transaction = Faker("uuid4")
     amount = Faker("pyfloat", positive=True, max_value=99)
+    authorization_code = None
+    authorization_nsu = None
+    authorizer = None
+    authorizer_id = None
+    created_at = Faker("date_of_birth")
+    gatewayResponseTime = None
+    id = Faker("uuid4")
     operation_type = "created"
-    status = "succeeded"
     response_code = None
     response_message = None
-    authorization_code = None
-    authorizer_id = None
-    authorization_nsu = None
-    gatewayResponseTime = None
-    authorizer = None
-    created_at = Faker("date_of_birth")
+    status = "succeeded"
+    transaction = Faker("uuid4")
 
 
 class TransactionFactory(ResourceModelFactory):
     class Meta:
         model = Transaction
 
-    resource = "transaction"
-
     amount = Faker("pyfloat", positive=True, max_value=99)
-    currency = "BRL"
-    description = Faker("sentence", nb_words=5)
-    reference_id = Faker("sentence", nb_words=5)
-    on_behalf_of = Faker("uuid4")
-    customer = Faker("uuid4")
-    status = Faker("random_element", elements=["failed", "suceeded"])
-    confirmed = "0"
-    original_amount = Faker("pyfloat", positive=True, max_value=99)
-    transaction_number = None
-    gateway_authorizer = None
     app_transaction_uid = None
-    refunds = None
-    rewards = None
-    discounts = None
-    pre_authorization = None
-    sales_receipt = None
-    statement_descriptor = Faker("sentence", nb_words=2)
-    installment_plan = None
-    refunded = Faker("pybool")
-    voided = Faker("pybool")
+    business = None
     captured = Faker("pybool")
-    fees = "0.0"
+    confirmed = "0"
+    currency = "BRL"
+    customer = Faker("uuid4")
+    description = Faker("sentence", nb_words=5)
+    discounts = None
+    expected_on = Faker("date_this_month")
     fee_details = None
+    fees = "0.0"
+    gateway_authorizer = None
+    history = SubFactory(HistoryFactory)
+    individual = None
+    installment_plan = None
     location_latitude = None
     location_longitude = None
-    individual = None
-    business = None
-    expected_on = Faker("date_this_month")
-
+    on_behalf_of = Faker("uuid4")
+    original_amount = Faker("pyfloat", positive=True, max_value=99)
     point_of_sale = SubFactory(PointOfSaleFactory)
-    history = SubFactory(HistoryFactory)
+    pre_authorization = None
+    reference_id = Faker("sentence", nb_words=5)
+    refunded = Faker("pybool")
+    refunds = None
+    resource = "transaction"
+    rewards = None
+    sales_receipt = None
+    statement_descriptor = Faker("sentence", nb_words=2)
+    status = Faker("random_element", elements=["failed", "suceeded"])
+    transaction_number = None
+    voided = Faker("pybool")
 
 
 class TransactionCreditFactory(TransactionFactory):
@@ -98,17 +96,14 @@ class CreateTransactionBoletoFactory(TransactionFactory):
         model = Transaction
 
     id = None
-    payment_type = "boleto"
-
     payment_method = SubFactory(InvoiceFactory)
+    payment_type = "boleto"
 
 
 class CancelTransactionCardFactory(TransactionFactory):
     class Meta:
         model = Transaction
 
-    payment_type = "credit"
-
     payment_method = SubFactory(CardFactory)
-
+    payment_type = "credit"
     source = SubFactory(SourceCardPresentFactory)

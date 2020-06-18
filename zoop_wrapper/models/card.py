@@ -25,15 +25,15 @@ class Card(PaymentMethod):
 
     Attributes:
         card_brand: company name
-        first4_digits: first 4 digits of card
-        last4_digits: last 4 digits of card
         expiration_month: month of expiration
         expiration_year: year of expiration
+        fingerprint: unique card identifier from company of card ?
+        first4_digits: first 4 digits of card
         holder_name: owner name
         is_active: boolean of verification
         is_valid: boolean of verification
         is_verified: boolean of verification
-        fingerprint: unique card identifier from company of card ?
+        last4_digits: last 4 digits of card
         verification_checklist: CardVerificationChecklist model
     """
 
@@ -67,12 +67,12 @@ class Card(PaymentMethod):
         return fields.union(
             {
                 "card_brand",
+                "fingerprint",
                 "first4_digits",
-                "last4_digits",
                 "is_active",
                 "is_valid",
                 "is_verified",
-                "fingerprint",
+                "last4_digits",
                 "verification_checklist",
             }
         )

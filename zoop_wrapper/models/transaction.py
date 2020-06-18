@@ -27,19 +27,19 @@ class History(ZoopObject):
     Represents a update for :class:`.Transaction`
 
     Attributes:
-        id: uuid identifier
-        transaction: transaction uuid identifier
         amount: amount value for the update
+        authorization_code: ??
+        authorization_nsu: ??
+        authorizer: ??
+        authorizer_id: ??
+        created_at: datetime for the update
+        gatewayResponseTime: ??
+        id: uuid identifier
         operation_type: type for the update
-        status: status for the update
         response_code: ??
         response_message: ??
-        authorization_code: ??
-        authorizer_id: ??
-        authorization_nsu: ??
-        gatewayResponseTime: ??
-        authorizer: ??
-        created_at: datetime for the update
+        status: status for the update
+        transaction: transaction uuid identifier
     """
 
     @classmethod
@@ -47,19 +47,19 @@ class History(ZoopObject):
         fields = super().get_non_required_fields()
         return fields.union(
             {
-                "id",
-                "transaction",
                 "amount",
+                "authorization_code",
+                "authorization_nsu",
+                "authorizer",
+                "authorizer_id",
+                "created_at",
+                "gatewayResponseTime",
+                "id",
                 "operation_type",
-                "status",
                 "response_code",
                 "response_message",
-                "authorization_code",
-                "authorizer_id",
-                "authorization_nsu",
-                "gatewayResponseTime",
-                "authorizer",
-                "created_at",
+                "status",
+                "transaction",
             }
         )
 
@@ -74,39 +74,38 @@ class Transaction(ResourceModel):
 
     Attributes:
         amount (int): integer amount value in 'centavos'
-        currency (str): coin currency string
-        description (str): value description
-        reference_id: ??
-        on_behalf_of (str): seller uuid identifier
-        customer (str): customer uuid identifier
-        status (str): value for status
-        confirmed (str): value of cofirmation
-        original_amount (int): original amount value
-        transaction_number: ??
-        gateway_authorizer: ??
         app_transaction_uid: ??
-        refunds: ??
-        rewards: ??
-        discounts: ??
-        pre_authorization: ??
-        sales_receipt:
-        statement_descriptor (str): value description
-        installment_plan: ??
-        refunded (bool): boolean of verification
-        voided (bool): boolean of verification
+        business: ??
         captured (bool): boolean of verification
-        fees: ??
+        confirmed (str): value of cofirmation
+        currency (str): coin currency string
+        customer (str): customer uuid identifier
+        description (str): value description
+        discounts: ??
+        expected_on (str):datetime string
         fee_details: ??
+        fees: ??
+        gateway_authorizer: ??
+        history (list of :class:`.History`): transaction updates
+        individual: ??
+        installment_plan: ??
         location_latitude: ??
         location_longitude: ??
-        individual: ??
-        business: ??
-        expected_on (str):datetime string
-
-        payment_type (str): payment type
+        on_behalf_of (str): seller uuid identifier
+        original_amount (int): original amount value
         payment_method (:class:`.Card` or :class:`.Invoice`): payment method used
+        payment_type (str): payment type
         point_of_sale (:class:`.PointOfSale`): ??
-        history (list of :class:`.History`): transaction updates
+        pre_authorization: ??
+        reference_id: ??
+        refunded (bool): boolean of verification
+        refunds: ??
+        rewards: ??
+        sales_receipt:
+        statement_descriptor (str): value description
+        status (str): value for status
+        transaction_number: ??
+        voided (bool): boolean of verification
 
     """
 
@@ -119,14 +118,14 @@ class Transaction(ResourceModel):
 
     def init_custom_fields(
         self,
-        id=None,
         amount=None,
-        payment_type=None,
-        payment_method=None,
-        source=None,
-        point_of_sale=None,
-        history=None,
         currency="BRL",
+        history=None,
+        id=None,
+        payment_method=None,
+        payment_type=None,
+        point_of_sale=None,
+        source=None,
         **kwargs,
     ):
         """
@@ -138,12 +137,12 @@ class Transaction(ResourceModel):
         Initialize :attr:`history` as list of :class:`.History`.
 
         Args:
-            payment_type (str): value for payment type
-            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data
-            point_of_sale (dict or :class:`.PointOfSale`): point of sale data
-            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`
             currency (str): default currency is 'BRL'.
                 So users may not need to pass currency!
+            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`
+            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data
+            payment_type (str): value for payment type
+            point_of_sale (dict or :class:`.PointOfSale`): point of sale data
             **kwargs: kwargs
         """
         setattr(self, "currency", currency)
@@ -249,9 +248,9 @@ class Transaction(ResourceModel):
         return fields.union(
             {
                 "currency",
+                "customer",
                 "description",
                 "on_behalf_of",
-                "customer",
                 "payment_type",
             }
         )
@@ -271,32 +270,32 @@ class Transaction(ResourceModel):
         fields = super().get_non_required_fields()
         return fields.union(
             {
-                "status",
-                "confirmed",
-                "original_amount",
-                "transaction_number",
-                "gateway_authorizer",
                 "app_transaction_uid",
-                "refunds",
-                "rewards",
-                "discounts",
-                "pre_authorization",
-                "sales_receipt",
-                "reference_id",
-                "statement_descriptor",
-                "point_of_sale",
-                "installment_plan",
-                "refunded",
-                "voided",
+                "business",
                 "captured",
-                "fees",
+                "confirmed",
+                "discounts",
+                "expected_on",
                 "fee_details",
+                "fees",
+                "gateway_authorizer",
+                "history",
+                "individual",
+                "installment_plan",
                 "location_latitude",
                 "location_longitude",
-                "individual",
-                "business",
-                "expected_on",
-                "history",
+                "original_amount",
+                "point_of_sale",
+                "pre_authorization",
+                "reference_id",
+                "refunded",
+                "refunds",
+                "rewards",
+                "sales_receipt",
+                "statement_descriptor",
+                "status",
+                "transaction_number",
+                "voided",
             }
         )
 

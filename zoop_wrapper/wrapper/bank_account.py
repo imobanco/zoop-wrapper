@@ -54,11 +54,11 @@ class BankAccountWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                'taxpayer_id' or 'ein': 'foo',
-                'holder_name': 'foo',
-                'bank_code': 'foo',
-                'routing_number': 'foo',
                 'account_number': 'foo',
+                'bank_code': 'foo',
+                'holder_name': 'foo',
+                'routing_number': 'foo',
+                'taxpayer_id' or 'ein': 'foo',
                 'type': 'foo'
             }
 

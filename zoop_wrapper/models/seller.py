@@ -16,31 +16,31 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
     Used to check against :attr:`.resource`!
 
     Attributes:
-        statement_descriptor: ?
-        mcc: ?
-        show_profile_online: ?
-        is_mobile (bool): value of verification
         decline_on_fail_security_code (bool): value of verification
         decline_on_fail_zipcode (bool): value of verification
+        is_mobile (bool): value of verification
+        mcc: ?
         merchant_code: ?
+        show_profile_online: ?
+        statement_descriptor: ?
         terminal_code: ?
 
         type (str): individual or business string
 
-        website (str): Optional value
         taxpayer_id (str): Optional value
+        website (str): Optional value
 
+        business_address (:class:`.Address`): Optional value
+        business_description (str): optional value
+        business_email (str): optional value
+        business_facebook (str): optional value
+        business_name (str): optional value
+        business_opening_date (str): optional value
+        business_phone (str): optional value
+        business_twitter (str): optional value
+        business_website (str): optional value
         ein (str): optional value
         owner (:class:`.Person`): Optional value
-        business_address (:class:`.Address`): Optional value
-        business_name (str): optional value
-        business_phone (str): optional value
-        business_email (str): optional value
-        business_website (str): optional value
-        business_opening_date (str): optional value
-        business_description (str): optional value
-        business_facebook (str): optional value
-        business_twitter (str): optional value
     """
 
     RESOURCE = "seller"
@@ -101,15 +101,15 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
             BusinessOrIndividualModel.get_non_required_fields(),
             FinancialModel.get_non_required_fields(),
             {
-                "type",
-                "statement_descriptor",
-                "mcc",
-                "show_profile_online",
-                "is_mobile",
                 "decline_on_fail_security_code",
                 "decline_on_fail_zipcode",
+                "is_mobile",
+                "mcc",
                 "merchant_code",
+                "show_profile_online",
+                "statement_descriptor",
                 "terminal_code",
+                "type",
             },
         )
 
@@ -147,13 +147,13 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
         return fields.union(
             super().get_business_required_fields(),
             {
-                "business_name",
-                "business_phone",
-                "business_email",
-                "business_website",
-                "business_opening_date",
-                "owner",
                 "business_address",
+                "business_email",
+                "business_name",
+                "business_opening_date",
+                "business_phone",
+                "business_website",
+                "owner",
             },
         )
 

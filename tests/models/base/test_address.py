@@ -10,14 +10,14 @@ class AddressTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertEqual(
             {
+                "city",
+                "country_code",
                 "line1",
                 "line2",
                 "line3",
                 "neighborhood",
-                "city",
-                "state",
                 "postal_code",
-                "country_code",
+                "state",
             },
             Address.get_non_required_fields(),
         )

@@ -5,8 +5,8 @@ from zoop_wrapper.models.bank_account import BankAccount
 from zoop_wrapper.models.token import Token
 from tests.factories.bank_account import IndividualBankAccountFactory
 from tests.factories.token import (
-    CreateIndividualBankAccountTokenFactory,
     BankAccountTokenFactory,
+    CreateIndividualBankAccountTokenFactory,
 )
 from tests.factories.seller import IndividualSellerFactory
 

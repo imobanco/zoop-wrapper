@@ -55,19 +55,19 @@ class TransactionWrapper(BaseZoopWrapper):
             data = {
                 'amount' : 'foo',
                 'currency' : 'BRL',
-                'description' : 'foo',
-                'reference_id' : 'foo',
-                'on_behalf_of' : 'foo',
                 'customer': 'foo',
+                'description' : 'foo',
+                'on_behalf_of' : 'foo',
                 'payment_type' : 'foo',
+                'reference_id' : 'foo',
                 'payment_method' : {
+                    'body_instructions' : instructions,
                     'expiration_date' : expiration_date,
                     'payment_limit_date' : payment_limit_date,
-                    'body_instructions' : instructions,
                     'billing_instructions' : {
-                        'late_fee' : late_fee,
-                        'interest' : interest,
                         'discount' : discount
+                        'interest' : interest,
+                        'late_fee' : late_fee,
                     }
                 }
             }
@@ -75,9 +75,9 @@ class TransactionWrapper(BaseZoopWrapper):
             data = {
                 'amount': '1000',
                 'currency': 'BRL',
+                'customer': 'buyer_id',
                 'description': 'meu boleto gerado para teste',
                 'on_behalf_of': 'seller_id',
-                'customer': 'buyer_id',
                 'payment_type': 'boleto',
                 'payment_method': {
                     'expiration_date': '2020-06-20',
@@ -94,9 +94,9 @@ class TransactionWrapper(BaseZoopWrapper):
                             'start_date': '2020-06-20'
                         },
                         'discount': [{
-                            'mode': 'FIXED',
                             'amount': 300,
                             'limit_date': '2020-06-20'
+                            'mode': 'FIXED',
                         }]
                     }
                 }

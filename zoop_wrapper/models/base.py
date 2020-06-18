@@ -348,14 +348,14 @@ class Address(ZoopObject):
         fields = super().get_non_required_fields()
         return fields.union(
             {
+                "city",
+                "country_code",
                 "line1",
                 "line2",
                 "line3",
                 "neighborhood",
-                "city",
-                "state",
                 "postal_code",
-                "country_code",
+                "state",
             }
         )
 
@@ -409,12 +409,12 @@ class Person(ZoopObject):
         fields = super().get_required_fields()
         return fields.union(
             {
+                "address",
+                "email",
                 "first_name",
                 "last_name",
-                "email",
-                "taxpayer_id",
                 "phone_number",
-                "address",
+                "taxpayer_id",
             }
         )
 
@@ -469,14 +469,14 @@ class FinancialModel(ZoopObject):
         fields = super().get_non_required_fields()
         return fields.union(
             {
-                "status",
                 "account_balance",
                 "current_balance",
-                "description",
-                "delinquent",
-                "payment_methods",
-                "default_debit",
                 "default_credit",
+                "default_debit",
+                "delinquent",
+                "description",
+                "payment_methods",
+                "status",
             }
         )
 

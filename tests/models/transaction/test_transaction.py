@@ -52,9 +52,9 @@ class TransactionTestCase(SetTestCase):
             ValidationError,
             Transaction.init_custom_fields,
             instance,
-            payment_type="bar",
-            id="foo",
             amount="23.45",
+            id="foo",
+            payment_type="bar",
         )
 
     def test_init_custom_fields_created_float_parse(self):
@@ -168,13 +168,7 @@ class TransactionTestCase(SetTestCase):
 
     def test_required_fields(self):
         self.assertEqual(
-            {
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_type",
-            },
+            {"currency", "customer", "description", "on_behalf_of", "payment_type",},
             Transaction.get_required_fields(),
         )
 

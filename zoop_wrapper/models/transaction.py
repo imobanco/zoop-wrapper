@@ -246,13 +246,7 @@ class Transaction(ResourceModel):
     def get_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union(
-            {
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_type",
-            }
+            {"currency", "customer", "description", "on_behalf_of", "payment_type",}
         )
 
     @classmethod

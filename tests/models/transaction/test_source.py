@@ -18,7 +18,11 @@ class SourceTestCase(SetTestCase):
         instance = MagicMock(SOURCE_TYPES={"foo"})
 
         self.assertRaises(
-            ValidationError, Source.init_custom_fields, instance, type="bar", amount=1234
+            ValidationError,
+            Source.init_custom_fields,
+            instance,
+            amount=1234,
+            type="bar",
         )
 
     def test_init_custom_fields_card_present_type(self):

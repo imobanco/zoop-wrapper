@@ -11,8 +11,8 @@ from .models import (
     Person,
     Seller,
     Source,
-    Transaction,
     Token,
+    Transaction,
 )  # noqa
 
 from ._version import get_versions

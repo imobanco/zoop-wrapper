@@ -12,11 +12,11 @@ class SourceCardPresentFactory(ZoopObjectFactory):
     class Meta:
         model = Source
 
-    card = SubFactory(CreateCardTokenFactory)
-    type = "card"
-    currency = "BRL"
-    usage = "single_use"
     amount = Faker("pyfloat", positive=True, max_value=999999)
+    card = SubFactory(CreateCardTokenFactory)
+    currency = "BRL"
+    type = "card"
+    usage = "single_use"
 
 
 class SourceCardNotPresentFactory(ZoopObjectFactory):

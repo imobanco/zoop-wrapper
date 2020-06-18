@@ -49,9 +49,9 @@ class Token(ResourceModel):
         bank_code (str): bank code for :attr:`BANK_ACCOUNT_TYPE`
         routing_number (str): agency code in BR for :attr:`BANK_ACCOUNT_TYPE`
 
+        card_number (str): card number for :attr:`CARD_TYPE`
         expiration_month (str): month of expiration for :attr:`CARD_TYPE`
         expiration_year (str): year of expiration for :attr:`CARD_TYPE`
-        card_number (str): card number for :attr:`CARD_TYPE`
         security_code (str): security code for :attr:`CARD_TYPE`
     """
 
@@ -80,9 +80,9 @@ class Token(ResourceModel):
         from :class:`.BusinessOrIndividualModel`).
 
         Args:
-            type (str): type for ``token`` or ``bank account``
-            card (dict or :class:`.Card`): data
             bank_account (dict or :class:`.BankAccount`):  data
+            card (dict or :class:`.Card`): data
+            type (str): type for ``token`` or ``bank account``
             **kwargs: kwargs
         """
 

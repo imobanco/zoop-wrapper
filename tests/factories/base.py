@@ -3,15 +3,15 @@ from factory.faker import Faker
 from pycpfcnpj import gen
 
 from zoop_wrapper.models.base import (
-    ZoopObject,
-    ResourceModel,
-    MarketPlaceModel,
-    Person,
     Address,
-    SocialModel,
     FinancialModel,
-    VerificationModel,
+    MarketPlaceModel,
     PaymentMethod,
+    Person,
+    ResourceModel,
+    SocialModel,
+    VerificationModel,
+    ZoopObject,
 )
 
 
@@ -36,12 +36,12 @@ class ResourceModelFactory(ZoopObjectFactory):
     class Meta:
         model = ResourceModel
 
-    id = Faker("uuid4")
-    resource = "resource"
-    uri = Faker("uri")
     created_at = Faker("date_of_birth")
-    updated_at = Faker("date_this_month")
+    id = Faker("uuid4")
     metadata = {}
+    resource = "resource"
+    updated_at = Faker("date_this_month")
+    uri = Faker("uri")
 
 
 class MarketPlaceModelFactory(ResourceModelFactory):
@@ -69,14 +69,14 @@ class AddressFactory(ZoopObjectFactory):
     class Meta:
         model = Address
 
+    city = Faker("city")
+    country_code = Faker("country_code", representation="alpha-2")
     line1 = Faker("street_name")
     line2 = Faker("building_number")
     line3 = Faker("secondary_address")
     neighborhood = Faker("street_suffix")
-    city = Faker("city")
-    state = Faker("military_state")
     postal_code = Faker("postalcode")
-    country_code = Faker("country_code", representation="alpha-2")
+    state = Faker("military_state")
 
 
 class PersonFactory(ZoopObjectFactory):
@@ -90,13 +90,13 @@ class PersonFactory(ZoopObjectFactory):
     class Meta:
         model = Person
 
+    address = SubFactory(AddressFactory)
+    birthdate = Faker("date_of_birth")
+    email = Faker("safe_email")
     first_name = Faker("first_name")
     last_name = Faker("last_name")
-    email = Faker("safe_email")
-    taxpayer_id = LazyFunction(gen.cpf)
     phone_number = Faker("phone_number")
-    birthdate = Faker("date_of_birth")
-    address = SubFactory(AddressFactory)
+    taxpayer_id = LazyFunction(gen.cpf)
 
 
 class SocialModelFactory(ZoopObjectFactory):
@@ -110,8 +110,8 @@ class SocialModelFactory(ZoopObjectFactory):
     class Meta:
         model = SocialModel
 
-    twitter = Faker("uri")
     facebook = Faker("uri")
+    twitter = Faker("uri")
 
 
 class FinancialModelFactory(ZoopObjectFactory):
@@ -125,14 +125,14 @@ class FinancialModelFactory(ZoopObjectFactory):
     class Meta:
         model = FinancialModel
 
-    status = Faker("random_element", elements=["active", "pending"])
     account_balance = Faker("pyfloat", positive=True, min_value=0.0)
     current_balance = Faker("pyfloat", positive=True, min_value=0.0)
-    description = Faker("sentence", nb_words=5)
-    delinquent = Faker("pybool")
-    default_debit = Faker("pybool")
     default_credit = Faker("pybool")
+    default_debit = Faker("pybool")
+    delinquent = Faker("pybool")
+    description = Faker("sentence", nb_words=5)
     payment_methods = None
+    status = Faker("random_element", elements=["active", "pending"])
 
 
 class VerificationModelFactory(ZoopObjectFactory):
@@ -146,11 +146,11 @@ class VerificationModelFactory(ZoopObjectFactory):
     class Meta:
         model = VerificationModel
 
-    postal_code_check = Faker("pybool")
     address_line1_check = Faker("pybool")
+    postal_code_check = Faker("pybool")
 
 
-class PaymentMethodFactory(ZoopObjectFactory):
+class PaymentMethodFactory(ResourceModelFactory):
     """
     Factory for instances with fake attributes.
     The Meta.model dictates which instance to be created.
@@ -161,6 +161,6 @@ class PaymentMethodFactory(ZoopObjectFactory):
     class Meta:
         model = PaymentMethod
 
-    description = Faker("sentence", nb_words=5)
-    customer = Faker("uuid4")
     address = SubFactory(AddressFactory)
+    customer = Faker("uuid4")
+    description = Faker("sentence", nb_words=5)

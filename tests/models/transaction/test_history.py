@@ -6,19 +6,19 @@ class HistoryTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertEqual(
             {
-                "id",
-                "transaction",
                 "amount",
+                "authorization_code",
+                "authorization_nsu",
+                "authorizer",
+                "authorizer_id",
+                "created_at",
+                "gatewayResponseTime",
+                "id",
                 "operation_type",
-                "status",
                 "response_code",
                 "response_message",
-                "authorization_code",
-                "authorizer_id",
-                "authorization_nsu",
-                "gatewayResponseTime",
-                "authorizer",
-                "created_at",
+                "status",
+                "transaction",
             },
             History.get_non_required_fields(),
         )

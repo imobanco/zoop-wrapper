@@ -29,11 +29,11 @@ class BankAccount(BusinessOrIndividualModel):
     Used to check against :attr:`.resource`!
 
     Attributes:
-        type: type of account
         account_number: account number
         bank_code: code of bank
         holder_name: name of owner
         routing_number: agency code in BR
+        type: type of account
 
         address: Address model
         bank_name: name of bank
@@ -112,17 +112,17 @@ class BankAccount(BusinessOrIndividualModel):
         return fields.union(
             {
                 "account_number",
-                "description",
+                "address",
                 "bank_name",
-                "last4_digits",
                 "country_code",
-                "phone_number",
+                "customer",
+                "debitable",
+                "description",
+                "fingerprint",
                 "is_active",
                 "is_verified",
-                "debitable",
-                "customer",
-                "fingerprint",
-                "address",
+                "last4_digits",
+                "phone_number",
                 "verification_checklist",
             }
         )

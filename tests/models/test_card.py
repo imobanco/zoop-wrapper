@@ -16,12 +16,12 @@ class CardTestCase(SetTestCase):
         self.assertIsSubSet(
             {
                 "card_brand",
+                "fingerprint",
                 "first4_digits",
-                "last4_digits",
                 "is_active",
                 "is_valid",
                 "is_verified",
-                "fingerprint",
+                "last4_digits",
                 "verification_checklist",
             },
             Card.get_non_required_fields(),

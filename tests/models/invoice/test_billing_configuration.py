@@ -6,8 +6,8 @@ from zoop_wrapper.models.invoice import BillingConfiguration
 from tests.factories.invoice import (
     BillingConfigurationFactory,
     FixedDiscountFactory,
-    PercentDiscountFactory,
     FixedFeeFactory,
+    PercentDiscountFactory,
     PercentFeeFactory,
 )
 

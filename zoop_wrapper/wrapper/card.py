@@ -48,10 +48,10 @@ class CardWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
-                "holder_name": "foo",
+                "card_number": "foo",
                 "expiration_month": "foo",
                 "expiration_year": "foo",
-                "card_number": "foo",
+                "holder_name": "foo",
                 "security_code": "foo"
             }
 

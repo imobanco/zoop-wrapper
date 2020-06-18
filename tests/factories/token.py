@@ -21,23 +21,21 @@ class TokenFactory(ResourceModelFactory):
         model = Token
 
     resource = "token"
-
     type = None
     used = Faker("pybool")
 
 
 class CardTokenFactory(TokenFactory):
-    type = "card"
-
     card = SubFactory(CardFactory)
+    type = "card"
 
 
 class CreateCardTokenFactory(TokenFactory):
     card_number = Faker("credit_card_number")
-    security_code = Faker("credit_card_security_code")
     expiration_month = Faker("pyint", min_value=1, max_value=12, step=1)
     expiration_year = Faker("pyint", min_value=2000, max_value=2030, step=1)
     holder_name = Faker("name")
+    security_code = Faker("credit_card_security_code")
 
 
 class BankAccountTokenFactory(TokenFactory):
@@ -47,11 +45,11 @@ class BankAccountTokenFactory(TokenFactory):
 
 
 class CreateBankAccountTokenFactory(TokenFactory):
-    type = Faker("random_element", elements=BankAccount.TYPES)
-    holder_name = Faker("name")
-    bank_code = Faker("pyint", min_value=0, max_value=999, step=1)
-    routing_number = Faker("pyint", min_value=0, max_value=999999, step=1)
     account_number = Faker("pyint", min_value=0, max_value=999999, step=1)
+    bank_code = Faker("pyint", min_value=0, max_value=999, step=1)
+    holder_name = Faker("name")
+    routing_number = Faker("pyint", min_value=0, max_value=999999, step=1)
+    type = Faker("random_element", elements=BankAccount.TYPES)
 
 
 class CreateIndividualBankAccountTokenFactory(CreateBankAccountTokenFactory):

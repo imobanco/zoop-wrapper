@@ -54,21 +54,21 @@ class BuyerWrapper(BaseZoopWrapper):
 
         Examples:
             data = {
+                "birthdate": 'foo',
+                "email": "foo",
                 "first_name": "foo",
                 "last_name": "foo",
-                "email": "foo",
-                "taxpayer_id": "foo",
                 "phone_number": "foo",
-                "birthdate": 'foo',
+                "taxpayer_id": "foo",
                 "address": {
+                    "city": "foo",
+                    "country_code": "foo"
                     "line1": "foo",
                     "line2": "foo",
                     "line3": "foo",
                     "neighborhood": "foo",
-                    "city": "foo",
-                    "state": "foo",
                     "postal_code": "foo",
-                    "country_code": "foo"
+                    "state": "foo",
                 }
             }
 

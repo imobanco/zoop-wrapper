@@ -17,15 +17,15 @@ class SellerTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertIsSubSet(
             {
-                "type",
-                "statement_descriptor",
-                "mcc",
-                "show_profile_online",
-                "is_mobile",
                 "decline_on_fail_security_code",
                 "decline_on_fail_zipcode",
+                "is_mobile",
+                "mcc",
                 "merchant_code",
+                "show_profile_online",
+                "statement_descriptor",
                 "terminal_code",
+                "type",
             },
             Seller.get_non_required_fields(),
         )
@@ -39,14 +39,14 @@ class SellerTestCase(SetTestCase):
     def test_business_required_fields(self):
         self.assertEqual(
             {
-                "ein",
-                "business_name",
-                "business_phone",
-                "business_email",
-                "business_website",
-                "business_opening_date",
-                "owner",
                 "business_address",
+                "business_email",
+                "business_name",
+                "business_opening_date",
+                "business_phone",
+                "business_website",
+                "ein",
+                "owner",
             },
             Seller.get_business_required_fields(),
         )
@@ -63,16 +63,16 @@ class SellerTestCase(SetTestCase):
 
         self.assertIsSubSet(
             {
-                "business_name",
-                "business_phone",
-                "business_email",
-                "business_website",
-                "business_opening_date",
-                "owner",
                 "business_address",
                 "business_description",
+                "business_email",
                 "business_facebook",
+                "business_name",
+                "business_opening_date",
+                "business_phone",
                 "business_twitter",
+                "business_website",
+                "owner",
             },
             instance.get_all_fields(),
         )
@@ -95,13 +95,13 @@ class SellerTestCase(SetTestCase):
 
         self.assertIsSubSet(
             {
-                "business_name",
-                "business_phone",
-                "business_email",
-                "business_website",
-                "business_opening_date",
-                "owner",
                 "business_address",
+                "business_email",
+                "business_name",
+                "business_opening_date",
+                "business_phone",
+                "business_website",
+                "owner",
             },
             instance.get_validation_fields(),
         )

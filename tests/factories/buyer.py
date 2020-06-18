@@ -1,9 +1,9 @@
 from zoop_wrapper.models.buyer import Buyer
 from tests.factories.base import (
+    FinancialModelFactory,
     MarketPlaceModelFactory,
     PersonFactory,
     SocialModelFactory,
-    FinancialModelFactory,
 )
 
 

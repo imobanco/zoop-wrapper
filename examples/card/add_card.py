@@ -14,10 +14,10 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
 card_token = Token(
-    holder_name="foo",
-    expiration_year="2030",
-    expiration_month="05",
     card_number=Faker("credit_card_number").generate(),
+    expiration_month="05",
+    expiration_year="2030",
+    holder_name="foo",
     security_code=123,
 )
 

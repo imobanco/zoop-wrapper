@@ -12,7 +12,7 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-card_transaction_id = "0b8361b8fdd1480783800229f87310c2"
+card_transaction_id = "b8d82a6296b346f58fa02bd47b14c095"
 response = client.cancel_transaction(card_transaction_id)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

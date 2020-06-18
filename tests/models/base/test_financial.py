@@ -10,14 +10,14 @@ class FinancialTestCase(SetTestCase):
     def test_non_required_fields(self):
         self.assertEqual(
             {
-                "status",
                 "account_balance",
                 "current_balance",
-                "description",
-                "delinquent",
-                "payment_methods",
-                "default_debit",
                 "default_credit",
+                "default_debit",
+                "delinquent",
+                "description",
+                "payment_methods",
+                "status",
             },
             FinancialModel.get_non_required_fields(),
         )

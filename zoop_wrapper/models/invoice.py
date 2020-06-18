@@ -25,11 +25,11 @@ class BillingConfiguration(ZoopObject):
     The attr :attr:`is_discount` identify if it's a ``Discount`` or not.
 
     Attributes:
+        amount (int): integer amount for :attr:`FIXED_MODE` in 'centavos'
         is_discount (bool): value representing if it's a ``Fee`` or ``Discount`` type
+        limit_date (str): limit date of Discount type
         mode (str): value identifying if it's ``Fixed`` or ``Percentage`` type
         start_date (str): start date for :attr:`FIXED_MODE`
-        limit_date (str): limit date of Discount type
-        amount (int): integer amount for :attr:`FIXED_MODE` in 'centavos'
         percentage (float): float percentage for for ``Percentage`` types.
             It has a ``max`` of ``4 decimal points`` and
             is ``rounded up`` on the ``5º decimal point``
@@ -194,9 +194,9 @@ class BillingInstructions(ZoopObject):
     Represents billing instructions (fine, interest and discount)
 
     Attributes:
-        late_fee (:class:`.BillingConfiguration`): optional fine rules
-        interest (:class:`.BillingConfiguration`): optional interest rules
         discount (list of :class:`.BillingConfiguration`): list of optional discount rules
+        interest (:class:`.BillingConfiguration`): optional interest rules
+        late_fee (:class:`.BillingConfiguration`): optional fine rules
     """
 
     def init_custom_fields(self, late_fee=None, interest=None, discount=None, **kwargs):
@@ -204,9 +204,9 @@ class BillingInstructions(ZoopObject):
         initialize late_fee, interest and discount.
 
         Args:
-            late_fee: dict or instance of BillingConfiguration model
-            interest: dict or instance of BillingConfiguration model
             discount: dict or instance of BillingConfiguration model
+            interest: dict or instance of BillingConfiguration model
+            late_fee: dict or instance of BillingConfiguration model
             **kwargs: kwargs
         """
         setattr(
@@ -259,8 +259,8 @@ class Invoice(PaymentMethod):
     https://docs.zoop.co/reference#boleto
 
     Attributes:
-        security_code_check (bool): verification of security code
         billing_instructions (:class:`.BillingInstructions`): optional billing instructions
+        security_code_check (bool): verification of security code
     """
 
     RESOURCE = "boleto"
@@ -290,24 +290,24 @@ class Invoice(PaymentMethod):
 
     @classmethod
     def get_non_required_fields(cls):
-        fields = super().get_required_fields()
+        fields = super().get_non_required_fields()
         return fields.union(
             {
-                "zoop_boleto_id",
-                "status",
-                "reference_number",
-                "url",
-                "document_number",
-                "recipient",
-                "bank_code",
-                "sequence",
                 "accepted",
-                "printed",
-                "downloaded",
-                "fingerprint",
-                "paid_at",
+                "bank_code",
                 "barcode",
                 "billing_instructions",
                 "body_instructions",
+                "document_number",
+                "downloaded",
+                "fingerprint",
+                "paid_at",
+                "printed",
+                "recipient",
+                "reference_number",
+                "sequence",
+                "status",
+                "url",
+                "zoop_boleto_id",
             }
         )

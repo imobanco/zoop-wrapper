@@ -1,4 +1,4 @@
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 
 from tests.utils import SetTestCase
 from zoop_wrapper.models.buyer import Buyer
@@ -12,6 +12,12 @@ class BuyerTestCase(SetTestCase):
             {"default_receipt_delivery_method", "marketplace_id", "resource"},
             Buyer.get_non_required_fields(),
         )
+
+        with patch(
+            "zoop_wrapper.models.base.MarketPlaceModel.get_non_required_fields"
+        ) as mocked_get_non_required_fields:
+            Buyer.get_non_required_fields()
+            mocked_get_non_required_fields.assert_called_once()
 
     def test_create(self):
         instance = BuyerFactory()

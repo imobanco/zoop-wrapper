@@ -20,7 +20,7 @@ s = Seller(
         line2="123",
         line3="barbar",
         neighborhood="fooofoo",
-        postal_code="59152250",
+        postal_code="59100000",
         state="RN",
     ),
     birthdate="1994-12-27",

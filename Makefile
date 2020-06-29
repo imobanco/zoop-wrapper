@@ -10,11 +10,12 @@ config.env:
 test:
 	python -m unittest
 
-black.check:
-	black --check .
-
-black:
+fmt:
 	black .
+
+fmt.check: mypy
+	black --check .
+	flake8
 
 stubgen:
 	stubgen zoop_wrapper

@@ -132,6 +132,43 @@ class SellerWrapper(BaseZoopWrapper):
         url = self._construct_url(action="sellers", identifier=identifier)
         return self._delete(url)
 
+    def __search_seller(self, **kwargs) -> ZoopResponse:
+        """
+        Busca um :class:`.Seller`.
+
+        Args:
+            kwargs: dicionário de valores a serem buscados
+
+        Returns:
+            :class:`.ZoopResponse`
+        """
+        url = self._construct_url(action="sellers", search=kwargs)
+        return self._get(url)
+
+    def search_business_seller(self, identifier: str) -> ZoopResponse:
+        """
+        search seller by CNPJ
+
+        Args:
+            identifier: ein (Employer Identification Number) is equivalent to CNPJ  # noqa:
+
+        Returns:
+            response with instance of Seller
+        """
+        return self.__search_seller(ein=identifier)
+
+    def search_individual_seller(self, identifier: str) -> ZoopResponse:
+        """
+        search seller by CPF
+
+        Args:
+            identifier: taxpayer_id is equivalent to CPF  # noqa:
+
+        Returns:
+            response with instance of Seller
+        """
+        return self.__search_seller(taxpayer_id=identifier)
+
     def update_seller(self, identifier: str, data: Union[dict, Seller]) -> ZoopResponse:
         """
         Atualiza um :class:`.Seller`.
@@ -208,40 +245,3 @@ class SellerWrapper(BaseZoopWrapper):
             sub_action_before_identifier=True,
         )
         return self._put_instance(url, instance=instance)
-
-    def __search_seller(self, **kwargs) -> ZoopResponse:
-        """
-        Busca um :class:`.Seller`.
-
-        Args:
-            kwargs: dicionário de valores a serem buscados
-
-        Returns:
-            :class:`.ZoopResponse`
-        """
-        url = self._construct_url(action="sellers", search=kwargs)
-        return self._get(url)
-
-    def search_business_seller(self, identifier: str) -> ZoopResponse:
-        """
-        search seller by CNPJ
-
-        Args:
-            identifier: ein (Employer Identification Number) is equivalent to CNPJ  # noqa:
-
-        Returns:
-            response with instance of Seller
-        """
-        return self.__search_seller(ein=identifier)
-
-    def search_individual_seller(self, identifier: str) -> ZoopResponse:
-        """
-        search seller by CPF
-
-        Args:
-            identifier: taxpayer_id is equivalent to CPF  # noqa:
-
-        Returns:
-            response with instance of Seller
-        """
-        return self.__search_seller(taxpayer_id=identifier)

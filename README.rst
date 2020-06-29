@@ -25,21 +25,6 @@
 
 .. container::
 
-    .. image:: https://api.codacy.com/project/badge/Grade/d78080aeddcc411696a91bb18f9fe953
-       :target: https://www.codacy.com/gh/imobanco/zoop-wrapper?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=imobanco/zoop-wrapper&amp;utm_campaign=Badge_Grade
-       :alt: Code grade
-       :height: 23
-    .. image:: https://codecov.io/gh/imobanco/zoop-wrapper/branch/master/graph/badge.svg
-       :target: https://codecov.io/gh/imobanco/zoop-wrapper
-       :alt: Coverage
-       :height: 21
-    .. image:: https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt
-       :target: https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt
-       :alt: Known Vulnerabilities
-       :height: 23
-
-.. container::
-
     .. image:: https://img.shields.io/github/workflow/status/imobanco/zoop-wrapper/tests
        :target: https://github.com/imobanco/zoop-wrapper/actions?query=workflow%3Atests
        :alt: Test status
@@ -48,6 +33,9 @@
        :target: https://zoop-wrapper.readthedocs.io/pt_BR/latest/?badge=latest
        :alt: Documentation Status
        :height: 23
+
+.. container::
+
     .. image:: https://img.shields.io/github/license/imobanco/zoop-wrapper
        :target: https://github.com/imobanco/zoop-wrapper/blob/dev/LICENSE
        :alt: Licença
@@ -55,6 +43,17 @@
     .. image:: https://img.shields.io/github/contributors/imobanco/zoop-wrapper
        :target: https://github.com/imobanco/zoop-wrapper/graphs/contributors
        :alt: Contributors
+       :height: 23
+
+.. container::
+
+    .. image:: https://codecov.io/gh/imobanco/zoop-wrapper/branch/master/graph/badge.svg
+       :target: https://codecov.io/gh/imobanco/zoop-wrapper
+       :alt: Coverage
+       :height: 21
+    .. image:: https://snyk.io/test/github/imobanco/zoop-wrapper/badge.svg?targetFile=requirements.txt
+       :target: https://snyk.io/test/github/imobanco/zoop-wrapper?targetFile=requirements.txt
+       :alt: Known Vulnerabilities
        :height: 23
 
 |br|

@@ -37,7 +37,7 @@ class BankAccount(BusinessOrIndividualModel):
         self,
         address: Optional[Any] = ...,
         verification_checklist: Optional[Any] = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> None: ...
     @classmethod
     def validate_type(cls, type: str) -> None: ...

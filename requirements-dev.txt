@@ -2,9 +2,21 @@
 -r requirements.txt
 -r requirements-build.txt
 
-factory-boy==2.12.0
-black==19.10b0
-mypy==0.770
-coverage==5.0.4
+# Docs
+# ------------------------------------------------
 Sphinx==3.0.0
 sphinx-rtd-theme==0.4.3
+
+# Coverage
+# ------------------------------------------------
+coverage==5.0.*
+
+# Tests
+# ------------------------------------------------
+factory-boy==2.12.0
+mypy==0.770
+
+# CI
+# ------------------------------------------------
+black
+flake8

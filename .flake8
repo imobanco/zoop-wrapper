@@ -1,7 +1,9 @@
 [flake8]
-max-line-length = 80
+ignore = D203
 exclude =
-	.git,
-	__pycache__
-	env/*
-	venv/*
+    .git,
+    venv,
+    env,
+    migrations
+max-complexity = 10
+max-line-length = 88

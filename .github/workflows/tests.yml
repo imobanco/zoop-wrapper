@@ -11,7 +11,7 @@ on:
       - 'release/**'
 
 jobs:
-  black:
+  lint:
     runs-on: ubuntu-18.04
     steps:
     - uses: actions/checkout@v2
@@ -20,9 +20,9 @@ jobs:
       with:
         python-version: 3.8
     - name: Install dependencies
-      run: pip install black
-    - name: Lint with black
-      run: make black.check
+      run: pip install black flake8
+    - name: Lint code
+      run: make fmt.check
 
   mypy:
     runs-on: ubuntu-18.04

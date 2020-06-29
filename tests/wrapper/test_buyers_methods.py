@@ -78,7 +78,7 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
         self.assertEqual(response.instance.id, "foo")
 
     def test_update_buyer(self):
-        self.set_put_mock(201, BuyerFactory(id='1').to_dict())
+        self.set_put_mock(201, BuyerFactory(id="1").to_dict())
 
         data = {
             "birthdate": "foo",
@@ -99,12 +99,9 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
             },
         }
 
-        response = self.client.update_buyer('1', data)
+        response = self.client.update_buyer("1", data)
         self.assertEqual(response.status_code, 201, msg=response.data)
 
         self.mocked_put.assert_called_once_with(
-            f'{self.base_url}/buyers/1/',
-            json=data,
-            auth=self.auth
+            f"{self.base_url}/buyers/1/", json=data, auth=self.auth
         )
-

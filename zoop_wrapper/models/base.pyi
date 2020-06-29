@@ -20,7 +20,7 @@ class ZoopObject:
         cls,
         data: Union[Dict[str, Any], ZoopObject],
         allow_empty: bool = ...,
-        **kwargs: Any
+        **kwargs: Any,
     ) -> ZoopObject: ...
     @staticmethod
     def is_value_empty(value: Any) -> bool: ...

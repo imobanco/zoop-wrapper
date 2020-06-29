@@ -80,4 +80,3 @@ class APITestCase(TestCase):
         self.mocked_put.return_value = self.build_response_mock(
             status_code=status_code, content=content
         )
-

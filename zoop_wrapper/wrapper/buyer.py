@@ -128,8 +128,5 @@ class BuyerWrapper(BaseZoopWrapper):
             :class:`.ZoopResponse`
         """
         instance = Buyer.from_dict_or_instance(data)
-        url = self._construct_url(
-            action=f"buyers",
-            identifier=identifier
-        )
+        url = self._construct_url(action=f"buyers", identifier=identifier)
         return self._put_instance(url, instance=instance)

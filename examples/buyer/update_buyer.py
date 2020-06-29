@@ -20,7 +20,7 @@ b = Buyer(
         line2="123",
         line3="barbar",
         neighborhood="fooofoo",
-        postal_code="59152250",
+        postal_code="59150000",
         state="RN",
     ),
     birthdate="1994-12-27",
@@ -31,10 +31,6 @@ b = Buyer(
     taxpayer_id="19249382944",
 )
 
-"""
-.. note:
-    A atualização do buyer ainda não está implementada!
-"""
-# response = client.update_buyer("ffe4b7a1f19c4a9da85b6d72c0b6201c", b)
+response = client.update_buyer("ffe4b7a1f19c4a9da85b6d72c0b6201c", b)
 
-# dump_response(response, os.path.basename(__file__).split(".")[0])
+dump_response(response, os.path.basename(__file__).split(".")[0])

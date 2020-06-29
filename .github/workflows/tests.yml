@@ -22,7 +22,7 @@ jobs:
     - name: Install dependencies
       run: pip install black flake8
     - name: Lint code
-      run: make fmt.check
+      run: flake8 && black . --check
 
   mypy:
     runs-on: ubuntu-18.04

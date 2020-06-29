@@ -1,6 +1,6 @@
 from .wrapper import ZoopWrapper  # noqa
 from .exceptions import ValidationError  # noqa
-from .models import (
+from .models import (  # noqa
     Address,
     BankAccount,
     BillingConfiguration,
@@ -13,7 +13,7 @@ from .models import (
     Source,
     Token,
     Transaction,
-)  # noqa
+)
 
 from ._version import get_versions
 

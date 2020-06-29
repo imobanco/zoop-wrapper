@@ -4,6 +4,8 @@ exclude =
     .git,
     venv,
     env,
-    migrations
+    versioneer.py,
+    _version.py,
+    build,
 max-complexity = 10
 max-line-length = 88

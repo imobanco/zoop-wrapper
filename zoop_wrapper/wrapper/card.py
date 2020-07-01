@@ -85,3 +85,16 @@ class CardWrapper(BaseZoopWrapper):
 
         url = self._construct_url(action="cards")
         return self._post(url, data=data)
+
+    def remove_card(self, identifier):
+        """
+        Deleta um cartão usando o identificador do cartão
+
+        Args:
+            identifier: uuid id (identificador do cartão)
+
+        Returns:
+            :class:`.ZoopResponse` com instância
+        """
+        url = self._construct_url(action="cards", identifier=identifier)
+        return self._delete(url)

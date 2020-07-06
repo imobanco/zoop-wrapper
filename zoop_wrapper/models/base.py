@@ -228,7 +228,7 @@ class ZoopObject(object):
     # noinspection PyMethodMayBeStatic
     def validate_custom_fields(self, **kwargs):
         """
-        Método de validação a ser extendida para fazer uma validação especializada.
+        Método de validação a ser estendido para fazer uma validação especializada.
 
         Returns:
             Lista de erros a serem levantados.

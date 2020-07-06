@@ -1,0 +1,31 @@
+{
+    "resource": "list",
+    "uri": "/v1/marketplaces/foo/webhooks",
+    "limit": 100,
+    "offset": 0,
+    "has_more": false,
+    "total": 1,
+    "items": [
+        {
+            "events_sent": 399,
+            "id": "577feddd61b14ec9ab202dfabdce831e",
+            "uri": "/v1/marketplaces/foo/webhooks/577feddd61b14ec9ab202dfabdce831e",
+            "method": "POST",
+            "resource": "webhook",
+            "status": "active",
+            "events": [
+                "seller.activated",
+                "seller.enabled",
+                "seller.deleted"
+            ],
+            "updated_at": "2020-06-08T18:53:07+00:00",
+            "last_sent_at": "2018-08-21T18:25:05+00:00",
+            "authorization": null,
+            "dflag": 1,
+            "url": "https://api-development.adianta.com.br/h/zoop/register/?token=59d3b547-dd69-4329-9721-98aaf69119cc",
+            "description": "URL para receber eventos de cadastro concluido da Zoop",
+            "marketplace_id": "foo",
+            "created_at": "2018-08-21T18:00:17+00:00"
+        }
+    ]
+}

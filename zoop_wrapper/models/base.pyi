@@ -1,5 +1,5 @@
 from logging import Logger
-from typing import Any, Optional, Dict, Union
+from typing import Any, Optional, Dict, Union, List
 
 logger: Logger
 
@@ -28,6 +28,7 @@ class ZoopObject:
     def validate_fields(
         self, raise_exception: Optional[bool] = ..., **kwargs: Dict[str, Any]
     ) -> None: ...
+    def validate_custom_fields(self, **kwargs: Dict[str, Any]) -> List[Any]: ...
     def get_validation_fields(self) -> set: ...
     def get_all_fields(self) -> set: ...
     @classmethod

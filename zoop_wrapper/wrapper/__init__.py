@@ -14,7 +14,7 @@ class ZoopWrapper(
     InvoiceWrapper,
     SellerWrapper,
     TransactionWrapper,
-    WebHookWrapper
+    WebHookWrapper,
 ):
     """
     Zoop Wrapper

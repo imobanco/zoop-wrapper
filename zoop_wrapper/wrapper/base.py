@@ -2,7 +2,7 @@ import requests
 
 from ..constants import ZOOP_KEY, MARKETPLACE_ID
 from ..exceptions import ValidationError
-from ..models.base import ResourceModel
+from ..models.base import ZoopObject
 from ..models.utils import get_instance_from_data
 from ..utils import get_logger
 from ..response import ZoopResponse
@@ -230,38 +230,38 @@ class BaseZoopWrapper(RequestsWrapper):
         """
         return self.__key, ""
 
-    def _post_instance(self, url, instance: ResourceModel):
+    def _post_instance(self, url, instance: ZoopObject):
         """
-        http post com instância de um :class:`.ResourceModel`.
+        http post com instância de um :class:`.ZoopObject`.
 
         Args:
             url: url da requisição
             instance: instância a ser utilizada
 
         Raises:
-            :class:`.ValidationError`: quando a instância passada não é um :class:`.ResourceModel`.
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.
 
         Returns:
             (:class:`.ZoopResponse`)
         """
-        if not isinstance(instance, ResourceModel):
-            raise ValidationError(self, "instance precisa ser um ResourceModel!")
+        if not isinstance(instance, ZoopObject):
+            raise ValidationError(self, "instance precisa ser um ZoopObject!")
         return self._post(url, data=instance.to_dict())
 
-    def _put_instance(self, url, instance: ResourceModel):
+    def _put_instance(self, url, instance: ZoopObject):
         """
-        http put com instância de um :class:`.ResourceModel`.
+        http put com instância de um :class:`.ZoopObject`.
 
         Args:
             url: url da requisição
             instance: instância a ser utilizada
 
         Raises:
-            :class:`.ValidationError`: quando a instância passada não é um :class:`.ResourceModel`.
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.
 
         Returns:
             (:class:`.ZoopResponse`)
         """
-        if not isinstance(instance, ResourceModel):
-            raise ValidationError(self, "instance precisa ser um ResourceModel!")
+        if not isinstance(instance, ZoopObject):
+            raise ValidationError(self, "instance precisa ser um ZoopObject!")
         return self._put(url, data=instance.to_dict())

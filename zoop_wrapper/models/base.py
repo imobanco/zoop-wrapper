@@ -220,8 +220,20 @@ class ZoopObject(object):
             if value is None:
                 errors.append(FieldError(validation_field, "missing required field"))
 
+        errors.extend(self.validate_custom_fields(**kwargs))
+
         if errors and raise_exception:
             raise ValidationError(self, errors)
+
+    # noinspection PyMethodMayBeStatic
+    def validate_custom_fields(self, **kwargs):
+        """
+        Método de validação a ser extendida para fazer uma validação especializada.
+
+        Returns:
+            Lista de erros a serem levantados.
+        """
+        return []
 
     def get_validation_fields(self):
         """

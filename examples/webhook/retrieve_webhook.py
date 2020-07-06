@@ -12,7 +12,7 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-webhook_id = '577feddd61b14ec9ab202dfabdce831e'
+webhook_id = "577feddd61b14ec9ab202dfabdce831e"
 
 response = client.retrieve_webhook(webhook_id)
 

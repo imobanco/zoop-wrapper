@@ -7,7 +7,7 @@ from zoop_wrapper.exceptions import FieldError
 
 class WebhookTestCase(SetTestCase):
     def test_get_required_fields(self):
-        expected = {"method", "url", "events"}
+        expected = {"method", "url", "event"}
 
         with patch('zoop_wrapper.models.webhook.super') as mocked_super:
             self.assertIsInstance(mocked_super, MagicMock)
@@ -41,25 +41,25 @@ class WebhookTestCase(SetTestCase):
         instance = MagicMock()
 
         self.assertIsInstance(instance.method, MagicMock)
-        self.assertIsInstance(instance.events, MagicMock)
+        self.assertIsInstance(instance.event, MagicMock)
 
         Webhook.init_custom_fields(instance)
 
         self.assertEqual(instance.method, 'POST')
-        self.assertEqual(instance.events, [])
+        self.assertEqual(instance.event, [])
 
-    def test_init_custom_fields_events(self):
+    def test_init_custom_fields_event(self):
         """
-        testa se o tratamento do events no init_custom_fields tem comportamente correto
+        testa se o tratamento do event no init_custom_fields tem comportamente correto
         """
 
         instance = MagicMock()
 
-        self.assertIsInstance(instance.events, MagicMock)
+        self.assertIsInstance(instance.event, MagicMock)
 
-        Webhook.init_custom_fields(instance, events='asd')
+        Webhook.init_custom_fields(instance, event='asd')
 
-        self.assertEqual(instance.events, ['asd'])
+        self.assertEqual(instance.event, ['asd'])
 
     def test_validate_custom_fields_events_empty(self):
         """
@@ -71,18 +71,18 @@ class WebhookTestCase(SetTestCase):
 
         self.assertEqual(len(errors), 1)
         error: FieldError = errors[0]
-        self.assertEqual(error.name, 'events')
+        self.assertEqual(error.name, 'event')
         self.assertIn('não pode ser vazia', error.reason)
 
     def test_validate_custom_fields_events_invalid(self):
         """
         cenário onde a lista de eventos é inválida
         """
-        instance = Webhook(allow_empty=True, events=['asd'])
+        instance = Webhook(allow_empty=True, event=['asd'])
 
         errors = instance.validate_custom_fields()
 
         self.assertEqual(len(errors), 1)
         error: FieldError = errors[0]
-        self.assertEqual(error.name, 'events')
+        self.assertEqual(error.name, 'event')
         self.assertIn('não são válidos', error.reason)

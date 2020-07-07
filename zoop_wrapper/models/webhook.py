@@ -82,26 +82,26 @@ class Webhook(ZoopObject):
         "transaction.void.succeeded"
     }
 
-    def init_custom_fields(self, method="POST", events=None, **kwargs) -> None:
+    def init_custom_fields(self, method="POST", event=None, **kwargs) -> None:
         setattr(self, 'method', method)
 
-        if events is None:
-            setattr(self, 'events', [])
-        elif not isinstance(events, list):
-            setattr(self, 'events', [events])
+        if event is None:
+            setattr(self, 'event', [])
+        elif not isinstance(event, list):
+            setattr(self, 'event', [event])
 
     def validate_custom_fields(self, **kwargs):
         errors = []
 
-        events_set = set(self.events)
+        events_set = set(self.event)
         if set().issuperset(events_set):
             errors.append(
-                FieldError('events', 'A lista de eventos não pode ser vazia')
+                FieldError('event', 'A lista de eventos não pode ser vazia')
             )
         elif not events_set.issubset(self.EVENTS):
             errors.append(
                 FieldError(
-                    'events',
+                    'event',
                     f'Os eventos {events_set-self.EVENTS} não são válidos! \n'
                     f'Os possíveis eventos são: {self.EVENTS}'
                 )
@@ -112,7 +112,7 @@ class Webhook(ZoopObject):
     @classmethod
     def get_required_fields(cls) -> set:
         fields = super().get_required_fields()
-        return fields.union({"method", "url", "events"})
+        return fields.union({"method", "url", "event"})
 
     @classmethod
     def get_non_required_fields(cls) -> set:

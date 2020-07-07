@@ -16,7 +16,7 @@ wh = {
     "description": "asd",
     "url": "http://google.com",
     "method": "POST",
-    "events": ["document.created", "document.updated"],
+    "event": ["document.created", "document.updated"],
 }
 
 response = client.add_webhook(wh)

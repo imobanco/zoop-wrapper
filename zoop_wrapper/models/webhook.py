@@ -16,7 +16,7 @@ class Event(ResourceModel):
         return fields.union({"payload"})
 
 
-class Webhook(ZoopObject):
+class Webhook(ResourceModel):
     """
     Webhook para cadastro de eventos assíncronos enviados pela Zoop.
 
@@ -82,26 +82,28 @@ class Webhook(ZoopObject):
         "transaction.void.succeeded"
     }
 
-    def init_custom_fields(self, method="POST", event=None, **kwargs) -> None:
+    RESOURCE = 'webhook'
+
+    def init_custom_fields(self, method="POST", events=None, **kwargs) -> None:
         setattr(self, 'method', method)
 
-        if event is None:
-            setattr(self, 'event', [])
-        elif not isinstance(event, list):
-            setattr(self, 'event', [event])
+        if events is None:
+            setattr(self, 'events', [])
+        elif not isinstance(events, list):
+            setattr(self, 'events', [events])
 
     def validate_custom_fields(self, **kwargs):
         errors = []
 
-        events_set = set(self.event)
+        events_set = set(self.events)
         if set().issuperset(events_set):
             errors.append(
-                FieldError('event', 'A lista de eventos não pode ser vazia')
+                FieldError('events', 'A lista de eventos não pode ser vazia')
             )
         elif not events_set.issubset(self.EVENTS):
             errors.append(
                 FieldError(
-                    'event',
+                    'events',
                     f'Os eventos {events_set-self.EVENTS} não são válidos! \n'
                     f'Os possíveis eventos são: {self.EVENTS}'
                 )
@@ -109,10 +111,13 @@ class Webhook(ZoopObject):
 
         return errors
 
+    def get_original_different_fields_mapping(self):
+        return {'events': 'event'}
+
     @classmethod
     def get_required_fields(cls) -> set:
         fields = super().get_required_fields()
-        return fields.union({"method", "url", "event"})
+        return fields.union({"method", "url", "events"})
 
     @classmethod
     def get_non_required_fields(cls) -> set:

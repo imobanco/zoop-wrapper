@@ -171,6 +171,9 @@ class ZoopObject(object):
             dict of instance
         """
         data = {}
+
+        different_fields_mapping = self.get_original_different_fields_mapping()
+
         for field in self.get_all_fields():
             value = getattr(self, field)
 
@@ -194,7 +197,12 @@ class ZoopObject(object):
             if self.is_value_empty(value):
                 continue
 
-            data[field] = value
+            if field in different_fields_mapping:
+                original_field = different_fields_mapping.get(field)
+            else:
+                original_field = field
+
+            data[original_field] = value
 
         return data
 
@@ -268,6 +276,17 @@ class ZoopObject(object):
             ``set`` of all fields
         """
         return self.get_fields()
+
+    # noinspection PyMethodMayBeStatic
+    def get_original_different_fields_mapping(self):
+        """
+        Método de mapeamento de nomes diferentes de atributo => API zoop
+        a ser estendido.
+
+        Returns:
+            Dicionário de nome_custom => nome_oringial
+        """
+        return {}
 
     @classmethod
     def get_fields(cls):

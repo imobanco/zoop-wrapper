@@ -82,8 +82,13 @@ class Webhook(ZoopObject):
         "transaction.void.succeeded"
     }
 
-    def init_custom_fields(self, method="POST", **kwargs) -> None:
+    def init_custom_fields(self, method="POST", events=None, **kwargs) -> None:
         setattr(self, 'method', method)
+
+        if events is None:
+            setattr(self, 'events', [])
+        elif not isinstance(events, list):
+            setattr(self, 'events', [events])
 
     def validate_custom_fields(self, **kwargs):
         errors = []

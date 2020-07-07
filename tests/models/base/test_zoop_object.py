@@ -143,6 +143,24 @@ class ZoopObjectTestCase(SetTestCase):
 
         instance.validate_fields(raise_exception=False)
 
+    def test_validate_call_validate_custom_fields(self):
+        instance: ZoopObject = ZoopObjectFactory(id=1)
+
+        with patch('zoop_wrapper.models.base.ZoopObject.validate_custom_fields') as mocked_validate:
+            instance.validate_fields()
+
+            self.assertIsInstance(mocked_validate, MagicMock)
+            mocked_validate.assert_called_once_with()
+
+    def test_validate_custom_fields(self):
+        instance: ZoopObject = ZoopObjectFactory(id=1)
+
+        expected = []
+
+        result = instance.validate_custom_fields()
+
+        self.assertEqual(expected, result)
+
     def test_is_value_empty(self):
         self.assertTrue(ZoopObject.is_value_empty(None))
         self.assertTrue(ZoopObject.is_value_empty({}))

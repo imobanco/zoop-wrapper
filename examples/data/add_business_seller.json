@@ -55,8 +55,8 @@
     "default_credit": null,
     "merchant_code": null,
     "terminal_code": null,
-    "uri": "/v1/marketplaces/d77c2258b51d49269191502695f939f4/sellers/businesses/",
-    "marketplace_id": "d77c2258b51d49269191502695f939f4",
+    "uri": "/v1/marketplaces/foo/sellers/businesses/",
+    "marketplace_id": "foo",
     "metadata": {},
     "created_at": "2020-05-13T21:00:30+00:00",
     "updated_at": "2020-05-13T21:00:30+00:00"

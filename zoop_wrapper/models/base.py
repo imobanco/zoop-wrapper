@@ -171,6 +171,9 @@ class ZoopObject(object):
             dict of instance
         """
         data = {}
+
+        different_fields_mapping = self.get_original_different_fields_mapping()
+
         for field in self.get_all_fields():
             value = getattr(self, field)
 
@@ -194,21 +197,28 @@ class ZoopObject(object):
             if self.is_value_empty(value):
                 continue
 
-            data[field] = value
+            if field in different_fields_mapping:
+                original_field = different_fields_mapping.get(field)
+            else:
+                original_field = field
+
+            data[original_field] = value
 
         return data
 
     def validate_fields(self, raise_exception=True, **kwargs):
         """
-        Validate fields returned from :meth:`get_validation_fields`.\n
+        Valida na instância os campos retornados do conjunto :meth:`get_validation_fields`.\n
 
-        if :attr:`_allow_empty` is ``True`` don't validate!
+        Se :attr:`_allow_empty` é ``True`` não validar!
+
+        Esse método deve chamar o :meth:`validate_custom_fields` para praticidade de extensão e especialização!
 
         Args:
-            raise_exception: boolean to raise or not exception
+            raise_exception: flag que dita se a exceção deve ser lançada ou não
 
         Raises:
-            :class:`.ValidationError`: if there's some ``required field`` missing and ``raise_exception==True``
+            :class:`.ValidationError` se (algum campo ``obrigatório`` está faltando ou ocorreu algum erro no :meth:`validate_custom_fields`) e ``raise_exception==True``
 
         """
         if self._allow_empty:
@@ -220,8 +230,25 @@ class ZoopObject(object):
             if value is None:
                 errors.append(FieldError(validation_field, "missing required field"))
 
+        errors.extend(self.validate_custom_fields(**kwargs))
+
+        error = ValidationError(self, errors)
+
         if errors and raise_exception:
-            raise ValidationError(self, errors)
+            raise error
+
+    # noinspection PyMethodMayBeStatic
+    def validate_custom_fields(self, **kwargs):
+        """
+        Método de validação a ser estendido para fazer uma validação especializada.
+
+        Esse método originalmente retorna uma lista vazia pois ele serve para ser sobreescrito pelas calsses especializadas
+        adicionando comportamento de validação!
+
+        Returns:
+            Lista de erros a serem levantados.
+        """
+        return []
 
     def get_validation_fields(self):
         """
@@ -256,6 +283,17 @@ class ZoopObject(object):
             ``set`` of all fields
         """
         return self.get_fields()
+
+    # noinspection PyMethodMayBeStatic
+    def get_original_different_fields_mapping(self):
+        """
+        Método de mapeamento de nomes diferentes de atributo => API zoop
+        a ser estendido.
+
+        Returns:
+            Dicionário de nome_custom => nome_oringial
+        """
+        return {}
 
     @classmethod
     def get_fields(cls):
@@ -547,7 +585,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        call :meth:`set_identifier`.
+        Chama :meth:`set_identifier`.
 
         Args:
             taxpayer_id: cpf value
@@ -559,10 +597,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     @classmethod
     def validate_identifiers(cls, taxpayer_id, ein):
         """
-        valida tupla de valores de identificação
+        Valida tupla de valores de identificação.
 
         Raises:
-            :class`.ValidationError`: quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
+            :class:`.ValidationError` quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
         """
         if (taxpayer_id is not None and ein is not None) or (
             taxpayer_id is None and ein is None
@@ -616,8 +654,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        set :attr:`taxpayer_id` or :attr:`ein` identifier.
-        Exactly one of then have to be not None.\n
+        Declara os atributos :attr:`taxpayer_id` ou (ou exclusivo) :attr:`ein`.
+        Exatamente um deles deve ser passado e válido, e não os dois.\n
 
         ``kwargs`` are there to be called from :meth:`.Seller.init_custom_fields`
         and :meth:`.BankAccount.init_custom_fields` without getting

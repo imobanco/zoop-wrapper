@@ -121,15 +121,15 @@ Market Place
 
 Webhooks
 
-- ☐ Cadastro
-- ☐ listagem
-- ☐ detalhes
-- ☐ remoção
+- ☑ Cadastro
+- ☑ listagem
+- ☑ detalhes
+- ☑ remoção
 
 
 Buyer
 
-- ☐ Atualização
+- ☑ Atualização
 - ☑ Cadastro
 - ☑ listagem
 - ☑ detalhes
@@ -179,5 +179,5 @@ Transação
 - ☑ detalhes
 - ☑ cancelamento
 - ☑ Cadastro transação boleto
-- ☐ Cadastro transação cartão de crédito
+- ☑ Cadastro transação cartão de crédito
 

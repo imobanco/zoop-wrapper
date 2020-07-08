@@ -1,0 +1,18 @@
+{
+    "events_sent": 0,
+    "id": "bc0c38ac6e3d4ccca1e893b7f5574a20",
+    "uri": "/v1/marketplaces/foo/webhooks/bc0c38ac6e3d4ccca1e893b7f5574a20",
+    "method": "POST",
+    "resource": "webhook",
+    "status": "registered",
+    "events": [
+        "document.created",
+        "document.updated"
+    ],
+    "authorization": null,
+    "dflag": 1,
+    "url": "http://google.com",
+    "description": "asd",
+    "marketplace_id": "foo",
+    "created_at": "2020-07-08T15:30:15+00:00"
+}

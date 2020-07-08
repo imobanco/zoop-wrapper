@@ -4,6 +4,7 @@ from .card import CardWrapper
 from .invoice import InvoiceWrapper
 from .seller import SellerWrapper
 from .transaction import TransactionWrapper
+from .webhook import WebhookWrapper
 
 
 class ZoopWrapper(
@@ -13,6 +14,7 @@ class ZoopWrapper(
     InvoiceWrapper,
     SellerWrapper,
     TransactionWrapper,
+    WebhookWrapper,
 ):
     """
     Zoop Wrapper

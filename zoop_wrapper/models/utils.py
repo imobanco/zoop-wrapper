@@ -5,13 +5,23 @@ from .invoice import Invoice
 from .seller import Seller
 from .token import Token
 from .transaction import Transaction
+from .webhook import Webhook
 from ..utils import get_logger
 
 
 logger = get_logger("models")
 
 
-RESOURCE_CLASSES = [BankAccount, Buyer, Card, Invoice, Seller, Token, Transaction]
+RESOURCE_CLASSES = [
+    BankAccount,
+    Buyer,
+    Card,
+    Invoice,
+    Seller,
+    Token,
+    Transaction,
+    Webhook,
+]
 RESOURCES_DICT = {CLASS.RESOURCE: CLASS for CLASS in RESOURCE_CLASSES}
 
 

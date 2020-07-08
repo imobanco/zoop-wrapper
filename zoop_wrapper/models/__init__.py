@@ -6,3 +6,4 @@ from .invoice import Invoice, BillingConfiguration, BillingInstructions  # noqa
 from .seller import Seller  # noqa
 from .token import Token  # noqa
 from .transaction import Transaction, Source  # noqa
+from .webhook import Webhook  # noqa

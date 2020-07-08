@@ -1,6 +1,7 @@
 from unittest.mock import patch, MagicMock
 
 from ..utils import SetTestCase
+from ..factories.webhook import WebhookFactory
 from zoop_wrapper.models.webhook import Webhook
 from zoop_wrapper.exceptions import FieldError
 
@@ -35,7 +36,7 @@ class WebhookTestCase(SetTestCase):
         self.assertEqual(expected, result)
 
     def test_get_original_differente_fields_mapping(self):
-        instance: Webhook = Webhook(allow_empty=True)
+        instance: Webhook = WebhookFactory()
 
         expected = {'events': 'event'}
 
@@ -74,7 +75,7 @@ class WebhookTestCase(SetTestCase):
         """
         cenário onde a lista de eventos vem vazia
         """
-        instance = Webhook(allow_empty=True)
+        instance = WebhookFactory(events=[], allow_empty=True)
 
         errors = instance.validate_custom_fields()
 
@@ -87,7 +88,7 @@ class WebhookTestCase(SetTestCase):
         """
         cenário onde a lista de eventos é inválida
         """
-        instance = Webhook(allow_empty=True, events=['asd'])
+        instance = WebhookFactory(events=['asd'], allow_empty=True)
 
         errors = instance.validate_custom_fields()
 

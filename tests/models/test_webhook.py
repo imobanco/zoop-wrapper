@@ -55,7 +55,7 @@ class WebhookTestCase(SetTestCase):
 
     def test_get_original_differente_fields_mapping(self):
         """
-        Testa se o dicionário mapeamento de campos custom => original está correto
+        Testa se o dicionário de mapeamento de campos custom => original está correto
 
         Dado N/A
         Quando for chamado Webhook.get_original_different_fields_mapping()

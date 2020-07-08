@@ -103,7 +103,7 @@ class Webhook(ResourceModel):
 
         .. note::
 
-            Se o events passado não for uma lista, dar um parse!
+            Se o `events` passado não for uma lista, faz um parse!
 
         Args:
             method: Método da requisição do webhook

@@ -72,7 +72,7 @@ class WebhookTestCase(SetTestCase):
 
     def test_init_custom_fields(self):
         """
-        testa se o init_custom_fields declarou os campos method e events corretamente
+        Testa se o init_custom_fields declarou os campos `method` e `events` corretamente
 
         Dado que exista um Webhook w1
         Quando for chamado w1.init_custom_fields()

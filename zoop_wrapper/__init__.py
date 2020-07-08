@@ -13,6 +13,7 @@ from .models import (  # noqa
     Source,
     Token,
     Transaction,
+    Webhook,
 )
 
 from ._version import get_versions

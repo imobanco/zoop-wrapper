@@ -1,4 +1,4 @@
-from .base import ZoopObject, ResourceModel
+from .base import ResourceModel
 from ..exceptions import FieldError
 
 

@@ -1,6 +1,6 @@
 import os
 
-from zoop_wrapper import ZoopWrapper
+from zoop_wrapper import ZoopWrapper, Webhook
 from examples.utils import dump_response
 
 """
@@ -12,12 +12,13 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-wh = {
-    "description": "asd",
-    "url": "http://google.com",
-    "method": "POST",
-    "events": ["document.created", "document.updated"],
-}
+wh = Webhook(
+    description="asd",
+    url="http://google.com",
+    method="POST",
+    events=["document.created", "document.updated"],
+)
+
 
 response = client.add_webhook(wh)
 

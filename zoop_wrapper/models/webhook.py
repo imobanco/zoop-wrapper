@@ -79,40 +79,38 @@ class Webhook(ResourceModel):
         "transaction.succeeded",
         "transaction.updated",
         "transaction.void.failed",
-        "transaction.void.succeeded"
+        "transaction.void.succeeded",
     }
 
-    RESOURCE = 'webhook'
+    RESOURCE = "webhook"
 
     def init_custom_fields(self, method="POST", events=None, **kwargs) -> None:
-        setattr(self, 'method', method)
+        setattr(self, "method", method)
 
         if events is None:
-            setattr(self, 'events', [])
+            setattr(self, "events", [])
         elif not isinstance(events, list):
-            setattr(self, 'events', [events])
+            setattr(self, "events", [events])
 
     def validate_custom_fields(self, **kwargs):
         errors = []
 
         events_set = set(self.events)
         if set().issuperset(events_set):
-            errors.append(
-                FieldError('events', 'A lista de eventos não pode ser vazia')
-            )
+            errors.append(FieldError("events", "A lista de eventos não pode ser vazia"))
         elif not events_set.issubset(self.EVENTS):
             errors.append(
                 FieldError(
-                    'events',
-                    f'Os eventos {events_set-self.EVENTS} não são válidos! \n'
-                    f'Os possíveis eventos são: {self.EVENTS}'
+                    "events",
+                    f"Os eventos {events_set-self.EVENTS} não são válidos! \n"
+                    f"Os possíveis eventos são: {self.EVENTS}",
                 )
             )
 
         return errors
 
     def get_original_different_fields_mapping(self):
-        return {'events': 'event'}
+        return {"events": "event"}
 
     @classmethod
     def get_required_fields(cls) -> set:

@@ -22,7 +22,9 @@ class ZoopObjectTestCase(SetTestCase):
         self.mocked_fields = self.patcher_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
         self.mocked_non_required_fields = self.patcher_non_required_fields.start()
-        self.mocked_get_original_different_fields_mapping = self.patcher_get_original_different_fields_mapping.start()
+        self.mocked_get_original_different_fields_mapping = (
+            self.patcher_get_original_different_fields_mapping.start()
+        )
 
         self.addCleanup(self.patcher_fields.stop)
         self.addCleanup(self.patcher_required_fields.stop)
@@ -32,7 +34,9 @@ class ZoopObjectTestCase(SetTestCase):
         self.mocked_fields.return_value = {"id", "name", "modificado"}
         self.mocked_required_fields.return_value = {"id"}
         self.mocked_non_required_fields.return_value = {"name", "modificado"}
-        self.mocked_get_original_different_fields_mapping.return_value = {"modificado": "original"}
+        self.mocked_get_original_different_fields_mapping.return_value = {
+            "modificado": "original"
+        }
 
     @property
     def data(self):
@@ -152,7 +156,9 @@ class ZoopObjectTestCase(SetTestCase):
     def test_validate_call_validate_custom_fields(self):
         instance: ZoopObject = ZoopObjectFactory(id=1)
 
-        with patch('zoop_wrapper.models.base.ZoopObject.validate_custom_fields') as mocked_validate:
+        with patch(
+            "zoop_wrapper.models.base.ZoopObject.validate_custom_fields"
+        ) as mocked_validate:
             instance.validate_fields()
 
             self.assertIsInstance(mocked_validate, MagicMock)
@@ -170,7 +176,7 @@ class ZoopObjectTestCase(SetTestCase):
     def test_get_original_fields_mapping(self):
         instance: ZoopObject = ZoopObjectFactory(id=1)
 
-        expected = {'modificado': 'original'}
+        expected = {"modificado": "original"}
 
         result = instance.get_original_different_fields_mapping()
 
@@ -193,7 +199,15 @@ class ZoopObjectTestCase(SetTestCase):
         data["foo2"] = MagicMock(to_dict=MagicMock(return_value={"foo2": "foo2"}))
         data["bar2"] = [MagicMock(to_dict=MagicMock(return_value={"bar2": "bar2"}))]
 
-        self.mocked_fields.return_value = {"id", "name", "modificado", "foo", "bar", "foo2", "bar2"}
+        self.mocked_fields.return_value = {
+            "id",
+            "name",
+            "modificado",
+            "foo",
+            "bar",
+            "foo2",
+            "bar2",
+        }
 
         instance = ZoopObject.from_dict(data)
         self.assertIsInstance(instance, ZoopObject)

@@ -9,9 +9,11 @@ class WebhookFactory(ResourceModelFactory):
     class Meta:
         model = Webhook
 
-    resource = 'webhook'
+    resource = "webhook"
 
     method = "POST"
-    url = Faker('uri')
-    events = LazyFunction(lambda: [Faker('random_element', elements=Webhook.EVENTS).generate()])
+    url = Faker("uri")
+    events = LazyFunction(
+        lambda: [Faker("random_element", elements=Webhook.EVENTS).generate()]
+    )
     description = Faker("sentence", nb_words=5)

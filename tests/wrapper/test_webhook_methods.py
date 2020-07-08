@@ -82,7 +82,7 @@ class WebhookWrapperTestCase(APITestCase):
 
         A api da zoop retorna 200 com esse payload em um request DELETE
 
-        Dado existe Webhook com id 'foo'
+        Dado que existe um  Webhook com id 'foo'
         Quando for chamado retrieve_webhook('foo')
         Então deve ter sido feita uma requisição DELETE com:
             - a url correta

@@ -21,6 +21,17 @@ class Webhook(ResourceModel):
     Webhook para cadastro de eventos assíncronos enviados pela Zoop.
 
     https://docs.zoop.co/reference#webhook
+
+    Attributes:
+        url: url para o envio da requisição do webhook
+        method: Método da requisição do webhook
+        events: Lista de eventos que acionarão o webhook
+
+        description: Descrição do webhook
+        authorization: ??
+        dflag: ??
+        status: situação do webhook na zoop
+        events_sent: quantidade de vezes que o wehbook foi acionado
     """
 
     EVENTS = {
@@ -85,6 +96,20 @@ class Webhook(ResourceModel):
     RESOURCE = "webhook"
 
     def init_custom_fields(self, method="POST", events=None, **kwargs) -> None:
+        """
+        Declara o campo :attr:`method` com o valor padrão se não tiver sido passado.
+
+        Trata e declara o campo :attr:`events`.
+
+        .. note::
+
+            Se o events passado não for uma lista, dar um parse!
+
+        Args:
+            method: Método da requisição do webhook
+            events: Lista de eventos que acionarão o webhook
+            **kwargs: kwargs
+        """
         setattr(self, "method", method)
 
         if events is None:
@@ -93,6 +118,15 @@ class Webhook(ResourceModel):
             setattr(self, "events", [events])
 
     def validate_custom_fields(self, **kwargs):
+        """
+        Valida se o campo :attr:`events` é vazio ou se os valores dele não são eventos válidos.
+
+        Args:
+            **kwargs: kwargs
+
+        Returns:
+            lista de erros ocorridos/identificados
+        """
         errors = []
 
         events_set = set(self.events)

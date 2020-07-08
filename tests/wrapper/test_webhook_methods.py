@@ -5,6 +5,16 @@ from zoop_wrapper.models.webhook import Webhook
 
 class WebhookWrapperTestCase(APITestCase):
     def test_add_webhook(self):
+        """
+        Testa o método add_webhook
+
+        Dado existe dicionário válido de dados data
+        Quando for chamado add_webhook(data)
+        Então deve ter sido feita uma requisição POST com:
+            - a url correta
+            - o payload correto
+            - autenticação correta
+        """
         self.set_post_mock(201, WebhookFactory().to_dict())
 
         data = {
@@ -24,6 +34,16 @@ class WebhookWrapperTestCase(APITestCase):
         )
 
     def test_list_webhooks(self):
+        """
+        Testa o método list_webhooks
+
+        Dado N/A
+        Quando for chamado list_webhooks()
+        Então deve ter sido feita uma requisição GET com:
+            - a url correta
+            - autenticação correta
+        """
+
         self.set_get_mock(200, {"items": [WebhookFactory()]})
 
         response = self.client.list_webhooks()
@@ -34,6 +54,16 @@ class WebhookWrapperTestCase(APITestCase):
         )
 
     def test_retrieve_webhook(self):
+        """
+        Testa o método retrieve_webhook
+
+        Dado existe Webhook com id 'foo'
+        Quando for chamado retrieve_webhook('foo')
+        Então deve ter sido feita uma requisição GET com:
+            - a url correta
+            - autenticação correta
+        """
+
         self.set_get_mock(200, WebhookFactory(id="foo").to_dict())
 
         response = self.client.retrieve_webhook("foo")
@@ -48,8 +78,17 @@ class WebhookWrapperTestCase(APITestCase):
 
     def test_remove_webhook(self):
         """
+        Testa o método remove_webhook.
+
         A api da zoop retorna 200 com esse payload em um request DELETE
+
+        Dado existe Webhook com id 'foo'
+        Quando for chamado retrieve_webhook('foo')
+        Então deve ter sido feita uma requisição DELETE com:
+            - a url correta
+            - autenticação correta
         """
+
         self.set_delete_mock(200, {"id": "foo", "resource": "webhook", "deleted": True})
 
         response = self.client.remove_webhook("foo")

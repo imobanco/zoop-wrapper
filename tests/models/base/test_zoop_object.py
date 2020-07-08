@@ -154,22 +154,32 @@ class ZoopObjectTestCase(SetTestCase):
         instance.validate_fields(raise_exception=False)
 
     def test_validate_call_validate_custom_fields(self):
-        instance: ZoopObject = ZoopObjectFactory(id=1)
+        """
+        Dado que existe um zoopObject z1
+        Quando for chamado z1.validate_fields()
+        Então z1.validate_custom_fields() deve ter sido chamado
+        """
+        z1: ZoopObject = ZoopObjectFactory(id=1)
 
         with patch(
             "zoop_wrapper.models.base.ZoopObject.validate_custom_fields"
         ) as mocked_validate:
-            instance.validate_fields()
+            z1.validate_fields()
 
             self.assertIsInstance(mocked_validate, MagicMock)
             mocked_validate.assert_called_once_with()
 
     def test_validate_custom_fields(self):
-        instance: ZoopObject = ZoopObjectFactory(id=1)
+        """
+        Dado que existe um zoopObject z1
+        Quando for chamado z1.custom_validate_fields()
+        Então deve ser retornado uma lista vazia
+        """
+        z1: ZoopObject = ZoopObjectFactory(id=1)
 
         expected = []
 
-        result = instance.validate_custom_fields()
+        result = z1.validate_custom_fields()
 
         self.assertEqual(expected, result)
 
@@ -200,13 +210,13 @@ class ZoopObjectTestCase(SetTestCase):
         data["bar2"] = [MagicMock(to_dict=MagicMock(return_value={"bar2": "bar2"}))]
 
         self.mocked_fields.return_value = {
-            "id",
-            "name",
-            "modificado",
-            "foo",
             "bar",
-            "foo2",
             "bar2",
+            "foo",
+            "foo2",
+            "id",
+            "modificado",
+            "name",
         }
 
         instance = ZoopObject.from_dict(data)

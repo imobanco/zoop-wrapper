@@ -8,6 +8,15 @@ from zoop_wrapper.exceptions import FieldError
 
 class WebhookTestCase(SetTestCase):
     def test_get_required_fields(self):
+        """
+        Testa se o conjunto de campos obrigatrórios está correto
+
+        Dado N/A
+        Quando for chamado Webhook.get_required_fields()
+        Então:
+            - o super().get_required_fields() deve ter sido chamado
+            - o resultado deve ser igual à {"method", "url", "events"}
+        """
         expected = {"method", "url", "events"}
 
         with patch("zoop_wrapper.models.webhook.super") as mocked_super:
@@ -22,6 +31,15 @@ class WebhookTestCase(SetTestCase):
         self.assertEqual(expected, result)
 
     def test_get_non_required_fields(self):
+        """
+        Testa se o conjunto de campos opcionais está correto
+
+        Dado N/A
+        Quando for chamado Webhook.get_non_required_fields()
+        Então:
+            - o super().get_non_required_fields() deve ter sido chamado
+            - o resultado deve ser igual à {"description", "authorization", "dflag", "status", "events_sent"}
+        """
         expected = {"description", "authorization", "dflag", "status", "events_sent"}
 
         with patch("zoop_wrapper.models.webhook.super") as mocked_super:
@@ -36,6 +54,14 @@ class WebhookTestCase(SetTestCase):
         self.assertEqual(expected, result)
 
     def test_get_original_differente_fields_mapping(self):
+        """
+        Testa se o dicionário mapeamento de campos custom => original está correto
+
+        Dado N/A
+        Quando for chamado Webhook.get_original_different_fields_mapping()
+        Então o resultado deve ser igual à {"events": "event"}
+        """
+
         instance: Webhook = WebhookFactory()
 
         expected = {"events": "event"}
@@ -46,30 +72,40 @@ class WebhookTestCase(SetTestCase):
 
     def test_init_custom_fields(self):
         """
-        testa se o init_custom_fields tem comportamente correto
+        testa se o init_custom_fields declarou os campos method e events corretamente
+
+        Dado que exista um Webhook w1
+        Quando for chamado w1.init_custom_fields()
+        Então:
+            w1.method deve ser igual à "POST"
+            w1.events deve ser igual à []
         """
-        instance = MagicMock()
+        w1: Webhook = MagicMock()
 
-        self.assertIsInstance(instance.method, MagicMock)
-        self.assertIsInstance(instance.events, MagicMock)
+        self.assertIsInstance(w1.method, MagicMock)
+        self.assertIsInstance(w1.events, MagicMock)
 
-        Webhook.init_custom_fields(instance)
+        Webhook.init_custom_fields(w1)
 
-        self.assertEqual(instance.method, "POST")
-        self.assertEqual(instance.events, [])
+        self.assertEqual(w1.method, "POST")
+        self.assertEqual(w1.events, [])
 
     def test_init_custom_fields_event(self):
         """
-        testa se o tratamento do event no init_custom_fields tem comportamente correto
+        testa se o tratamento do events no init_custom_fields fez o parse para lista corretamente
+
+        Dado que exista um Webhook w1
+        Quando for chamado w1.init_custom_fields(events="asd")
+        Então w1.events deve ser igual à ["asd"]
         """
 
-        instance: Webhook = MagicMock()
+        w1: Webhook = MagicMock()
 
-        self.assertIsInstance(instance.events, MagicMock)
+        self.assertIsInstance(w1.events, MagicMock)
 
-        Webhook.init_custom_fields(instance, events="asd")
+        Webhook.init_custom_fields(w1, events="asd")
 
-        self.assertEqual(instance.events, ["asd"])
+        self.assertEqual(w1.events, ["asd"])
 
     def test_validate_custom_fields_events_empty(self):
         """

@@ -120,4 +120,4 @@ class Webhook(ResourceModel):
     @classmethod
     def get_non_required_fields(cls) -> set:
         fields = super().get_non_required_fields()
-        return fields.union({"description"})
+        return fields.union({"description", "authorization", "dflag", "status", "events_sent"})

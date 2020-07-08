@@ -22,7 +22,7 @@ class WebhookTestCase(SetTestCase):
         self.assertEqual(expected, result)
 
     def test_get_non_required_fields(self):
-        expected = {"description"}
+        expected = {"description", "authorization", "dflag", "status", "events_sent"}
 
         with patch("zoop_wrapper.models.webhook.super") as mocked_super:
             self.assertIsInstance(mocked_super, MagicMock)

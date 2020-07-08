@@ -578,7 +578,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def init_custom_fields(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        call :meth:`set_identifier`.
+        Chama :meth:`set_identifier`.
 
         Args:
             taxpayer_id: cpf value
@@ -590,10 +590,10 @@ class BusinessOrIndividualModel(MarketPlaceModel):
     @classmethod
     def validate_identifiers(cls, taxpayer_id, ein):
         """
-        valida tupla de valores de identificação
+        Valida tupla de valores de identificação.
 
         Raises:
-            :class`.ValidationError`: quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
+            :class:`.ValidationError` quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
         """
         if (taxpayer_id is not None and ein is not None) or (
             taxpayer_id is None and ein is None
@@ -647,8 +647,8 @@ class BusinessOrIndividualModel(MarketPlaceModel):
 
     def set_identifier(self, taxpayer_id=None, ein=None, **kwargs):
         """
-        set :attr:`taxpayer_id` or :attr:`ein` identifier.
-        Exactly one of then have to be not None.\n
+        Declara os atributos :attr:`taxpayer_id` ou (ou exclusivo) :attr:`ein`.
+        Exatamente um deles deve ser passado e válido, e não os dois.\n
 
         ``kwargs`` are there to be called from :meth:`.Seller.init_custom_fields`
         and :meth:`.BankAccount.init_custom_fields` without getting

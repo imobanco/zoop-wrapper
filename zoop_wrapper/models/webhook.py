@@ -10,10 +10,10 @@ class Event(ResourceModel):
     https://docs.zoop.co/docs/eventos-dispon%C3%ADveis
     """
 
-    @classmethod
-    def get_non_required_fields(cls):
-        fields = super().get_non_required_fields()
-        return fields.union({"payload"})
+    # @classmethod
+    # def get_non_required_fields(cls):
+    #     fields = super().get_non_required_fields()
+    #     return fields.union({"payload"})
 
 
 class Webhook(ResourceModel):

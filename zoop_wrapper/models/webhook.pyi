@@ -3,8 +3,7 @@ from .base import ResourceModel as ResourceModel
 from typing import Any, List
 
 class Event(ResourceModel):
-    @classmethod
-    def get_non_required_fields(cls): ...
+    pass
 
 class Webhook(ResourceModel):
     EVENTS: Any = ...

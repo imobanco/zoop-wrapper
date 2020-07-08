@@ -92,7 +92,7 @@ class WebhookTestCase(SetTestCase):
 
     def test_init_custom_fields_event(self):
         """
-        testa se o tratamento do events no init_custom_fields fez o parse para lista corretamente
+        Testa se o tratamento do events no init_custom_fields fez o parse para lista corretamente
 
         Dado que exista um Webhook w1
         Quando for chamado w1.init_custom_fields(events="asd")

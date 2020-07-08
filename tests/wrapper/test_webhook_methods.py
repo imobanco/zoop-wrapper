@@ -57,7 +57,7 @@ class WebhookWrapperTestCase(APITestCase):
         """
         Testa o método retrieve_webhook
 
-        Dado existe Webhook com id 'foo'
+        Dado que existe um Webhook com id 'foo'
         Quando for chamado retrieve_webhook('foo')
         Então deve ter sido feita uma requisição GET com:
             - a url correta

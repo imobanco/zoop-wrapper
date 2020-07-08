@@ -8,7 +8,7 @@ class WebhookWrapperTestCase(APITestCase):
         """
         Testa o método add_webhook
 
-        Dado existe dicionário válido de dados data
+        Dado que existe um dicionário válido de dados `data`
         Quando for chamado add_webhook(data)
         Então deve ter sido feita uma requisição POST com:
             - a url correta

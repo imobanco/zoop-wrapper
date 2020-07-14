@@ -177,62 +177,54 @@ class TransactionTestCase(SetTestCase):
         self.assertIsInstance(instance, Transaction)
 
     def test_get_card_required_fields(self):
-        self.assertEqual(
-            {
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_type",
-                "source",
-            },
-            Transaction.get_card_required_fields(),
-        )
+        expected = {"source", "capture"}
+
+        with patch(
+            "zoop_wrapper.models.transaction.Transaction.get_required_fields"
+        ) as mocked_required:
+            mocked_required.return_value = set()
+
+            result = Transaction.get_card_required_fields()
+
+            mocked_required.assert_called_once()
+
+        self.assertEqual(result, expected)
 
     def test_get_boleto_required_fields(self):
-        self.assertEqual(
-            {
-                "amount",
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_method",
-                "payment_type",
-            },
-            Transaction.get_boleto_required_fields(),
-        )
+        expected = {"payment_method", "amount"}
+
+        with patch(
+            "zoop_wrapper.models.transaction.Transaction.get_required_fields"
+        ) as mocked_required:
+            mocked_required.return_value = set()
+
+            result = Transaction.get_boleto_required_fields()
+
+            mocked_required.assert_called_once()
+
+        self.assertEqual(result, expected)
 
     def test_get_validation_fields_credit(self):
         instance = TransactionCreditFactory()
         self.assertIsInstance(instance, Transaction)
-        self.assertEqual(
-            {
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_type",
-                "source",
-            },
-            instance.get_validation_fields(),
-        )
+
+        with patch(
+            "zoop_wrapper.models.transaction.Transaction.get_card_required_fields"
+        ) as mocked_card_required:
+            instance.get_validation_fields()
+
+            mocked_card_required.assert_called_once()
 
     def test_get_validation_fields_boleto(self):
         instance = TransactionBoletoFactory()
         self.assertIsInstance(instance, Transaction)
-        self.assertEqual(
-            {
-                "amount",
-                "currency",
-                "customer",
-                "description",
-                "on_behalf_of",
-                "payment_method",
-                "payment_type",
-            },
-            instance.get_validation_fields(),
-        )
+
+        with patch(
+            "zoop_wrapper.models.transaction.Transaction.get_boleto_required_fields"
+        ) as mocked_boleto_required:
+            instance.get_validation_fields()
+
+            mocked_boleto_required.assert_called_once()
 
     def test_get_all_fields(self):
         with patch(

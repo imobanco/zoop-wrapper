@@ -73,24 +73,24 @@ class Webhook(ResourceModel):
         "subscription.deleted",
         "subscription.expired",
         "subscription.overdue",
-        "transaction.authorization.failed",
-        "transaction.authorization.succeeded",
+        "transaction.failed",
+        "transaction.succeeded",
         "transaction.canceled",
+        "transaction.created",
+        "transaction.failed",
+        "transaction.charged_back",
+        "transaction.reversed",
+        "transaction.updated",
         "transaction.capture.failed",
         "transaction.capture.succeeded",
-        "transaction.charged_back",
-        "transaction.commission.succeeded",
-        "transaction.created",
         "transaction.dispute.succeeded",
         "transaction.disputed",
         "transaction.pre_authorization.failed",
         "transaction.pre_authorization.succeeded",
         "transaction.pre_authorized",
-        "transaction.reversed",
-        "transaction.succeeded",
-        "transaction.updated",
         "transaction.void.failed",
         "transaction.void.succeeded",
+        "transaction.commission.succeeded",
     }
 
     RESOURCE = "webhook"
@@ -154,4 +154,6 @@ class Webhook(ResourceModel):
     @classmethod
     def get_non_required_fields(cls) -> set:
         fields = super().get_non_required_fields()
-        return fields.union({"description", "authorization", "dflag", "status", "events_sent"})
+        return fields.union(
+            {"description", "authorization", "dflag", "status", "events_sent"}
+        )

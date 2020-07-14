@@ -1,5 +1,5 @@
 {
-    "id": "b8d82a6296b346f58fa02bd47b14c095",
+    "id": "d4ec5e8310cc433486f416ba44522d4d",
     "resource": "transaction",
     "status": "succeeded",
     "amount": "5.00",
@@ -14,7 +14,7 @@
     "rewards": null,
     "discounts": null,
     "pre_authorization": null,
-    "sales_receipt": "2450c0ac030343619926e27db9cdb7b1",
+    "sales_receipt": "24467ddf6521444c9265a039d888b0b2",
     "on_behalf_of": "25037b2978b14e7fa5b902d9322e8426",
     "customer": "0b05a360f4b749498f74e13004c08024",
     "statement_descriptor": "LOJA DO JOAO",
@@ -45,7 +45,7 @@
         "updated_at": "2020-06-08T20:52:00+00:00"
     },
     "source": {
-        "id": "f3d7c119a4784893a211042caf68421c",
+        "id": "ae8b9207b3544ad39a5dc4d293a62a8c",
         "status": "used",
         "usage": "single_use",
         "amount": "5.00",
@@ -102,11 +102,11 @@
     ],
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/foo/transactions/b8d82a6296b346f58fa02bd47b14c095",
+    "uri": "/v1/marketplaces/foo/transactions/d4ec5e8310cc433486f416ba44522d4d",
     "metadata": {},
-    "expected_on": "2020-07-10T00:00:00+00:00",
-    "created_at": "2020-06-10T17:11:07+00:00",
-    "updated_at": "2020-06-10T17:11:09+00:00",
+    "expected_on": "2020-08-13T00:00:00+00:00",
+    "created_at": "2020-07-14T20:38:55+00:00",
+    "updated_at": "2020-07-14T20:38:57+00:00",
     "payment_authorization": {
         "authorizer_id": "000260004",
         "authorization_code": "133937",
@@ -114,8 +114,8 @@
     },
     "history": [
         {
-            "id": "670a7fb321064c219af924e50462bf4f",
-            "transaction": "b8d82a6296b346f58fa02bd47b14c095",
+            "id": "9e2edfe497964c149f0a58f9e2d4e67a",
+            "transaction": "d4ec5e8310cc433486f416ba44522d4d",
             "amount": "5.00",
             "operation_type": "created",
             "status": "succeeded",
@@ -126,11 +126,11 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-06-10 17:11:07"
+            "created_at": "2020-07-14 20:38:55"
         },
         {
-            "id": "054c08ff3c4b4e7cb4de7206286ed2e8",
-            "transaction": "b8d82a6296b346f58fa02bd47b14c095",
+            "id": "6678b4b54a344609aeb71cc8f1ab0a69",
+            "transaction": "d4ec5e8310cc433486f416ba44522d4d",
             "amount": "5.00",
             "operation_type": "authorization",
             "status": "succeeded",
@@ -139,9 +139,9 @@
             "authorization_code": "133937",
             "authorizer_id": "000260004",
             "authorization_nsu": "20180510122911535",
-            "gatewayResponseTime": "2207",
+            "gatewayResponseTime": "2204",
             "authorizer": "cielo",
-            "created_at": "2020-06-10 17:11:09"
+            "created_at": "2020-07-14 20:38:57"
         }
     ]
 }

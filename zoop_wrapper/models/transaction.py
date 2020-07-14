@@ -76,7 +76,8 @@ class Transaction(ResourceModel):
         amount (int): integer amount value in 'centavos'
         app_transaction_uid: ??
         business: ??
-        captured (bool): boolean of verification
+        capture (bool): flag que designa se será uma transação simples {true} ou uma composta (com pre autorização) {false}
+        captured (bool): flag se a transação foi capturada ou não
         confirmed (str): value of cofirmation
         currency (str): coin currency string
         customer (str): customer uuid identifier
@@ -106,7 +107,6 @@ class Transaction(ResourceModel):
         status (str): value for status
         transaction_number: ??
         voided (bool): boolean of verification
-
     """
 
     RESOURCE = "transaction"
@@ -252,12 +252,12 @@ class Transaction(ResourceModel):
     @classmethod
     def get_card_required_fields(cls):
         fields = cls.get_required_fields()
-        return fields.union({"source",})
+        return fields.union({"source", "capture"})
 
     @classmethod
     def get_boleto_required_fields(cls):
         fields = cls.get_required_fields()
-        return fields.union({"payment_method", "amount",})
+        return fields.union({"payment_method", "amount"})
 
     @classmethod
     def get_non_required_fields(cls):

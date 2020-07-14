@@ -1,5 +1,5 @@
 {
-    "id": "8eec76a8aafa468296806d19f412edbd",
+    "id": "baf49b89431c439d8eaf7f753315a532",
     "resource": "transaction",
     "status": "succeeded",
     "amount": "12.34",
@@ -14,17 +14,17 @@
     "rewards": null,
     "discounts": null,
     "pre_authorization": null,
-    "sales_receipt": "0a45412a0f114669b4819e859d07386c",
+    "sales_receipt": "088214337e4e4b9c9efbbfb530fa8f8d",
     "on_behalf_of": "25037b2978b14e7fa5b902d9322e8426",
     "customer": null,
-    "statement_descriptor": "DENISE SMITH",
+    "statement_descriptor": "JOHN THOMAS",
     "payment_method": {
-        "id": "e11e077ba3cd47ab98f44e0cc78649ef",
+        "id": "840cbd335e0f46b090a1835fda8f8697",
         "resource": "card",
         "description": null,
         "card_brand": "MasterCard",
-        "first4_digits": "2295",
-        "last4_digits": "2924",
+        "first4_digits": "2131",
+        "last4_digits": "9184",
         "expiration_month": "5",
         "expiration_year": "2030",
         "holder_name": "foo",
@@ -32,7 +32,7 @@
         "is_valid": true,
         "is_verified": false,
         "customer": null,
-        "fingerprint": "a6091c1cd50e0911400ea18c6a4471e1b038fc896db6356e0a35eb9fe8561089",
+        "fingerprint": "2d46e6a03ee8dbb42c306a9c19ac18b0ccb61bd123ed4ba78eb4467ea1bcebea",
         "address": null,
         "verification_checklist": {
             "postal_code_check": "unchecked",
@@ -40,12 +40,12 @@
             "address_line1_check": "unchecked"
         },
         "metadata": {},
-        "uri": "/v1/marketplaces/foo/transactions/e11e077ba3cd47ab98f44e0cc78649ef",
-        "created_at": "2020-06-10T22:51:19+00:00",
-        "updated_at": "2020-06-10T22:51:20+00:00"
+        "uri": "/v1/marketplaces/foo/transactions/840cbd335e0f46b090a1835fda8f8697",
+        "created_at": "2020-07-14T20:39:04+00:00",
+        "updated_at": "2020-07-14T20:39:07+00:00"
     },
     "source": {
-        "id": "0666ec792ae048f59eaed2f7813dd421",
+        "id": "6707f1129e8a43f898408db40ee12417",
         "status": "used",
         "usage": "single_use",
         "amount": "12.34",
@@ -54,12 +54,12 @@
         "statement_descriptor": null,
         "type": "card",
         "card": {
-            "id": "e11e077ba3cd47ab98f44e0cc78649ef",
+            "id": "840cbd335e0f46b090a1835fda8f8697",
             "resource": "card",
             "description": null,
             "card_brand": "MasterCard",
-            "first4_digits": "2295",
-            "last4_digits": "2924",
+            "first4_digits": "2131",
+            "last4_digits": "9184",
             "expiration_month": "5",
             "expiration_year": "2030",
             "holder_name": "foo",
@@ -67,7 +67,7 @@
             "is_valid": true,
             "is_verified": false,
             "customer": null,
-            "fingerprint": "a6091c1cd50e0911400ea18c6a4471e1b038fc896db6356e0a35eb9fe8561089",
+            "fingerprint": "2d46e6a03ee8dbb42c306a9c19ac18b0ccb61bd123ed4ba78eb4467ea1bcebea",
             "address": null,
             "verification_checklist": {
                 "postal_code_check": "unchecked",
@@ -75,9 +75,9 @@
                 "address_line1_check": "unchecked"
             },
             "metadata": {},
-            "uri": "/v1/marketplaces/foo/transactions/e11e077ba3cd47ab98f44e0cc78649ef",
-            "created_at": "2020-06-10T22:51:19+00:00",
-            "updated_at": "2020-06-10T22:51:20+00:00",
+            "uri": "/v1/marketplaces/foo/transactions/840cbd335e0f46b090a1835fda8f8697",
+            "created_at": "2020-07-14T20:39:04+00:00",
+            "updated_at": "2020-07-14T20:39:07+00:00",
             "amount": "12.34"
         }
     },
@@ -102,11 +102,11 @@
     ],
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/foo/transactions/8eec76a8aafa468296806d19f412edbd",
+    "uri": "/v1/marketplaces/foo/transactions/baf49b89431c439d8eaf7f753315a532",
     "metadata": {},
-    "expected_on": "2020-07-10T00:00:00+00:00",
-    "created_at": "2020-06-10T22:51:19+00:00",
-    "updated_at": "2020-06-10T22:51:22+00:00",
+    "expected_on": "2020-08-13T00:00:00+00:00",
+    "created_at": "2020-07-14T20:39:04+00:00",
+    "updated_at": "2020-07-14T20:39:09+00:00",
     "payment_authorization": {
         "authorizer_id": "000260004",
         "authorization_code": "133937",
@@ -114,8 +114,8 @@
     },
     "history": [
         {
-            "id": "ce441c8b17cb41818f42eaa0d6a3ec62",
-            "transaction": "8eec76a8aafa468296806d19f412edbd",
+            "id": "ffe03817e7be4b7a90274b1889a5ab03",
+            "transaction": "baf49b89431c439d8eaf7f753315a532",
             "amount": "12.34",
             "operation_type": "created",
             "status": "succeeded",
@@ -126,11 +126,11 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-06-10 22:51:20"
+            "created_at": "2020-07-14 20:39:07"
         },
         {
-            "id": "b604f7f7026b415893a7c16d925b4a76",
-            "transaction": "8eec76a8aafa468296806d19f412edbd",
+            "id": "4f181e89817e47ceab8e4157494cf5f8",
+            "transaction": "baf49b89431c439d8eaf7f753315a532",
             "amount": "12.34",
             "operation_type": "authorization",
             "status": "succeeded",
@@ -141,7 +141,7 @@
             "authorization_nsu": "20180510122911535",
             "gatewayResponseTime": "2205",
             "authorizer": "cielo",
-            "created_at": "2020-06-10 22:51:22"
+            "created_at": "2020-07-14 20:39:09"
         }
     ]
 }

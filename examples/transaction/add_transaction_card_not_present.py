@@ -16,12 +16,17 @@ card_id_brian = "6408de3a490b4679adfc462810b68a85"
 seller_brian = "0b05a360f4b749498f74e13004c08024"
 seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 
+# Essa flag indica se a transação deve ser apenas pré autorizado ou capturada
+capture_flag = True
+
+
 t = Transaction(
     customer=seller_brian,
     description="Uma descrição breve da motivação da sua transação",
     on_behalf_of=seller_denise,
     payment_type="credit",
     statement_descriptor="Loja do Joao",
+    capture=capture_flag,
     source=Source(
         card=Token(id=card_id_brian, allow_empty=True), usage="single_use", amount="500"
     ),

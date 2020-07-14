@@ -77,7 +77,7 @@ class Transaction(ResourceModel):
         app_transaction_uid: ??
         business: ??
         capture (bool): flag que designa se será uma transação simples {true} ou uma composta (com pre autorização) {false}
-        captured (bool): flag se a transação foi capturada ou não
+        captured (bool): flag indica se a transação foi capturada ou não
         confirmed (str): value of cofirmation
         currency (str): coin currency string
         customer (str): customer uuid identifier

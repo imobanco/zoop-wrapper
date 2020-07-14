@@ -17,7 +17,7 @@ client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 seller_brian = "0b05a360f4b749498f74e13004c08024"
 seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 
-# Essa flag indica se a transação deve ser apenas pré autorizado ou capturada
+# Essa flag indica se a transação deve ser apenas pré autorizada ou capturada
 capture_flag = True
 
 t = Transaction(

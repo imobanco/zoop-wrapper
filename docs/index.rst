@@ -13,6 +13,14 @@ Documentação do zoop-wrapper
    instrucoes/*
 
 .. toctree::
+   :caption: Eventos
+   :maxdepth: 2
+   :numbered:
+   :glob:
+
+   eventos/*
+
+.. toctree::
    :caption: Exemplos
    :maxdepth: 2
    :numbered:

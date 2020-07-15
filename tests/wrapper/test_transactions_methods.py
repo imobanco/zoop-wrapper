@@ -97,6 +97,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "original_amount": -1776.0,
             "payment_type": "credit",
+            "capture": True,
             "reference_id": "Exactly there develop.",
             "source": {
                 "card": {
@@ -130,6 +131,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "on_behalf_of": "94ea79f2-6fc0-4551-b409-824f140f6a2e",
             "original_amount": -1776.0,
             "payment_type": "credit",
+            "capture": True,
             "reference_id": "Exactly there develop.",
             "source": {
                 "amount": 1234,

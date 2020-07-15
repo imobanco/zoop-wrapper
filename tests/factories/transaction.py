@@ -42,6 +42,7 @@ class TransactionFactory(ResourceModelFactory):
     amount = Faker("pyfloat", positive=True, max_value=99)
     app_transaction_uid = None
     business = None
+    capture = Faker("pybool")
     captured = Faker("pybool")
     confirmed = "0"
     currency = "BRL"

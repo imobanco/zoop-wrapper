@@ -239,7 +239,7 @@ class SellerWrapper(BaseZoopWrapper):
         """
         instance = Seller.from_dict_or_instance(data)
         url = self._construct_url(
-            action=f"sellers",
+            action="sellers",
             identifier=identifier,
             subaction=instance.get_type_uri(),
             sub_action_before_identifier=True,

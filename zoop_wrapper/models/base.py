@@ -208,17 +208,19 @@ class ZoopObject(object):
 
     def validate_fields(self, raise_exception=True, **kwargs):
         """
-        Valida na instância os campos retornados do conjunto :meth:`get_validation_fields`.\n
+        Valida na instância os campos retornados do conjunto
+        :meth:`get_validation_fields`.\n
 
         Se :attr:`_allow_empty` é ``True`` não validar!
 
-        Esse método deve chamar o :meth:`validate_custom_fields` para praticidade de extensão e especialização!
+        Esse método deve chamar o :meth:`validate_custom_fields` para
+        praticidade de extensão e especialização!
 
         Args:
             raise_exception: flag que dita se a exceção deve ser lançada ou não
 
         Raises:
-            :class:`.ValidationError` se (algum campo ``obrigatório`` está faltando ou ocorreu algum erro no :meth:`validate_custom_fields`) e ``raise_exception==True``
+            :class:`.ValidationError` se (algum campo ``obrigatório`` está faltando ou ocorreu algum erro no :meth:`validate_custom_fields`) e ``raise_exception==True``  # noqa
 
         """
         if self._allow_empty:
@@ -242,7 +244,8 @@ class ZoopObject(object):
         """
         Método de validação a ser estendido para fazer uma validação especializada.
 
-        Esse método originalmente retorna uma lista vazia pois ele serve para ser sobreescrito pelas calsses especializadas
+        Esse método originalmente retorna uma lista vazia
+        pois ele serve para ser sobreescrito pelas calsses especializadas
         adicionando comportamento de validação!
 
         Returns:
@@ -600,7 +603,7 @@ class BusinessOrIndividualModel(MarketPlaceModel):
         Valida tupla de valores de identificação.
 
         Raises:
-            :class:`.ValidationError` quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido
+            :class:`.ValidationError` quando é passado os dois, ou nenhum, ou quando o identificador passado é inválido  # noqa
         """
         if (taxpayer_id is not None and ein is not None) or (
             taxpayer_id is None and ein is None

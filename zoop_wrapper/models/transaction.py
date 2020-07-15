@@ -1,4 +1,4 @@
-from .base import ZoopObject, ResourceModel, PaymentMethod
+from .base import ZoopObject, ResourceModel
 from .card import Card
 from .invoice import Invoice
 from .token import Token
@@ -76,7 +76,7 @@ class Transaction(ResourceModel):
         amount (int): integer amount value in 'centavos'
         app_transaction_uid: ??
         business: ??
-        capture (bool): flag que designa se será uma transação simples {true} ou uma composta (com pre autorização) {false}
+        capture (bool): flag que designa se será uma transação simples {true} ou uma composta (com pre autorização) {false}  # noqa
         captured (bool): flag indica se a transação foi capturada ou não
         confirmed (str): value of cofirmation
         currency (str): coin currency string
@@ -139,8 +139,8 @@ class Transaction(ResourceModel):
         Args:
             currency (str): default currency is 'BRL'.
                 So users may not need to pass currency!
-            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`
-            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data
+            history (dict or :class:`.History` or list of either): history data. May be a list of dict or list of :class:`.History`  # noqa
+            payment_method (dict or :class:`.Card` or :class:`.Invoice`): payment method data  # noqa
             payment_type (str): value for payment type
             point_of_sale (dict or :class:`.PointOfSale`): point of sale data
             **kwargs: kwargs
@@ -181,7 +181,7 @@ class Transaction(ResourceModel):
                 ),
             )
         else:
-            raise ValidationError(self, f"Alguma coisa muito errada aconteceu!! ")
+            raise ValidationError(self, "Alguma coisa muito errada aconteceu!!")
 
         setattr(self, "payment_type", payment_type)
 
@@ -212,8 +212,8 @@ class Transaction(ResourceModel):
         Pega os ``campos de validação`` para uma instância.\n
 
         O conjunto de campos é feito com base no :attr:`payment_type`.
-        
-         Se for :attr:`CARD_TYPE` utiliza o :meth:`get_card_required_fields`.
+
+        Se for :attr:`CARD_TYPE` utiliza o :meth:`get_card_required_fields`.
 
         Se não, ele é :attr:`payment_type` é :attr:`BOLETO_TYPE`!
         Utiliza o :meth:`get_boleto_required_fields`.
@@ -232,7 +232,7 @@ class Transaction(ResourceModel):
         """
         Pega ``todos os campos`` para instância.
 
-        o conjunto de campos é construído com base no :meth:`get_validation_fields` 
+        O conjunto de campos é construído com base no :meth:`get_validation_fields`
         com a união do :meth:`get_non_required_fields`.
 
         Returns:
@@ -246,7 +246,7 @@ class Transaction(ResourceModel):
     def get_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union(
-            {"currency", "customer", "description", "on_behalf_of", "payment_type",}
+            {"currency", "customer", "description", "on_behalf_of", "payment_type"}
         )
 
     @classmethod
@@ -311,7 +311,7 @@ class Source(ZoopObject):
 
         """
         Ver documentação do :meth:`.from_dict_or_instance`.
-        
+
         Precisamos pegar o atributo `id` para identificar o tipo.
         """
 
@@ -338,9 +338,10 @@ class Source(ZoopObject):
         Pega ``campos de validação`` da instâcia.\n
 
         O conjunto de campos é construído com base no :attr:`card_type`.
-        
-        Se for :attr:`CARD_PRESENT_TYPE` utiliza o :meth:`get_card_present_required_fields`.
-         
+
+        Se for :attr:`CARD_PRESENT_TYPE` utiliza o
+        :meth:`get_card_present_required_fields`.
+
         Se não, utiliza o :meth:`get_card_not_present_required_fields`.
 
         Returns:

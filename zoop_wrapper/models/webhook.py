@@ -119,7 +119,8 @@ class Webhook(ResourceModel):
 
     def validate_custom_fields(self, **kwargs):
         """
-        Valida se o campo :attr:`events` é vazio ou se os valores dele não são eventos válidos.
+        Valida se o campo :attr:`events` é vazio ou
+        se os valores dele não são eventos válidos.
 
         Args:
             **kwargs: kwargs

@@ -32,8 +32,8 @@ class RequestsWrapper:
         Adiciona o :attr:`.instance` ou :attr:`.instances` baseado no resource.
 
         .. note::
-            Apenas adiciona :attr:`.instance` ou :attr:`.instances` se não tiver o dado 'deleted' no :attr:`.data`
-            que é retornado em todas as respostas de deleção (200 ok) e se tiver o dado `resource` no :attr:`.data`
+            Apenas adiciona :attr:`.instance` ou :attr:`.instances` se não tiver o dado 'deleted' no :attr:`.data`  # noqa
+            que é retornado em todas as respostas de deleção (200 ok) e se tiver o dado `resource` no :attr:`.data`  # noqa
 
         Adiciona :attr:`.error` na resposta se tiver ocorrido erros
 
@@ -239,7 +239,7 @@ class BaseZoopWrapper(RequestsWrapper):
             instance: instância a ser utilizada
 
         Raises:
-            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.  # noqa
 
         Returns:
             (:class:`.ZoopResponse`)
@@ -257,7 +257,7 @@ class BaseZoopWrapper(RequestsWrapper):
             instance: instância a ser utilizada
 
         Raises:
-            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.
+            :class:`.ValidationError`: quando a instância passada não é um :class:`.ZoopObject`.  # noqa
 
         Returns:
             (:class:`.ZoopResponse`)

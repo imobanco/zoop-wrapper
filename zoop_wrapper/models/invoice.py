@@ -16,7 +16,8 @@ class BillingConfiguration(ZoopObject):
     Or ``Discount`` and ``Fixed``.
     Or ``Discount`` and ``Percentage``.
 
-    ``Percentage`` can be just :attr:`PERCENTAGE_MODE` or :attr:`DAILY_PERCENTAGE_MODE` or
+    ``Percentage`` can be just :attr:`PERCENTAGE_MODE` or
+    :attr:`DAILY_PERCENTAGE_MODE` or
     :attr:`MONTHLY_PERCENTAGE_MODE`.
 
     ``Fixed`` is :attr:`FIXED_MODE`.
@@ -88,8 +89,11 @@ class BillingConfiguration(ZoopObject):
         """
         Get ``validation fields`` for instance.
 
-        if ``type`` is ``Discount`` ``'fields'`` is :meth:`get_discount_required_fields`\n
-        else ``type`` is ``Fee``! ``'fields'`` is :meth:`get_fee_required_fields`
+        if ``type`` is ``Discount`` ``'fields'``
+        is :meth:`get_discount_required_fields`\n
+
+        else ``type`` is ``Fee``! ``'fields'``
+        is :meth:`get_fee_required_fields`
 
         if ``type`` is  in :attr:`PERCENT_MODES` return ``'fields'`` union
         :meth:`get_percent_required_fields`\n
@@ -194,7 +198,7 @@ class BillingInstructions(ZoopObject):
     Represents billing instructions (fine, interest and discount)
 
     Attributes:
-        discount (list of :class:`.BillingConfiguration`): list of optional discount rules
+        discount (list of :class:`.BillingConfiguration`): list of optional discount rules  # noqa
         interest (:class:`.BillingConfiguration`): optional interest rules
         late_fee (:class:`.BillingConfiguration`): optional fine rules
     """
@@ -259,7 +263,7 @@ class Invoice(PaymentMethod):
     https://docs.zoop.co/reference#boleto
 
     Attributes:
-        billing_instructions (:class:`.BillingInstructions`): optional billing instructions
+        billing_instructions (:class:`.BillingInstructions`): optional billing instructions  # noqa
         security_code_check (bool): verification of security code
     """
 

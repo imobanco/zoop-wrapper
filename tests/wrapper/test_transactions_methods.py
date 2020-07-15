@@ -7,10 +7,7 @@ from tests.factories.transaction import (
     CancelTransactionCardFactory,
     TransactionBoletoFactory,
     TransactionCreditFactory,
-    TransactionFactory,
 )
-from zoop_wrapper.models.card import Card
-from zoop_wrapper.models.invoice import Invoice
 from zoop_wrapper.models.token import Token
 
 

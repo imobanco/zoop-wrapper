@@ -85,7 +85,8 @@ class BuyerWrapper(BaseZoopWrapper):
         Buscar um :class:`.Buyer` pelo CPF ou CNPJ
 
         .. note::
-            Sim, o atributo é o :attr:`.taxpayer_id` para os dois. Veja o código para entender.
+            Sim, o atributo é o :attr:`.taxpayer_id` para os dois.
+            Veja o código para entender.
 
         Args:
             identifier: CPF ou CNPJ
@@ -128,5 +129,5 @@ class BuyerWrapper(BaseZoopWrapper):
             :class:`.ZoopResponse`
         """
         instance = Buyer.from_dict_or_instance(data)
-        url = self._construct_url(action=f"buyers", identifier=identifier)
+        url = self._construct_url(action="buyers", identifier=identifier)
         return self._put_instance(url, instance=instance)

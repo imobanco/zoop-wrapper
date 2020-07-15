@@ -6,9 +6,6 @@ from tests.factories.token import CreateCardTokenFactory
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
 
 from zoop_wrapper.models.token import Token
-from zoop_wrapper.models.invoice import Invoice
-from tests.factories.transaction import TransactionFactory
-
 from zoop_wrapper.exceptions import ValidationError
 
 
@@ -58,7 +55,7 @@ class SourceTestCase(SetTestCase):
 
     def test_get_card_present_required_fields(self):
         self.assertEqual(
-            {"amount", "card", "currency", "type", "usage",},
+            {"amount", "card", "currency", "type", "usage"},
             Source.get_card_present_required_fields(),
         )
 
@@ -79,7 +76,7 @@ class SourceTestCase(SetTestCase):
         )
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "currency", "type", "usage", "amount",}, instance.get_all_fields(),
+            {"card", "currency", "type", "usage", "amount"}, instance.get_all_fields(),
         )
 
     def test_get_validation_fields_card_present(self):
@@ -87,7 +84,7 @@ class SourceTestCase(SetTestCase):
         self.assertIsInstance(instance, Source)
 
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount",},
+            {"card", "type", "usage", "currency", "amount"},
             instance.get_validation_fields(),
         )
 
@@ -95,5 +92,5 @@ class SourceTestCase(SetTestCase):
         instance = SourceCardPresentFactory(card=CreateCardTokenFactory(id=None))
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount",}, instance.get_all_fields(),
+            {"card", "type", "usage", "currency", "amount"}, instance.get_all_fields(),
         )

@@ -67,7 +67,7 @@ class BankAccount(BusinessOrIndividualModel):
         Args:
             type (str): value containing type
             address (dict or :class:`.Address`): address
-            verification_checklist (dict or :class:`.BankAccountVerificationModel`): verifications
+            verification_checklist (dict or :class:`.BankAccountVerificationModel`): verifications  # noqa
             **kwargs:
         """
         self.set_identifier(**kwargs)

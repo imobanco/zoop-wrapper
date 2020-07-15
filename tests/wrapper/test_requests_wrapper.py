@@ -1,5 +1,3 @@
-from unittest.mock import patch
-
 from requests.exceptions import HTTPError
 
 from tests.utils import APITestCase
@@ -16,21 +14,21 @@ class RequestWrapperTestCase(APITestCase):
 
         url = self.client._construct_url(action=action)
 
-        self.assertEqual(url, f"foo/teste/")
+        self.assertEqual(url, "foo/teste/")
 
     def test_construct_url_action_identifier(self):
         identifier = "123"
 
         url = self.client._construct_url(identifier=identifier)
 
-        self.assertEqual(url, f"foo/123/")
+        self.assertEqual(url, "foo/123/")
 
     def test_construct_url_subaction(self):
         subaction = "bar"
 
         url = self.client._construct_url(subaction=subaction)
 
-        self.assertEqual(url, f"foo/bar/")
+        self.assertEqual(url, "foo/bar/")
 
     def test_construct_url_subaction_identifier(self):
         identifier = "123"
@@ -38,7 +36,7 @@ class RequestWrapperTestCase(APITestCase):
 
         url = self.client._construct_url(identifier=identifier, subaction=subaction)
 
-        self.assertEqual(url, f"foo/123/bar/")
+        self.assertEqual(url, "foo/123/bar/")
 
     def test_construct_url_subaction_identifier_inverted(self):
         identifier = "123"
@@ -50,21 +48,21 @@ class RequestWrapperTestCase(APITestCase):
             sub_action_before_identifier=True,
         )
 
-        self.assertEqual(url, f"foo/bar/123/")
+        self.assertEqual(url, "foo/bar/123/")
 
     def test_construct_url_search(self):
         search = "id=1"
 
         url = self.client._construct_url(search=search)
 
-        self.assertEqual(url, f"foo/search?id=1")
+        self.assertEqual(url, "foo/search?id=1")
 
     def test_construct_url_search_dict(self):
         search = {"id": 1}
 
         url = self.client._construct_url(search=search)
 
-        self.assertEqual(url, f"foo/search?id=1")
+        self.assertEqual(url, "foo/search?id=1")
 
     def test_process_response_error(self):
         response = self.build_response_mock(

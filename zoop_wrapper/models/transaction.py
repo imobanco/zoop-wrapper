@@ -232,7 +232,7 @@ class Transaction(ResourceModel):
         """
         Pega ``todos os campos`` para instância.
 
-        o conjunto de campos é construído com base no :meth:`get_validation_fields`
+        O conjunto de campos é construído com base no :meth:`get_validation_fields`
         com a união do :meth:`get_non_required_fields`.
 
         Returns:

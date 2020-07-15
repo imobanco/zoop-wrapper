@@ -137,7 +137,8 @@ class TransactionWrapper(BaseZoopWrapper):
             if amount > transaction.amount:
                 raise ValidationError(
                     self,
-                    f'A quantia {amount} é maior do que o valor {transaction.amount} da transação'
+                    f"A quantia {amount} é maior do que o "
+                    f"valor {transaction.amount} da transação",
                 )
 
         data = {
@@ -161,7 +162,7 @@ class TransactionWrapper(BaseZoopWrapper):
         Returns:
             response
         """
-        return self._capture_or_void_transaction(identifier, 'void', amount)
+        return self._capture_or_void_transaction(identifier, "void", amount)
 
     def capture_transaction(self, identifier, amount=None):
         """
@@ -174,4 +175,4 @@ class TransactionWrapper(BaseZoopWrapper):
         Returns:
             response
         """
-        return self._capture_or_void_transaction(identifier, 'capture', amount)
+        return self._capture_or_void_transaction(identifier, "capture", amount)

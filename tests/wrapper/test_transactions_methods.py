@@ -159,23 +159,22 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction"
         ) as mocked_retrieve_transaction:
 
-            t1 = TransactionCreditFactory(id='1', allow_empty=True)
+            t1 = TransactionCreditFactory(id="1", allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
                 200, instance=t1
             )
 
-            response = self.client._capture_or_void_transaction(t1.id, 'foo')
+            response = self.client._capture_or_void_transaction(t1.id, "foo")
             self.assertEqual(response.status_code, 200, msg=response.data)
             mocked_retrieve_transaction.assert_called_once()
 
-            expected_data = {
-                "amount": t1.amount,
-                "on_behalf_of": t1.on_behalf_of
-            }
+            expected_data = {"amount": t1.amount, "on_behalf_of": t1.on_behalf_of}
 
             self.mocked_post.assert_called_once_with(
-                f"{self.base_url}/transactions/{t1.id}/foo/", json=expected_data, auth=self.auth
+                f"{self.base_url}/transactions/{t1.id}/foo/",
+                json=expected_data,
+                auth=self.auth,
             )
 
     def test__capture_or_void_transaction_amount(self):
@@ -192,23 +191,22 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction"
         ) as mocked_retrieve_transaction:
 
-            t1 = TransactionCreditFactory(id='1', amount=10000, allow_empty=True)
+            t1 = TransactionCreditFactory(id="1", amount=10000, allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
                 200, instance=t1
             )
 
-            response = self.client._capture_or_void_transaction(t1.id, 'foo', 100.00)
+            response = self.client._capture_or_void_transaction(t1.id, "foo", 100.00)
             self.assertEqual(response.status_code, 200, msg=response.data)
             mocked_retrieve_transaction.assert_called_once()
 
-            expected_data = {
-                "amount": 10000,
-                "on_behalf_of": t1.on_behalf_of
-            }
+            expected_data = {"amount": 10000, "on_behalf_of": t1.on_behalf_of}
 
             self.mocked_post.assert_called_once_with(
-                f"{self.base_url}/transactions/{t1.id}/foo/", json=expected_data, auth=self.auth
+                f"{self.base_url}/transactions/{t1.id}/foo/",
+                json=expected_data,
+                auth=self.auth,
             )
 
     def test__capture_or_void_transaction_amount_invalid(self):
@@ -225,16 +223,16 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             "zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction"
         ) as mocked_retrieve_transaction:
 
-            t1 = TransactionCreditFactory(id='1', amount=10000, allow_empty=True)
+            t1 = TransactionCreditFactory(id="1", amount=10000, allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
                 200, instance=t1
             )
 
             with self.assertRaises(ValidationError) as error:
-                self.client._capture_or_void_transaction(t1.id, 'foo', 100.01)
+                self.client._capture_or_void_transaction(t1.id, "foo", 100.01)
 
-                self.assertIn('a quantia 10001 é maior', str(error))
+                self.assertIn("a quantia 10001 é maior", str(error))
 
             mocked_retrieve_transaction.assert_called_once()
 
@@ -244,24 +242,26 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         """
         Dado N/A
         Quando for chamado ZoopWrapper().cancel_transaction('foo', 10)
-        Então ZoopWrapper().__capture_or_void_transaction('foo', 'void', 10) deve ter sido chamado
+        Então ZoopWrapper().__capture_or_void_transaction('foo', 'void', 10) deve ter sido chamado  # noqa
         """
         with patch(
-                "zoop_wrapper.wrapper.transaction.TransactionWrapper._capture_or_void_transaction"
+            "zoop_wrapper.wrapper.transaction."
+            "TransactionWrapper._capture_or_void_transaction"
         ) as mocked_method:
-            self.client.cancel_transaction('foo', 10)
+            self.client.cancel_transaction("foo", 10)
 
-            mocked_method.assert_called_once_with('foo', 'void', 10)
+            mocked_method.assert_called_once_with("foo", "void", 10)
 
     def test_capture_transaction(self):
         """
         Dado N/A
         Quando for chamado ZoopWrapper().capture_transaction('foo', 10)
-        Então ZoopWrapper().__capture_or_void_transaction('foo', 'capture', 10) deve ter sido chamado
+        Então ZoopWrapper().__capture_or_void_transaction('foo', 'capture', 10) deve ter sido chamado  # noqa
         """
         with patch(
-                "zoop_wrapper.wrapper.transaction.TransactionWrapper._capture_or_void_transaction"
+            "zoop_wrapper.wrapper.transaction."
+            "TransactionWrapper._capture_or_void_transaction"
         ) as mocked_method:
-            self.client.capture_transaction('foo', 10)
+            self.client.capture_transaction("foo", 10)
 
-            mocked_method.assert_called_once_with('foo', 'capture', 10)
+            mocked_method.assert_called_once_with("foo", "capture", 10)

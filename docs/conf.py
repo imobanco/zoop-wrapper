@@ -16,7 +16,7 @@ import os
 # Insert zoop-wrapper path into the system.
 sys.path.insert(0, os.path.abspath(".."))
 
-import zoop_wrapper
+import zoop_wrapper  # noqa
 
 # -- Project information -----------------------------------------------------
 

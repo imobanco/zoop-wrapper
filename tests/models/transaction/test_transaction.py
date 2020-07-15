@@ -3,10 +3,9 @@ from unittest.mock import MagicMock, patch
 from tests.utils import SetTestCase
 from zoop_wrapper.exceptions import ValidationError
 from zoop_wrapper.models.transaction import Transaction, PointOfSale, History, Source
-from zoop_wrapper.models.token import Token, Card
+from zoop_wrapper.models.token import Card
 from zoop_wrapper.models.invoice import Invoice
 from tests.factories.transaction import (
-    TransactionFactory,
     TransactionCreditFactory,
     TransactionBoletoFactory,
 )
@@ -168,7 +167,7 @@ class TransactionTestCase(SetTestCase):
 
     def test_required_fields(self):
         self.assertEqual(
-            {"currency", "customer", "description", "on_behalf_of", "payment_type",},
+            {"currency", "customer", "description", "on_behalf_of", "payment_type"},
             Transaction.get_required_fields(),
         )
 

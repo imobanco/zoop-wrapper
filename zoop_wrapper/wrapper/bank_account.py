@@ -72,7 +72,9 @@ class BankAccountWrapper(BaseZoopWrapper):
 
         bank_account_type = instance.get_bank_account_type()
         if bank_account_type == BankAccount.INDIVIDUAL_TYPE:
-            seller_response = self.search_individual_seller(instance.taxpayer_id)  # type: ignore
+            seller_response = self.search_individual_seller(  # type: ignore
+                instance.taxpayer_id
+            )
         elif bank_account_type == BankAccount.BUSINESS_TYPE:
             seller_response = self.search_business_seller(instance.ein)  # type: ignore
         else:

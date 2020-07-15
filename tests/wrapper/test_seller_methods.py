@@ -115,8 +115,7 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
 
         self.mocked_delete.assert_called_once_with(
-            f"https://api.zoop.ws/v1/marketplaces/foo/" f"sellers/foo/",
-            auth=("foo", ""),
+            "https://api.zoop.ws/v1/marketplaces/foo/sellers/foo/", auth=("foo", ""),
         )
 
     def test_list_seller_bank_accounts(self):

@@ -57,7 +57,7 @@ class CardWrapper(BaseZoopWrapper):
 
         Args:
             data: dicionário de dados
-            customer_identifier: uuid do consumidor (:class:`.Buyer` ou :class:`.Seller`)
+            customer_identifier: uuid do consumidor (:class:`.Buyer` ou :class:`.Seller`)  # noqa
 
         Returns:
             :class:`.ZoopResponse` com instância do :class:`.Card`

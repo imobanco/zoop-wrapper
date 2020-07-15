@@ -38,7 +38,7 @@ class WebhookTestCase(SetTestCase):
         Quando for chamado Webhook.get_non_required_fields()
         Então:
             - o super().get_non_required_fields() deve ter sido chamado
-            - o resultado deve ser igual à {"description", "authorization", "dflag", "status", "events_sent"}
+            - o resultado deve ser igual à {"description", "authorization", "dflag", "status", "events_sent"}  # noqa
         """
         expected = {"description", "authorization", "dflag", "status", "events_sent"}
 
@@ -72,7 +72,8 @@ class WebhookTestCase(SetTestCase):
 
     def test_init_custom_fields(self):
         """
-        Testa se o init_custom_fields declarou os campos `method` e `events` corretamente
+        Testa se o init_custom_fields declarou os campos
+        `method` e `events` corretamente.
 
         Dado que exista um Webhook w1
         Quando for chamado w1.init_custom_fields()
@@ -92,7 +93,8 @@ class WebhookTestCase(SetTestCase):
 
     def test_init_custom_fields_event(self):
         """
-        Testa se o tratamento do events no init_custom_fields fez o parse para lista corretamente
+        Testa se o tratamento do events no init_custom_fields
+        fez o parse para lista corretamente.
 
         Dado que exista um Webhook w1
         Quando for chamado w1.init_custom_fields(events="asd")

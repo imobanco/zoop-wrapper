@@ -32,7 +32,7 @@ t = Transaction(
     source=Source(
         card=Token(id=card_id_brian, allow_empty=True),
         usage="single_use",
-        amount=quantia_em_centavos
+        amount=quantia_em_centavos,
     ),
 )
 

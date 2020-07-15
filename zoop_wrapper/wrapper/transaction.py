@@ -2,6 +2,8 @@ from typing import Union
 
 from .base import BaseZoopWrapper
 from ..models.transaction import Transaction
+from ..utils import convert_currency_float_value_to_cents
+from ..exceptions import ValidationError
 
 
 class TransactionWrapper(BaseZoopWrapper):
@@ -112,12 +114,14 @@ class TransactionWrapper(BaseZoopWrapper):
         url = self._construct_url(action="transactions")
         return self._post_instance(url, instance=instance)
 
-    def cancel_transaction(self, identifier):
+    def _capture_or_void_transaction(self, identifier, sub_action, amount=None):
         """
-        cancel a transaction
+        estorna ou captura uma transaction
 
         Args:
             identifier: uuid id
+            sub_action: string da ação a ser feita
+            amout: quantia da ação a ser feita
 
         Returns:
             response
@@ -125,12 +129,49 @@ class TransactionWrapper(BaseZoopWrapper):
         transaction_response = self.retrieve_transaction(identifier)
         transaction = transaction_response.instance
 
+        if amount is None:
+            amount = transaction.amount
+        else:
+            amount = convert_currency_float_value_to_cents(amount)
+
+            if amount > transaction.amount:
+                raise ValidationError(
+                    self,
+                    f'A quantia {amount} é maior do que o valor {transaction.amount} da transação'
+                )
+
         data = {
-            "amount": transaction.amount,
+            "amount": amount,
             "on_behalf_of": transaction.on_behalf_of,
         }
 
         url = self._construct_url(
-            action="transactions", identifier=identifier, subaction="void"
+            action="transactions", identifier=identifier, subaction=sub_action
         )
         return self._post(url, data=data)
+
+    def cancel_transaction(self, identifier, amount=None):
+        """
+        estorna uma transaction
+
+        Args:
+            identifier: uuid id
+            amount: quantia a ser estronado
+
+        Returns:
+            response
+        """
+        return self._capture_or_void_transaction(identifier, 'void', amount)
+
+    def capture_transaction(self, identifier, amount=None):
+        """
+        captura uma transação
+
+        Args:
+            identifier: uuid id
+            amount: quantia a ser capturado
+
+        Returns:
+            response
+        """
+        return self._capture_or_void_transaction(identifier, 'capture', amount)

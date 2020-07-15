@@ -19,6 +19,8 @@ seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 # Essa flag indica se a transação deve ser apenas pré autorizada ou capturada
 capture_flag = True
 
+# Equivalente à R$543,21
+quantia_em_centavos = "54321"
 
 t = Transaction(
     customer=seller_brian,
@@ -28,7 +30,9 @@ t = Transaction(
     statement_descriptor="Loja do Joao",
     capture=capture_flag,
     source=Source(
-        card=Token(id=card_id_brian, allow_empty=True), usage="single_use", amount="500"
+        card=Token(id=card_id_brian, allow_empty=True),
+        usage="single_use",
+        amount=quantia_em_centavos
     ),
 )
 

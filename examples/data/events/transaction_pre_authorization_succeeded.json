@@ -1,7 +1,7 @@
 {
 	"type": "transaction.pre_authorization.succeeded",
 	"resource": "transaction",
-	"description": "A $14.99 transaction has successfully pre-authorized",
+	"description": "A R$14.99 transaction has successfully pre-authorized",
 	"object": {
 		"id": "",
 		"resource": "transaction",

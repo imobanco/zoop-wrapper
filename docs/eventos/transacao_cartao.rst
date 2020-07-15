@@ -1,7 +1,7 @@
 Transação de Cartão de crédito
 ========================================
 
-No mundo de transações de cartão de crédito, existem os eventos::
+No mundo de transações de cartão de crédito, existem alguns eventos. Dentro deles temos por exemplo::
 
 
     - pre autorização

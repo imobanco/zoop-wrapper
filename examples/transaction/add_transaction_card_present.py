@@ -20,6 +20,9 @@ seller_denise = "25037b2978b14e7fa5b902d9322e8426"
 # Essa flag indica se a transação deve ser apenas pré autorizada ou capturada
 capture_flag = True
 
+# Equivalente à R$543,21
+quantia_em_centavos = "54321"
+
 t = Transaction(
     customer=seller_brian,
     description="Uma descrição breve da motivação da sua transação",
@@ -27,7 +30,7 @@ t = Transaction(
     payment_type="credit",
     capture=capture_flag,
     source=Source(
-        amount="1234",
+        amount=quantia_em_centavos,
         card=Token(
             card_number=Faker("credit_card_number").generate(),
             expiration_month="05",

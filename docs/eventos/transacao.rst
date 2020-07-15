@@ -15,7 +15,7 @@ No mundo de transações, existem alguns eventos. Dentro deles temos por exemplo
 
 Charge Back
 ***********************************
-Processo no qual o gateway de pagamento cobra um vendedor o valor da compra pago pelo comprador.
+Processo no qual o gateway de pagamento cobra a um vendedor o valor da compra pago pelo comprador.
 Retornando o dinheiro ao comprador.
 
 Void

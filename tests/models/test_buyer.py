@@ -27,6 +27,13 @@ class BuyerTestCase(SetTestCase):
 
         self.assertEqual(len(result), 0)
 
+    def test_validate_custom_fields_empty(self):
+        instance: Buyer = BuyerFactory(allow_empty=True)
+
+        result = Buyer.validate_custom_fields(instance)
+
+        self.assertEqual(len(result), 0)
+
     def test_validate_custom_fields_raise(self):
         instance: Buyer = MagicMock(_allow_empty=False, taxpayer_id=123)
 

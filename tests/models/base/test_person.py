@@ -3,6 +3,7 @@ from unittest.mock import MagicMock
 from tests.utils import SetTestCase
 from zoop_wrapper.models.base import Person, Address
 from tests.factories.base import PersonFactory
+from zoop_wrapper.exceptions import FieldError
 
 
 class PersonTestCase(SetTestCase):
@@ -37,3 +38,29 @@ class PersonTestCase(SetTestCase):
 
         Person.init_custom_fields(instance)
         self.assertIsInstance(instance.address, Address)
+
+    def test_validate_custom_fields(self):
+        instance: Person = PersonFactory()
+
+        result = Person.validate_custom_fields(instance)
+
+        self.assertEqual(len(result), 0)
+
+    def test_validate_custom_fields_empty(self):
+        instance: Person = PersonFactory(allow_empty=True)
+
+        result = Person.validate_custom_fields(instance)
+
+        self.assertEqual(len(result), 0)
+
+    def test_validate_custom_fields_raise(self):
+        instance: Person = MagicMock(_allow_empty=False, taxpayer_id=123)
+
+        result = Person.validate_custom_fields(instance)
+
+        self.assertEqual(len(result), 1)
+
+        error: FieldError = result[0]
+        self.assertIsInstance(error, FieldError)
+        self.assertEqual(error.name, "taxpayer_id")
+        self.assertIn("taxpayer_id inválido!", error.reason)

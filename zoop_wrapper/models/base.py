@@ -429,9 +429,7 @@ class Person(ZoopObject):
             return errors
 
         if not cpf.validate(self.taxpayer_id):
-            errors.append(
-                FieldError("taxpayer_id", "taxpayer_id inválido!")
-            )
+            errors.append(FieldError("taxpayer_id", "taxpayer_id inválido!"))
         return errors
 
     def init_custom_fields(self, address=None, **kwargs):

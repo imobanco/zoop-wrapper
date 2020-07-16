@@ -6,7 +6,7 @@ from .base import (
     SocialModel,
     FinancialModel,
 )
-from ..exceptions import ValidationError, FieldError
+from ..exceptions import FieldError
 
 
 class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
@@ -36,9 +36,7 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
             return errors
 
         if not cpfcnpj.validate(self.taxpayer_id):
-            errors.append(
-                FieldError("taxpayer_id", "taxpayer_id inválido!")
-            )
+            errors.append(FieldError("taxpayer_id", "taxpayer_id inválido!"))
         return errors
 
     @classmethod

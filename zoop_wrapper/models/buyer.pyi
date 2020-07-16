@@ -7,7 +7,6 @@ from zoop_wrapper.models.base import (
     MarketPlaceModel as MarketPlaceModel,
 )
 
-
 class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
     RESOURCE: str = ...
     default_receipt_delivery_method: Any

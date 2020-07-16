@@ -170,7 +170,7 @@ class TransactionWrapper(BaseZoopWrapper):
 
         Args:
             identifier: uuid id
-            amount: quantia a ser capturado
+            amount: quantia a ser capturada
 
         Returns:
             response

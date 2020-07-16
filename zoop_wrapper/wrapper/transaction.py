@@ -118,14 +118,29 @@ class TransactionWrapper(BaseZoopWrapper):
         """
         estorna ou captura uma transaction
 
+        Examples:
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void', '10.00')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'capture', '10,00')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void', '1000')
+
         Args:
             identifier: uuid id
-            sub_action: string da ação a ser feita
-            amout: quantia da ação a ser feita
+            sub_action: string da ação a ser feita. 'void' ou 'capture'
+            amount: quantia OPCIONAL em centavos (aceita real também, porém é convertido) da ação a ser feita  # noqa
 
         Returns:
             response
         """
+        SUB_ACTIONS = {"void", "capture"}
+
+        if sub_action not in SUB_ACTIONS:
+            raise ValidationError(
+                self,
+                f"Sub ação '{sub_action}' não identificada! "
+                f"Deveria ser um dos valores {SUB_ACTIONS}",
+            )
+
         transaction_response = self.retrieve_transaction(identifier)
         transaction = transaction_response.instance
 
@@ -153,11 +168,16 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def cancel_transaction(self, identifier, amount=None):
         """
-        estorna uma transaction
+        Estorna uma transação.
+
+        Examples:
+            >>> ZoopWrapper().cancel_transaction('1', '10.00')
+            >>> ZoopWrapper().cancel_transaction('1', '10,00')
+            >>> ZoopWrapper().cancel_transaction('1', '1000')
 
         Args:
             identifier: uuid id
-            amount: quantia a ser estronado
+            amount: quantia em centavos (aceita real também, porém é convertido) a ser estronada  # noqa
 
         Returns:
             response
@@ -166,11 +186,16 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def capture_transaction(self, identifier, amount=None):
         """
-        captura uma transação
+        Captura uma transação.
+
+        Examples:
+            >>> ZoopWrapper().capture_transaction('1', '10.00')
+            >>> ZoopWrapper().capture_transaction('1', '10,00')
+            >>> ZoopWrapper().capture_transaction('1', '1000')
 
         Args:
             identifier: uuid id
-            amount: quantia a ser capturada
+            amount: quantia em centavos (aceita real também, porém é convertido) a ser capturada  # noqa
 
         Returns:
             response

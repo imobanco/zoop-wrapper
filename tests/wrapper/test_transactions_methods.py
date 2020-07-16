@@ -148,7 +148,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
     def test__capture_or_void_transaction(self):
         """
         Dado que existe transação t1
-        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id)
+        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id, 'void')
         Então:
             - TransactionWrapper.retrieve_transaction deve ter sido chamado
             - deve ter sido feito um post corretamente
@@ -165,14 +165,14 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 200, instance=t1
             )
 
-            response = self.client._capture_or_void_transaction(t1.id, "foo")
+            response = self.client._capture_or_void_transaction(t1.id, "void")
             self.assertEqual(response.status_code, 200, msg=response.data)
             mocked_retrieve_transaction.assert_called_once()
 
             expected_data = {"amount": t1.amount, "on_behalf_of": t1.on_behalf_of}
 
             self.mocked_post.assert_called_once_with(
-                f"{self.base_url}/transactions/{t1.id}/foo/",
+                f"{self.base_url}/transactions/{t1.id}/void/",
                 json=expected_data,
                 auth=self.auth,
             )
@@ -180,7 +180,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
     def test__capture_or_void_transaction_amount(self):
         """
         Dado que existe transação t1 de 10000
-        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id, 100.00)
+        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id, 'void', 100.00)  # noqa
         Então:
             - TransactionWrapper.retrieve_transaction deve ter sido chamado
             - deve ter sido feito um post corretamente
@@ -197,14 +197,14 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 200, instance=t1
             )
 
-            response = self.client._capture_or_void_transaction(t1.id, "foo", 100.00)
+            response = self.client._capture_or_void_transaction(t1.id, "void", 100.00)
             self.assertEqual(response.status_code, 200, msg=response.data)
             mocked_retrieve_transaction.assert_called_once()
 
             expected_data = {"amount": 10000, "on_behalf_of": t1.on_behalf_of}
 
             self.mocked_post.assert_called_once_with(
-                f"{self.base_url}/transactions/{t1.id}/foo/",
+                f"{self.base_url}/transactions/{t1.id}/void/",
                 json=expected_data,
                 auth=self.auth,
             )
@@ -212,10 +212,11 @@ class TransactionWrapperMethodsTestCase(APITestCase):
     def test__capture_or_void_transaction_amount_invalid(self):
         """
         Dado que existe transação t1 de 10000
-        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id, 100.01)
+        Quando for chamado ZoopWrapper().__capture_or_void_transaction(t1.id, 'void', 100.01)  # noqa
         Então:
             - TransactionWrapper.retrieve_transaction deve ter sido chamado
-            - deve ter sido feito um post corretamente
+            - não deve ter sido feito um post
+            - deve ter sido levantado um ValidationError com o texto correto
         """
         self.set_post_mock(200, CancelTransactionCardFactory(id="foo").to_dict())
 
@@ -229,12 +230,39 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 200, instance=t1
             )
 
-            with self.assertRaises(ValidationError) as error:
-                self.client._capture_or_void_transaction(t1.id, "foo", 100.01)
+            with self.assertRaises(ValidationError) as error_context:
+                self.client._capture_or_void_transaction(t1.id, "void", 100.01)
 
-                self.assertIn("a quantia 10001 é maior", str(error))
+            self.assertIn(
+                "A quantia 10001 é maior", str(error_context.exception.errors[0])
+            )
 
             mocked_retrieve_transaction.assert_called_once()
+
+            self.mocked_post.assert_not_called()
+
+    def test__capture_or_void_transaction_sub_action_invalid(self):
+        """
+        Dado que existe transação t1 de 10000
+        Quando for chamado ZoopWrapper().__capture_or_void_transaction('1', 'foo')
+        Então:
+            - TransactionWrapper.retrieve_transaction deve ter sido chamado
+            - não deve ter sido feito um post
+            - deve ter sido levantado um ValidationError com o texto correto
+        """
+
+        with patch(
+            "zoop_wrapper.wrapper.transaction.TransactionWrapper.retrieve_transaction"
+        ) as mocked_retrieve_transaction:
+
+            with self.assertRaises(ValidationError) as error_context:
+                self.client._capture_or_void_transaction("1", "foo")
+
+            self.assertIn(
+                "Deveria ser um dos valores", str(error_context.exception.errors[0])
+            )
+
+            mocked_retrieve_transaction.assert_not_called()
 
             self.mocked_post.assert_not_called()
 

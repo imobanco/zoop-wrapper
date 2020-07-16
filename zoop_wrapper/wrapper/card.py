@@ -47,7 +47,7 @@ class CardWrapper(BaseZoopWrapper):
         Adiciona um cartão de crédito utilizando um Token de cartão de crédito
 
         Examples:
-            data = {
+            >>> data = {
                 "card_number": "foo",
                 "expiration_month": "foo",
                 "expiration_year": "foo",

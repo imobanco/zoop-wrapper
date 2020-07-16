@@ -15,7 +15,7 @@ class BuyerWrapper(BaseZoopWrapper):
         Adiciona um :class:`.Buyer`
 
         Examples:
-            data = {
+            >>> data = {
                 "birthdate": 'foo',
                 "email": "foo",
                 "first_name": "foo",
@@ -102,7 +102,7 @@ class BuyerWrapper(BaseZoopWrapper):
         Atualiza um :class:`.Buyer`.
 
         Examples:
-            data = {
+            >>> data = {
                 "birthdate": "1994-12-27",
                 "email": "foo@bar.com",
                 "first_name": "foo",

@@ -2,6 +2,8 @@ from typing import Union
 
 from .base import BaseZoopWrapper
 from ..models.transaction import Transaction
+from ..utils import convert_currency_float_value_to_cents
+from ..exceptions import ValidationError
 
 
 class TransactionWrapper(BaseZoopWrapper):
@@ -11,7 +13,7 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def list_transactions(self):
         """
-        list all transactions
+        Lista todas as :class:`.Transaction`'s
 
         Returns:
             response
@@ -21,10 +23,10 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def list_transactions_for_seller(self, identifier):
         """
-        list all transactions from seller
+        Lista todas as :class:`.Transaction`'s de um :class:`.Seller`
 
         Args:
-            identifier: uuid id
+            identifier: uuid id do :class:`.Seller`
 
         Returns:
             response
@@ -36,10 +38,10 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def retrieve_transaction(self, identifier):
         """
-        retrieve a transaction
+        Retorna uma :class:`.Transaction`.
 
         Args:
-            identifier: uuid id
+            identifier: uuid id da :class:`.Transaction`
 
         Returns:
             response
@@ -49,10 +51,10 @@ class TransactionWrapper(BaseZoopWrapper):
 
     def add_transaction(self, data: Union[dict, Transaction]):
         """
-        add transaction
+        Adiciona uma :class:`.Transaction`.
 
         Examples:
-            data = {
+            >>> data = {
                 'amount' : 'foo',
                 'currency' : 'BRL',
                 'customer': 'foo',
@@ -72,7 +74,7 @@ class TransactionWrapper(BaseZoopWrapper):
                 }
             }
 
-            data = {
+            >>> data = {
                 'amount': '1000',
                 'currency': 'BRL',
                 'customer': 'buyer_id',
@@ -112,25 +114,117 @@ class TransactionWrapper(BaseZoopWrapper):
         url = self._construct_url(action="transactions")
         return self._post_instance(url, instance=instance)
 
-    def cancel_transaction(self, identifier):
+    def _capture_or_void_transaction(self, identifier, sub_action, amount=None):
         """
-        cancel a transaction
+        Estorna ou captura uma :class:`.Transaction`.
+
+        O :attr:`amount` é opcional, e deve ser um valor em centavos ou real.
+        Caso ele não seja passado, o valor da transação é utilizado.
+        Caso ele seja um valor menor do que a transação, é feita uma
+        ação parcial no valor passado.
+
+        .. warning::
+
+            o :attr:`amount` não pode ser maior do que o valor da quantia!
+
+        Examples:
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void', '10.00')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'capture', '10,00')
+            >>> ZoopWrapper()._capture_or_void_transaction('1', 'void', '1000')
 
         Args:
-            identifier: uuid id
+            identifier: uuid id da :class:`.Transaction`
+            sub_action: string da ação a ser feita. 'void' ou 'capture'
+            amount: quantia em centavos da ação a ser feita
 
         Returns:
             response
         """
+        SUB_ACTIONS = {"void", "capture"}
+
+        if sub_action not in SUB_ACTIONS:
+            raise ValidationError(
+                self,
+                f"Sub ação '{sub_action}' não identificada! "
+                f"Deveria ser um dos valores {SUB_ACTIONS}",
+            )
+
         transaction_response = self.retrieve_transaction(identifier)
         transaction = transaction_response.instance
 
+        if amount is None:
+            amount = transaction.amount
+        else:
+            amount = convert_currency_float_value_to_cents(amount)
+
+            if amount > transaction.amount:
+                raise ValidationError(
+                    self,
+                    f"A quantia {amount} é maior do que o "
+                    f"valor {transaction.amount} da transação",
+                )
+
         data = {
-            "amount": transaction.amount,
+            "amount": amount,
             "on_behalf_of": transaction.on_behalf_of,
         }
 
         url = self._construct_url(
-            action="transactions", identifier=identifier, subaction="void"
+            action="transactions", identifier=identifier, subaction=sub_action
         )
         return self._post(url, data=data)
+
+    def cancel_transaction(self, identifier, amount=None):
+        """
+        Estorna uma  :class:`.Transaction`.
+
+        O :attr:`amount` é opcional, e deve ser um valor em centavos ou real.
+        Caso ele não seja passado, o valor da transação é utilizado.
+        Caso ele seja um valor menor do que a transação, é feita uma
+        ação parcial no valor passado.
+
+        .. warning::
+
+            o :attr:`amount` não pode ser maior do que o valor da quantia!
+
+        Examples:
+            >>> ZoopWrapper().cancel_transaction('1', '10.00')
+            >>> ZoopWrapper().cancel_transaction('1', '10,00')
+            >>> ZoopWrapper().cancel_transaction('1', '1000')
+
+        Args:
+            identifier: uuid id da :class:`.Transaction`
+            amount: quantia em centavos a ser estronada
+
+        Returns:
+            response
+        """
+        return self._capture_or_void_transaction(identifier, "void", amount)
+
+    def capture_transaction(self, identifier, amount=None):
+        """
+        Captura uma  :class:`.Transaction`.
+
+        O :attr:`amount` é opcional, e deve ser um valor em centavos ou real.
+        Caso ele não seja passado, o valor da transação é utilizado.
+        Caso ele seja um valor menor do que a transação, é feita uma
+        ação parcial no valor passado.
+
+        .. warning::
+
+            o :attr:`amount` não pode ser maior do que o valor da quantia!
+
+        Examples:
+            >>> ZoopWrapper().capture_transaction('1', '10.00')
+            >>> ZoopWrapper().capture_transaction('1', '10,00')
+            >>> ZoopWrapper().capture_transaction('1', '1000')
+
+        Args:
+            identifier: uuid id da :class:`.Transaction`
+            amount: quantia em centavos a ser capturada
+
+        Returns:
+            response
+        """
+        return self._capture_or_void_transaction(identifier, "capture", amount)

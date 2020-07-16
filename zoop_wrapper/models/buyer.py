@@ -37,9 +37,7 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
 
         if not cpfcnpj.validate(self.taxpayer_id):
             errors.append(
-                ValidationError(
-                    self, FieldError("taxpayer_id", "taxpayer_id inválido!")
-                )
+                FieldError("taxpayer_id", "taxpayer_id inválido!")
             )
         return errors
 

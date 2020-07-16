@@ -14,46 +14,46 @@ class BankAccountWrapper(BaseZoopWrapper):
 
     def list_bank_accounts(self):
         """
-        list all bank accounts
+        Lista todas as :class:`.BankAccount`'s.
 
         Returns:
-            response with instances of BankAccount
+            response with instances of :class:`.BankAccount`
         """
         url = self._construct_url(action="bank_accounts")
         return self._get(url)
 
     def retrieve_bank_account(self, identifier):
         """
-        retrieve bank account
+        Retorna uma :class:`.BankAccount`.
 
         Args:
-            identifier: uuid id
+            identifier: uuid id da :class:`.BankAccount`
 
         Returns:
-            response with instance of BankAccount
+            response with instance of :class:`.BankAccount`
         """
         url = self._construct_url(action="bank_accounts", identifier=identifier)
         return self._get(url)
 
     def __add_bank_account_token(self, token: Token):
         """
-        add bank account token
+        Adiciona um :class:`.Token` para uma :class:`.BankAccount`.
 
         Args:
-            token: Token instance for BankAccount
+            token: :class:`.Token` para :class:`.BankAccount`.
 
         Returns:
-            response with instance of Token
+            response with instance of  :class:`.Token`
         """
         url = self._construct_url(action="bank_accounts", subaction="tokens")
         return self._post_instance(url, instance=token)
 
     def add_bank_account(self, data: dict):
         """
-        add bank account
+        Adiciona uma :class:`.BankAccount`.
 
         Examples:
-            data = {
+            >>> data = {
                 'account_number': 'foo',
                 'bank_code': 'foo',
                 'holder_name': 'foo',
@@ -66,7 +66,7 @@ class BankAccountWrapper(BaseZoopWrapper):
             data: dict of data
 
         Returns:
-            response with instance of BankAccount
+            response with instance of :class:`.BankAccount`
         """
         instance = Token.from_dict_or_instance(data)
 

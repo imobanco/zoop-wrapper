@@ -15,7 +15,7 @@ class SellerWrapper(BaseZoopWrapper):
         Adiciona um :class:`.Seller`.
 
         Examples:
-            data = {
+            >>> data = {
                 "birthdate": "1994-12-27",
                 "email": "foo@bar.com",
                 "first_name": "foo",
@@ -34,7 +34,7 @@ class SellerWrapper(BaseZoopWrapper):
                 }
             }
 
-            data = {
+            >>> data = {
                 "business_email": "foo",
                 "business_name": "foo",
                 "business_opening_date": "foo",
@@ -174,7 +174,7 @@ class SellerWrapper(BaseZoopWrapper):
         Atualiza um :class:`.Seller`.
 
         Examples:
-            data = {
+            >>> data = {
                 "birthdate": "1994-12-27",
                 "email": "foo@bar.com",
                 "first_name": "foo",
@@ -193,7 +193,7 @@ class SellerWrapper(BaseZoopWrapper):
                 }
             }
 
-            data = {
+            >>> data = {
                 "business_email": "foo",
                 "business_name": "foo",
                 "business_opening_date": "foo",

@@ -19,11 +19,6 @@ class BuyerFactory(
 
     resource = "buyer"
     taxpayer_id = LazyFunction(
-        lambda: Faker(
-            "random_element",
-            elements=[
-                gen.cpf(),
-                gen.cnpj()]
-        ).generate()
+        lambda: Faker("random_element", elements=[gen.cpf(), gen.cnpj()]).generate()
     )
     default_receipt_delivery_method = None

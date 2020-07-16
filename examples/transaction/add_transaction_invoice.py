@@ -18,13 +18,13 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-seller_id = "27e17b778b404a83bf8e25ec995e2ffe"
-buyer_or_seller_id = "e7eec0f640c14e21b35d20d58b49b584"
+seller_id = "3b94dc92dbad422ea49d44364f3b7b4b"
+buyer_or_seller_id = "f85c8b84749c431ab0db044812ca7a57"
 
 
 quantia_em_centavos = "1000"
-vencimento = "2020-06-20"
-limite = "2020-06-30"
+vencimento = "2020-08-20"
+limite = "2020-08-30"
 
 t = Transaction(
     amount=quantia_em_centavos,

@@ -21,23 +21,44 @@ class BuyerTestCase(SetTestCase):
             mocked_get_non_required_fields.assert_called_once()
 
     def test_validate_custom_fields(self):
-        instance: Buyer = BuyerFactory()
+        """
+        Testa o Buyer.validate_custom_fields.
 
-        result = Buyer.validate_custom_fields(instance)
+        Dado que existe buyer b1
+        Quando for chamado b1.validate_custom_fields()
+        Então deve ter sido retornado uma lista vazia
+        """
+        b1: Buyer = BuyerFactory()
+
+        result = b1.validate_custom_fields()
 
         self.assertEqual(len(result), 0)
 
     def test_validate_custom_fields_empty(self):
-        instance: Buyer = BuyerFactory(allow_empty=True)
+        """
+        Testa o Buyer.validate_custom_fields.
 
-        result = Buyer.validate_custom_fields(instance)
+        Dado que existe buyer b1 com `taxpeyr_id` inválido e `allow_empty=True`
+        Quando for chamado b1.validate_custom_fields()
+        Então deve ter sido retornado uma lista vazia
+        """
+        b1: Buyer = BuyerFactory(allow_empty=True, taxpayer_id=123)
+
+        result = b1.validate_custom_fields()
 
         self.assertEqual(len(result), 0)
 
     def test_validate_custom_fields_raise(self):
-        instance: Buyer = MagicMock(_allow_empty=False, taxpayer_id=123)
+        """
+        Testa o Buyer.validate_custom_fields.
 
-        result = Buyer.validate_custom_fields(instance)
+        Dado que existe buyer b1 com `taxpeyr_id` inválido e `allow_empty=False`
+        Quando for chamado b1.validate_custom_fields()
+        Então deve ter sido retornado uma lista com 1 erro de taxpayer_id
+        """
+        b1: Buyer = MagicMock(_allow_empty=False, taxpayer_id=123)
+
+        result = Buyer.validate_custom_fields(b1)
 
         self.assertEqual(len(result), 1)
 

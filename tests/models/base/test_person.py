@@ -40,23 +40,45 @@ class PersonTestCase(SetTestCase):
         self.assertIsInstance(instance.address, Address)
 
     def test_validate_custom_fields(self):
-        instance: Person = PersonFactory()
+        """
+        Testa o Person.validate_custom_fields.
 
-        result = Person.validate_custom_fields(instance)
+        Dado que existe person p1
+        Quando for chamado p1.validate_custom_fields()
+        Então deve ter sido retornado uma lista vazia
+        """
+
+        p1: Person = PersonFactory()
+
+        result = p1.validate_custom_fields()
 
         self.assertEqual(len(result), 0)
 
     def test_validate_custom_fields_empty(self):
-        instance: Person = PersonFactory(allow_empty=True)
+        """
+        Testa o Person.validate_custom_fields.
 
-        result = Person.validate_custom_fields(instance)
+        Dado que existe person p1 com `taxpeyr_id` inválido e `allow_empty=True`
+        Quando for chamado p1.validate_custom_fields()
+        Então deve ter sido retornado uma lista vazia
+        """
+        p1: Person = PersonFactory(allow_empty=True, taxpayer_id=123)
+
+        result = p1.validate_custom_fields()
 
         self.assertEqual(len(result), 0)
 
     def test_validate_custom_fields_raise(self):
-        instance: Person = MagicMock(_allow_empty=False, taxpayer_id=123)
+        """
+        Testa o Person.validate_custom_fields.
 
-        result = Person.validate_custom_fields(instance)
+        Dado que existe person p1 com `taxpeyr_id` inválido e `allow_empty=False`
+        Quando for chamado p1.validate_custom_fields()
+        Então deve ter sido retornado uma lista com 1 erro de taxpayer_id
+        """
+        p1: Person = MagicMock(_allow_empty=False, taxpayer_id=123)
+
+        result = Person.validate_custom_fields(p1)
 
         self.assertEqual(len(result), 1)
 

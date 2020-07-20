@@ -1,5 +1,6 @@
 import os
 
+from factory.faker import Faker
 from pycpfcnpj import gen
 
 from zoop_wrapper import ZoopWrapper, Buyer, Address
@@ -13,6 +14,8 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
+
+cpf_ou_cnpj = Faker("random_element", elements=[gen.cpf(), gen.cnpj()]).generate()
 
 b = Buyer(
     address=Address(
@@ -30,7 +33,7 @@ b = Buyer(
     first_name="foo",
     last_name="foo",
     phone_number="+55 84 99999-9999",
-    taxpayer_id=gen.cpf(),
+    taxpayer_id=cpf_ou_cnpj,
 )
 
 

@@ -1,9 +1,12 @@
+from pycpfcnpj import cpfcnpj
+
 from .base import (
     MarketPlaceModel,
     Person,
     SocialModel,
     FinancialModel,
 )
+from ..exceptions import FieldError
 
 
 class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
@@ -19,6 +22,22 @@ class Buyer(MarketPlaceModel, Person, SocialModel, FinancialModel):
     """
 
     RESOURCE = "buyer"
+
+    def validate_custom_fields(self, **kwargs):
+        """
+        O :attr:`taxpayer_id` precisa ser um CPF ou CNPJ válido. Então verificamos isso.
+
+        Args:
+            **kwargs:
+        """
+        errors = []
+
+        if self._allow_empty:
+            return errors
+
+        if not cpfcnpj.validate(self.taxpayer_id):
+            errors.append(FieldError("taxpayer_id", "taxpayer_id inválido!"))
+        return errors
 
     @classmethod
     def get_non_required_fields(cls):

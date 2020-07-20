@@ -77,6 +77,7 @@ class Person(ZoopObject):
     last_name: Optional[str]
     phone_number: Optional[str]
     taxpayer_id: Optional[str]
+    def validate_custom_fields(self, **kwargs) -> List[Any]: ...
     def init_custom_fields(self, address: Union[Dict[str, Any], Address], **kwargs) -> None: ...  # type: ignore
     @classmethod
     def get_required_fields(cls) -> set: ...

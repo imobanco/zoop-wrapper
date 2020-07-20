@@ -45,7 +45,7 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
 
     RESOURCE = "seller"
 
-    def validate_fields(self, raise_exception=True, **kwargs):
+    def validate_custom_fields(self, **kwargs):
         """
         Caso o vendedor seja :attr:`.BUSINESS_TYPE` precisamos validar os campos pelo
         :class:`.BusinessOrIndividualModel`.
@@ -54,13 +54,11 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
         :class:`.Person`.
 
         Args:
-            raise_exception: flag definindo se deve ser levantada exceção ou não
             **kwargs:
         """
-        if self.get_type() == self.BUSINESS_TYPE:
-            BusinessOrIndividualModel.validate_fields(self, raise_exception, **kwargs)
-        else:
-            Person.validate_fields(self, raise_exception, **kwargs)
+        if self.get_type() == self.INDIVIDUAL_TYPE:
+            return Person.validate_custom_fields(self, **kwargs)
+        return []
 
     def init_custom_fields(self, business_address=None, owner=None, **kwargs):
         """

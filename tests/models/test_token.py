@@ -103,7 +103,7 @@ class TokenTestCase(SetTestCase):
         instance: Token = MagicMock(
             card_number=Faker("credit_card_number").generate(),
             token_type=Token.CARD_TYPE,
-            CARD_TYPE=Token.CARD_TYPE
+            CARD_TYPE=Token.CARD_TYPE,
         )
 
         errors = Token.validate_custom_fields(instance)
@@ -118,9 +118,7 @@ class TokenTestCase(SetTestCase):
         """
 
         instance: Token = MagicMock(
-            card_number="123",
-            token_type=Token.CARD_TYPE,
-            CARD_TYPE=Token.CARD_TYPE
+            card_number="123", token_type=Token.CARD_TYPE, CARD_TYPE=Token.CARD_TYPE
         )
 
         result = Token.validate_custom_fields(instance)

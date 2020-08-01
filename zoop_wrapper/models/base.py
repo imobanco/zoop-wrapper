@@ -230,7 +230,7 @@ class ZoopObject(object):
         for validation_field in self.get_validation_fields():
             value = getattr(self, validation_field, None)
             if value is None:
-                errors.append(FieldError(validation_field, "missing required field"))
+                errors.append(FieldError(validation_field, "campo obrigatório faltando!"))
 
         errors.extend(self.validate_custom_fields(**kwargs))
 

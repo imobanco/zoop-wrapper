@@ -1,21 +1,22 @@
 from unittest.mock import MagicMock
 
 from pycpfcnpj import gen
+from factory.faker import Faker
 
-from tests.utils import SetTestCase
-from zoop_wrapper.models.bank_account import BankAccount
-from zoop_wrapper.models.card import Card
-from zoop_wrapper.models.token import Token
-from zoop_wrapper.exceptions import ValidationError
-from tests.factories.token import (
+from ..utils import SetTestCase
+from ..factories.token import (
     CardTokenFactory,
     CreateCardTokenFactory,
     BankAccountTokenFactory,
     CreateIndividualBankAccountTokenFactory,
     CreateBusinessBankAccountTokenFactory,
 )
-from tests.factories.card import CardFactory
-from tests.factories.bank_account import IndividualBankAccountFactory
+from ..factories.card import CardFactory
+from ..factories.bank_account import IndividualBankAccountFactory
+from zoop_wrapper.models.bank_account import BankAccount
+from zoop_wrapper.models.card import Card
+from zoop_wrapper.models.token import Token
+from zoop_wrapper.exceptions import ValidationError, FieldError
 
 
 class TokenTestCase(SetTestCase):
@@ -91,6 +92,42 @@ class TokenTestCase(SetTestCase):
         Token.init_custom_fields(instance, foo="bar", taxpayer_id=cpf)
         self.assertEqual(instance.token_type, instance.BANK_ACCOUNT_TYPE)
         self.assertEqual(instance.taxpayer_id, cpf)
+
+    def test_validate_custom_fields_card(self):
+        """
+        Dado que está sendo criado um token de cartão t1 com número de cartão válido
+        Quando for chamado t1.validate_custom_fields(**kwargs)
+        Então a lista de erros deve estar vazia
+        """
+
+        instance: Token = MagicMock(
+            card_number=Faker("credit_card_number").generate(),
+            token_type=Token.CARD_TYPE,
+            CARD_TYPE=Token.CARD_TYPE,
+        )
+
+        errors = Token.validate_custom_fields(instance)
+
+        self.assertEqual(len(errors), 0)
+
+    def test_validate_custom_fields_card_raise(self):
+        """
+        Dado que está sendo criado um token de cartão t1 com número de cartão inválido
+        Quando for chamado t1.validate_custom_fields(**kwargs)
+        Então a lista de erros deve ter um elemento com as mensagens corretas
+        """
+
+        instance: Token = MagicMock(
+            card_number="123", token_type=Token.CARD_TYPE, CARD_TYPE=Token.CARD_TYPE
+        )
+
+        result = Token.validate_custom_fields(instance)
+
+        self.assertEqual(len(result), 1)
+        error = result[0]
+        self.assertIsInstance(error, FieldError)
+        self.assertEqual(error.name, "card_number")
+        self.assertEqual(error.reason, "O número do cartão é inválido!")
 
     def test_get_non_required_fields(self):
         self.assertIsSubSet({"type", "used"}, Token.get_non_required_fields())

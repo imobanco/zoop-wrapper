@@ -1,3 +1,5 @@
+from card_identifier.cardutils import validate_card
+
 from .base import ResourceModel, BusinessOrIndividualModel
 from .bank_account import BankAccount
 from .card import Card
@@ -191,6 +193,29 @@ class Token(ResourceModel):
             return fields.union(self.get_bank_account_non_required_fields())
         else:
             return fields.union(self.get_non_required_fields())
+
+    def validate_custom_fields(self, **kwargs):
+        """
+        Valida campos do token.
+
+        Se for um token de cartão, valida o :attr:`.card_number`.
+
+        Args:
+            **kwargs:
+
+        Returns:
+            Lista com os erros ocorridos (se tiver algum!)
+        """
+
+        errors = []
+        if self.token_type == self.CARD_TYPE:
+
+            if not validate_card(self.card_number):
+                errors.append(
+                    FieldError("card_number", "O número do cartão é inválido!")
+                )
+
+        return errors
 
     @classmethod
     def get_non_required_fields(cls):

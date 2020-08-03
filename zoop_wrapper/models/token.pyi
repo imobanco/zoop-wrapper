@@ -5,7 +5,7 @@ from zoop_wrapper.models.base import (
 )
 from zoop_wrapper.models.card import Card as Card
 from zoop_wrapper.utils import get_logger as get_logger
-from typing import Any, Optional, Set, Dict, Union
+from typing import Any, Optional, Set, Dict, Union, List
 
 logger: Any
 
@@ -50,6 +50,7 @@ class Token(ResourceModel):
     def get_bank_account_type(self): ...
     def get_validation_fields(self): ...
     def get_all_fields(self): ...
+    def validate_custom_fields(self, **kwargs: Any) -> List[Any]: ...
     @classmethod
     def get_non_required_fields(cls): ...
     @classmethod

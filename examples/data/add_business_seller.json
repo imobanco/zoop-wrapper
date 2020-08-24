@@ -1,5 +1,5 @@
 {
-    "id": "8818dc0cbe1843cc8140f0bb362620c7",
+    "id": "a482a4d33d3741b287071132bb3225af",
     "status": "pending",
     "resource": "seller",
     "type": "business",
@@ -14,7 +14,7 @@
     "business_opening_date": "0000-00-00",
     "business_facebook": null,
     "business_twitter": null,
-    "ein": "70722684542436",
+    "ein": "16535515052002",
     "statement_descriptor": null,
     "mcc": null,
     "business_address": {
@@ -28,12 +28,12 @@
         "country_code": "BR"
     },
     "owner": {
-        "first_name": "foo",
-        "last_name": "foo",
-        "email": "foo",
-        "phone_number": "foo",
-        "taxpayer_id": "19642334372",
-        "birthdate": "0000-00-00",
+        "first_name": null,
+        "last_name": null,
+        "email": null,
+        "phone_number": null,
+        "taxpayer_id": null,
+        "birthdate": null,
         "address": {
             "line1": null,
             "line2": null,
@@ -58,6 +58,6 @@
     "uri": "/v1/marketplaces/foo/sellers/businesses/",
     "marketplace_id": "foo",
     "metadata": {},
-    "created_at": "2020-05-13T21:00:30+00:00",
-    "updated_at": "2020-05-13T21:00:30+00:00"
+    "created_at": "2020-08-24T17:22:06+00:00",
+    "updated_at": "2020-08-24T17:22:07+00:00"
 }

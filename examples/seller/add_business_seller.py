@@ -2,7 +2,7 @@ import os
 
 from pycpfcnpj import gen
 
-from zoop_wrapper import ZoopWrapper, Seller, Address, Person
+from zoop_wrapper import ZoopWrapper, Seller, Address
 from examples.utils import dump_response
 
 """
@@ -31,24 +31,6 @@ s = Seller(
     business_phone="foo",
     business_website="foo",
     ein=gen.cnpj(),
-    owner=Person(
-        birthdate="foo",
-        email="foo",
-        first_name="foo",
-        last_name="foo",
-        phone_number="foo",
-        taxpayer_id=gen.cpf(),
-        address=Address(
-            city="Natal",
-            country_code="BR",
-            line1="foo",
-            line2="123",
-            line3="barbar",
-            neighborhood="fooofoo",
-            postal_code="59100000",
-            state="RN",
-        ),
-    ),
 )
 
 

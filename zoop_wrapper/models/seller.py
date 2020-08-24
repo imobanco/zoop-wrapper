@@ -102,12 +102,12 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
                 "decline_on_fail_security_code",
                 "decline_on_fail_zipcode",
                 "is_mobile",
-                "mcc",
-                "merchant_code",
                 "show_profile_online",
                 "statement_descriptor",
                 "terminal_code",
                 "type",
+                "merchant_code",
+                "mcc",
             },
         )
 
@@ -130,7 +130,7 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
         fields = cls.get_non_required_fields()
         return fields.union(
             super().get_business_non_required_fields(),
-            {"business_description", "business_facebook", "business_twitter"},
+            {"owner", "business_description", "business_facebook", "business_twitter"},
         )
 
     @classmethod
@@ -151,7 +151,6 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
                 "business_opening_date",
                 "business_phone",
                 "business_website",
-                "owner",
             },
         )
 

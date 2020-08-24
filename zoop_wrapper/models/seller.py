@@ -127,11 +127,11 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
         return fields.union(
             super().get_business_non_required_fields(),
             {
-                "owner",
                 "business_description",
                 "business_website",
                 "business_facebook",
                 "business_twitter",
+                "owner",
             },
         )
 

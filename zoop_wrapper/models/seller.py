@@ -80,13 +80,13 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
             setattr(
                 self,
                 "owner",
-                Person.from_dict_or_instance(owner, allow_empty=self._allow_empty),
+                Person.from_dict_or_instance(owner, allow_empty=True),
             )
             setattr(
                 self,
                 "business_address",
                 Address.from_dict_or_instance(
-                    business_address, allow_empty=self._allow_empty
+                    business_address, allow_empty=True
                 ),
             )
         else:

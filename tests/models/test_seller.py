@@ -20,12 +20,12 @@ class SellerTestCase(SetTestCase):
                 "decline_on_fail_security_code",
                 "decline_on_fail_zipcode",
                 "is_mobile",
-                "mcc",
-                "merchant_code",
                 "show_profile_online",
                 "statement_descriptor",
                 "terminal_code",
                 "type",
+                "merchant_code",
+                "mcc",
             },
             Seller.get_non_required_fields(),
         )
@@ -46,14 +46,13 @@ class SellerTestCase(SetTestCase):
                 "business_phone",
                 "business_website",
                 "ein",
-                "owner",
             },
             Seller.get_business_required_fields(),
         )
 
     def test_business_non_required_fields(self):
         self.assertIsSubSet(
-            {"business_description", "business_facebook", "business_twitter"},
+            {"owner", "business_description", "business_facebook", "business_twitter"},
             Seller.get_business_non_required_fields(),
         )
 
@@ -101,7 +100,6 @@ class SellerTestCase(SetTestCase):
                 "business_opening_date",
                 "business_phone",
                 "business_website",
-                "owner",
             },
             instance.get_validation_fields(),
         )

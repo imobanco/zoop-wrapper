@@ -30,7 +30,7 @@ s = Seller(
     business_opening_date="foo",
     business_phone="foo",
     business_website="foo",
-    ein=gen.cnpj()
+    ein=gen.cnpj(),
 )
 
 

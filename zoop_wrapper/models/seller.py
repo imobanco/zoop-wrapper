@@ -126,7 +126,13 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
         fields = cls.get_non_required_fields()
         return fields.union(
             super().get_business_non_required_fields(),
-            {"owner", "business_description", "business_facebook", "business_twitter"},
+            {
+                "business_description",
+                "business_website",
+                "business_facebook",
+                "business_twitter",
+                "owner",
+            },
         )
 
     @classmethod
@@ -146,7 +152,6 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
                 "business_name",
                 "business_opening_date",
                 "business_phone",
-                "business_website",
             },
         )
 

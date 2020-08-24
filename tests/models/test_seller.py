@@ -44,7 +44,6 @@ class SellerTestCase(SetTestCase):
                 "business_name",
                 "business_opening_date",
                 "business_phone",
-                "business_website",
                 "ein",
             },
             Seller.get_business_required_fields(),
@@ -52,7 +51,13 @@ class SellerTestCase(SetTestCase):
 
     def test_business_non_required_fields(self):
         self.assertIsSubSet(
-            {"owner", "business_description", "business_facebook", "business_twitter"},
+            {
+                "business_website",
+                "business_description",
+                "business_facebook",
+                "business_twitter",
+                "owner",
+            },
             Seller.get_business_non_required_fields(),
         )
 
@@ -99,7 +104,6 @@ class SellerTestCase(SetTestCase):
                 "business_name",
                 "business_opening_date",
                 "business_phone",
-                "business_website",
             },
             instance.get_validation_fields(),
         )

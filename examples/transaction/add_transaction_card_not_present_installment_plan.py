@@ -1,6 +1,6 @@
 import os
 
-from zoop_wrapper import ZoopWrapper, Transaction, Source, Token
+from zoop_wrapper import ZoopWrapper, Transaction, Source, Token, InstallmentPlan
 from examples.utils import dump_response
 
 """
@@ -33,6 +33,12 @@ t = Transaction(
         card=Token(id=card_id_brian, allow_empty=True),
         usage="single_use",
         amount=quantia_em_centavos,
+    ),
+    installment_plan=InstallmentPlan(
+        {
+            "number_installments": "12",
+            "mode": "interest_free",
+        }
     ),
 )
 

@@ -7,6 +7,7 @@ from .models import (  # noqa
     BillingInstructions,
     Buyer,
     Card,
+    InstallmentPlan,
     Invoice,
     Person,
     Seller,

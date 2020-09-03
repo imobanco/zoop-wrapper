@@ -406,4 +406,4 @@ class InstallmentPlan(ZoopObject):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union({"interest_free", "with_interest"})
+        return fields.union({"number_installments", "mode"})

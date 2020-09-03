@@ -5,6 +5,6 @@ from zoop_wrapper.models.transaction import InstallmentPlan
 class InstallmentPlanTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
-            {"with_interest", "interest_free"},
+            {"number_installments", "mode"},
             InstallmentPlan.get_required_fields(),
         )

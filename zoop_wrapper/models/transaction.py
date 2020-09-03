@@ -391,3 +391,15 @@ class Source(ZoopObject):
         """
         fields = cls.get_required_fields()
         return fields.union({"amount", "usage"})
+
+class InstallmentPlan(ZoopObject):
+    INTEREST_FREE_TYPE = "interest_free"
+    WITH_INTEREST_TYPE = "card_not_present_type"
+
+    INSTALLMENT_PLAN_TYPES = {INTEREST_FREE_TYPE, WITH_INTEREST_TYPE}
+
+    @classmethod
+    def get_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union({"interest_free", "with_interest"})
+

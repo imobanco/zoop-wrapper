@@ -302,7 +302,11 @@ class Source(ZoopObject):
     SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
 
     def init_custom_fields(
-        self, card=None, type="card", currency="BRL", **kwargs,
+        self,
+        card=None,
+        type="card",
+        currency="BRL",
+        **kwargs,
     ):
         setattr(self, "type", type)
         setattr(self, "currency", currency)
@@ -392,6 +396,7 @@ class Source(ZoopObject):
         fields = cls.get_required_fields()
         return fields.union({"amount", "usage"})
 
+
 class InstallmentPlan(ZoopObject):
     INTEREST_FREE_TYPE = "interest_free"
     WITH_INTEREST_TYPE = "card_not_present_type"
@@ -402,4 +407,3 @@ class InstallmentPlan(ZoopObject):
     def get_required_fields(cls):
         fields = super().get_required_fields()
         return fields.union({"interest_free", "with_interest"})
-

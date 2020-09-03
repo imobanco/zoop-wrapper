@@ -76,7 +76,8 @@ class SourceTestCase(SetTestCase):
         )
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "currency", "type", "usage", "amount"}, instance.get_all_fields(),
+            {"card", "currency", "type", "usage", "amount"},
+            instance.get_all_fields(),
         )
 
     def test_get_validation_fields_card_present(self):
@@ -92,5 +93,6 @@ class SourceTestCase(SetTestCase):
         instance = SourceCardPresentFactory(card=CreateCardTokenFactory(id=None))
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount"}, instance.get_all_fields(),
+            {"card", "type", "usage", "currency", "amount"},
+            instance.get_all_fields(),
         )

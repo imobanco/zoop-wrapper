@@ -18,7 +18,7 @@ class InstallmentPlanTestCase(SetTestCase):
         Testa o InstallmentPlan.validate_custom_fields.
 
         Dado:
-            - que existe InstallmentPlan ip1 com `mode` inválido e `number_installments=3` que é válido
+            - que existe InstallmentPlan ip1 com `mode` inválido e `number_installments=3` que é válido # noqa
         Quando:
             - for chamado ip1.validate_custom_fields()
         Então:
@@ -42,12 +42,12 @@ class InstallmentPlanTestCase(SetTestCase):
         Dado:
             - que existe number_installments com um valor que não é um inteiro
         Quando:
-            - for chamado InstallmentPlan._validate_number_installments(number_installments)
+            - for chamado InstallmentPlan._validate_number_installments(number_installments) # noqa
         Então:
             - o retorno deve ser True
         """
 
-        number_installments = 'algo-que-não-é-int'
+        number_installments = "algo-que-não-é-int"
 
         result = InstallmentPlan._validate_number_installments(number_installments)
         expected = True
@@ -60,7 +60,7 @@ class InstallmentPlanTestCase(SetTestCase):
         Dado:
             - que existe number_installments com um valor menor do que 1
         Quando:
-            - for chamado InstallmentPlan._validate_number_installments(number_installments)
+            - for chamado InstallmentPlan._validate_number_installments(number_installments) # noqa
         Então:
             - o retorno deve ser True
         """
@@ -78,7 +78,7 @@ class InstallmentPlanTestCase(SetTestCase):
         Dado:
             - que existe number_installments com um valor menor do que 1
         Quando:
-            - for chamado InstallmentPlan._validate_number_installments(number_installments)
+            - for chamado InstallmentPlan._validate_number_installments(number_installments) # noqa
         Então:
             - o retorno deve ser True
         """

@@ -414,7 +414,8 @@ class InstallmentPlan(ZoopObject):
             errors.append(
                 FieldError(
                     "mode",
-                    f"O mode é inválido! Deveria ser um dos dois tipos: {self.INSTALLMENT_PLAN_MODES}",
+                    f"O mode é inválido! Deveria ser um dos "
+                    f"dois tipos: {self.INSTALLMENT_PLAN_MODES}",
                 )
             )
 
@@ -422,7 +423,8 @@ class InstallmentPlan(ZoopObject):
             errors.append(
                 FieldError(
                     "number_installments",
-                    f"O number_installments é inválido! Deveria ser de 1 até 12, e não {self.number_installments}",
+                    f"O number_installments é inválido! Deveria ser de 1 até 12, "
+                    f"e não {self.number_installments}",
                 )
             )
 
@@ -436,4 +438,8 @@ class InstallmentPlan(ZoopObject):
             - number_installments é um valor inteiro entre 1 e 12 incluindo as bordas
         :return: bool
         """
-        return not isinstance(number_installments, int) or number_installments < 1 or number_installments > 12
+        return (
+            not isinstance(number_installments, int)
+            or number_installments < 1
+            or number_installments > 12
+        )

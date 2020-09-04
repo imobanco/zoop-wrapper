@@ -441,4 +441,4 @@ class InstallmentPlan(ZoopObject):
         if not isinstance(number_installments, int):
             return False
 
-        return number_installments >= 1 or number_installments <= 12
+        return number_installments >= 1 and number_installments <= 12

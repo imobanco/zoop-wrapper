@@ -2,7 +2,7 @@ from .base import ZoopObject, ResourceModel
 from .card import Card
 from .invoice import Invoice
 from .token import Token
-from ..exceptions import ValidationError
+from ..exceptions import ValidationError, FieldError
 
 from zoop_wrapper.utils import convert_currency_float_value_to_cents
 
@@ -302,7 +302,11 @@ class Source(ZoopObject):
     SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
 
     def init_custom_fields(
-        self, card=None, type="card", currency="BRL", **kwargs,
+        self,
+        card=None,
+        type="card",
+        currency="BRL",
+        **kwargs,
     ):
         setattr(self, "type", type)
         setattr(self, "currency", currency)
@@ -391,3 +395,50 @@ class Source(ZoopObject):
         """
         fields = cls.get_required_fields()
         return fields.union({"amount", "usage"})
+
+
+class InstallmentPlan(ZoopObject):
+    INTEREST_FREE_MODE = "interest_free"
+    WITH_INTEREST_MODE = "with_interest"
+
+    INSTALLMENT_PLAN_MODES = {INTEREST_FREE_MODE, WITH_INTEREST_MODE}
+
+    @classmethod
+    def get_required_fields(cls):
+        fields = super().get_required_fields()
+        return fields.union({"mode", "number_installments"})
+
+    def validate_custom_fields(self, **kwargs):
+        errors = []
+        if self.mode not in self.INSTALLMENT_PLAN_MODES:
+            errors.append(
+                FieldError(
+                    "mode",
+                    f"O mode é inválido! Deveria ser um dos "
+                    f"dois tipos: {self.INSTALLMENT_PLAN_MODES}",
+                )
+            )
+
+        if not InstallmentPlan._validate_number_installments(self.number_installments):
+            errors.append(
+                FieldError(
+                    "number_installments",
+                    f"O number_installments é inválido! Deveria ser de 1 até 12, "
+                    f"e não {self.number_installments}",
+                )
+            )
+
+        return errors
+
+    @classmethod
+    def _validate_number_installments(cls, number_installments):
+        """
+        Esse método verifica se:
+            - number_installments é inteiro
+            - number_installments é um valor inteiro entre 1 e 12 incluindo as bordas
+        :return: bool
+        """
+        if not isinstance(number_installments, int):
+            return False
+
+        return number_installments >= 1 and number_installments <= 12

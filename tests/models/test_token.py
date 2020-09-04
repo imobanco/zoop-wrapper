@@ -67,7 +67,9 @@ class TokenTestCase(SetTestCase):
         We set the CARD_IDENTIFIER to 'foo'
         and pass foo='bar' on args!
         """
-        instance = MagicMock(CARD_IDENTIFIER="foo",)
+        instance = MagicMock(
+            CARD_IDENTIFIER="foo",
+        )
 
         Token.init_custom_fields(instance, foo="bar")
         self.assertEqual(instance.token_type, instance.CARD_TYPE)

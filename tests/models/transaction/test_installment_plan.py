@@ -18,7 +18,7 @@ class InstallmentPlanTestCase(SetTestCase):
         Testa o InstallmentPlan.validate_custom_fields.
 
         Dado:
-            - que existe InstallmentPlan ip1 com `mode` inválido e `number_installments=3` que é válido # noqa
+            - que existe InstallmentPlan ip1 com `mode` inválido e `number_installments=3` # noqa
         Quando:
             - for chamado ip1.validate_custom_fields()
         Então:

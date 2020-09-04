@@ -419,7 +419,7 @@ class InstallmentPlan(ZoopObject):
                 )
             )
 
-        if InstallmentPlan._validate_number_installments(self.number_installments):
+        if not InstallmentPlan._validate_number_installments(self.number_installments):
             errors.append(
                 FieldError(
                     "number_installments",
@@ -438,8 +438,7 @@ class InstallmentPlan(ZoopObject):
             - number_installments é um valor inteiro entre 1 e 12 incluindo as bordas
         :return: bool
         """
-        return (
-            not isinstance(number_installments, int)
-            or number_installments < 1
-            or number_installments > 12
-        )
+        if not isinstance(number_installments, int):
+            return False
+
+        return number_installments >= 1 or number_installments <= 12

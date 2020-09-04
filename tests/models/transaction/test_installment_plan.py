@@ -50,7 +50,7 @@ class InstallmentPlanTestCase(SetTestCase):
         number_installments = "algo-que-não-é-int"
 
         result = InstallmentPlan._validate_number_installments(number_installments)
-        expected = True
+        expected = False
         self.assertEqual(result, expected)
 
     def test_validate_number_installments_less_than_one(self):

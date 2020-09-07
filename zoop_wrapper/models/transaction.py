@@ -373,7 +373,7 @@ class Source(ZoopObject):
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union({"card", "type", "currency", "usage", "amount"})
+        return fields.union({"card", "type", "currency", "usage", "amount", "installment_plan"})
 
     @classmethod
     def get_card_not_present_required_fields(cls):

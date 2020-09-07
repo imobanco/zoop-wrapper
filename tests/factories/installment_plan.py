@@ -1,8 +1,6 @@
-from factory import SubFactory
 from factory.faker import Faker
 
 from tests.factories.base import ZoopObjectFactory
-from tests.factories.token import CreateCardTokenFactory
 from zoop_wrapper.models.transaction import InstallmentPlan
 
 

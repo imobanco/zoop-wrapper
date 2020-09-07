@@ -109,10 +109,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 "currency": "BRL",
                 "type": "card",
                 "usage": "single_use",
-                "installment_plan": {
-                    "mode": "interest_free",
-                    "number_installments": 5
-                }
+                "installment_plan": {"mode": "interest_free", "number_installments": 5},
             },
         }
 

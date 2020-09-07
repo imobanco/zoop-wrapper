@@ -306,6 +306,7 @@ class Source(ZoopObject):
         card=None,
         type="card",
         currency="BRL",
+        installment_plan=None,
         **kwargs,
     ):
         setattr(self, "type", type)

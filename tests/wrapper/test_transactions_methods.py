@@ -109,6 +109,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 "currency": "BRL",
                 "type": "card",
                 "usage": "single_use",
+                "installment_plan": {"mode": "interest_free", "number_installments": 5},
             },
         }
 
@@ -136,6 +137,10 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 "card": {"id": "5000be1e-3e68-4296-9780-a39b1fcd08f1"},
                 "type": "card",
                 "usage": "single_use",
+                "installment_plan": {
+                    "mode": "interest_free",
+                    "number_installments": 5,
+                },
             },
         }
 

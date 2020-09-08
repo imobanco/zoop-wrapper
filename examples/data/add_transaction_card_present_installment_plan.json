@@ -1,5 +1,5 @@
 {
-    "id": "88c1c5b0c30a46e0b2b0efa3f99554f4",
+    "id": "4b89e9fb085d45c381332ec431f8bef7",
     "resource": "transaction",
     "status": "succeeded",
     "amount": "543.21",
@@ -14,17 +14,17 @@
     "rewards": null,
     "discounts": null,
     "pre_authorization": null,
-    "sales_receipt": "9b04c4b829f44fe79eefc3e2feb8e29b",
+    "sales_receipt": "d5972dd8221d4e0ea581995618aeb3b6",
     "on_behalf_of": "25037b2978b14e7fa5b902d9322e8426",
     "customer": null,
     "statement_descriptor": "KIMBERLY STEVENSON",
     "payment_method": {
-        "id": "80a63e4e413141148f387a60089d680e",
+        "id": "91b0daa82d6943ccac91f6edfb7af502",
         "resource": "card",
         "description": null,
-        "card_brand": "Visa",
-        "first4_digits": "4497",
-        "last4_digits": "2521",
+        "card_brand": "Discover",
+        "first4_digits": "6011",
+        "last4_digits": "5410",
         "expiration_month": "5",
         "expiration_year": "2030",
         "holder_name": "foo",
@@ -32,7 +32,7 @@
         "is_valid": true,
         "is_verified": false,
         "customer": null,
-        "fingerprint": "f21a1ee8457c9c8b995d18e597f457c6bd523cfef716a02ddd7693094cdaff5f",
+        "fingerprint": "aaa07a59f462ea94cdb7912ae0d55b71742f4786539509513d7c1f9e10eef2c4",
         "address": null,
         "verification_checklist": {
             "postal_code_check": "unchecked",
@@ -40,12 +40,12 @@
             "address_line1_check": "unchecked"
         },
         "metadata": {},
-        "uri": "/v1/marketplaces/foo/transactions/80a63e4e413141148f387a60089d680e",
-        "created_at": "2020-09-04T18:28:05+00:00",
-        "updated_at": "2020-09-04T18:28:08+00:00"
+        "uri": "/v1/marketplaces/foo/transactions/91b0daa82d6943ccac91f6edfb7af502",
+        "created_at": "2020-09-08T17:30:21+00:00",
+        "updated_at": "2020-09-08T17:30:22+00:00"
     },
     "source": {
-        "id": "8d396cb7df464f3697572286d28df726",
+        "id": "44534313be5c4b27b8245c548776344f",
         "status": "used",
         "usage": "single_use",
         "amount": "543.21",
@@ -54,12 +54,12 @@
         "statement_descriptor": null,
         "type": "card",
         "card": {
-            "id": "80a63e4e413141148f387a60089d680e",
+            "id": "91b0daa82d6943ccac91f6edfb7af502",
             "resource": "card",
             "description": null,
-            "card_brand": "Visa",
-            "first4_digits": "4497",
-            "last4_digits": "2521",
+            "card_brand": "Discover",
+            "first4_digits": "6011",
+            "last4_digits": "5410",
             "expiration_month": "5",
             "expiration_year": "2030",
             "holder_name": "foo",
@@ -67,7 +67,7 @@
             "is_valid": true,
             "is_verified": false,
             "customer": null,
-            "fingerprint": "f21a1ee8457c9c8b995d18e597f457c6bd523cfef716a02ddd7693094cdaff5f",
+            "fingerprint": "aaa07a59f462ea94cdb7912ae0d55b71742f4786539509513d7c1f9e10eef2c4",
             "address": null,
             "verification_checklist": {
                 "postal_code_check": "unchecked",
@@ -75,10 +75,14 @@
                 "address_line1_check": "unchecked"
             },
             "metadata": {},
-            "uri": "/v1/marketplaces/foo/transactions/80a63e4e413141148f387a60089d680e",
-            "created_at": "2020-09-04T18:28:05+00:00",
-            "updated_at": "2020-09-04T18:28:08+00:00",
+            "uri": "/v1/marketplaces/foo/transactions/91b0daa82d6943ccac91f6edfb7af502",
+            "created_at": "2020-09-08T17:30:21+00:00",
+            "updated_at": "2020-09-08T17:30:22+00:00",
             "amount": "543.21"
+        },
+        "installment_plan": {
+            "number_installments": 11,
+            "mode": "interest_free"
         }
     },
     "point_of_sale": {
@@ -105,11 +109,11 @@
     ],
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/foo/transactions/88c1c5b0c30a46e0b2b0efa3f99554f4",
+    "uri": "/v1/marketplaces/foo/transactions/4b89e9fb085d45c381332ec431f8bef7",
     "metadata": {},
-    "expected_on": "2020-10-05T00:00:00+00:00",
-    "created_at": "2020-09-04T18:28:05+00:00",
-    "updated_at": "2020-09-04T18:28:10+00:00",
+    "expected_on": "2020-10-08T00:00:00+00:00",
+    "created_at": "2020-09-08T17:30:21+00:00",
+    "updated_at": "2020-09-08T17:30:25+00:00",
     "payment_authorization": {
         "authorizer_id": "000260004",
         "authorization_code": "133937",
@@ -117,8 +121,8 @@
     },
     "history": [
         {
-            "id": "50a0f6376cd2478e84bf20965af7fcb9",
-            "transaction": "88c1c5b0c30a46e0b2b0efa3f99554f4",
+            "id": "31427ef753c74c79a96fbc9bc35d182c",
+            "transaction": "4b89e9fb085d45c381332ec431f8bef7",
             "amount": "543.21",
             "operation_type": "created",
             "status": "succeeded",
@@ -129,11 +133,11 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-09-04 18:28:08"
+            "created_at": "2020-09-08 17:30:22"
         },
         {
-            "id": "420e68fb065f4c41a2ef1e3766d88707",
-            "transaction": "88c1c5b0c30a46e0b2b0efa3f99554f4",
+            "id": "74faed4a8d7f4e91a57b7690c7a6421a",
+            "transaction": "4b89e9fb085d45c381332ec431f8bef7",
             "amount": "543.21",
             "operation_type": "authorization",
             "status": "succeeded",
@@ -144,7 +148,7 @@
             "authorization_nsu": "20180510122911535",
             "gatewayResponseTime": "2204",
             "authorizer": "cielo",
-            "created_at": "2020-09-04 18:28:10"
+            "created_at": "2020-09-08 17:30:25"
         }
     ]
 }

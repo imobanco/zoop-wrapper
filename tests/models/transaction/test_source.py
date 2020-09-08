@@ -33,7 +33,7 @@ class SourceTestCase(SetTestCase):
 
     def test_required_fields(self):
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount"},
+            {"card", "type", "usage", "currency", "amount", "installment_plan"},
             Source.get_required_fields(),
         )
 
@@ -49,13 +49,13 @@ class SourceTestCase(SetTestCase):
 
     def test_get_card_not_present_required_fields(self):
         self.assertEqual(
-            {"card", "type", "amount", "usage", "currency"},
+            {"card", "type", "amount", "usage", "currency", "installment_plan"},
             Source.get_card_not_present_required_fields(),
         )
 
     def test_get_card_present_required_fields(self):
         self.assertEqual(
-            {"amount", "card", "currency", "type", "usage"},
+            {"amount", "card", "currency", "type", "usage", "installment_plan"},
             Source.get_card_present_required_fields(),
         )
 
@@ -66,7 +66,7 @@ class SourceTestCase(SetTestCase):
         self.assertIsInstance(instance, Source)
 
         self.assertEqual(
-            {"card", "type", "currency", "usage", "amount"},
+            {"card", "type", "currency", "usage", "amount", "installment_plan"},
             instance.get_validation_fields(),
         )
 
@@ -76,7 +76,7 @@ class SourceTestCase(SetTestCase):
         )
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "currency", "type", "usage", "amount"},
+            {"card", "currency", "type", "usage", "amount", "installment_plan"},
             instance.get_all_fields(),
         )
 
@@ -85,7 +85,7 @@ class SourceTestCase(SetTestCase):
         self.assertIsInstance(instance, Source)
 
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount"},
+            {"card", "type", "usage", "currency", "amount", "installment_plan"},
             instance.get_validation_fields(),
         )
 
@@ -93,6 +93,6 @@ class SourceTestCase(SetTestCase):
         instance = SourceCardPresentFactory(card=CreateCardTokenFactory(id=None))
         self.assertIsInstance(instance, Source)
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount"},
+            {"card", "type", "usage", "currency", "amount", "installment_plan"},
             instance.get_all_fields(),
         )

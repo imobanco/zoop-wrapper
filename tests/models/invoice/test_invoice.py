@@ -55,7 +55,7 @@ class InvoiceTestCase(SetTestCase):
 
         instance.init_custom_fields()
 
-        self.assertNotIn('billing_instructions', instance.to_dict())
+        self.assertNotIn("billing_instructions", instance.to_dict())
 
     def test_create(self):
         instance = InvoiceFactory()

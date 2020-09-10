@@ -190,9 +190,7 @@ class Invoice(PaymentMethod):
             setattr(
                 self,
                 "billing_instructions",
-                BillingInstructions.from_dict_or_instance(
-                    billing_instructions
-                ),
+                BillingInstructions.from_dict_or_instance(billing_instructions),
             )
 
     @classmethod

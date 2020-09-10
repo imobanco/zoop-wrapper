@@ -8,7 +8,9 @@ from zoop_wrapper.models.base import ZoopObject
 
 class ZoopObjectTestCase(SetTestCase):
     def setUp(self) -> None:
-        self.patcher_fields = patch("zoop_wrapper.models.base.ZoopObject.get_fields")
+        self.patcher_all_fields = patch(
+            "zoop_wrapper.models.base.ZoopObject.get_all_fields"
+        )
         self.patcher_required_fields = patch(
             "zoop_wrapper.models.base.ZoopObject.get_required_fields"
         )
@@ -19,14 +21,14 @@ class ZoopObjectTestCase(SetTestCase):
             "zoop_wrapper.models.base.ZoopObject.get_original_different_fields_mapping"
         )
 
-        self.mocked_fields = self.patcher_fields.start()
+        self.mocked_fields = self.patcher_all_fields.start()
         self.mocked_required_fields = self.patcher_required_fields.start()
         self.mocked_non_required_fields = self.patcher_non_required_fields.start()
         self.mocked_get_original_different_fields_mapping = (
             self.patcher_get_original_different_fields_mapping.start()
         )
 
-        self.addCleanup(self.patcher_fields.stop)
+        self.addCleanup(self.patcher_all_fields.stop)
         self.addCleanup(self.patcher_required_fields.stop)
         self.addCleanup(self.patcher_non_required_fields.stop)
         self.addCleanup(self.patcher_get_original_different_fields_mapping.stop)
@@ -242,13 +244,13 @@ class ZoopObjectTestCase(SetTestCase):
 
         self.assertEqual(expected, result)
 
-    @staticmethod
-    def test_get_all_fields():
-        mocked_get_fields = MagicMock()
-        instance = MagicMock(_allow_empty=False, get_fields=mocked_get_fields)
+    def test_get_all_fields(self):
+        instance = MagicMock()
 
-        ZoopObject.get_all_fields(instance)
-        mocked_get_fields.assert_called_once()
+        expected = {"id", "name", "modificado"}
+
+        result = ZoopObject.get_all_fields(instance)
+        self.assertEqual(result, expected)
 
     @staticmethod
     def test_get_validation_fields():
@@ -259,9 +261,6 @@ class ZoopObjectTestCase(SetTestCase):
 
         ZoopObject.get_validation_fields(instance)
         mocked_required_fields.assert_called_once()
-
-    def test_get_fields(self):
-        self.assertEqual({"id", "name", "modificado"}, ZoopObject.get_fields())
 
     def test_get_required_fields(self):
         self.assertEqual({"id"}, ZoopObject.get_required_fields())

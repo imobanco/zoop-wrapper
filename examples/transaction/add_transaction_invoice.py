@@ -1,7 +1,7 @@
 import os
 
 from zoop_wrapper import (
-    BillingConfiguration,
+    Fine, Interest, Discount,
     BillingInstructions,
     Invoice,
     Transaction,
@@ -24,9 +24,10 @@ client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 buyer_or_seller_id = buyer_id
 
 
-quantia_em_centavos = "1000"
-vencimento = "2020-08-20"
-limite = "2020-08-30"
+quantia_em_centavos = "3000"
+vencimento = "2020-11-20"
+pre_vencimento = "2020-11-10"
+limite = "2020-11-30"
 
 t = Transaction(
     amount=quantia_em_centavos,
@@ -39,22 +40,26 @@ t = Transaction(
         expiration_date=vencimento,
         payment_limit_date=limite,
         billing_instructions=BillingInstructions(
-            late_fee=BillingConfiguration(
-                mode=BillingConfiguration.PERCENTAGE_MODE,
-                percentage=50,
-                start_date=vencimento,
+            late_fee=Fine(
+                mode=Fine.FIXED,
+                amount=300,
             ),
-            interest=BillingConfiguration(
-                mode=BillingConfiguration.MONTHLY_PERCENTAGE_MODE,
-                percentage=50.5555555555,
-                start_date=vencimento,
+            interest=Interest(
+                mode=Interest.MONTHLY_PERCENTAGE,
+                percentage=1,
             ),
-            discount=BillingConfiguration(
-                amount=100,
-                is_discount=True,
-                limit_date=vencimento,
-                mode=BillingConfiguration.FIXED_MODE,
-            ),
+            discount=[
+                Discount(
+                    amount=100,
+                    limit_date=vencimento,
+                    mode=Discount.FIXED,
+                ),
+                Discount(
+                    amount=200,
+                    limit_date=pre_vencimento,
+                    mode=Discount.FIXED,
+                ),
+            ]
         ),
     ),
 )

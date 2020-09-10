@@ -2,67 +2,76 @@ from factory import SubFactory
 from factory.faker import Faker
 
 from zoop_wrapper.models.invoice import (
+    BaseModeObject,
+    Discount,
     Fine,
-    BillingConfiguration,
+    Interest,
     BillingInstructions,
     Invoice,
 )
 from tests.factories.base import ZoopObjectFactory, PaymentMethodFactory
 
 
-class FineFactory(ZoopObjectFactory):
+class BaseModeObjectFactory(ZoopObjectFactory):
+    class Meta:
+        model = BaseModeObject
+
+    mode = None
+
+
+class FixedBaseModeObjectFactory(BaseModeObjectFactory):
+    amount = Faker("pyfloat", positive=True, max_value=99)
+
+
+class PercentageBaseModeObjectFactory(BaseModeObject):
+    percentage = Faker("pyfloat", positive=True, max_value=99)
+
+
+class FixedFineFactory(FixedBaseModeObjectFactory):
     class Meta:
         model = Fine
 
-    mode = None
+    mode = "FIXED"
 
 
-class FixedFineFactory(FineFactory):
-    mode = 'FIXED'
-    amount = Faker("pyfloat", positive=True, max_value=99)
-
-
-class PercentageFineFactory(FineFactory):
-    mode = 'PERCENTAGE'
-    percentage = Faker("pyfloat", positive=True, max_value=99)
-
-
-class BillingConfigurationFactory(ZoopObjectFactory):
+class PercentageFineFactory(PercentageBaseModeObjectFactory):
     class Meta:
-        model = BillingConfiguration
+        model = Fine
 
-    mode = None
-    is_discount = None
-
-
-class FeeFactory(BillingConfigurationFactory):
-    is_discount = False
-    start_date = Faker("date_this_month")
+    mode = "PERCENTAGE"
 
 
-class DiscountFactory(BillingConfigurationFactory):
-    is_discount = True
+class FixedInterestFactory(FixedBaseModeObjectFactory):
+    class Meta:
+        model = Interest
+
+    mode = "DAILY_AMOUNT"
+
+
+class PercentageInterestFactory(PercentageBaseModeObjectFactory):
+    class Meta:
+        model = Interest
+
+    mode = Faker(
+        "random_element",
+        elements=[Interest.DAILY_PERCENTAGE, Interest.MONTHLY_PERCENTAGE],
+    )
+
+
+class FixedDiscountFactory(FixedBaseModeObjectFactory):
+    class Meta:
+        model = Discount
+
+    mode = "FIXED"
     limit_date = Faker("date_this_month")
 
 
-class PercentFeeFactory(FeeFactory):
-    mode = Faker("random_element", elements=BillingConfiguration.PERCENT_MODES)
-    percentage = Faker("pyfloat", positive=True, max_value=99)
+class PercentageDiscountFactory(PercentageBaseModeObjectFactory):
+    class Meta:
+        model = Discount
 
-
-class FixedFeeFactory(FeeFactory):
-    mode = BillingConfiguration.FIXED_MODE
-    amount = Faker("pyfloat", positive=True, max_value=99)
-
-
-class PercentDiscountFactory(DiscountFactory):
-    mode = Faker("random_element", elements=BillingConfiguration.PERCENT_MODES)
-    percentage = Faker("pyfloat", positive=True, max_value=99)
-
-
-class FixedDiscountFactory(DiscountFactory):
-    mode = BillingConfiguration.FIXED_MODE
-    amount = Faker("pyfloat", positive=True, max_value=99)
+    mode = "PERCENTAGE"
+    limit_date = Faker("date_this_month")
 
 
 class BillingInstructionsFactory(ZoopObjectFactory):
@@ -70,8 +79,8 @@ class BillingInstructionsFactory(ZoopObjectFactory):
         model = BillingInstructions
 
     discount = SubFactory(FixedDiscountFactory)
-    interest = SubFactory(PercentFeeFactory)
-    late_fee = SubFactory(FixedFeeFactory)
+    interest = SubFactory(FixedInterestFactory)
+    late_fee = SubFactory(FixedFineFactory)
 
 
 class InvoiceFactory(PaymentMethodFactory):

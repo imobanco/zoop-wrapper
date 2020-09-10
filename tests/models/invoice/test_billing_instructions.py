@@ -1,8 +1,13 @@
 from unittest.mock import MagicMock
 
 from tests.utils import SetTestCase
-from zoop_wrapper.models.invoice import BillingInstructions, BillingConfiguration
-from tests.factories.invoice import BillingInstructionsFactory
+from zoop_wrapper.models.invoice import BillingInstructions, Fine, Interest, Discount
+from tests.factories.invoice import (
+    BillingInstructionsFactory,
+    FixedFineFactory,
+    FixedInterestFactory,
+    FixedDiscountFactory,
+)
 
 
 class BillingInstructionsTestCase(SetTestCase):
@@ -19,8 +24,13 @@ class BillingInstructionsTestCase(SetTestCase):
     def test_init_custom_fields(self):
         instance = MagicMock()
 
-        BillingInstructions.init_custom_fields(instance)
-        self.assertIsInstance(instance.late_fee, BillingConfiguration)
-        self.assertIsInstance(instance.interest, BillingConfiguration)
+        BillingInstructions.init_custom_fields(
+            instance,
+            late_fee=FixedFineFactory().to_dict(),
+            interest=FixedInterestFactory().to_dict(),
+            discount=FixedDiscountFactory().to_dict(),
+        )
+        self.assertIsInstance(instance.late_fee, Fine)
+        self.assertIsInstance(instance.interest, Interest)
         self.assertIsInstance(instance.discount, list)
-        self.assertIsInstance(instance.discount[0], BillingConfiguration)
+        self.assertIsInstance(instance.discount[0], Discount)

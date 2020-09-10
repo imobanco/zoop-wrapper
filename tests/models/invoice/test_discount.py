@@ -1,22 +1,22 @@
 from tests.utils import SetTestCase
-from zoop_wrapper.models.invoice import Fine
-from tests.factories.invoice import FixedFineFactory
+from zoop_wrapper.models.invoice import Discount
+from tests.factories.invoice import FixedDiscountFactory
 
 
-class FineTestCase(SetTestCase):
+class DiscountTestCase(SetTestCase):
     def test_modes(self):
         fixed = "FIXED"
         percentage = "PERCENTAGE"
 
-        self.assertEqual(Fine.FIXED, fixed)
-        self.assertEqual(Fine.PERCENTAGE, percentage)
+        self.assertEqual(Discount.FIXED, fixed)
+        self.assertEqual(Discount.PERCENTAGE, percentage)
 
         modes = {fixed, percentage}
 
-        self.assertSetEqual(Fine.MODES, modes)
+        self.assertSetEqual(Discount.MODES, modes)
 
     def test_get_mode_required_fields_mapping(self):
-        instance: Fine = FixedFineFactory()
+        instance: Discount = FixedDiscountFactory()
 
         expected = {
             instance.FIXED: instance.get_fixed_required_fields,
@@ -27,9 +27,9 @@ class FineTestCase(SetTestCase):
 
         self.assertEqual(result, expected)
 
-    def test_non_required_fields(self):
-        expected = {"start_date"}
+    def test_required_fields(self):
+        expected = {"limit_date", "mode"}
 
-        result = Fine.get_non_required_fields()
+        result = Discount.get_required_fields()
 
         self.assertSetEqual(result, expected)

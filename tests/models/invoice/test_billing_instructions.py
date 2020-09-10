@@ -4,9 +4,9 @@ from tests.utils import SetTestCase
 from zoop_wrapper.models.invoice import BillingInstructions, Fine, Interest, Discount
 from tests.factories.invoice import (
     BillingInstructionsFactory,
-    FixedFineFactory,
-    FixedInterestFactory,
     FixedDiscountFactory,
+    FixedFineFactory,
+    FixedInterestFactory,    
 )
 
 

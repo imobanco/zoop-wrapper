@@ -1,7 +1,9 @@
 import os
 
 from zoop_wrapper import (
-    Fine, Interest, Discount,
+    Fine,
+    Interest,
+    Discount,
     BillingInstructions,
     Invoice,
     Transaction,
@@ -40,26 +42,12 @@ t = Transaction(
         expiration_date=vencimento,
         payment_limit_date=limite,
         billing_instructions=BillingInstructions(
-            late_fee=Fine(
-                mode=Fine.FIXED,
-                amount=300,
-            ),
-            interest=Interest(
-                mode=Interest.MONTHLY_PERCENTAGE,
-                percentage=1,
-            ),
+            late_fee=Fine(mode=Fine.FIXED, amount=300,),
+            interest=Interest(mode=Interest.MONTHLY_PERCENTAGE, percentage=1,),
             discount=[
-                Discount(
-                    amount=100,
-                    limit_date=vencimento,
-                    mode=Discount.FIXED,
-                ),
-                Discount(
-                    amount=200,
-                    limit_date=pre_vencimento,
-                    mode=Discount.FIXED,
-                ),
-            ]
+                Discount(amount=100, limit_date=vencimento, mode=Discount.FIXED,),
+                Discount(amount=200, limit_date=pre_vencimento, mode=Discount.FIXED,),
+            ],
         ),
     ),
 )

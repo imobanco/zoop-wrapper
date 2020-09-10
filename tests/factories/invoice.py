@@ -3,10 +3,10 @@ from factory.faker import Faker
 
 from zoop_wrapper.models.invoice import (
     BaseModeObject,
+    BillingInstructions,
     Discount,
     Fine,
     Interest,
-    BillingInstructions,
     Invoice,
 )
 from tests.factories.base import ZoopObjectFactory, PaymentMethodFactory

@@ -2,11 +2,29 @@ from factory import SubFactory
 from factory.faker import Faker
 
 from zoop_wrapper.models.invoice import (
+    Fine,
     BillingConfiguration,
     BillingInstructions,
     Invoice,
 )
 from tests.factories.base import ZoopObjectFactory, PaymentMethodFactory
+
+
+class FineFactory(ZoopObjectFactory):
+    class Meta:
+        model = Fine
+
+    mode = None
+
+
+class FixedFineFactory(FineFactory):
+    mode = 'FIXED'
+    amount = Faker("pyfloat", positive=True, max_value=99)
+
+
+class PercentageFineFactory(FineFactory):
+    mode = 'PERCENTAGE'
+    percentage = Faker("pyfloat", positive=True, max_value=99)
 
 
 class BillingConfigurationFactory(ZoopObjectFactory):

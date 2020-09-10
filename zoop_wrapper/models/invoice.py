@@ -2,6 +2,60 @@ from .base import PaymentMethod, ZoopObject
 from ..exceptions import FieldError, ValidationError
 
 
+class Fine(ZoopObject):
+    """
+    Representa a multa!
+
+    https://docs.zoop.co/docs/multa-juros-e-descontos#multa
+    """
+    FIXED = "FIXED"
+    PERCENTAGE = "PERCENTAGE"
+    MODES = {FIXED, PERCENTAGE}
+
+    def init_custom_fields(self, mode, **kwargs):
+        """
+        É necessário configurar o :attr:`mode` antes pois ele influencia no :meth:`get_all_fields`
+        """
+
+        if mode not in Fine.MODES:
+            raise ValidationError(self, FieldError("mode", f"o valor {mode} é inválido! Possíveis modos são {Fine.MODES}"))
+
+        setattr(self, "mode", mode)
+
+    def get_validation_fields(self):
+        MODES_REQUIRED_FIELDS_MAPPING = {
+            Fine.FIXED: Fine.get_fixed_required_fields,
+            Fine.PERCENTAGE: Fine.get_percentage_required_fields
+        }
+        required_method = MODES_REQUIRED_FIELDS_MAPPING.get(self.mode)
+        return required_method()
+
+    def get_all_fields(self):
+        fields = set()
+        return fields.union(
+            self.get_validation_fields(),
+            self.get_non_required_fields()
+        )
+
+    @classmethod
+    def get_required_fields(cls):
+        return {"mode"}
+
+    @classmethod
+    def get_percentage_required_fields(cls):
+        fields = cls.get_required_fields()
+        return fields.union({"percentage"})
+
+    @classmethod
+    def get_fixed_required_fields(cls):
+        fields = cls.get_required_fields()
+        return fields.union({"amount"})
+
+    @classmethod
+    def get_non_required_fields(cls):
+        return {"start_date"}
+
+
 class BillingConfiguration(ZoopObject):
     """
     Represents a billing configuration object.

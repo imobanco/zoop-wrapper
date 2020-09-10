@@ -3,7 +3,9 @@ from .exceptions import ValidationError  # noqa
 from .models import (  # noqa
     Address,
     BankAccount,
-    BillingConfiguration,
+    Fine,
+    Interest,
+    Discount,
     BillingInstructions,
     Buyer,
     Card,

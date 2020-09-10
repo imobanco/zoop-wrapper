@@ -4,6 +4,7 @@ from tests.utils import SetTestCase
 from zoop_wrapper.models.transaction import Source
 from tests.factories.token import CreateCardTokenFactory
 from tests.factories.source import SourceCardPresentFactory, SourceCardNotPresentFactory
+from tests.factories.installment_plan import InstallmentPlanFactory
 
 from zoop_wrapper.models.token import Token
 from zoop_wrapper.exceptions import ValidationError
@@ -26,12 +27,26 @@ class SourceTestCase(SetTestCase):
         instance = MagicMock()
 
         Source.init_custom_fields(
-            instance, card=CreateCardTokenFactory(), usage="single_use", amount=1234
+            instance,
+            card=CreateCardTokenFactory(),
+            usage="single_use",
+            amount=1234,
+            installment_plan=InstallmentPlanFactory(),
         )
 
         self.assertIsInstance(instance.card, Token)
 
+    # def test_init_custom_fields_card_present_type_installment_plan(self):
+    #     instance = MagicMock()
+    #
+    #     Source.init_custom_fields(
+    #         instance, card=CreateCardTokenFactory(), usage="single_use", amount=1234
+    #     )
+    #
+    #     self.assertIsInstance(instance.card, Token)
+
     def test_required_fields(self):
+
         self.assertEqual(
             {"card", "type", "usage", "currency", "amount", "installment_plan"},
             Source.get_required_fields(),

@@ -335,6 +335,9 @@ class Source(ZoopObject):
                     f"Utilize um dos tipos {Source.SOURCE_TYPES}",
                 ) from e
 
+        installment_plan = InstallmentPlan.from_dict_or_instance(installment_plan)
+
+        setattr(self, "installment_plan", installment_plan)
         setattr(self, "card", token_for_card)
         setattr(self, "card_type", card_type)
 

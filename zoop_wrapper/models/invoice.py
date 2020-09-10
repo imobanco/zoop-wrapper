@@ -12,7 +12,7 @@ class BaseModeObject(ZoopObject):
     def init_custom_fields(self, mode=None, **kwargs):
         """
         É necessário configurar o :attr:`mode` antes pois
-        ele influencia no :meth:`get_validation_fields`
+        ele influência no :meth:`get_validation_fields`
         """
 
         if mode not in self.MODES:

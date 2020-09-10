@@ -24,26 +24,59 @@ class SourceTestCase(SetTestCase):
         )
 
     def test_init_custom_fields_card_present_type(self):
+        """
+        Dado:
+            - Um cartão qualquer válido c1
+            - Um installment_plan qualquer válido ip1
+            - usage="single_use"
+            - amount=1234
+        Quando:
+            - for chamado Source.init_custom_fields( ...)
+        Então:
+            - Nenhum erro deve ocorrer
+            - instance.card deve ser uma instância de Token
+        """
+        c1 = CreateCardTokenFactory()
+        ip1 = InstallmentPlanFactory()
+
         instance = MagicMock()
 
         Source.init_custom_fields(
             instance,
-            card=CreateCardTokenFactory(),
+            card=c1,
             usage="single_use",
             amount=1234,
-            installment_plan=InstallmentPlanFactory(),
+            installment_plan=ip1,
         )
 
         self.assertIsInstance(instance.card, Token)
 
-    # def test_init_custom_fields_card_present_type_installment_plan(self):
-    #     instance = MagicMock()
-    #
-    #     Source.init_custom_fields(
-    #         instance, card=CreateCardTokenFactory(), usage="single_use", amount=1234
-    #     )
-    #
-    #     self.assertIsInstance(instance.card, Token)
+    def test_init_custom_fields_card_present_type_installment_plan_raise(self):
+        """
+        Dado:
+            - Um installment_plan inválido installment_plan_invalid
+        Quando:
+            - for chamado Source.init_custom_fields( ..., installment_plan=installment_plan_invalid) # noqa
+        Então:
+            - O erro ValidationError deve ser lançado
+
+        Note:
+            - O number_installments só pode ser de 1 até 12
+            - O mode só pode ser ou with_interest ou interest_free
+        """
+
+        installment_plan_invalid = MagicMock(mode="foo-bar", number_installments=11234)
+
+        instance = MagicMock()
+
+        with self.assertRaises(ValidationError):
+            Source.init_custom_fields(
+                instance,
+                card=CreateCardTokenFactory(),
+                usage="single_use",
+                amount=1234,
+                installment_plan=installment_plan_invalid,
+            )
 
     def test_required_fields(self):
 

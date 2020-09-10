@@ -42,11 +42,7 @@ class SourceTestCase(SetTestCase):
         instance = MagicMock()
 
         Source.init_custom_fields(
-            instance,
-            card=c1,
-            usage="single_use",
-            amount=1234,
-            installment_plan=ip1,
+            instance, card=c1, usage="single_use", amount=1234, installment_plan=ip1,
         )
 
         self.assertIsInstance(instance.card, Token)

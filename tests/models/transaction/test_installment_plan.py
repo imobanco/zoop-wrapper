@@ -9,8 +9,7 @@ from zoop_wrapper.exceptions import FieldError
 class InstallmentPlanTestCase(SetTestCase):
     def test_required_fields(self):
         self.assertEqual(
-            {"number_installments", "mode"},
-            InstallmentPlan.get_required_fields(),
+            {"number_installments", "mode"}, InstallmentPlan.get_required_fields(),
         )
 
     def test_validate_custom_fields_mode_raise(self):

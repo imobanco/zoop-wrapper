@@ -302,12 +302,7 @@ class Source(ZoopObject):
     SOURCE_TYPES = {CARD_PRESENT_TYPE, CARD_NOT_PRESENT_TYPE}
 
     def init_custom_fields(
-        self,
-        card=None,
-        type="card",
-        currency="BRL",
-        installment_plan=None,
-        **kwargs,
+        self, card=None, type="card", currency="BRL", installment_plan=None, **kwargs,
     ):
         setattr(self, "type", type)
         setattr(self, "currency", currency)

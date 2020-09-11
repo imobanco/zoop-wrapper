@@ -138,30 +138,34 @@ class BillingInstructions(ZoopObject):
             late_fee: dict or instance of BillingConfiguration model
             **kwargs: kwargs
         """
-        setattr(
-            self, "late_fee", Fine.from_dict_or_instance(late_fee),
-        )
-        setattr(
-            self, "interest", Interest.from_dict_or_instance(interest),
-        )
+        if late_fee:
+            setattr(
+                self, "late_fee", Fine.from_dict_or_instance(late_fee),
+            )
 
-        if not isinstance(discount, list):
-            discount = [discount]
-        setattr(
-            self,
-            "discount",
-            [Discount.from_dict_or_instance(item) for item in discount],
-        )
+        if interest:
+            setattr(
+                self, "interest", Interest.from_dict_or_instance(interest),
+            )
+
+        if discount:
+            if not isinstance(discount, list):
+                discount = [discount]
+            setattr(
+                self,
+                "discount",
+                [Discount.from_dict_or_instance(item) for item in discount],
+            )
 
     @classmethod
-    def get_required_fields(cls):
+    def get_non_required_fields(cls):
         """
-        get set of required fields
+        Conjunto de campos não obrigatórios
 
         Returns:
-            ``set`` of fields
+            ``set`` de campos
         """
-        fields = super().get_required_fields()
+        fields = super().get_non_required_fields()
         return fields.union({"late_fee", "interest", "discount"})
 
 

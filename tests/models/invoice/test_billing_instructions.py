@@ -26,7 +26,7 @@ class BillingInstructionsTestCase(SetTestCase):
         Serve para testar a inicialização correta dos campos!
 
         Dado que existe uma instância mocada
-        Quando for inicializado os campos:
+        Quando forem inicializados os campos:
             - late_fee com dados válidos
             - interest com dados válidos
             - discount com dados válidos

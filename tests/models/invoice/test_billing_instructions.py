@@ -22,6 +22,19 @@ class BillingInstructionsTestCase(SetTestCase):
         self.assertIsInstance(instance, BillingInstructions)
 
     def test_init_custom_fields_1(self):
+        """
+        Serve para testar a inicialização correta dos campos!
+
+        Dado que existe uma instância mocada
+        Quando for inicializado os campos:
+            - late_fee com dados válidos
+            - interest com dados válidos
+            - discount com dados válidos
+        Então:
+            - instância.late_fee deve ser válido
+            - instância.interest deve ser válido
+            - instância.discount deve ser válido
+        """
         instance = MagicMock(late_fee=None, interest=None, discount=None)
 
         BillingInstructions.init_custom_fields(
@@ -36,6 +49,17 @@ class BillingInstructionsTestCase(SetTestCase):
         self.assertIsInstance(instance.discount[0], Discount)
 
     def test_init_custom_fields_2(self):
+        """
+        Serve para testar a flexibilização do campo late_fee!
+
+        Dado que existe uma instância mocada
+        Quando for inicializado os campos:
+            - interest com dados válidos
+            - discount com dados válidos
+        Então:
+            - instância.interest deve ser válido
+            - instância.discount deve ser válido
+        """
         instance = MagicMock(late_fee=None, interest=None, discount=None)
 
         BillingInstructions.init_custom_fields(
@@ -49,6 +73,17 @@ class BillingInstructionsTestCase(SetTestCase):
         self.assertIsInstance(instance.discount[0], Discount)
 
     def test_init_custom_fields_3(self):
+        """
+        Serve para testar a flexibilização do campo interest!
+
+        Dado que existe uma instância mocada
+        Quando for inicializado os campos:
+            - late_fee com dados válidos
+            - discount com dados válidos
+        Então:
+            - instância.late_fee deve ser válido
+            - instância.discount deve ser válido
+        """
         instance = MagicMock(late_fee=None, interest=None, discount=None)
 
         BillingInstructions.init_custom_fields(
@@ -62,6 +97,17 @@ class BillingInstructionsTestCase(SetTestCase):
         self.assertIsInstance(instance.discount[0], Discount)
 
     def test_init_custom_fields_4(self):
+        """
+        Serve para testar a flexibilização do campo discount!
+
+        Dado que existe uma instância mocada
+        Quando for inicializado os campos:
+            - late_fee com dados válidos
+            - interest com dados válidos
+        Então:
+            - instância.late_fee deve ser válido
+            - instância.interest deve ser válido
+        """
         instance = MagicMock(late_fee=None, interest=None, discount=None)
 
         BillingInstructions.init_custom_fields(

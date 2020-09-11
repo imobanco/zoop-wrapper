@@ -1,8 +1,8 @@
 pip.install:
-	pip install -r requirements-dev.txt
+	pip install -U -r requirements-dev.txt
 
 pip.install.build:
-	pip install -r requirements-build.txt
+	pip install -U -r requirements-build.txt
 
 config.env:
 	cp .env.sample .env

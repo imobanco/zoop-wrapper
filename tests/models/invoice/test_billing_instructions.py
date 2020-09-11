@@ -77,7 +77,7 @@ class BillingInstructionsTestCase(SetTestCase):
         Serve para testar a flexibilização do campo interest!
 
         Dado que existe uma instância mocada
-        Quando for inicializado os campos:
+        Quando forem inicializados os campos:
             - late_fee com dados válidos
             - discount com dados válidos
         Então:

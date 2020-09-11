@@ -140,12 +140,16 @@ class BillingInstructions(ZoopObject):
         """
         if late_fee:
             setattr(
-                self, "late_fee", Fine.from_dict_or_instance(late_fee),
+                self,
+                "late_fee",
+                Fine.from_dict_or_instance(late_fee),
             )
 
         if interest:
             setattr(
-                self, "interest", Interest.from_dict_or_instance(interest),
+                self,
+                "interest",
+                Interest.from_dict_or_instance(interest),
             )
 
         if discount:

@@ -39,7 +39,10 @@ t = Transaction(
             security_code=123,
         ),
         usage="single_use",
-        installment_plan=InstallmentPlan(number_installments=11, mode="interest_free",),
+        installment_plan=InstallmentPlan(
+            number_installments=11,
+            mode="interest_free",
+        ),
     ),
 )
 

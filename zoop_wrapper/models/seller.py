@@ -78,7 +78,9 @@ class Seller(BusinessOrIndividualModel, Person, FinancialModel, SocialModel):
 
         if self.get_type() == self.BUSINESS_TYPE:
             setattr(
-                self, "owner", Person.from_dict_or_instance(owner, allow_empty=True),
+                self,
+                "owner",
+                Person.from_dict_or_instance(owner, allow_empty=True),
             )
             setattr(
                 self,

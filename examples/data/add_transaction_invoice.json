@@ -1,9 +1,9 @@
 {
-    "id": "85b71fbeaa1346169a634e4af5bb86cd",
+    "id": "9d4f1054607447798e9ce61e2a42d948",
     "resource": "transaction",
     "status": "pending",
-    "amount": "10.00",
-    "original_amount": "10.00",
+    "amount": "30.00",
+    "original_amount": "30.00",
     "currency": "BRL",
     "description": "meu boleto gerado para teste",
     "payment_type": "boleto",
@@ -15,52 +15,57 @@
     "discounts": null,
     "pre_authorization": null,
     "sales_receipt": null,
-    "on_behalf_of": "27e17b778b404a83bf8e25ec995e2ffe",
-    "customer": "e7eec0f640c14e21b35d20d58b49b584",
-    "statement_descriptor": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
+    "on_behalf_of": "0e084bb6a60f47e8ac45949d5040eb92",
+    "customer": "ffe4b7a1f19c4a9da85b6d72c0b6201c",
+    "statement_descriptor": "Mateus Satiro",
     "payment_method": {
-        "id": "38a2932a929444a699a1a5b97ea0d2fb",
+        "id": "e77a3d54fc5d4dd9a4741bf6dc8b3c37",
         "zoop_boleto_id": null,
         "resource": "boleto",
         "description": "meu boleto gerado para teste",
-        "reference_number": "3360906",
-        "document_number": "3360906",
-        "expiration_date": "2020-06-20T00:00:00+00:00",
-        "payment_limit_date": "2020-06-30T00:00:00+00:00",
-        "recipient": "IMOBANCO BANCO DE COBRANCA IMOBILIARIA LTDA - EPP",
+        "reference_number": "6199780",
+        "document_number": "6199780",
+        "expiration_date": "2020-11-20T00:00:00+00:00",
+        "payment_limit_date": "2020-11-30T00:00:00+00:00",
+        "recipient": "Mateus Satiro",
         "bank_code": "109",
-        "customer": "e7eec0f640c14e21b35d20d58b49b584",
+        "customer": "ffe4b7a1f19c4a9da85b6d72c0b6201c",
         "address": null,
-        "sequence": "63864",
-        "url": "https://api-boleto-production.s3.amazonaws.com/foo/27e17b778b404a83bf8e25ec995e2ffe/5e8cfef73d502008309b4779.html",
+        "sequence": "93211",
+        "url": "https://api-boleto-production.s3.amazonaws.com/foo/0e084bb6a60f47e8ac45949d5040eb92/5f5a5e000d93d708cff3f646.html",
         "accepted": false,
         "printed": false,
         "downloaded": false,
         "fingerprint": null,
         "paid_at": null,
-        "uri": "/v1/marketplaces/foo/boletos/38a2932a929444a699a1a5b97ea0d2fb",
-        "barcode": "34191090323609068893231339210002482920000001000",
+        "uri": "/v1/marketplaces/foo/boletos/e77a3d54fc5d4dd9a4741bf6dc8b3c37",
+        "barcode": "34191090651997807893931339210002184450000003000",
         "metadata": {},
-        "created_at": "2020-04-07T19:30:15+00:00",
-        "updated_at": "2020-04-07T22:30:15+00:00",
+        "created_at": "2020-09-10T14:10:24+00:00",
+        "updated_at": "2020-09-10T17:10:24+00:00",
         "status": "not_paid",
         "billing_instructions": {
-            "late_fee": {
-                "mode": "PERCENTAGE",
-                "start_date": "2020-06-20",
-                "percentage": "50"
-            },
             "discount": [
                 {
                     "mode": "FIXED",
-                    "limit_date": "2020-06-20",
+                    "limit_date": "2020-11-10",
+                    "amount": "200"
+                },
+                {
+                    "mode": "FIXED",
+                    "limit_date": "2020-11-20",
                     "amount": "100"
                 }
             ],
+            "late_fee": {
+                "mode": "FIXED",
+                "start_date": null,
+                "amount": "300"
+            },
             "interest": {
                 "mode": "MONTHLY_PERCENTAGE",
-                "start_date": "2020-06-20",
-                "percentage": "50.5556"
+                "start_date": null,
+                "percentage": "1"
             }
         }
     },
@@ -77,17 +82,17 @@
     "fee_details": null,
     "location_latitude": null,
     "location_longitude": null,
-    "uri": "/v1/marketplaces/foo/transactions/85b71fbeaa1346169a634e4af5bb86cd",
+    "uri": "/v1/marketplaces/foo/transactions/9d4f1054607447798e9ce61e2a42d948",
     "metadata": {},
     "expected_on": "1970-01-01T00:00:00+00:00",
-    "created_at": "2020-04-07T22:30:14+00:00",
-    "updated_at": "2020-04-07T22:30:15+00:00",
+    "created_at": "2020-09-10T17:10:23+00:00",
+    "updated_at": "2020-09-10T17:10:24+00:00",
     "payment_authorization": null,
     "history": [
         {
-            "id": "ebd31542e48b44a596fe0cabdaa44f78",
-            "transaction": "85b71fbeaa1346169a634e4af5bb86cd",
-            "amount": "10.00",
+            "id": "a2002ebd3e444ce2bd0ab8b0373af0bc",
+            "transaction": "9d4f1054607447798e9ce61e2a42d948",
+            "amount": "30.00",
             "operation_type": "created",
             "status": "succeeded",
             "response_code": null,
@@ -97,7 +102,7 @@
             "authorization_nsu": null,
             "gatewayResponseTime": null,
             "authorizer": null,
-            "created_at": "2020-04-07 22:30:14"
+            "created_at": "2020-09-10 17:10:23"
         }
     ]
 }

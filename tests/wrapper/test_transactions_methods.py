@@ -63,16 +63,8 @@ class TransactionWrapperMethodsTestCase(APITestCase):
                 "expiration_date": "2020-06-20",
                 "payment_limit_date": "2020-06-30",
                 "billing_instructions": {
-                    "late_fee": {
-                        "mode": "FIXED",
-                        "percentage": 30,
-                        "start_date": "2020-06-20",
-                    },
-                    "interest": {
-                        "mode": "MONTHLY_PERCENTAGE",
-                        "percentage": 30,
-                        "start_date": "2020-06-20",
-                    },
+                    "late_fee": {"mode": "FIXED", "amount": 300},
+                    "interest": {"mode": "MONTHLY_PERCENTAGE", "percentage": 2},
                     "discount": [
                         {"mode": "FIXED", "amount": 300, "limit_date": "2020-06-20"}
                     ],

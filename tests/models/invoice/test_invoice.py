@@ -41,7 +41,7 @@ class InvoiceTestCase(SetTestCase):
 
             mocked_super_non_required_fields.assert_called_once()
 
-    def test_init_custom_fields(self):
+    def test_init_custom_fields_1(self):
         instance = MagicMock(spec=Invoice)
 
         billing_instructions = BillingInstructionsFactory().to_dict()
@@ -49,6 +49,13 @@ class InvoiceTestCase(SetTestCase):
         Invoice.init_custom_fields(instance, billing_instructions=billing_instructions)
 
         self.assertIsInstance(instance.billing_instructions, BillingInstructions)
+
+    def test_init_custom_fields_2(self):
+        instance = InvoiceFactory(billing_instructions=None)
+
+        instance.init_custom_fields()
+
+        self.assertNotIn("billing_instructions", instance.to_dict())
 
     def test_create(self):
         instance = InvoiceFactory()

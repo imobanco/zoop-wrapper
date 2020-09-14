@@ -257,37 +257,42 @@ class ZoopObject(object):
 
     def get_validation_fields(self):
         """
-        Get ``validation fields`` for instance.\n
+        Método para pegar os campos de validação!\n
 
-        This is necessary for classes/instances with
-        different fields based on type.\n
+        Isso é necessário para classes/instances com
+        diferentes campos obrigatórios definidos por
+        um tipo dinâmico!\n
 
-        Such as :class:`.Seller`, :class:`.BankAccount`,
-        :class:`.BillingConfiguration` and :class:`.Token`.\n
+        Tais como :class:`.Seller`, :class:`.BankAccount`,
+        :class:`.Fine` e :class:`.Token`.\n
 
-        Defaults to :meth:`get_required_fields`.
+        O padrão é :meth:`get_required_fields`.
 
         Returns:
-            ``set`` of fields to be used on validation
+            ``set`` de campos para serem utilizados na validação
         """
         return self.get_required_fields()
 
     def get_all_fields(self):
         """
-        get ``all fields`` for instance.\n
+        Método para pegar todos os campos!\n
 
-        This is necessary for classes/instances with
-        different fields based on type.\n
+        Isso é necessário para classes/instances com
+        diferentes campos obrigatórios definidos por
+        um tipo dinâmico!\n
 
-        Such as :class:`.Seller`, :class:`.BankAccount`,
-        :class:`.BillingConfiguration` and :class:`.Token`.\n
+        Tais como :class:`.Seller`, :class:`.BankAccount`,
+        :class:`.Fine` e :class:`.Token`.\n
 
-        Defaults to :meth:`get_fields`.
+        O padrão é :meth:`get_validation_fields` + :meth:`get_non_required_fields`.
 
         Returns:
-            ``set`` of all fields
+            ``set`` de todos os campos
         """
-        return self.get_fields()
+        fields = set()
+        return fields.union(
+            self.get_validation_fields(), self.get_non_required_fields()
+        )
 
     # noinspection PyMethodMayBeStatic
     def get_original_different_fields_mapping(self):
@@ -299,18 +304,6 @@ class ZoopObject(object):
             Dicionário de nome_custom => nome_oringial
         """
         return {}
-
-    @classmethod
-    def get_fields(cls):
-        """
-        get ``set`` of ``all fields``
-
-        Returns:
-            ``set`` of fields
-        """
-        required_fields = cls.get_required_fields()
-        non_required_fields = cls.get_non_required_fields()
-        return required_fields.union(non_required_fields)
 
     @classmethod
     def get_required_fields(cls):

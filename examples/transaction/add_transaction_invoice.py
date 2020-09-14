@@ -43,19 +43,14 @@ t = Transaction(
         payment_limit_date=limite,
         billing_instructions=BillingInstructions(
             late_fee=Fine(
-                mode=Fine.FIXED,
-                amount=300,
+                mode=Fine.PERCENTAGE,
+                percentage=2,
             ),
             interest=Interest(
                 mode=Interest.MONTHLY_PERCENTAGE,
                 percentage=1,
             ),
             discount=[
-                Discount(
-                    amount=100,
-                    limit_date=vencimento,
-                    mode=Discount.FIXED,
-                ),
                 Discount(
                     amount=200,
                     limit_date=pre_vencimento,

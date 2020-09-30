@@ -43,7 +43,9 @@ def convert_currency_float_value_to_cents(value):
 
     try:
         if isinstance(value, float):
-            raise ValueError("O valor é um float. Então podemos fazer o tratamento dele!")
+            raise ValueError(
+                "O valor é um float. Então podemos fazer o tratamento dele!"
+            )
         int(value)
     except ValueError:
         value = int(float(value) * 100)

@@ -16,8 +16,8 @@ client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 ba = BankAccount(
     type=BankAccount.SAVING_TYPE,
     holder_name='Algum Nome',
-    bank_code=,
-    routing_number=
+    bank_code="237",
+    routing_number="123"
 )
 
 response = client.add_bank_account(ba)

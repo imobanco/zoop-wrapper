@@ -3,7 +3,6 @@ import os
 from zoop_wrapper import ZoopWrapper, BankAccount
 from examples.utils import dump_response
 
-from examples.transaction.add_transaction_card_present import seller_brian
 
 """
 Nesse momento as constantes podem ser criadas no arquivo .py.
@@ -14,6 +13,7 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
+seller_brian = "0b05a360f4b749498f74e13004c08024"
 brian = client.retrieve_seller(seller_brian)
 
 ba = {

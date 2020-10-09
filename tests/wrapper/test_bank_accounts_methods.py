@@ -16,8 +16,10 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
         """
         Test list_bank_accounts method.
         """
-        self.set_get_mock(200, {"items": [IndividualBankAccountFactory().to_dict()]})
-        response = self.client.list_bank_accounts()
+        self.set_get_mock(
+            200, {"items": [IndividualBankAccountFactory(id="foo").to_dict()]}
+        )
+        response = self.client.list_bank_accounts_by_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         items = response.data.get("items")
         self.assertTrue(items)

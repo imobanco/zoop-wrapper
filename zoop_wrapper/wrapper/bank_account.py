@@ -12,14 +12,14 @@ class BankAccountWrapper(BaseZoopWrapper):
         Essa classe precisa de métodos presentes em outro wrapper
     """
 
-    def list_bank_accounts(self):
+    def list_bank_accounts_by_seller(self, identifier):
         """
         Lista todas as :class:`.BankAccount`'s.
 
         Returns:
             response with instances of :class:`.BankAccount`
         """
-        url = self._construct_url(action="bank_accounts")
+        url = self._construct_url(action="sellers", identifier=identifier, subaction='bank_accounts')
         return self._get(url)
 
     def retrieve_bank_account(self, identifier):
@@ -89,3 +89,16 @@ class BankAccountWrapper(BaseZoopWrapper):
 
         url = self._construct_url(action="bank_accounts")
         return self._post(url, data=data)
+
+    def remove_bank_account(self, identifier: str):
+        """
+        Remove um :class:`.BankAccount`
+
+        Args:
+            identifier: uuid id
+
+        Returns:
+           :class:`.ZoopResponse`
+        """
+        url = self._construct_url(action="bank_accounts", identifier=identifier)
+        return self._delete(url)

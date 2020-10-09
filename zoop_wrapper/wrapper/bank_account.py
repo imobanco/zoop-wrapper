@@ -19,7 +19,9 @@ class BankAccountWrapper(BaseZoopWrapper):
         Returns:
             response with instances of :class:`.BankAccount`
         """
-        url = self._construct_url(action="sellers", identifier=identifier, subaction='bank_accounts')
+        url = self._construct_url(
+            action="sellers", identifier=identifier, subaction="bank_accounts"
+        )
         return self._get(url)
 
     def retrieve_bank_account(self, identifier):

@@ -94,7 +94,8 @@ class BankAccountWrapper(BaseZoopWrapper):
 
     def remove_bank_account(self, identifier: str):
         """
-        Remove um :class:`.BankAccount`
+        Remove todas as :class:`.BankAccount` de um
+        :class:`.Seller` usando o `identifier` deste.
 
         Args:
             identifier: uuid id

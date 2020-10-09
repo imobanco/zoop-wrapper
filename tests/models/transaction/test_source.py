@@ -81,8 +81,15 @@ class SourceTestCase(SetTestCase):
     def test_required_fields(self):
 
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount", "installment_plan"},
+            {"card", "type", "usage", "currency", "amount"},
             Source.get_required_fields(),
+        )
+
+    def test_non_required_fields(self):
+
+        self.assertEqual(
+            {"installment_plan"},
+            Source.get_non_required_fields(),
         )
 
     def test_create_card_present(self):
@@ -97,13 +104,13 @@ class SourceTestCase(SetTestCase):
 
     def test_get_card_not_present_required_fields(self):
         self.assertEqual(
-            {"card", "type", "amount", "usage", "currency", "installment_plan"},
+            {"card", "type", "amount", "usage", "currency"},
             Source.get_card_not_present_required_fields(),
         )
 
     def test_get_card_present_required_fields(self):
         self.assertEqual(
-            {"amount", "card", "currency", "type", "usage", "installment_plan"},
+            {"amount", "card", "currency", "type", "usage"},
             Source.get_card_present_required_fields(),
         )
 
@@ -114,7 +121,7 @@ class SourceTestCase(SetTestCase):
         self.assertIsInstance(instance, Source)
 
         self.assertEqual(
-            {"card", "type", "currency", "usage", "amount", "installment_plan"},
+            {"card", "type", "currency", "usage", "amount"},
             instance.get_validation_fields(),
         )
 
@@ -133,7 +140,7 @@ class SourceTestCase(SetTestCase):
         self.assertIsInstance(instance, Source)
 
         self.assertEqual(
-            {"card", "type", "usage", "currency", "amount", "installment_plan"},
+            {"card", "type", "usage", "currency", "amount"},
             instance.get_validation_fields(),
         )
 

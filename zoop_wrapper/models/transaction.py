@@ -335,7 +335,8 @@ class Source(ZoopObject):
                     f"Utilize um dos tipos {Source.SOURCE_TYPES}",
                 ) from e
 
-        installment_plan = InstallmentPlan.from_dict_or_instance(installment_plan)
+        if installment_plan:
+            installment_plan = InstallmentPlan.from_dict_or_instance(installment_plan)
 
         setattr(self, "installment_plan", installment_plan)
         setattr(self, "card", token_for_card)
@@ -366,19 +367,23 @@ class Source(ZoopObject):
         """
         Pega ``todos os campos`` da instância.
 
-        O conjunto de todos os campos é igual ao conjunto de campos a serem validados
-
         Returns:
             ``set`` de todos os campos
         """
-        return self.get_validation_fields()
+        fields = set()
+        return fields.union(
+            self.get_validation_fields(), self.get_non_required_fields()
+        )
 
     @classmethod
     def get_required_fields(cls):
         fields = super().get_required_fields()
-        return fields.union(
-            {"card", "type", "currency", "usage", "amount", "installment_plan"}
-        )
+        return fields.union({"card", "type", "currency", "usage", "amount"})
+
+    @classmethod
+    def get_non_required_fields(cls) -> set:
+        fields = super().get_non_required_fields()
+        return fields.union({"installment_plan"})
 
     @classmethod
     def get_card_not_present_required_fields(cls):

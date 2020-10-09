@@ -1,9 +1,7 @@
 import os
 
-from zoop_wrapper import ZoopWrapper, BankAccount
+from zoop_wrapper import ZoopWrapper
 from examples.utils import dump_response
-
-# from examples.transaction.add_transaction_card_present import seller_brian
 
 """
 Nesse momento as constantes podem ser criadas no arquivo .py.

@@ -25,7 +25,6 @@ ba = {
     "type": BankAccount.SAVING_TYPE,
 }
 
-
 response = client.add_bank_account(ba)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])

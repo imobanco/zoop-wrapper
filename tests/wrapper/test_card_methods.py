@@ -18,7 +18,7 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
         """
         self.set_get_mock(200, CardFactory(id="foo").to_dict())
 
-        response = self.client.list_bank_accounts()
+        response = self.client.list_bank_accounts_by_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
         self.assertIsInstance(response.instance, Card)

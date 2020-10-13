@@ -1,0 +1,42 @@
+{
+    "resource": "list",
+    "uri": "/v1/marketplaces/foo/sellers/0b05a360f4b749498f74e13004c08024/bank_accounts?limit=100&offset=0",
+    "items": [
+        {
+            "id": "682cd3a336124ca1a9a891195960c16e",
+            "resource": "bank_account",
+            "holder_name": "Algum Nome",
+            "taxpayer_id": "94998862499",
+            "description": null,
+            "bank_name": "Banco Bradesco S.A.",
+            "bank_code": "237",
+            "type": "Savings",
+            "last4_digits": "123",
+            "account_number": "123",
+            "country_code": "BR",
+            "routing_number": "foo",
+            "routing_check_digit": null,
+            "phone_number": null,
+            "is_active": true,
+            "is_verified": false,
+            "debitable": false,
+            "customer": "0b05a360f4b749498f74e13004c08024",
+            "fingerprint": "5415ba4927cb5cec4aa4dfd309a4f6813b5f2644423533ffb2d245713a285a61",
+            "address": null,
+            "verification_checklist": {
+                "postal_code_check": "unchecked",
+                "address_line1_check": "unchecked",
+                "deposit_check": "unchecked"
+            },
+            "metadata": {},
+            "uri": "/v1/marketplaces/foo/bank_accounts/682cd3a336124ca1a9a891195960c16e",
+            "created_at": "2020-10-09T19:50:37+00:00",
+            "updated_at": "2020-10-09T19:50:37+00:00"
+        }
+    ],
+    "limit": 100,
+    "offset": 0,
+    "has_more": false,
+    "query_count": 0,
+    "total": 4
+}

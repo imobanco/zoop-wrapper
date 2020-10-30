@@ -1,8 +1,8 @@
 {
-    "id": "bedd8013b7d04e9ebb053c1d9a145d8a",
+    "id": "4e03e7785405428a90f67f007721025c",
     "resource": "bank_account",
     "holder_name": "Algum Nome",
-    "taxpayer_id": "94998862499",
+    "taxpayer_id": "74201461611044",
     "description": null,
     "bank_name": "Banco do Brasil S.A.",
     "bank_code": "001",
@@ -15,8 +15,8 @@
     "is_active": true,
     "is_verified": false,
     "debitable": false,
-    "customer": "0b05a360f4b749498f74e13004c08024",
-    "fingerprint": "66fde16cbcd461a389ad0fa31c61c30c6c5a8a3f44d40cf783f808498a59b0ec",
+    "customer": "ef90df686ab64e6cbcdc2c1d68156605",
+    "fingerprint": "05fdfcb94af1e73c223ac75ca69665c3afd6bd62aaad9bdc99af5590b2eb8438",
     "address": null,
     "verification_checklist": {
         "postal_code_check": "unchecked",
@@ -24,7 +24,7 @@
         "deposit_check": "unchecked"
     },
     "metadata": {},
-    "uri": "/v1/marketplaces/foo/bank_accounts/bedd8013b7d04e9ebb053c1d9a145d8a",
-    "created_at": "2020-10-27T15:50:13+00:00",
-    "updated_at": "2020-10-27T15:50:14+00:00"
+    "uri": "/v1/marketplaces/foo/bank_accounts/4e03e7785405428a90f67f007721025c",
+    "created_at": "2020-10-30T22:34:01+00:00",
+    "updated_at": "2020-10-30T22:34:01+00:00"
 }

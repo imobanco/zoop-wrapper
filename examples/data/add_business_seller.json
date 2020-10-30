@@ -1,5 +1,5 @@
 {
-    "id": "a482a4d33d3741b287071132bb3225af",
+    "id": "ef90df686ab64e6cbcdc2c1d68156605",
     "status": "pending",
     "resource": "seller",
     "type": "business",
@@ -14,7 +14,7 @@
     "business_opening_date": "0000-00-00",
     "business_facebook": null,
     "business_twitter": null,
-    "ein": "16535515052002",
+    "ein": "74201461611044",
     "statement_descriptor": null,
     "mcc": null,
     "business_address": {
@@ -58,6 +58,6 @@
     "uri": "/v1/marketplaces/foo/sellers/businesses/",
     "marketplace_id": "foo",
     "metadata": {},
-    "created_at": "2020-08-24T17:22:06+00:00",
-    "updated_at": "2020-08-24T17:22:07+00:00"
+    "created_at": "2020-10-30T22:32:22+00:00",
+    "updated_at": "2020-10-30T22:32:22+00:00"
 }

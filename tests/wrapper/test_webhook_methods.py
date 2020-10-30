@@ -69,8 +69,6 @@ class WebhookWrapperTestCase(APITestCase):
         response = self.client.retrieve_webhook("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Webhook)
-        self.assertEqual(response.instance.id, "foo")
 
         self.mocked_get.assert_called_once_with(
             f"{self.base_url}/webhooks/foo/", auth=self.auth

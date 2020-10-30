@@ -151,23 +151,23 @@ class TransactionWrapper(BaseZoopWrapper):
             )
 
         transaction_response = self.retrieve_transaction(identifier)
-        transaction = transaction_response.instance
+        transaction_data = transaction_response.data
 
         if amount is None:
-            amount = transaction.amount
+            amount = transaction_data["amount"]
         else:
             amount = convert_currency_float_value_to_cents(amount)
 
-            if amount > transaction.amount:
+            if amount > transaction_data["amount"]:
                 raise ValidationError(
                     self,
                     f"A quantia {amount} é maior do que o "
-                    f"valor {transaction.amount} da transação",
+                    f"valor {transaction_data['amount']} da transação",
                 )
 
         data = {
             "amount": amount,
-            "on_behalf_of": transaction.on_behalf_of,
+            "on_behalf_of": transaction_data["on_behalf_of"],
         }
 
         url = self._construct_url(

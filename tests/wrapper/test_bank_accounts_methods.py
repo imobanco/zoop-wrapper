@@ -1,8 +1,6 @@
 from unittest.mock import patch, MagicMock
 
 from tests.utils import APITestCase
-from zoop_wrapper.models.bank_account import BankAccount
-from zoop_wrapper.models.token import Token
 from tests.factories.bank_account import IndividualBankAccountFactory
 from tests.factories.token import (
     BankAccountTokenFactory,
@@ -33,8 +31,6 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
         self.assertEqual(response.status_code, 200, msg=response.data)
         data = response.data
         self.assertEqual(data.get("id"), "foo", msg=data)
-        self.assertIsInstance(response.instance, BankAccount)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_add_bank_account_token(self):
         """
@@ -46,8 +42,6 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
 
         response = self.client._BankAccountWrapper__add_bank_account_token(token)
         self.assertEqual(response.status_code, 201, msg=response.data)
-        self.assertIsInstance(response.instance, Token)
-        self.assertIsInstance(response.instance.bank_account, BankAccount)
 
     @patch(
         "zoop_wrapper.wrapper.ZoopWrapper._BankAccountWrapper__add_bank_account_token"
@@ -68,5 +62,3 @@ class ZoopWrapperBankAccountsMethodsTestCase(APITestCase):
 
         response = self.client.add_bank_account(data)
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertIsInstance(response.instance, BankAccount)
-        self.assertEqual(response.instance.id, "foo")

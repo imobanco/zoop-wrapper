@@ -82,12 +82,12 @@ class BankAccountWrapper(BaseZoopWrapper):
         else:
             raise TypeError("this is not supposed to happen!")
 
-        seller_instance = seller_response.instance
+        seller_data = seller_response.data
 
         token_response = self.__add_bank_account_token(instance)
-        created_token = token_response.instance
+        created_token = token_response.data
 
-        data = {"customer": seller_instance.id, "token": created_token.id}
+        data = {"customer": seller_data["id"], "token": created_token["id"]}
 
         url = self._construct_url(action="bank_accounts")
         return self._post(url, data=data)

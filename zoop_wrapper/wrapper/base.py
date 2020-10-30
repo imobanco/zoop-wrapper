@@ -3,7 +3,6 @@ import requests
 from ..constants import ZOOP_KEY, MARKETPLACE_ID
 from ..exceptions import ValidationError
 from ..models.base import ZoopObject
-from ..models.utils import get_instance_from_data
 from ..utils import get_logger
 from ..response import ZoopResponse
 
@@ -29,12 +28,6 @@ class RequestsWrapper:
 
         Adiciona o :attr:`.data` carregado do :meth:`requests.Response.json`.
 
-        Adiciona o :attr:`.instance` ou :attr:`.instances` baseado no resource.
-
-        .. note::
-            Apenas adiciona :attr:`.instance` ou :attr:`.instances` se não tiver o dado 'deleted' no :attr:`.data`  # noqa
-            que é retornado em todas as respostas de deleção (200 ok) e se tiver o dado `resource` no :attr:`.data`  # noqa
-
         Adiciona :attr:`.error` na resposta se tiver ocorrido erros
 
         Args:
@@ -47,16 +40,6 @@ class RequestsWrapper:
             'objeto' (:class:`.ZoopResponse`) de resposta http
         """
         response.data = response.json()
-
-        deleted = response.data.get("deleted")
-        if not deleted:
-            resource = response.data.get("resource")
-            if resource == "list":
-                response.instances = [
-                    get_instance_from_data(item) for item in response.data.get("items")
-                ]
-            elif resource is not None:
-                response.instance = get_instance_from_data(response.data)
 
         if response.data.get("error"):
             error = response.data.get("error")

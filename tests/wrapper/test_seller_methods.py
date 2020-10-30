@@ -4,7 +4,6 @@ from requests import HTTPError
 from tests.utils import APITestCase
 from tests.factories.seller import BusinessSellerFactory, IndividualSellerFactory
 from tests.factories.bank_account import IndividualBankAccountFactory
-from zoop_wrapper.models.seller import Seller
 
 
 class ZoopWrapperSellerMethodsTestCase(APITestCase):
@@ -28,8 +27,6 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         response = self.client.retrieve_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Seller)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_search_individual_seller(self):
         """
@@ -40,8 +37,6 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         response = self.client.search_individual_seller("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Seller)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_search_business_seller(self):
         """
@@ -52,8 +47,6 @@ class ZoopWrapperSellerMethodsTestCase(APITestCase):
         response = self.client.search_business_seller("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Seller)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_add_individual_seller(self):
         self.set_post_mock(201, {})

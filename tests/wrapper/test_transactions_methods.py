@@ -1,14 +1,11 @@
 from unittest.mock import patch
 
 from tests.utils import APITestCase
-from zoop_wrapper.models.transaction import Transaction, Source
-from zoop_wrapper.models.base import PaymentMethod
 from tests.factories.transaction import (
     CancelTransactionCardFactory,
     TransactionBoletoFactory,
     TransactionCreditFactory,
 )
-from zoop_wrapper.models.token import Token
 from zoop_wrapper.exceptions import ValidationError
 
 
@@ -46,8 +43,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
         response = self.client.retrieve_transaction("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Transaction)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_add_transaction_invoice(self):
         self.set_post_mock(201, TransactionBoletoFactory().to_dict())
@@ -74,8 +69,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         response = self.client.add_transaction(data)
         self.assertEqual(response.status_code, 201, msg=response.data)
-        self.assertEqual(response.instance.payment_type, "boleto")
-        self.assertIsInstance(response.instance.payment_method, PaymentMethod)
 
     def test_add_transaction_card_present(self):
         self.set_post_mock(201, TransactionCreditFactory().to_dict())
@@ -107,9 +100,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         response = self.client.add_transaction(data)
         self.assertEqual(response.status_code, 201, msg=response.data)
-        self.assertEqual(response.instance.payment_type, "credit")
-        self.assertIsInstance(response.instance.source.card, Token)
-        self.assertIsInstance(response.instance.source, Source)
 
     def test_add_transaction_card_not_present(self):
         self.set_post_mock(201, TransactionCreditFactory().to_dict())
@@ -138,9 +128,6 @@ class TransactionWrapperMethodsTestCase(APITestCase):
 
         response = self.client.add_transaction(data)
         self.assertEqual(response.status_code, 201, msg=response.data)
-        self.assertEqual(response.instance.payment_type, "credit")
-        self.assertIsInstance(response.instance.source.card, Token)
-        self.assertIsInstance(response.instance.source, Source)
 
     def test__capture_or_void_transaction(self):
         """
@@ -159,7 +146,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             t1 = TransactionCreditFactory(id="1", allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
-                200, instance=t1
+                200, data={"amount": t1.amount, "on_behalf_of": t1.on_behalf_of}
             )
 
             response = self.client._capture_or_void_transaction(t1.id, "void")
@@ -191,7 +178,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             t1 = TransactionCreditFactory(id="1", amount=10000, allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
-                200, instance=t1
+                200, data={"amount": t1.amount, "on_behalf_of": t1.on_behalf_of}
             )
 
             response = self.client._capture_or_void_transaction(t1.id, "void", 100.00)
@@ -224,7 +211,7 @@ class TransactionWrapperMethodsTestCase(APITestCase):
             t1 = TransactionCreditFactory(id="1", amount=10000, allow_empty=True)
 
             mocked_retrieve_transaction.return_value = self.build_response_mock(
-                200, instance=t1
+                200, data={"amount": t1.amount, "on_behalf_of": t1.on_behalf_of}
             )
 
             with self.assertRaises(ValidationError) as error_context:

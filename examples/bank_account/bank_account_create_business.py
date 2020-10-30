@@ -13,15 +13,15 @@ from zoop_wrapper.constants import MARKETPLACE_ID, ZOOP_KEY
 
 client = ZoopWrapper(marketplace_id=MARKETPLACE_ID, key=ZOOP_KEY)
 
-seller_brian = "0b05a360f4b749498f74e13004c08024"
-brian = client.retrieve_seller(seller_brian)
+business_seller_id = "ef90df686ab64e6cbcdc2c1d68156605"
+response = client.retrieve_seller(business_seller_id)
 
 ba = {
-    "account_number": "123",
-    "bank_code": "237",
+    "account_number": "123123",
+    "bank_code": "001",
     "holder_name": "Algum Nome",
-    "routing_number": "foo",
-    "taxpayer_id": brian.instance.taxpayer_id,
+    "routing_number": "123123",
+    "ein": response.data["ein"],
     "type": BankAccount.SAVING_TYPE,
 }
 

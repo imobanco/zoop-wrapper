@@ -1,0 +1,30 @@
+{
+    "id": "4e03e7785405428a90f67f007721025c",
+    "resource": "bank_account",
+    "holder_name": "Algum Nome",
+    "taxpayer_id": "74201461611044",
+    "description": null,
+    "bank_name": "Banco do Brasil S.A.",
+    "bank_code": "001",
+    "type": "Savings",
+    "account_number": "123123",
+    "country_code": "BR",
+    "routing_number": "123123",
+    "routing_check_digit": null,
+    "phone_number": null,
+    "is_active": true,
+    "is_verified": false,
+    "debitable": false,
+    "customer": "ef90df686ab64e6cbcdc2c1d68156605",
+    "fingerprint": "05fdfcb94af1e73c223ac75ca69665c3afd6bd62aaad9bdc99af5590b2eb8438",
+    "address": null,
+    "verification_checklist": {
+        "postal_code_check": "unchecked",
+        "address_line1_check": "unchecked",
+        "deposit_check": "unchecked"
+    },
+    "metadata": {},
+    "uri": "/v1/marketplaces/foo/bank_accounts/4e03e7785405428a90f67f007721025c",
+    "created_at": "2020-10-30T22:34:01+00:00",
+    "updated_at": "2020-10-30T22:34:01+00:00"
+}

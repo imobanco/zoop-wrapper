@@ -12,6 +12,4 @@ class ZoopResponse(Response):
 
     Attributes:
         data (dict): json da resposta
-        instance (:class:`.ResourceModel`): instância do recurso
-        instances (lista de :class:`.ResourceModel`): lista de instâncias do recurso
     """

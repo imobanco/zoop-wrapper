@@ -79,9 +79,9 @@ class CardWrapper(BaseZoopWrapper):
                 )
 
         token_response = self.__add_card_token(token)
-        created_token = token_response.instance
+        created_token = token_response.data
 
-        data = {"customer": customer_identifier, "token": created_token.id}
+        data = {"customer": customer_identifier, "token": created_token["id"]}
 
         url = self._construct_url(action="cards")
         return self._post(url, data=data)

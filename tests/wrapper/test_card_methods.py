@@ -7,7 +7,6 @@ from ..factories.buyer import BuyerFactory
 from ..factories.card import CardFactory
 from ..factories.seller import SellerFactory
 from ..factories.token import CardTokenFactory, CreateCardTokenFactory
-from zoop_wrapper.models.card import Card
 from zoop_wrapper.exceptions import ValidationError
 
 
@@ -21,8 +20,6 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
         response = self.client.list_bank_accounts_by_seller("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Card)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_add_card_token(self):
         """
@@ -52,8 +49,6 @@ class ZoopWrapperCardMethodsTestCase(APITestCase):
 
         response = self.client.add_card(data, "bar")
         self.assertEqual(response.status_code, 200, msg=response.data)
-        self.assertIsInstance(response.instance, Card)
-        self.assertEqual(response.instance.id, "foo")
 
     @patch("zoop_wrapper.wrapper.ZoopWrapper._CardWrapper__add_card_token")
     def test_add_card_buyer(self, mocked_add_token):

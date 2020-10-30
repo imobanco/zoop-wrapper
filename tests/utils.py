@@ -48,11 +48,11 @@ class APITestCase(TestCase):
         del self.client
 
     @staticmethod
-    def build_response_mock(status_code=200, content=None, instance=None):
+    def build_response_mock(status_code=200, content=None, data=None):
         response = MagicMock(
             status_code=status_code,
             json=MagicMock(return_value=content if content else {}),
-            instance=instance,
+            data=data if data else {},
         )
 
         def raise_for_status():

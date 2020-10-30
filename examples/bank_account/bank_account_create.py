@@ -17,10 +17,10 @@ seller_brian = "0b05a360f4b749498f74e13004c08024"
 brian = client.retrieve_seller(seller_brian)
 
 ba = {
-    "account_number": "123",
-    "bank_code": "237",
+    "account_number": "123123",
+    "bank_code": "001",
     "holder_name": "Algum Nome",
-    "routing_number": "foo",
+    "routing_number": "123123",
     "taxpayer_id": brian.instance.taxpayer_id,
     "type": BankAccount.SAVING_TYPE,
 }

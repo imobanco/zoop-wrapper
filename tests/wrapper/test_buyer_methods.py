@@ -1,7 +1,6 @@
 from pycpfcnpj import gen
 
 from tests.utils import APITestCase
-from zoop_wrapper.models.buyer import Buyer
 from tests.factories.buyer import BuyerFactory
 
 
@@ -52,8 +51,6 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
         response = self.client.retrieve_buyer("foo")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Buyer)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_remove_buyer(self):
         """
@@ -74,8 +71,6 @@ class ZoopWrapperBuyerMethodsTestCase(APITestCase):
         response = self.client.search_buyer("bar")
         self.assertEqual(response.status_code, 200, msg=response.data)
         self.assertEqual(response.data.get("id"), "foo")
-        self.assertIsInstance(response.instance, Buyer)
-        self.assertEqual(response.instance.id, "foo")
 
     def test_update_buyer(self):
         self.set_put_mock(201, BuyerFactory(id="1").to_dict())

@@ -1,22 +1,22 @@
 {
-    "id": "e85edf6d0add48339e3d8189f615c3b1",
+    "id": "bedd8013b7d04e9ebb053c1d9a145d8a",
     "resource": "bank_account",
     "holder_name": "Algum Nome",
     "taxpayer_id": "94998862499",
     "description": null,
-    "bank_name": "Banco Bradesco S.A.",
-    "bank_code": "237",
+    "bank_name": "Banco do Brasil S.A.",
+    "bank_code": "001",
     "type": "Savings",
-    "account_number": "123",
+    "account_number": "123123",
     "country_code": "BR",
-    "routing_number": "foo",
+    "routing_number": "123123",
     "routing_check_digit": null,
     "phone_number": null,
     "is_active": true,
     "is_verified": false,
     "debitable": false,
     "customer": "0b05a360f4b749498f74e13004c08024",
-    "fingerprint": "5415ba4927cb5cec4aa4dfd309a4f6813b5f2644423533ffb2d245713a285a61",
+    "fingerprint": "66fde16cbcd461a389ad0fa31c61c30c6c5a8a3f44d40cf783f808498a59b0ec",
     "address": null,
     "verification_checklist": {
         "postal_code_check": "unchecked",
@@ -24,7 +24,7 @@
         "deposit_check": "unchecked"
     },
     "metadata": {},
-    "uri": "/v1/marketplaces/foo/bank_accounts/e85edf6d0add48339e3d8189f615c3b1",
-    "created_at": "2020-10-09T19:54:56+00:00",
-    "updated_at": "2020-10-09T19:54:57+00:00"
+    "uri": "/v1/marketplaces/foo/bank_accounts/bedd8013b7d04e9ebb053c1d9a145d8a",
+    "created_at": "2020-10-27T15:50:13+00:00",
+    "updated_at": "2020-10-27T15:50:14+00:00"
 }

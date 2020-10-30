@@ -21,7 +21,7 @@ ba = {
     "bank_code": "001",
     "holder_name": "Algum Nome",
     "routing_number": "123123",
-    "taxpayer_id": brian.data['taxpayer_id'],
+    "taxpayer_id": brian.data["taxpayer_id"],
     "type": BankAccount.SAVING_TYPE,
 }
 

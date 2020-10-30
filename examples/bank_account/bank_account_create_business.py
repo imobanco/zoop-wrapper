@@ -21,7 +21,7 @@ ba = {
     "bank_code": "001",
     "holder_name": "Algum Nome",
     "routing_number": "123123",
-    "ein": response.data['ein'],
+    "ein": response.data["ein"],
     "type": BankAccount.SAVING_TYPE,
 }
 

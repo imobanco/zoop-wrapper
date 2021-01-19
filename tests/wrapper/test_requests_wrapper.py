@@ -55,14 +55,14 @@ class RequestWrapperTestCase(APITestCase):
 
         url = self.client._construct_url(search=search)
 
-        self.assertEqual(url, "foo/search?id=1")
+        self.assertEqual(url, "foo/?id=1")
 
     def test_construct_url_search_dict(self):
         search = {"id": 1}
 
         url = self.client._construct_url(search=search)
 
-        self.assertEqual(url, "foo/search?id=1")
+        self.assertEqual(url, "foo/?id=1")
 
     def test_process_response_error(self):
         response = self.build_response_mock(

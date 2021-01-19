@@ -98,11 +98,11 @@ class RequestsWrapper:
 
         if search:
             if isinstance(search, dict):
-                url += "search?"
+                url += "?"
                 for key, value in search.items():
                     url += f"{key}={value}"
             else:
-                url += f"search?{search}"
+                url += f"?{search}"
         return url
 
     @property

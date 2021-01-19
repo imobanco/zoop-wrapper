@@ -27,12 +27,13 @@ class TransactionWrapper(BaseZoopWrapper):
 
         Args:
             identifier: uuid id do :class:`.Seller`
+            offset: ''
 
         Returns:
             response
         """
         url = self._construct_url(
-            action="sellers", identifier=identifier, subaction="transactions"
+            action="sellers", identifier=identifier, subaction="transactions", search='sort=time-descending'
         )
         return self._get(url)
 

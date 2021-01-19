@@ -142,7 +142,7 @@ class SellerWrapper(BaseZoopWrapper):
         Returns:
             :class:`.ZoopResponse`
         """
-        url = self._construct_url(action="sellers", search=kwargs)
+        url = self._construct_url(action="sellers/search", search=kwargs)
         return self._get(url)
 
     def search_business_seller(self, identifier: str) -> ZoopResponse:

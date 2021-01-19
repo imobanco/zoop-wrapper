@@ -27,6 +27,8 @@ def convert_currency_float_value_to_cents(value):
         1234 => 1234
         56.78 => 5678
         56.78123 => 5678
+        56.7 => 5670
+        653.55 => 65355
         "9876" => 9876
         "91.23" => 9123
 
@@ -41,15 +43,13 @@ def convert_currency_float_value_to_cents(value):
     except (ValueError, TypeError) as e:
         raise FieldError(value, "O input é inválido") from e
 
-    try:
-        if isinstance(value, float):
-            raise ValueError(
-                "O valor é um float. Então podemos fazer o tratamento dele!"
-            )
-        int(value)
-    except ValueError:
-        value = int(float(value) * 100)
-    finally:
-        value = int(value)
+    string_value = str(value)
 
-    return value
+    if '.' in string_value:
+        split_value = string_value.split('.')
+        int_value = split_value[0]
+        float_value = split_value[1]
+        float_value = float_value.ljust(2, '0')
+        value = f"{int_value}{float_value[:2]}"
+
+    return int(value)

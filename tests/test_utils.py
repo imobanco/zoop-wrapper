@@ -33,6 +33,34 @@ class UtilsTestCase(TestCase):
         result = convert_currency_float_value_to_cents(value)
         self.assertEqual(expected, result)
 
+    def test_convert_currency_float_value_to_cents_float_input_1(self):
+        """
+        Dado:
+            - um valor 56.7
+        Quando:
+            - for chamado convert_currency_float_value_to_cents(value)
+        Então:
+            - o resultado deve ser 5670
+        """
+        value = 56.7
+        expected = 5670
+        result = convert_currency_float_value_to_cents(value)
+        self.assertEqual(expected, result)
+
+    def test_convert_currency_float_value_to_cents_float_input_2(self):
+        """
+        Dado:
+            - um valor 653.55
+        Quando:
+            - for chamado convert_currency_float_value_to_cents(value)
+        Então:
+            - o resultado deve ser 65355
+        """
+        value = 653.55
+        expected = 65355
+        result = convert_currency_float_value_to_cents(value)
+        self.assertEqual(expected, result)
+
     def test_convert_currency_float_value_to_cents_str_with_int_input(self):
         """
         Dado:

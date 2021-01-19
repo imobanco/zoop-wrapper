@@ -45,11 +45,11 @@ def convert_currency_float_value_to_cents(value):
 
     string_value = str(value)
 
-    if '.' in string_value:
-        split_value = string_value.split('.')
+    if "." in string_value:
+        split_value = string_value.split(".")
         int_value = split_value[0]
         float_value = split_value[1]
-        float_value = float_value.ljust(2, '0')
+        float_value = float_value.ljust(2, "0")
         value = f"{int_value}{float_value[:2]}"
 
     return int(value)

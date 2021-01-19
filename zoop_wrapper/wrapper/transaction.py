@@ -33,7 +33,10 @@ class TransactionWrapper(BaseZoopWrapper):
             response
         """
         url = self._construct_url(
-            action="sellers", identifier=identifier, subaction="transactions", search='sort=time-descending'
+            action="sellers",
+            identifier=identifier,
+            subaction="transactions",
+            search="sort=time-descending",
         )
         return self._get(url)
 

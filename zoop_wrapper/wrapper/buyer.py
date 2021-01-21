@@ -94,7 +94,7 @@ class BuyerWrapper(BaseZoopWrapper):
         Returns:
             :class:`.ZoopResponse`
         """
-        url = self._construct_url(action="buyers", search=f"taxpayer_id={identifier}")
+        url = self._construct_url(action="buyers/search", search=f"taxpayer_id={identifier}")
         return self._get(url)
 
     def update_buyer(self, identifier: str, data: Union[dict, Buyer]) -> ZoopResponse:

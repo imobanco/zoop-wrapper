@@ -1,7 +1,7 @@
 import os
 from requests import HTTPError
 
-from zoop_wrapper import ZoopWrapper, Seller, Address
+from zoop_wrapper import ZoopWrapper, Seller
 from examples.utils import dump_response
 
 """
@@ -32,5 +32,3 @@ except HTTPError as e:
     print(e)
 
 dump_response(response, os.path.basename(__file__).split(".")[0])
-
-
